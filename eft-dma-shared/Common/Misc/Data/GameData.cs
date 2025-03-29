@@ -14,6 +14,7 @@ namespace eft_dma_shared.Common.Misc.Data
         public static FrozenDictionary<string, string> MapNames { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             ["default"] = "default",
+            ["Labyrinth"] = "The Labyrinth",
             ["woods"] = "Woods",
             ["shoreline"] = "Shoreline",
             ["rezervbase"] = "Reserve",
@@ -105,6 +106,10 @@ namespace eft_dma_shared.Common.Misc.Data
                 ["Exit3"] = "??",
                 ["Exit4"] = "Checkpoint Fence",
                 ["Armored Train"] = "Armored Train",
+            }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase) },
+            { "Labyrinth", new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["labir_exit"] = "The Way Up",
             }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase) },
             { "laboratory", new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {

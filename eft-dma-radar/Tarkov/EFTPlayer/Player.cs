@@ -664,6 +664,12 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         {
             switch (voiceLine)
             {
+                case "BossTagillaAggro":
+                    return new AIRole()
+                    {
+                        Name = "Shadow of Tagilla",
+                        Type = PlayerType.AIBoss
+                    };
                 case "BossSanitar":
                     return new AIRole()
                     {
@@ -1187,6 +1193,24 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     return new AIRole()
                     {
                         Name = "Zombie Tagilla",
+                        Type = PlayerType.AIBoss
+                    };
+                case Enums.WildSpawnType.bossTagillaAgro:
+                    return new AIRole()
+                    {
+                        Name = "Shadow of Tagilla",
+                        Type = PlayerType.AIBoss
+                    };
+                case Enums.WildSpawnType.bossKillaAgro:
+                    return new AIRole()
+                    {
+                        Name = "Vengeful Killa",
+                        Type = PlayerType.AIBoss
+                    };
+                case Enums.WildSpawnType.tagillaHelperAgro:
+                    return new AIRole()
+                    {
+                        Name = "tagillaHelperAgro",
                         Type = PlayerType.AIBoss
                     };
                 default:

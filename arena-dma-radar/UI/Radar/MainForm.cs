@@ -20,6 +20,10 @@ using arena_dma_radar.Arena.Features.MemoryWrites;
 using arena_dma_radar.Arena.Features.MemoryWrites.Patches;
 using eft_dma_shared.Common.ESP;
 using eft_dma_shared.Common.Misc.Commercial;
+using eft_dma_shared.Common.Unity.Collections;
+using static SDK.Enums;
+using VmmFrost;
+using arena_dma_radar.Arena;
 
 namespace arena_dma_radar.UI.Radar
 {
@@ -38,6 +42,12 @@ namespace arena_dma_radar.UI.Radar
         private int _fps;
         private Vector2 _mapPanPosition;
         private EspWidget _espWidget;
+
+        public MonoLib.MonoClass _arenaOverlay;
+
+
+        public Vector3[] objectivePositions = new Vector3[3];
+        public Vector2[] objectiveMapPos = new Vector2[3];
 
         /// <summary>
         /// Main UI/Application Config.
@@ -193,6 +203,7 @@ namespace arena_dma_radar.UI.Radar
                 if (inMatch && localPlayer is not null) // LocalPlayer is in a raid -> Begin Drawing...
                 {
                     var map = LoneMapManager.Map; // cache ref
+                    
                     ArgumentNullException.ThrowIfNull(map, nameof(map));
                     var closestToMouse = _mouseOverItem; // cache ref
                     var mouseOverGrp = MouseoverGroup; // cache value for entire render
@@ -328,6 +339,7 @@ namespace arena_dma_radar.UI.Radar
             const string waitingFor1 = "Waiting for Match Start.";
             const string waitingFor2 = "Waiting for Match Start..";
             const string waitingFor3 = "Waiting for Match Start...";
+            _arenaOverlay = new MonoLib.MonoClass();//MonoLib.MonoClass.Find("Assembly-CSharp", ClassNames.ArenaOverlayData.ClassName, out _);
             string status = _statusOrder == 1 ?
                 waitingFor1 : _statusOrder == 2 ?
                 waitingFor2 : waitingFor3;
@@ -1791,6 +1803,16 @@ namespace arena_dma_radar.UI.Radar
                 FileName = updatesUrl,
                 UseShellExecute = true
             });
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skglControl_Radar_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
+        {
+
         }
     }
 }

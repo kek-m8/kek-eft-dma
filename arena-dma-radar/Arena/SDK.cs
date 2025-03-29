@@ -33,7 +33,43 @@ namespace SDK
 
 	public readonly partial struct Offsets
 	{
-		public readonly partial struct TarkovApplication
+        public readonly partial struct ArenaOverlayDataContainer
+        {
+            public const uint PlayersData = 0x10; // System.Collections.Generic.Dictionary<String, \uE7AD>
+            public const uint BotsData = 0x18; // System.Collections.Generic.Dictionary<String, \uE7AD>
+            public const uint BombData = 0x20; // -.\uE7AE
+            public const uint CapturePointsData = 0x28; // System.Collections.Generic.Dictionary<Int32, \uE7AF>
+            public const uint ContainedCharacters = 0x30; // System.Collections.Generic.HashSet<String>
+        }
+        public readonly partial struct CapturePointsDataContainer
+        {
+            public const uint Name = 0x10; // String
+            public const uint Position = 0x20; // UnityEngine.Vector3
+            public const uint State = 0x2C; // System.Int32
+            public const uint Id = 0x30; // Int32
+        }
+        public readonly partial struct BombDataContainer
+        {
+            public const uint BombComponent = 0x10; // EFT.BombComponent
+            public const uint DressBombItem = 0x18; // EFT.Visual.DressBombItem
+            public const uint PlayerWithBombId = 0x20; // String
+            public const uint E001 = 0x28; // System.Collections.Generic.List<Transform>
+            public const uint Exist = 0x30; // Boolean
+            public const uint OnPlayer = 0x31; // Boolean
+            public const uint E000 = 0x32; // Boolean
+
+        }
+        public readonly partial struct BombComponentContainer
+        {
+            public const uint Item = 0x10; // EFT.InventoryLogic.Item
+            public const uint PlaceId = 0x18; // String
+            public const uint NextStatus = 0x20; // System.Collections.Generic.Dictionary<Int32, List<Int32>>
+            public const uint PlantTime = 0x28; // Single
+            public const uint ActivationTime = 0x2C; // Single
+            public const uint DeactivationTime = 0x30; // Single
+            public const uint Status = 0x34; // System.Int32
+        }
+        public readonly partial struct TarkovApplication
 		{
 			public const uint GameOperationSubclass = 0xF0; // -.\uEA68
 		}

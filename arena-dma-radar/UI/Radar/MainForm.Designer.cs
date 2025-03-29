@@ -655,7 +655,7 @@
             label10.AutoSize = true;
             label10.Location = new Point(3, 75);
             label10.Name = "label10";
-            label10.Size = new Size(40, 15);
+            label10.Size = new Size(39, 15);
             label10.TabIndex = 51;
             label10.Text = "Target";
             // 
@@ -664,7 +664,7 @@
             comboBox_AimbotTarget.Anchor = AnchorStyles.Right;
             comboBox_AimbotTarget.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_AimbotTarget.FormattingEnabled = true;
-            comboBox_AimbotTarget.Location = new Point(49, 71);
+            comboBox_AimbotTarget.Location = new Point(48, 71);
             comboBox_AimbotTarget.Name = "comboBox_AimbotTarget";
             comboBox_AimbotTarget.Size = new Size(121, 23);
             comboBox_AimbotTarget.TabIndex = 50;
@@ -673,7 +673,7 @@
             // 
             checkBox_AimRandomBone.Anchor = AnchorStyles.Right;
             checkBox_AimRandomBone.AutoSize = true;
-            checkBox_AimRandomBone.Location = new Point(176, 73);
+            checkBox_AimRandomBone.Location = new Point(175, 73);
             checkBox_AimRandomBone.Name = "checkBox_AimRandomBone";
             checkBox_AimRandomBone.Size = new Size(101, 19);
             checkBox_AimRandomBone.TabIndex = 68;
@@ -685,7 +685,7 @@
             // 
             button_RandomBoneCfg.Anchor = AnchorStyles.Right;
             button_RandomBoneCfg.Enabled = false;
-            button_RandomBoneCfg.Location = new Point(283, 69);
+            button_RandomBoneCfg.Location = new Point(282, 69);
             button_RandomBoneCfg.Name = "button_RandomBoneCfg";
             button_RandomBoneCfg.Size = new Size(57, 28);
             button_RandomBoneCfg.TabIndex = 69;
@@ -1470,6 +1470,7 @@
             skglControl_Radar.Size = new Size(1250, 647);
             skglControl_Radar.TabIndex = 18;
             skglControl_Radar.VSync = false;
+            skglControl_Radar.PaintSurface += skglControl_Radar_PaintSurface;
             // 
             // tabControl1
             // 
@@ -1492,6 +1493,7 @@
             Margin = new Padding(4, 3, 4, 3);
             Name = "MainForm";
             Text = "Whats A DMA?";
+            Load += MainForm_Load;
             tabPage2.ResumeLayout(false);
             flowLayoutPanel_Settings.ResumeLayout(false);
             flowLayoutPanel_Settings.PerformLayout();

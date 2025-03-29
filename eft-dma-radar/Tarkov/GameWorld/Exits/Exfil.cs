@@ -86,6 +86,10 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
                 case "lighthouse_secret_minefield":
                     Name = "Passage by the Lake (Secret)";
                     break;
+                /// The Labyrinth
+                case "labyrinth_secret_tagilla_key":
+                    Name = "Ariadne's Path (Secret)";
+                    break;
 
             }
             #endregion
@@ -280,6 +284,10 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
                     /// Lighthouse
                     case "lighthouse_secret_minefield":
                         newName = "Passage by the Lake (Secret)";
+                        break;
+                    /// The Labyrinth
+                    case "labyrinth_secret_tagilla_key":
+                        newName = "Ariadne's Path (Secret)";
                         break;
 
                 }
