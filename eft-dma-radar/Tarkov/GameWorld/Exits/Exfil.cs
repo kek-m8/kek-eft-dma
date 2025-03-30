@@ -292,7 +292,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
 
                 }
                 #endregion
-                var label1 = $"{Name} ({Status.GetDescription()})";
+                var label1 = $"{(newName is null ? Name : newName)} ({Status.GetDescription()})";
                 scrPos.DrawESPText(canvas, this, localPlayer, ESP.Config.ShowDistances, SKPaints.TextExfilESP, label1);
                 return;
             }

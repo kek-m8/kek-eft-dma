@@ -97,11 +97,17 @@ namespace SDK
 			public const uint ClientShellingController = 0x80; // -.\uE6BE
 			public const uint LocationId = 0x90; // String
 			public const uint LootList = 0x118; // System.Collections.Generic.List<\uE307>
-			public const uint RegisteredPlayers = 0x140; // System.Collections.Generic.List<IPlayer>
+			public const uint LootItems = 0x128; // -.\uE3CE<Int32, LootItem>
+            public const uint RegisteredPlayers = 0x140; // System.Collections.Generic.List<IPlayer>
 			public const uint BorderZones = 0x198; // EFT.Interactive.BorderZone[]
 			public const uint MainPlayer = 0x1A8; // EFT.Player
 			public const uint SynchronizableObjectLogicProcessor = 0x1D8; // -.\uEB4C
 			public const uint Grenades = 0x200; // -.\uE3CE<Int32, Throwable>
+		}
+		public readonly partial struct LootItemsContainer
+		{
+			public const uint Dic = 0x10;
+			public const uint List = 0x18;
 		}
 
 		public readonly partial struct TransitController

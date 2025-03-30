@@ -1336,7 +1336,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     var pRenderersArray = Memory.ReadValue<ulong>(dress + Offsets.Dress.Renderers);
                     if (!Utils.IsValidVirtualAddress(pRenderersArray))
                         continue;
-
+                    
                     using var renderersArray = MemArray<ulong>.Get(pRenderersArray);
                     if (renderersArray.Count == 0)
                         continue;

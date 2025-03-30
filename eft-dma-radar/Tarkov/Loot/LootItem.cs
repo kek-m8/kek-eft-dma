@@ -8,6 +8,10 @@ using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Maps;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Misc.Data;
+using eft_dma_shared.Common.DMA.ScatterAPI;
+using eft_dma_shared.Common.Unity.LowLevel;
+using eft_dma_shared.Common.Misc.Commercial;
+using static eft_dma_shared.Common.Unity.LowLevel.ChamsManager;
 
 namespace eft_dma_radar.Tarkov.Loot
 {
@@ -89,6 +93,8 @@ namespace eft_dma_radar.Tarkov.Loot
         /// </summary>
         public LootFilterEntry CustomFilter => _item.CustomFilter;
 
+        public ChamsManager.ChamsMode ChamsMode { get; private set; }
+
         /// <summary>
         /// True if the item is important via the UI.
         /// </summary>
@@ -137,7 +143,6 @@ namespace eft_dma_radar.Tarkov.Loot
                 return _item.IsBackpack;
             }
         }
-
         public bool IsWishlist
         {
             get
@@ -234,6 +239,37 @@ namespace eft_dma_radar.Tarkov.Loot
                 return container.Loot.Any(x => x.ContainsSearchPredicate(predicate));
             }
             return predicate(this);
+        }
+
+        public void SetChams(ScatterWriteHandle writes, ChamsManager.ChamsMode chamsMode, int chamsMaterial)
+        {
+            try
+            {
+                var localGameWorld = Memory.ReadPtr(MonoLib.GameWorldField, false);
+                var lootItemPtr = Memory.ReadPtr(localGameWorld + Offsets.ClientLocalGameWorld.LootItems, false);
+                if (ChamsMode != chamsMode)
+                {
+                    writes.Clear();
+                    // ApplyClothingChams(writes, chamsMaterial);
+                    if (chamsMode is not ChamsManager.ChamsMode.Basic)
+                    {
+                        //     ApplyGearChams(writes, chamsMaterial);
+                    }
+                    writes.Execute(DoWrite);
+                    LoneLogging.WriteLine($"Chams set OK for Player '{Name}'");
+                    ChamsMode = chamsMode;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoneLogging.WriteLine($"ERROR setting Chams for Player '{Name}': {ex}");
+            }
+            bool DoWrite()
+            {
+                if (!Memory.Game.IsSafeToWriteMem)
+                    return false;
+                return true;
+            }
         }
 
         public virtual void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)

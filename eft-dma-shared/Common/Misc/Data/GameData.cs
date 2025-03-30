@@ -145,6 +145,7 @@ namespace eft_dma_shared.Common.Misc.Data
                 ["Gate 3"] = "Gate 3",
                 ["Gate 0"] = "Gate 0",
                 ["Gate m"] = "Med Tent Gate",
+                ["Gate_o"] = "Courtyard Gate",
                 // SCAV
                 ["Camera Bunker Door"] = "Camera Bunker Door",
                 ["Office Window"] = "Office Window",
@@ -156,6 +157,7 @@ namespace eft_dma_shared.Common.Misc.Data
                 ["Gate 3"] = "Gate 3",
                 ["Gate 0"] = "Gate 0",
                 ["Gate m"] = "Med Tent Gate",
+                ["Gate_o"] = "Courtyard Gate",
                 // SCAV
                 ["Camera Bunker Door"] = "Camera Bunker Door",
                 ["Office Window"] = "Office Window",
