@@ -1653,7 +1653,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 !IsActive || !IsAlive)
                 return;
             var dist = Vector3.Distance(localPlayer.Position, Position);
-            if (dist > Program.Config.MaxDistance)
+            if (dist > Program.Config.MaxPlayerDistance)
                 return;
             var showInfo = IsAI ? ESP.Config.AIRendering.ShowLabels : ESP.Config.PlayerRendering.ShowLabels;
             var showDist = IsAI ? ESP.Config.AIRendering.ShowDist : ESP.Config.PlayerRendering.ShowDist;

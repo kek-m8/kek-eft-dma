@@ -2042,6 +2042,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_Aimview.Checked = Config.ESPWidgetEnabled;
             trackBar_UIScale.Value = (int)Math.Round(Config.UIScale * 100);
             trackBar_MaxDist.Value = (int)Config.MaxDistance;
+            trackBar_ESPPlayerDist.Value = (int)Config.MaxPlayerDistance;
             trackBar_AimFOV.Value = (int)Math.Round(Aimbot.Config.FOV);
             textBox_ResWidth.Text = Config.MonitorWidth.ToString();
             textBox_ResHeight.Text = Config.MonitorHeight.ToString();
@@ -2188,6 +2189,7 @@ namespace eft_dma_radar.UI.Radar
 
                 Config.Zoom = _zoom;
                 Config.MaxDistance = trackBar_MaxDist.Value;
+                Config.MaxPlayerDistance = trackBar_ESPPlayerDist.Value;
                 Memory.CloseFPGA(); // Close FPGA
             }
             finally
@@ -3886,6 +3888,12 @@ namespace eft_dma_radar.UI.Radar
         private void skglControl_Radar_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
         {
 
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            Config.MaxPlayerDistance = trackBar_ESPPlayerDist.Value;
+            label_MaxDist.Text = $"Player Dist {trackBar_MaxDist.Value}";
         }
     }
 }

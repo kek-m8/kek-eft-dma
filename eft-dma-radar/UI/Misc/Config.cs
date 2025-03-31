@@ -132,11 +132,16 @@ namespace eft_dma_radar.UI.Misc
         public bool ConnectGroups { get; set; } = true;
 
         /// <summary>
-        /// Max game distance to render targets in Aimview,
-        /// and to display dynamic aimlines between two players.
+        /// Max game distance to render targets in Aimview
         /// </summary>
         [JsonPropertyName("maxDistance")]
         public float MaxDistance { get; set; } = 350;
+
+        /// <sumarry>
+        /// Max player distance to render in ESP
+        /// </sumarry>
+        [JsonPropertyName("maxPlayerDistance")]
+        public float MaxPlayerDistance { get; set; } = 350f;
         /// <summary>
         /// True if teammate aimlines should be the same length as LocalPlayer.
         /// </summary>
@@ -484,7 +489,7 @@ namespace eft_dma_radar.UI.Misc
         // Show InGame Time (for Tasking)
         // <summary>
         [JsonPropertyName("showTime")]
-        public bool ShowTime { get; set; } = true;
+        public bool ShowTime { get; set; } = false;
 
         /// <summary>
         /// Display exfils in ESP.
@@ -498,6 +503,9 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("showLoot")]
         public bool ShowLoot { get; set; } = true;
 
+        /// <summary>
+        /// Display wishlisted items only in ESP.
+        /// </summary>
         [JsonPropertyName("showOnlyWishlist")]
         public bool ShowOnlyWishlist { get; set; } = false;
 
