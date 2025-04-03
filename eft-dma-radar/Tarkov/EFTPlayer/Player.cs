@@ -1397,7 +1397,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             try
             {
                 var point = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
-                float dist = 0f; float height = 0f;
+                float dist = 0f; float height = 0f; bool important = false;
                 MouseoverPosition = new Vector2(point.X, point.Y);
                 if (!IsAlive) // Player Dead -- Draw 'X' death marker and move on
                 {
@@ -1456,8 +1456,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         && ((Gear?.Loot?.Any(x => x.IsImportant) ?? false) ||
                             (MainForm.Config.QuestHelper.Enabled && (Gear?.HasQuestItems ?? false))
                         ))
+                    {
                         lines[0] = $"!!{lines[0]}"; // Notify important loot
-                    DrawPlayerText(canvas, point, lines);
+                        important = true;
+                    }
+                    DrawPlayerText(canvas, point, lines, important);
                 }
             }
             catch (Exception ex)
@@ -1531,7 +1534,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// <summary>
         /// Draws Player Text on this location.
         /// </summary>
-        private void DrawPlayerText(SKCanvas canvas, SKPoint point, List<string> lines)
+        private void DrawPlayerText(SKCanvas canvas, SKPoint point, List<string> lines, bool importantLoot = false)
         {
             var paints = GetPaints();
             if (MainForm.MouseoverGroup is int grp && grp == GroupID)
@@ -1544,7 +1547,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     continue;
 
                 canvas.DrawText(line, point, SKPaints.TextOutline); // Draw outline
-                canvas.DrawText(line, point, paints.Item2); // draw line text
+                canvas.DrawText(line, point, importantLoot ? SKPaints.TextQuestItemESP : paints.Item2); // draw line text
                 point.Offset(0, 12 * MainForm.UIScale);
             }
         }
