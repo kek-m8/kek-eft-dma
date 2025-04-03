@@ -70,7 +70,7 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 var hands = player.Hands?.CurrentItem;
                 var inHands = hands is not null ? hands : "--";
                 string edition = "--";
-                string level = "0";
+                string level = "--";
                 string prestige = "--";
                 string kd = "--";
                 string raidCount = "--";

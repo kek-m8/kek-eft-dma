@@ -65,13 +65,13 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
             SKPaints.ShapeOutline.StrokeWidth = 2f;
             if (heightDiff > 1.85f) // exfil is above player
             {
-                using var path = point.GetUpArrow(6.5f);
+                using var path = point.GetArrow(6.5f);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, paint);
             }
             else if (heightDiff < -1.85f) // exfil is below player
             {
-                using var path = point.GetDownArrow(6.5f);
+                using var path = point.GetArrow(6.5f, false);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, paint);
             }

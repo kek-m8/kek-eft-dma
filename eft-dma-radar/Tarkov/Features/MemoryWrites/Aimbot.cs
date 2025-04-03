@@ -214,7 +214,7 @@ namespace eft_dma_radar.Tarkov.Features.MemoryWrites
                 else if (Config.SilentAim.AutoBone)
                 {
                     var boneTargets = new List<PossibleAimbotTarget>();
-                    foreach (var tr in target.Skeleton.Bones)
+                    foreach (var tr in target.Skeleton_.Bones)
                     {
                         if (tr.Key is Bones.HumanBase)
                             continue;
@@ -242,7 +242,7 @@ namespace eft_dma_radar.Tarkov.Features.MemoryWrites
                 }
 
                 /// Target Bone Position
-                Vector3 bonePosition = target.Skeleton.Bones[bone].UpdatePosition();
+                Vector3 bonePosition = target.Skeleton_.Bones[bone].UpdatePosition();
 
                 if (Config.SilentAim.SafeLock)
                 {
@@ -254,7 +254,7 @@ namespace eft_dma_radar.Tarkov.Features.MemoryWrites
                     }
                     bool IsSafeLockTripped()
                     {
-                        foreach (var tr in target.Skeleton.Bones)
+                        foreach (var tr in target.Skeleton_.Bones)
                         {
                             if (tr.Key is Bones.HumanBase)
                                 continue;
@@ -309,9 +309,9 @@ namespace eft_dma_radar.Tarkov.Features.MemoryWrites
             foreach (var player in players)
             {
                 var distance = Vector3.Distance(localPlayer.Position, player.Position);
-                if (distance > MainForm.Config.MaxDistance)
+                if (distance > MainForm.Config.MaxPlayerDistance)
                     continue;
-                foreach (var tr in player.Skeleton.Bones)
+                foreach (var tr in player.Skeleton_.Bones)
                 {
                     if (tr.Key is Bones.HumanBase)
                         continue;

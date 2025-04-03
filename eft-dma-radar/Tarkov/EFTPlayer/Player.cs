@@ -19,6 +19,7 @@ using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Pools;
 using eft_dma_shared.Common.DMA;
+using static SDK.Offsets;
 
 namespace eft_dma_radar.Tarkov.EFTPlayer
 {
@@ -206,7 +207,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// Player's Skeleton Bones.
         /// Derived types MUST define this.
         /// </summary>
-        public virtual Skeleton Skeleton => throw new NotImplementedException(nameof(Skeleton));
+        public virtual eft_dma_shared.Common.Players.Skeleton Skeleton_ => throw new NotImplementedException(nameof(Skeleton_));
 
         /// <summary>
         /// Duration of consecutive errors.
@@ -254,6 +255,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
 
         public virtual int Prestige { get; set; }
 
+        public virtual int Level { get; set; }
+
+        public virtual int Hours { get; set; }
+
         /// <summary>
         /// Account UUID for Human Controlled Players.
         /// </summary>
@@ -273,6 +278,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// Player is Human-Controlled.
         /// </summary>
         public virtual bool IsHuman { get; }
+
+        /// <summary>
+        /// Player is Aiming Down Sights.
+        /// </summary>
+        public virtual bool IsAiming { get; set; } = false;
 
         /// <summary>
         /// MovementContext / StateContext
@@ -502,7 +512,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         public virtual void OnRealtimeLoop(ScatterReadIndex index)
         {
             index.AddEntry<Vector2>(-1, this.RotationAddress); // Rotation
-            foreach (var tr in Skeleton.Bones)
+            foreach (var tr in Skeleton_.Bones)
             {
                 index.AddEntry<SharedArray<UnityTransform.TrsX>>((int)(uint)tr.Key, tr.Value.VerticesAddr,
                     (3 * tr.Value.Index + 3) * 16); // ESP Vertices
@@ -514,7 +524,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 bool p2 = true;
                 if (x1.TryGetResult<Vector2>(-1, out var rotation))
                     p1 = this.SetRotation(ref rotation);
-                foreach (var tr in Skeleton.Bones)
+                foreach (var tr in Skeleton_.Bones)
                 {
                     if (x1.TryGetResult<SharedArray<UnityTransform.TrsX>>((int)(uint)tr.Key, out var vertices))
                     {
@@ -527,7 +537,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             catch (Exception ex) // Attempt to re-allocate Transform on error
                             {
                                 LoneLogging.WriteLine($"ERROR getting Player '{this.Name}' {tr.Key} Position: {ex}");
-                                this.Skeleton.ResetTransform(tr.Key);
+                                this.Skeleton_.ResetTransform(tr.Key);
                             }
                         }
                         catch
@@ -555,7 +565,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// <param name="round2">Index (round 2)</param>
         public void OnValidateTransforms(ScatterReadIndex round1, ScatterReadIndex round2)
         {
-            foreach (var tr in Skeleton.Bones)
+            foreach (var tr in Skeleton_.Bones)
             {
                 round1.AddEntry<MemPointer>((int)(uint)tr.Key,
                     tr.Value.TransformInternal +
@@ -572,7 +582,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             {
                                 LoneLogging.WriteLine(
                                     $"WARNING - '{tr.Key}' Transform has changed for Player '{this.Name}'");
-                                this.Skeleton.ResetTransform(tr.Key); // alloc new transform
+                                this.Skeleton_.ResetTransform(tr.Key); // alloc new transform
                             }
                         }
                     };
@@ -1379,7 +1389,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
 
         #region Interfaces
 
-        public virtual ref Vector3 Position => ref this.Skeleton.Root.Position;
+        public virtual ref Vector3 Position => ref this.Skeleton_.Root.Position;
         public Vector2 MouseoverPosition { get; set; }
 
         public void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
@@ -1653,12 +1663,15 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 !IsActive || !IsAlive)
                 return;
             var dist = Vector3.Distance(localPlayer.Position, Position);
-            if (dist > Program.Config.MaxPlayerDistance)
+            if (dist > Program.Config.MaxPlayerDistance && this.IsPmc)
+                return;
+            if (dist > Program.Config.MaxDistance && !this.IsPmc)
                 return;
             var showInfo = IsAI ? ESP.Config.AIRendering.ShowLabels : ESP.Config.PlayerRendering.ShowLabels;
             var showDist = IsAI ? ESP.Config.AIRendering.ShowDist : ESP.Config.PlayerRendering.ShowDist;
             var showWep = IsAI ? ESP.Config.AIRendering.ShowWeapons : ESP.Config.PlayerRendering.ShowWeapons;
-            var drawLabel = showInfo || showDist || showWep;
+            var showRank = ESP.Config.PlayerRendering.ShowRank;
+            var drawLabel = showInfo || showDist || showWep || showRank;
 
             if (IsHostile && (ESP.Config.HighAlertMode is HighAlertMode.AllPlayers ||
                               (ESP.Config.HighAlertMode is HighAlertMode.HumansOnly && IsHuman))) // Check High Alert
@@ -1689,13 +1702,13 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
 
             if (renderMode is ESPPlayerRenderMode.Bones)
             {
-                if (!this.Skeleton.UpdateESPBuffer())
+                if (!this.Skeleton_.UpdateESPBuffer())
                     return;
-                canvas.DrawPoints(SKPointMode.Lines, Skeleton.ESPBuffer, espPaints.Item1);
+                canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, espPaints.Item1);
             }
             else if (renderMode is ESPPlayerRenderMode.Box)
             {
-                var getBox = Skeleton.GetESPBox(baseScrPos);
+                var getBox = Skeleton_.GetESPBox(baseScrPos);
                 if (getBox is not SKRect box)
                     return;
                 canvas.DrawRect(box, espPaints.Item1);
@@ -1704,7 +1717,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             }
             else if (renderMode is ESPPlayerRenderMode.Presence)
             {
-                if (!CameraManagerBase.WorldToScreen(ref Skeleton.Bones[Bones.HumanHead].Position, out var presenceScrPos, true, true))
+                if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanHead].Position, out var presenceScrPos, true, true))
                     return;
                 canvas.DrawCircle(presenceScrPos, 1.5f * ESP.Config.FontScale, espPaints.Item1);
             }
@@ -1730,14 +1743,42 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     lines.Add($"{fac}{Name}{health}");
                 }
 
-                if (showWep)
-                    lines.Add($"({Hands?.CurrentItem})");
+                if (showWep) {
+                    lines.Add($"{Hands?.CurrentItem}");
+
+                    if (this is ObservedPlayer observed && Config.ESP.ShowIfAiming)
+                    {
+                        var handCtrlPtr = Memory.ReadPtr(observed.HandsControllerAddr);
+                        bool isAiming = Memory.ReadValue<bool>(Memory.ReadPtrChain(handCtrlPtr, new uint[] { Offsets.ObservedHandsController.BundleAnimationBones, Offsets.BundleAnimationBonesController.ProceduralWeaponAnimation }) + Offsets.ProceduralWeaponAnimationController.IsAiming);
+                        if (isAiming)
+                        {
+                            lines.Add("(AIMING)");
+                        }
+                        else
+                        {
+                            if (lines.Exists(x => x.Contains("(AIMING)")))
+                            {
+                                lines.Remove("(AIMING)");
+                            }
+                        }
+                    }
+                
+                }
                 if (showDist)
                 {
                     if (lines.Count == 0)
                         lines.Add($"{(int)dist}m");
                     else
                         lines[0] += $" ({(int)dist}m)";
+                }
+                if (showRank && this.IsHumanActive)
+                {
+                    var rankLine = new List<string>();
+                    if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanHead].Position, out var rankScreenPos, true, true))
+                        return;
+                    rankScreenPos -= new SKPoint(0f, 5f);
+                    rankLine.Add($"LVL: {Prestige} / {Level} | {Hours}h");
+                    rankScreenPos.DrawESPText(canvas, this, localPlayer, false, espPaints.Item2, rankLine.ToArray());
                 }
 
                 var textPt = new SKPoint(baseScrPos.X,
@@ -1758,6 +1799,23 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         return;
                     canvas.DrawLine(fpScreen, playerScreen, SKPaints.PaintBasicESP);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Wrapper defining a Chamber Structure.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        private readonly struct Chamber
+        {
+            public static implicit operator ulong(Chamber x) => x._base;
+            private readonly ulong _base;
+
+            public readonly bool HasBullet(bool useCache = false)
+            {
+                if (_base == 0x0)
+                    return false;
+                return Memory.ReadValue<ulong>(_base + Offsets.Slot.ContainedItem, useCache) != 0x0;
             }
         }
 

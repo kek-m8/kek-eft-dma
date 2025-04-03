@@ -315,18 +315,28 @@ namespace eft_dma_radar.Tarkov.Loot
             var label = GetUILabel(MainForm.Config.QuestHelper.Enabled);
             var paints = GetPaints();
             var heightDiff = Position.Y - localPlayer.Position.Y;
+            if (MainForm.Config.MapFollowTeammate == 1 && this is not QuestItem)
+            {
+                foreach (var mate in Memory.Players)
+                {
+                    if (mate.GroupID == Memory.LocalPlayer.GroupID && mate.IsPmc && mate.IsFriendlyActive)
+                    {
+                        heightDiff = Position.Y - mate.Position.Y;
+                    }
+                }
+            }
             var point = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
             MouseoverPosition = new Vector2(point.X, point.Y);
             SKPaints.ShapeOutline.StrokeWidth = 2f;
             if (heightDiff > 1.45) // loot is above player
             {
-                using var path = point.GetUpArrow(5);
+                using var path = point.GetArrow(5);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, paints.Item1);
             }
             else if (heightDiff < -1.45) // loot is below player
             {
-                using var path = point.GetDownArrow(5);
+                using var path = point.GetArrow(5, false);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, paints.Item1);
             }

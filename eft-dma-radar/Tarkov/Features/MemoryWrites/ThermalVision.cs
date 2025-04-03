@@ -12,7 +12,6 @@ namespace LonesEFTRadar.Tarkov.Features.MemoryWrites
 {
     public sealed class ThermalVision : MemWriteFeature<ThermalVision>
     {
-        private bool _set;
         public override bool Enabled { 
             get => MemWrites.Config.ThermalVision;
             set => MemWrites.Config.ThermalVision = value; 

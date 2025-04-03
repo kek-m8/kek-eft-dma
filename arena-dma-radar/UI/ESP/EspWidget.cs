@@ -75,7 +75,7 @@ namespace arena_dma_radar.UI.ESP
                         float scaleY = _espBitmap.Height / (float)CameraManagerBase.Viewport.Height;
                         foreach (var player in allPlayers)
                         {
-                            if (player.Skeleton.UpdateESPWidgetBuffer(scaleX, scaleY))
+                            if (player.Skeleton_.UpdateESPWidgetBuffer(scaleX, scaleY))
                                 _espCanvas.DrawPoints(SKPointMode.Lines, Skeleton.ESPWidgetBuffer, player.GetAimviewPaint());
                         }
                     }

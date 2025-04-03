@@ -61,7 +61,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// <summary>
         /// Player's Skeleton Bones.
         /// </summary>
-        public override Skeleton Skeleton { get; }
+        public override Skeleton Skeleton_ { get; }
 
         internal ArenaClientPlayer(ulong playerBase) : base(playerBase)
         {
@@ -78,7 +78,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                 ArgumentOutOfRangeException.ThrowIfEqual(TeamID, -1, nameof(TeamID)); MovementContext = GetMovementContext();
             RotationAddress = ValidateRotationAddr(MovementContext + Offsets.MovementContext._rotation);
             /// Setup Transforms
-            this.Skeleton = new Skeleton(this, GetTransformInternalChain);
+            this.Skeleton_ = new Skeleton(this, GetTransformInternalChain);
             if (this is LocalPlayer) // Handled in derived class
                 return;
 

@@ -71,7 +71,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// <summary>
         /// Player's Skeleton Bones.
         /// </summary>
-        public override Skeleton Skeleton { get; }
+        public override Skeleton Skeleton_ { get; }
 
         internal ClientPlayer(ulong playerBase) : base(playerBase)
         {
@@ -89,7 +89,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             MovementContext = GetMovementContext();
             RotationAddress = ValidateRotationAddr(MovementContext + Offsets.MovementContext._rotation);
             /// Setup Transforms
-            this.Skeleton = new Skeleton(this, GetTransformInternalChain);
+            this.Skeleton_ = new Skeleton(this, GetTransformInternalChain);
             /// Determine Player Type
             PlayerSide = (Enums.EPlayerSide)Memory.ReadValue<int>(Info + Offsets.PlayerInfo.Side); // Usec,Bear,Scav,etc.
             if (!Enum.IsDefined(PlayerSide)) // Make sure PlayerSide is valid

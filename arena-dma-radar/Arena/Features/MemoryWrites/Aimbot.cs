@@ -204,7 +204,7 @@ namespace arena_dma_radar.Arena.Features.MemoryWrites
                 else if (Config.SilentAim.AutoBone)
                 {
                     var boneTargets = new List<PossibleAimbotTarget>();
-                    foreach (var tr in target.Skeleton.Bones)
+                    foreach (var tr in target.Skeleton_.Bones)
                     {
                         if (tr.Key is Bones.HumanBase)
                             continue;
@@ -232,7 +232,7 @@ namespace arena_dma_radar.Arena.Features.MemoryWrites
                 }
 
                 /// Target Bone Position
-                Vector3 bonePosition = target.Skeleton.Bones[bone].UpdatePosition();
+                Vector3 bonePosition = target.Skeleton_.Bones[bone].UpdatePosition();
 
                 if (Config.SilentAim.SafeLock)
                 {
@@ -244,7 +244,7 @@ namespace arena_dma_radar.Arena.Features.MemoryWrites
                     }
                     bool IsSafeLockTripped()
                     {
-                        foreach (var tr in target.Skeleton.Bones)
+                        foreach (var tr in target.Skeleton_.Bones)
                         {
                             if (tr.Key is Bones.HumanBase)
                                 continue;
@@ -301,7 +301,7 @@ namespace arena_dma_radar.Arena.Features.MemoryWrites
                 var distance = Vector3.Distance(localPlayer.Position, player.Position);
                 if (distance > LocalGameWorld.MAX_DIST)
                     continue;
-                foreach (var tr in player.Skeleton.Bones)
+                foreach (var tr in player.Skeleton_.Bones)
                 {
                     if (tr.Key is Bones.HumanBase)
                         continue;

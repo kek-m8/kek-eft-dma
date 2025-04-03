@@ -31,10 +31,21 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// </summary>
         public override string Name { get; set; }
         /// <summary>
-        /// Account UUID for Human Controlled Players.
+        /// Player prestige level.
         /// </summary>
         /// 
         public override int Prestige { get; set; }
+        /// <summary>
+        /// Player hours.
+        /// </summary>
+        public override int Hours { get; set; }
+        /// <summary>
+        /// Player level.
+        /// </summary>
+        public override int Level { get; set; }
+        /// <summary>
+        /// Account UUID for Human Controlled Players.
+        /// </summary>
         public override string AccountID { get; }
         /// <summary>
         /// Group that the player belongs to.
@@ -48,6 +59,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// Player is Human-Controlled.
         /// </summary>
         public override bool IsHuman { get; }
+        /// <summary>
+        /// Player is Aiming Down Sights.
+        /// </summary>
+        public override bool IsAiming { get; set; } = false;
         /// <summary>
         /// MovementContext / StateContext
         /// </summary>
@@ -75,11 +90,12 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// <summary>
         /// Player's Skeleton Bones.
         /// </summary>
-        public override Skeleton Skeleton { get; }
+        public override Skeleton Skeleton_ { get; }
         /// <summary>
         /// Player's Current Health Status
         /// </summary>
         public Enums.ETagStatus HealthStatus { get; private set; } = Enums.ETagStatus.Healthy;
+        
 
         internal ObservedPlayer(ulong playerBase) : base(playerBase)
         {
@@ -97,12 +113,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             InventoryControllerAddr = ObservedPlayerController + Offsets.ObservedPlayerController.InventoryController;
             HandsControllerAddr = ObservedPlayerController + Offsets.ObservedPlayerController.HandsController;
             CorpseAddr = ObservedHealthController + Offsets.ObservedHealthController.PlayerCorpse;
-
             GroupID = GetGroupID();
             MovementContext = GetMovementContext();
             RotationAddress = ValidateRotationAddr(MovementContext + Offsets.ObservedMovementController.Rotation);
             /// Setup Transforms
-            this.Skeleton = new Skeleton(this, GetTransformInternalChain);
+            this.Skeleton_ = new Skeleton(this, GetTransformInternalChain);
             /// Determine Player Type
             PlayerSide = (Enums.EPlayerSide)Memory.ReadValue<int>(this + Offsets.ObservedPlayerView.Side); // Usec,Bear,Scav,etc.
             if (!Enum.IsDefined(PlayerSide)) // Make sure PlayerSide is valid
@@ -214,6 +229,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     UpdateMemberCategory();
                     UpdatePlayerName();
                     UpdatePlayerPrestige();
+                    UpdatePlayerLevel();
+                    UpdatePlayerHours();
                 }
                 UpdateHealthStatus();
             }
@@ -233,6 +250,38 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             catch (Exception ex)
             {
                 LoneLogging.WriteLine($"ERROR updating Prestige for Player '{Name}': {ex}");
+            }
+        }
+
+        private void UpdatePlayerHours()
+        {
+            try
+            {
+                int? hours = Profile.Hours;
+                if(hours is not -1 && this.Hours != hours)
+                {
+                    this.Hours = (int)hours;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoneLogging.WriteLine($"ERROR updating Hours for Player '{Name}': {ex}");
+            }
+        }
+
+        private void UpdatePlayerLevel()
+        {
+            try
+            {
+                int? level = Profile.Level;
+                if(level is not null && this.Level != level)
+                {
+                    this.Level = (int)level.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoneLogging.WriteLine($"ERROR updating Level for Player '{Name}': {ex}");
             }
         }
 

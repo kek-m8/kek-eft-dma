@@ -308,8 +308,16 @@ namespace SDK
 			public const uint HealthController = 0xF0; // -.\uE43C
 			public const uint InventoryController = 0x118; // -.\uECCB
 		}
+		public readonly partial struct BundleAnimationBonesController
+		{
+			public const uint ProceduralWeaponAnimation = 0xB8; // EFT.Animations.ProceduralWeaponAnimation
+        }
+        public readonly partial struct ProceduralWeaponAnimationController
+        {
+			public const uint IsAiming = 0x1C5; // Boolean
+        }
 
-		public readonly partial struct ObservedMovementController
+        public readonly partial struct ObservedMovementController
 		{
 			public const uint Rotation = 0x88; // UnityEngine.Vector2
 			public const uint Velocity = 0x10C; // UnityEngine.Vector3
@@ -318,7 +326,8 @@ namespace SDK
 		public readonly partial struct ObservedHandsController
 		{
 			public const uint ItemInHands = 0x58; // EFT.InventoryLogic.Item
-		}
+            public const uint BundleAnimationBones = 0xA0; // -.\uECB2
+        }
 
 		public readonly partial struct ObservedHealthController
 		{
@@ -661,7 +670,8 @@ namespace SDK
 			public const uint FireMode = 0xA0; // EFT.InventoryLogic.FireModeComponent
 			public const uint Chambers = 0xB0; // EFT.InventoryLogic.Slot[]
 			public const uint _magSlotCache = 0xC8; // EFT.InventoryLogic.Slot
-		}
+			public const uint Slots = 0x80; // EFT.InventoryLogic.Slot[]
+        }
 
 		public readonly partial struct FireModeComponent
 		{

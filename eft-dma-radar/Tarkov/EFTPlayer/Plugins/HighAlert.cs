@@ -55,7 +55,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
         public static void DrawHighAlertESP(SKCanvas canvas, Player target)
         {
             var targetPos = target is BtrOperator btr ?
-                btr.Position : target.Skeleton.Bones[Bones.HumanSpine2].Position;
+                btr.Position : target.Skeleton_.Bones[Bones.HumanSpine2].Position;
             if (CameraManagerBase.WorldToScreen(ref targetPos, out var targetScrPos, true))
             {
                 canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height),

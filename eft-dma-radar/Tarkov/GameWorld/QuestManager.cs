@@ -259,13 +259,13 @@ namespace eft_dma_radar.Tarkov.GameWorld
             }
             if (heightDiff > 1.45) // marker is above player
             {
-                using var path = point.GetUpArrow();
+                using var path = point.GetArrow();
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, SKPaints.QuestHelperPaint);
             }
             else if (heightDiff < -1.45) // marker is below player
             {
-                using var path = point.GetDownArrow();
+                using var path = point.GetArrow(6,false);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, SKPaints.QuestHelperPaint);
             }

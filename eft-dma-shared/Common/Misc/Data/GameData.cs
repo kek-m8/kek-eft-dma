@@ -1,4 +1,5 @@
-﻿using System.Collections.Frozen;
+﻿using OpenTK.Graphics.OpenGL;
+using System.Collections.Frozen;
 using System.Numerics;
 
 namespace eft_dma_shared.Common.Misc.Data
@@ -38,6 +39,19 @@ namespace eft_dma_shared.Common.Misc.Data
             ["Arena_Prison"] = "Fort"
         }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
 
+        public static FrozenDictionary<string, FrozenDictionary<string, Vector3>> Switches { get; } = new Dictionary<string, FrozenDictionary<string, Vector3>>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "bigmap", new Dictionary<string, Vector3>(StringComparer.OrdinalIgnoreCase)
+            {
+                 ["switch_develop_00000_Switch"] = new Vector3(113.554016f, -4.01100159f, -43.5665855f),
+                 ["ZB-013 Power Switch"] = new Vector3(352.230316f, 2.61458874f, -40.8052826f),
+            }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase) },
+            { "Lighthouse", new Dictionary<string, Vector3>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["Lightkeeper Switch 1"] = new Vector3(445.3035f, 33.391f, 457.5599f),
+                ["Lightkeeper Switch 2"] = new Vector3(444.6317f, 33.391f, 457.6145f),
+            }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase) },
+        }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         /// Exfil Names.
         /// First Key: Map ID
@@ -507,6 +521,68 @@ namespace eft_dma_shared.Common.Misc.Data
             }
         }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
 
+        public static List<Vector3> EventTraps { get; } = new List<Vector3>()
+        {
+            new Vector3(-42.104f, 1.476f, -13.391f),
+            new Vector3(28.8755f, -0.48149997f, 40.758f),
+            new Vector3(-5.461f, 1.86186087f, -31.705f),
+            new Vector3(-5.86f, 1.86186087f, -31.705f),
+            new Vector3(28.9215f, 0.3685f, 40.737f),
+            new Vector3(-39.11657f, 1.97947586f, -13.391f),
+            new Vector3(-38.46725f, -0.315859318f, 51.03258f),
+            new Vector3(1.2609992f, 0.147615388f, 16.7568f),
+            new Vector3(14.5923824f, 0.145615384f, 5.888755f),
+            new Vector3(-2.34400058f, 0.151615381f, 29.779f),
+            new Vector3(7.86999941f, 0.14861539f, 23.1279984f),
+            new Vector3(7.198999f, 0.145615384f, 14.2077541f),
+            new Vector3(-19.113615f, 0.149615392f, 30.1537552f),
+            new Vector3(-27.8516159f, 0.146615386f, 25.3427544f),
+            new Vector3(5.24699926f, 0.147615388f, 4.20400047f),
+            new Vector3(-23.26f, 0.145615384f, 14.5407562f),
+            new Vector3(-12.7157f, 0.13793f, 6.25764f),
+            new Vector3(-38.46725f, -0.315856934f, 55.59258f),
+            new Vector3(-2.78f, -1.622f, 21.42f),
+        };
+
+        public static FrozenDictionary<string, Memory<Vector3>> EventSwitches { get; } = new Dictionary<string, Memory<Vector3>>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Alarm Switch"] = new Vector3[]
+            {
+
+                new Vector3(-4.279f, 1.51507258f, 55.87111f),
+                new Vector3(1.05600023f, 1.50388885f, 7.16910934f),
+                new Vector3(-13.3701f, 1.63888884f, 36.08191f),
+                new Vector3(8.937f, 1.54792f, 28.68511f),
+                new Vector3(-9.011f, 1.66788888f, 1.57610893f),
+            },
+            ["Sealed Door"] = new Vector3[]
+            {
+
+                new Vector3(40.1832f, 0.298618853f, 19.1903f),
+                new Vector3(-49.34948f, 1.70373631f, -11.756073f),
+            },
+            ["Fire Trap Switch"] = new Vector3[]
+            {
+                new Vector3(-43.587f, 1.56588888f, -10.9208889f)
+            },
+            ["Toxic Pool Trap"] = new Vector3[]
+            {
+                new Vector3(-31.7254715f, 2.08068f, 58.2143f)
+            },
+            ["Shotgun Trap Switch"] = new Vector3[]
+            {
+                new Vector3(25.4025669f, 1.37f, 59.453f)
+            },
+            ["Toxic Puddle Switch"] = new Vector3[]
+            {
+                new Vector3(46.42f, 1.031f, 11.084f)
+            },
+            ["Steam Trap Switch"] = new Vector3[]
+            {
+                new Vector3(2.659f, 2.109861f, -31.705f)
+            }
+
+        }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
         public static IReadOnlyDictionary<int, int> XPTable { get; } = new Dictionary<int, int>
         {
             {0, 1},

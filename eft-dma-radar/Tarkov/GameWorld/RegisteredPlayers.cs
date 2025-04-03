@@ -95,6 +95,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
             foreach (var player in allPlayers)
             {
                 player.OnRegRefresh(round1[i++], registered);
+
             }
             map.Execute();
         }

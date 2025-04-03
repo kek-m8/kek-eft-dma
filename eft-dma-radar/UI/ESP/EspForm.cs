@@ -239,6 +239,8 @@ namespace eft_dma_radar.UI.ESP
                             DrawAimFOV(canvas);
                         if (Config.ESP.ShowFPS)
                             DrawFPS(canvas);
+                        if (Config.ESP.ShowEventStuff)
+                            DrawEventStuff(canvas);
                         if (Config.ESP.ShowTime)
                             DrawTime(canvas);
                         if (Config.ESP.ShowMagazine)
@@ -388,6 +390,29 @@ namespace eft_dma_radar.UI.ESP
                 if (!CameraManagerBase.WorldToScreen(ref mine, out var mineScr))
                     continue;
                 canvas.DrawText("*DANGER* Mine", mineScr, SKPaints.TextBasicESP);
+            }
+        }
+
+        private static void DrawEventStuff(SKCanvas canvas)
+        {
+            if(MapID.ToLower().Contains("labyrinth"))
+            {
+                foreach (var trap in GameData.EventTraps)
+                {
+                    var trapPosition = trap; // Create a local variable to hold the trap position
+                    if (!CameraManagerBase.WorldToScreen(ref trapPosition, out var trapPos))
+                        continue;
+                    canvas.DrawText("*DANGER* TRAP", trapPos, SKPaints.TextBasicESP);
+                }
+                foreach (var _switch in GameData.EventSwitches)
+                {
+                    foreach (ref var x in _switch.Value.Span)
+                    {
+                        if (!CameraManagerBase.WorldToScreen(ref x, out var switchPos))
+                            continue;
+                        canvas.DrawText($"{_switch.Key}", switchPos, SKPaints.TextBasicESP);
+                    }
+                }
             }
         }
 

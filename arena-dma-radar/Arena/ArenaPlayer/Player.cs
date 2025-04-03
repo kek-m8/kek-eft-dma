@@ -139,7 +139,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// <summary>
         /// Player's Skeleton Bones.
         /// </summary>
-        public virtual Skeleton Skeleton => throw new NotImplementedException(nameof(Skeleton));
+        public virtual Skeleton Skeleton_ => throw new NotImplementedException(nameof(Skeleton));
         /// <summary>
         /// Duration of consecutive errors.
         /// </summary>
@@ -329,7 +329,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         public virtual void OnRealtimeLoop(ScatterReadIndex index)
         {
             index.AddEntry<Vector2>(-1, this.RotationAddress); // Rotation
-            foreach (var tr in Skeleton.Bones)
+            foreach (var tr in Skeleton_.Bones)
             {
                 index.AddEntry<SharedArray<UnityTransform.TrsX>>((int)(uint)tr.Key, tr.Value.VerticesAddr,
                     (3 * tr.Value.Index + 3) * 16); // ESP Vertices
@@ -340,7 +340,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                 bool p2 = true;
                 if (x1.TryGetResult<Vector2>(-1, out var rotation))
                     p1 = this.SetRotation(ref rotation);
-                foreach (var tr in Skeleton.Bones)
+                foreach (var tr in Skeleton_.Bones)
                 {
                     if (x1.TryGetResult<SharedArray<UnityTransform.TrsX>>((int)(uint)tr.Key, out var vertices))
                     {
@@ -353,7 +353,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                             catch (Exception ex) // Attempt to re-allocate Transform on error
                             {
                                 LoneLogging.WriteLine($"ERROR getting Player '{this.Name}' {tr.Key} Position: {ex}");
-                                this.Skeleton.ResetTransform(tr.Key);
+                                this.Skeleton_.ResetTransform(tr.Key);
                             }
                         }
                         catch
@@ -381,7 +381,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// <param name="round2">Index (round 2)</param>
         public void OnValidateTransforms(ScatterReadIndex round1, ScatterReadIndex round2)
         {
-            foreach (var tr in Skeleton.Bones)
+            foreach (var tr in Skeleton_.Bones)
             {
                 round1.AddEntry<MemPointer>((int)(uint)tr.Key,
                     tr.Value.TransformInternal +
@@ -398,7 +398,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                             {
                                 LoneLogging.WriteLine(
                                     $"WARNING - '{tr.Key}' Transform has changed for Player '{this.Name}'");
-                                this.Skeleton.ResetTransform(tr.Key); // alloc new transform
+                                this.Skeleton_.ResetTransform(tr.Key); // alloc new transform
                             }
                         }
                     };
@@ -664,7 +664,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
 
         #region Interfaces
         public Vector2 MouseoverPosition { get; set; }
-        public ref Vector3 Position => ref this.Skeleton.Root.Position;
+        public ref Vector3 Position => ref this.Skeleton_.Root.Position;
 
         public void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
         {
@@ -862,7 +862,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             var paint = this.GetEspPlayerPaint();
             if (ESP.Config.PlayerRendering.RenderingMode is ESPPlayerRenderMode.Bones) // Draw Player Bones
             {
-                if (!this.Skeleton.UpdateESPBuffer())
+                if (!this.Skeleton_.UpdateESPBuffer())
                     return;
                 canvas.DrawPoints(SKPointMode.Lines, Skeleton.ESPBuffer, paint.Item1);
             }

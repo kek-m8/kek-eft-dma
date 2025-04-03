@@ -28,9 +28,12 @@ using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Unity.LowLevel;
 using LonesEFTRadar.Tarkov.Features.MemoryWrites;
+using SkiaSharp;
 using System;
+using System.Net.Http.Json;
 using System.Security.Authentication.ExtendedProtection;
 using System.Timers;
+using static eft_dma_radar.Tarkov.API.EFTProfileService;
 using static eft_dma_radar.UI.Hotkeys.HotkeyManager;
 using static eft_dma_radar.UI.Hotkeys.HotkeyManager.HotkeyActionController;
 using Timer = System.Timers.Timer;
@@ -1531,16 +1534,90 @@ namespace eft_dma_radar.UI.Radar
 
         #endregion
 
+        public sealed class TaskQuery
+        {
+            [JsonPropertyName("data")]
+            public TaskData Data { get; set; }
+
+        }
+
+        public sealed class TaskData
+        {
+            [JsonPropertyName("task")]
+            public TaskItems Task { get; set; }
+
+        }
+
+        public sealed class TaskItems
+        {
+            [JsonPropertyName("availableDelaySecondsMax")]
+            public int AvailableDelaySecondsMax { get; set; }
+            [JsonPropertyName("availableDelaySecondsMin")]
+            public int AvailableDelaySecondsMin { get; set; }
+            [JsonPropertyName("descriptionMessageId")]
+            public string DescriptionMessageId { get; set; }
+            [JsonPropertyName("experience")]
+            public int Experience { get; set; }
+            [JsonPropertyName("factionName")]
+            public string FactionName { get; set; }
+            [JsonPropertyName("failMessageId")]
+            public string FailMessageId { get; set; }
+            [JsonPropertyName("id")]
+            public string Id { get; set; }
+            [JsonPropertyName("kappaRequired")]
+            public bool KappaRequired { get; set; }
+            [JsonPropertyName("lightkeeperRequired")]
+            public bool LightkeeperRequired { get; set; }
+            [JsonPropertyName("minPlayerLevel")]
+            public int MinPlayerLevel { get; set; }
+            [JsonPropertyName("name")]
+            public string Name { get; set; }
+            [JsonPropertyName("normalizedName")]
+            public string NormalizedName { get; set; }
+            [JsonPropertyName("restartable")]
+            public bool Restartable { get; set; }
+            [JsonPropertyName("startMessageId")]
+            public string StartMessageId { get; set; }
+            [JsonPropertyName("successMessageId")]
+            public string SuccessMessageId { get; set; }
+            [JsonPropertyName("tarkovDataId")]
+            public string TarkovDataId { get; set; }
+            [JsonPropertyName("taskImageLink")]
+            public string TaskImageLink { get; set; }
+            [JsonPropertyName("wikiLink")]
+            public string WikiLink { get; set; }
+            [JsonPropertyName("map")]
+            public TaskMap Map { get; set; }
+        }
+
+        public class TaskMap
+        {
+            [JsonPropertyName("name")]
+            public string Name { get; set; }
+            [JsonPropertyName("nameId")]
+            public string NameId { get; set; }
+            [JsonPropertyName("description")]
+            public string Description { get; set; }
+            [JsonPropertyName("id")]
+            public string Id { get; set; }
+        }
+
         #region Methods
 
         /// <summary>
         /// Refresh quest helper (if enabled).
         /// </summary>
-        private void RefreshQuestHelper()
+        private async void RefreshQuestHelper()
         {
+            var currentList = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
+            Dictionary<string, int> listidforid = new Dictionary<string, int>();
+            for (int i = 0; i < checkedListBox_QuestHelper.Items.Count; i++)
+            {
+                listidforid[currentList[i].Id] = i;
+            }
             if (Config.QuestHelper.Enabled && Memory.InRaid && Memory.QuestManager is QuestManager quests)
             {
-                var currentList = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
+
                 foreach (var quest in quests.CurrentQuests)
                 {
                     if (!currentList.Any(x => x.Id.Equals(quest, StringComparison.OrdinalIgnoreCase)))
@@ -1553,6 +1630,37 @@ namespace eft_dma_radar.UI.Radar
                 {
                     if (!quests.CurrentQuests.Contains(existing.Id))
                         checkedListBox_QuestHelper.Items.Remove(existing);
+                    var data = new Dictionary<string, string>()
+                    {
+                        {"query", "{task(gameMode: regular, id: \"" + existing.Id + "\") {     kappaRequired   }}"}
+                    };
+                    try
+                    {
+                        using (var httpClient = new HttpClient())
+                        {
+
+                            var httpResponse = await httpClient.PostAsJsonAsync("https://api.tarkov.dev/graphql", data);
+                            var responseContent = await httpResponse.Content.ReadAsStreamAsync();
+                            var jsonObj = JsonSerializer.Deserialize<TaskQuery>(responseContent);
+
+                            if (!jsonObj.Data.Task.KappaRequired && checkBox_KappaOnly.Checked) // if task is not kappa, but kappa only is on
+                            {
+                                Config.QuestHelper.BlacklistedQuests.Add(existing.Id);
+                                // checkedListBox_QuestHelper.Items.Remove(existing);
+                                checkedListBox_QuestHelper.SetItemChecked(listidforid[existing.Id], false);
+                            }
+                            else if (!checkBox_KappaOnly.Checked) // if kappa only is not on, and quest was removed due to it being on previously
+                            {
+                                Config.QuestHelper.BlacklistedQuests.Remove(existing.Id);
+                                //checkedListBox_QuestHelper.Items.Add(existing);
+                                checkedListBox_QuestHelper.SetItemChecked(listidforid[existing.Id], true);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LoneLogging.WriteLine("Error getting quest data: " + ex.Message);
+                    }
                 }
             }
         }
@@ -2016,6 +2124,7 @@ namespace eft_dma_radar.UI.Radar
         /// </summary>
         private void SetUiValues()
         {
+            checkBox_displayRaidTIme.Checked = Config.ESP.ShowTime;
             comboBox_LootFiltersItem_Items.Items
                 .AddRange(EftDataManager.AllItems.Values
                 .OrderBy(x => x.Name)
@@ -2664,8 +2773,10 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESPRender_Dist.Checked = Config.ESP.PlayerRendering.ShowDist;
             checkBox_ESPAIRender_Labels.Checked = Config.ESP.AIRendering.ShowLabels;
             checkBox_ESPAIRender_Weapons.Checked = Config.ESP.AIRendering.ShowWeapons;
+            checkBox_ShowRank.Checked = Config.ESP.PlayerRendering.ShowRank;
             checkBox_ESPAIRender_Dist.Checked = Config.ESP.AIRendering.ShowDist;
             textBox_EspFpsCap.Text = Config.ESP.FPSCap.ToString();
+            checkBox_displayRaidTIme.Checked = Config.ESP.ShowTime;
             checkBox_ESP_Exfils.Checked = Config.ESP.ShowExfils;
             checkBox_ESP_Loot.Checked = Config.ESP.ShowLoot;
             checkBox_ESP_Explosives.Checked = Config.ESP.ShowExplosives;
@@ -2676,8 +2787,10 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_ShowMines.Checked = Config.ESP.ShowMines;
             checkBox_ESP_ShowMag.Checked = Config.ESP.ShowMagazine;
             checkBox_ESP_RaidStats.Checked = Config.ESP.ShowRaidStats;
+            checkBox_IsAiming.Checked = Config.ESP.ShowIfAiming;
             checkBox_ESP_StatusText.Checked = Config.ESP.ShowStatusText;
             checkBox_ESP_FPS.Checked = Config.ESP.ShowFPS;
+            checkBox_TrapSwitches.Checked = Config.ESP.ShowEventStuff;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
             trackBar_EspImpLootDist.Value = (int)Config.ESP.ImpLootDrawDistance;
             trackBar_EspQuestHelperDist.Value = (int)Config.ESP.QuestHelperDrawDistance;
@@ -3893,7 +4006,31 @@ namespace eft_dma_radar.UI.Radar
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             Config.MaxPlayerDistance = trackBar_ESPPlayerDist.Value;
-            label_MaxDist.Text = $"Player Dist {trackBar_MaxDist.Value}";
+            label_ESPPlayerDist.Text = $"Player Dist {trackBar_ESPPlayerDist.Value}";
+        }
+
+        private void checkBox_ShowRank_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.PlayerRendering.ShowRank = checkBox_ShowRank.Checked;
+        }
+
+        private void checkBox_TrapSwitches_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowEventStuff = checkBox_TrapSwitches.Checked;
+        }
+
+        private void checkBox_KappaOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_QuestHelper_Enabled.Checked)
+            {
+                RefreshQuestHelper();
+            }
+
+        }
+
+        private void checkBox_IsAiming_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowIfAiming = checkBox_IsAiming.Checked;
         }
     }
 }

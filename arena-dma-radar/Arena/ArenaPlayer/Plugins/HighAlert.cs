@@ -53,7 +53,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
         public static void DrawHighAlertESP(SKCanvas canvas, Player target)
         {
             float scale = ESP.Config.FontScale;
-            if (CameraManagerBase.WorldToScreen(ref target.Skeleton.Bones[Bones.HumanSpine2].Position, out var targetScrPos, true))
+            if (CameraManagerBase.WorldToScreen(ref target.Skeleton_.Bones[Bones.HumanSpine2].Position, out var targetScrPos, true))
                 canvas.DrawLine(targetScrPos, new(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), SKPaints.PaintHighAlertAimlineESP);
 
             else

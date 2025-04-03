@@ -166,15 +166,25 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
             var point = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
             MouseoverPosition = new Vector2(point.X, point.Y);
             SKPaints.ShapeOutline.StrokeWidth = 2f;
+            if (MainForm.Config.MapFollowTeammate == 1)
+            {
+                foreach (var mate in Memory.Players)
+                {
+                    if (mate.GroupID == Memory.LocalPlayer.GroupID && mate.IsPmc && mate.IsFriendlyActive)
+                    {
+                        heightDiff = Position.Y - mate.Position.Y;
+                    }
+                }
+            }
             if (heightDiff > 1.85f) // exfil is above player
             {
-                using var path = point.GetUpArrow(6.5f);
+                using var path = point.GetArrow(6.5f);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, paint);
             }
             else if (heightDiff < -1.85f) // exfil is below player
             {
-                using var path = point.GetDownArrow(6.5f);
+                using var path = point.GetArrow(6.5f, false);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, paint);
             }

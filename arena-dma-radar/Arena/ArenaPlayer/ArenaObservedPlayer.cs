@@ -67,7 +67,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// <summary>
         /// Player's Skeleton Bones.
         /// </summary>
-        public override Skeleton Skeleton { get; }
+        public override Skeleton Skeleton_ { get; }
         /// <summary>
         /// Player's Current Health Status
         /// </summary>
@@ -107,7 +107,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             MovementContext = GetMovementContext();
             RotationAddress = ValidateRotationAddr(MovementContext + Offsets.ObservedMovementController.Rotation);
             /// Setup Transforms
-            this.Skeleton = new Skeleton(this, GetTransformInternalChain);
+            this.Skeleton_ = new Skeleton(this, GetTransformInternalChain);
             bool isAI = Memory.ReadValue<bool>(this + Offsets.ObservedPlayerView.IsAI);
             IsHuman = !isAI;
             if (isAI)

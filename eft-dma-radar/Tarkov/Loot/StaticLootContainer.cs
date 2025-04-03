@@ -54,13 +54,13 @@ namespace eft_dma_radar.Tarkov.Loot
             SKPaints.ShapeOutline.StrokeWidth = 2f;
             if (heightDiff > 1.45) // loot is above player
             {
-                using var path = point.GetUpArrow(4);
+                using var path = point.GetArrow(4);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, SKPaints.PaintContainerLoot);
             }
             else if (heightDiff < -1.45) // loot is below player
             {
-                using var path = point.GetDownArrow(4);
+                using var path = point.GetArrow(4, false);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, SKPaints.PaintContainerLoot);
             }

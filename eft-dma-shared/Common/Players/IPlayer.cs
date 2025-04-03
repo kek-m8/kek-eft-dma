@@ -11,6 +11,6 @@ namespace eft_dma_shared.Common.Players
         string Name { get; }
         ref Vector3 Position { get; }
         Vector2 Rotation { get; }
-        Skeleton Skeleton { get; }
+        Skeleton Skeleton_ { get; }
     }
 }

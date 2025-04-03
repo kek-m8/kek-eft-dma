@@ -538,7 +538,11 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showMines")]
         public bool ShowMines { get; set; } = false;
-
+        /// <summary>
+        /// Display Event Traps/Switches in ESP
+        /// </summary>
+        [JsonPropertyName("showEventStuff")]
+        public bool ShowEventStuff { get; set; } = false;
         /// <summary>
         /// Player rendering options in ESP.
         /// </summary>
@@ -548,7 +552,8 @@ namespace eft_dma_radar.UI.Misc
             RenderingMode = ESPPlayerRenderMode.Bones,
             ShowLabels = true,
             ShowWeapons = true,
-            ShowDist = false
+            ShowDist = false,
+            ShowRank = true
         };
 
         /// <summary>
@@ -580,7 +585,16 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showRaidStats")]
         public bool ShowRaidStats { get; set; } = false;
-
+        /// <summary>
+        /// Draw "(AIMING)" when a player is Aiming Down Sight
+        /// </summary>
+        [JsonPropertyName("isAiming")]
+        public bool ShowIfAiming { get; set; } = true;
+        /// <summary>
+        /// Draws magazine ammo acount (currentCount / maxCount) next to player weapon info
+        /// </summary>
+        [JsonPropertyName("showMagAmmo")]
+        public bool ShowMagAmmo { get; set; } = true;
         /// <summary>
         /// Display Status (aimbot enabled, bone, wide lean, etc.) in top center of ESP Screen.
         /// </summary>
@@ -686,6 +700,11 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showDist")]
         public bool ShowDist { get; set; }
+        /// <summary>
+        /// Show rank above this player.
+        /// </summary>
+        [JsonPropertyName("showRank")]
+        public bool ShowRank { get; set; }
     }
 
     public sealed class MemWritesConfig

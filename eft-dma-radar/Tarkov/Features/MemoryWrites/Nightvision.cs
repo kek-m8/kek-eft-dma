@@ -12,7 +12,6 @@ namespace LonesEFTRadar.Tarkov.Features.MemoryWrites
 {
     public sealed class NightVision : MemWriteFeature<NightVision>
     {
-        private bool _set;
         public override bool Enabled
         {
             get => MemWrites.Config.Nightvision;
