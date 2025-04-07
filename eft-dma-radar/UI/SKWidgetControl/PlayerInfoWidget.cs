@@ -47,7 +47,7 @@ namespace eft_dma_radar.UI.SKWidgetControl
             var filteredPlayers = players.Where(x => x.IsHumanHostileActive)
                 .OrderBy(x => Vector3.Distance(localPlayerPos, x.Position));
             var sb = new StringBuilder();
-            sb.AppendFormat("{0,-30}", "Fac/ Prestige/ Lvl/ Name")
+            sb.AppendFormat("{0,-52}", "Fac/ Prestige/ Lvl/ Name     Updated")
                 .AppendFormat("{0,-5}", "Acct")
                 .AppendFormat("{0,-7}", "K/D")
                 .AppendFormat("{0,-7}", "Hours")
@@ -70,18 +70,21 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 var hands = player.Hands?.CurrentItem;
                 var inHands = hands is not null ? hands : "--";
                 string edition = "--";
-                string level = "--";
-                string prestige = "--";
+                string level = "0";
+                string prestige = "0";
                 string kd = "--";
                 string raidCount = "--";
                 string survivePercent = "--";
                 string hours = "--";
+                string updated = "--";
                 try
                 {
                     if (notFound_)
                     {
                         if (player is ObservedPlayer observed)
                         {
+                            if(observed.Profile.Updated is string updatedResult)
+                                updated = observed.Profile.Updated;
                             edition = observed.Profile?.Acct;
                             if (observed.Profile?.Level is int levelResult)
                                 level = levelResult.ToString();
@@ -107,7 +110,7 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 
                 var grp = player.GroupID != -1 ? player.GroupID.ToString() : "--";
                 var focused = player.IsFocused ? "*" : null;
-                sb.AppendFormat("{0,-30}", $"{focused}{faction}: P{prestige} | L{level}: {name}");
+                sb.AppendFormat("{0,-52}", $"{focused}{faction}:      P{prestige} |   L{level}: {name} |     {updated}");
                 sb.AppendFormat("{0,-5}", edition)
                     .AppendFormat("{0,-7}", kd)
                     .AppendFormat("{0,-7}", hours)

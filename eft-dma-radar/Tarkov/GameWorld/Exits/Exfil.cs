@@ -312,8 +312,6 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
             else if (localPlayer.IsScav &&
                 !ScavIds.Contains(localPlayer.ProfileId))
                 return;
-            if (!localPlayer.IsPmc && Status is not EStatus.Open)
-                return; // Only draw available SCAV Exfils
             if (Status is EStatus.Closed) // Only draw open/pending exfils
                 return;
             var label = $"{Name} ({Status.GetDescription()})";
@@ -322,7 +320,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
 
         #endregion
 
-        public enum EStatus
+        public enum EStatus : int
         {
             [Description(nameof(Open))] Open,
             [Description(nameof(Pending))] Pending,

@@ -62,7 +62,7 @@ namespace eft_dma_shared.Common.Misc.Data
             { "woods", new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 // PMC
-                ["Factory Gate"] = "Factory Gate (Co-Op)",
+                ["Factory Gate"] = "Friendship Bridge (Co-Op)",
                 ["RUAF Gate"] = "RUAF Gate",
                 ["ZB-016"] = "ZB-016",
                 ["ZB-014"] = "ZB-014",
@@ -71,7 +71,7 @@ namespace eft_dma_shared.Common.Misc.Data
                 ["Outskirts"] = "Outskirts",
                 ["un-sec"] = "Northern UN Roadblock",
                 // SCAV
-                ["Factory Gate (Co-Op)"] = "Factory Gate (Co-Op)",
+                ["Friendship Bridge (Co-Op)"] = "Friendship Bridge (Co-Op)",
                 ["Outskirts Water"] = "Scav Bridge",
                 ["Dead Man's Place"] = "Dead Man's Place",
                 ["The Boat"] = "Boat",
@@ -252,6 +252,7 @@ namespace eft_dma_shared.Common.Misc.Data
                 ["scav_e5"] = "Near Kamchatskaya Arch",
                 ["scav_e7"] = "Cardinal Apartment Complex Parking",
                 ["scav_e8"] = "Klimov Shopping Mall Exfil",
+                ["scav_e6"] = "Pinewood Basement (Co-Op)",
             }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase) },
             { "Sandbox", new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {

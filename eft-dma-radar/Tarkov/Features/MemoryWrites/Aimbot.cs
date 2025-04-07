@@ -309,7 +309,9 @@ namespace eft_dma_radar.Tarkov.Features.MemoryWrites
             foreach (var player in players)
             {
                 var distance = Vector3.Distance(localPlayer.Position, player.Position);
-                if (distance > MainForm.Config.MaxPlayerDistance)
+                if (distance > MainForm.Config.MaxPlayerDistance && player.IsPmc)
+                    continue;
+                else if(distance > MainForm.Config.MaxDistance && !player.IsPmc)
                     continue;
                 foreach (var tr in player.Skeleton_.Bones)
                 {

@@ -1,4 +1,5 @@
 ﻿using eft_dma_shared.Common.Misc;
+using OpenTK.Graphics.OpenGL;
 
 namespace eft_dma_radar.UI.Misc
 {
@@ -488,6 +489,18 @@ namespace eft_dma_radar.UI.Misc
             FilterQuality = SKFilterQuality.High
         };
 
+        public static SKPaint TextImportant { get; } = new()
+        {
+            SubpixelText = true,
+            Color = SKColors.Cyan,
+            IsStroke = false,
+            TextSize = 12,
+            TextEncoding = SKTextEncoding.Utf8,
+            IsAntialias = true,
+            Typeface = CustomFonts.SKFontFamilyRegular,
+            FilterQuality = SKFilterQuality.High
+        };
+
         #endregion
 
         #region Render/Misc Paints
@@ -602,6 +615,8 @@ namespace eft_dma_radar.UI.Misc
             Style = SKPaintStyle.Stroke,
             Typeface = CustomFonts.SKFontFamilyRegular
         };
+
+        
 
         /// <summary>
         /// Only utilize this paint on the Radar UI Thread. StrokeWidth is modified prior to each draw call.

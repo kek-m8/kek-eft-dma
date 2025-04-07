@@ -674,7 +674,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         {
             switch (voiceLine)
             {
-                case "BossTagillaAggro":
+                case "BossAgroTagilla":
                     return new AIRole()
                     {
                         Name = "Shadow of Tagilla",
@@ -1534,6 +1534,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// <summary>
         /// Draws Player Text on this location.
         /// </summary>
+        /// 
+
         private void DrawPlayerText(SKCanvas canvas, SKPoint point, List<string> lines, bool importantLoot = false)
         {
             var paints = GetPaints();
@@ -1547,7 +1549,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     continue;
 
                 canvas.DrawText(line, point, SKPaints.TextOutline); // Draw outline
-                canvas.DrawText(line, point, importantLoot ? SKPaints.TextQuestItemESP : paints.Item2); // draw line text
+                canvas.DrawText(line, point, importantLoot ? SKPaints.TextImportant : paints.Item2); // draw line text
                 point.Offset(0, 12 * MainForm.UIScale);
             }
         }

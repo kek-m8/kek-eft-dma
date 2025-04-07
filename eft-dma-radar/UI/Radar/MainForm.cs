@@ -266,10 +266,22 @@ namespace eft_dma_radar.UI.Radar
                 SetMapName();
                 /// Check for map switch
                 var mapID = MapID; // Cache ref
+                if(mapID.ToLower() == "lighthouse")
+                {
+                    foreach (var quest in Memory.QuestManager.CurrentQuests)
+                    {
+                        if (quest.Equals("6179acbdc760af5ad2053585"))
+                        {
+                            LoneMapManager.LoadMap("lighthouse_ejp2");
+                            goto next;
+                        }
+                    }
+                }
                 if (!mapID.Equals(LoneMapManager.Map?.ID, StringComparison.OrdinalIgnoreCase)) // Map changed
                 {
                     LoneMapManager.LoadMap(mapID);
                 }
+            next:
                 canvas.Clear(); // Clear canvas
                 if (inRaid && localPlayer is not null) // LocalPlayer is in a raid -> Begin Drawing...
                 {

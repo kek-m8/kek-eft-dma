@@ -1,5 +1,6 @@
 ﻿using eft_dma_radar.Tarkov.API;
 using eft_dma_shared.Common.Misc.Data;
+using System.Threading;
 
 namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
 {
@@ -111,6 +112,20 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     }
                 }
                 return null;
+            }
+        }
+
+        private string? _updated;
+
+        public string? Updated
+        {
+            get
+            {
+                if (_updated is string updated)
+                    return updated;
+                string fixUnix = Profile.Updated.ToString().Substring(0, Profile.Updated.ToString().Length - 3);
+                var time = (DateTime.Now - DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(fixUnix)).LocalDateTime);
+                return time.Days > 0 ? $"{time.Days} days{(time.Hours > 0 ? $", {time.Hours} hours ago" : " ago")}" : (time.Hours > 0 ? $"{time.Hours} hours ago" : $"{time.Seconds} seconds ago");
             }
         }
 

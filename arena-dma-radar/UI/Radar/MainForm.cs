@@ -203,7 +203,7 @@ namespace arena_dma_radar.UI.Radar
                 if (inMatch && localPlayer is not null) // LocalPlayer is in a raid -> Begin Drawing...
                 {
                     var map = LoneMapManager.Map; // cache ref
-                    
+
                     ArgumentNullException.ThrowIfNull(map, nameof(map));
                     var closestToMouse = _mouseOverItem; // cache ref
                     var mouseOverGrp = MouseoverGroup; // cache value for entire render

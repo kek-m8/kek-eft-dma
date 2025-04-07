@@ -14,6 +14,7 @@ using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
+using OpenTK.Graphics.OpenGL;
 
 namespace eft_dma_radar.UI.ESP
 {

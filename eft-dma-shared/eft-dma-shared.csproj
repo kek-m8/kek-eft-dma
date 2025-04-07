@@ -27,7 +27,6 @@
 		<EmbeddedResource Include="..\Resources\NeoSansStdBold.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdItalic.otf" />
 		<EmbeddedResource Include="..\Resources\DEFAULT_DATA.json" />
-		<EmbeddedResource Include="K2D-Thin.otf" />
 	</ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -55,6 +54,10 @@
     <Reference Include="VmmFrost">
       <HintPath>..\VmmFrost.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Maps.bin" />
   </ItemGroup>
 
 </Project>

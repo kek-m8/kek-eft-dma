@@ -50,6 +50,10 @@ namespace eft_dma_shared.Common.Maps
         [JsonPropertyName("mapLayers")]
         public List<Layer> MapLayers { get; private set; }
 
+        [JsonInclude]
+        [JsonPropertyName("questLocationId")]
+        public string QuestLocationId { get; private set; }
+
         /// <summary>
         /// A single layer of a Multi-Layered Map.
         /// </summary>

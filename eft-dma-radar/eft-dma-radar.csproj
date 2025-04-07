@@ -65,6 +65,9 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup>
+	  <EmbeddedResource Include="Maps.bin" />
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\eft-dma-shared\eft-dma-shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>

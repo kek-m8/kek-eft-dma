@@ -252,6 +252,9 @@ namespace eft_dma_radar.Tarkov.API
             [JsonPropertyName("pmcStats")]
             public StatsContainer PmcStats { get; set; }
 
+            [JsonPropertyName("updated")]
+            public long Updated { get; set; }
+
         }
         public sealed class ProfileInfo
         {
