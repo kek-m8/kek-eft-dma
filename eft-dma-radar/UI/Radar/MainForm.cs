@@ -266,7 +266,7 @@ namespace eft_dma_radar.UI.Radar
                 SetMapName();
                 /// Check for map switch
                 var mapID = MapID; // Cache ref
-                if(mapID.ToLower() == "lighthouse")
+                if (mapID.ToLower() == "lighthouse")
                 {
                     foreach (var quest in Memory.QuestManager.CurrentQuests)
                     {
@@ -2810,6 +2810,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_EspFontScale.Value = (int)Math.Round(Config.ESP.FontScale * 100f);
             trackBar_EspLineScale.Value = (int)Math.Round(Config.ESP.LineScale * 100f);
             trackBar_ESPContainerDist.Value = (int)Math.Round(Config.ESP.ContainerDrawDistance);
+            trackBar_ESPPlayerDist.Value = (int)Config.MaxPlayerDistance;
             checkBox_ESP_AutoFS.Checked = Config.ESP.AutoFullscreen;
             /// High Alert Combobox
             foreach (var mode in Enum.GetValues(typeof(HighAlertMode)).Cast<HighAlertMode>())
@@ -3956,12 +3957,6 @@ namespace eft_dma_radar.UI.Radar
                     break;
             }
         }
-
-        private void splitter3_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
         private void checkBox_displayRaidTIme_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowTime = checkBox_displayRaidTIme.Checked;
@@ -4008,11 +4003,6 @@ namespace eft_dma_radar.UI.Radar
             {
                 MessageBox.Show($"NightVision failed\n{ex}", "Night Vision", MessageBoxButtons.OK);
             }
-        }
-
-        private void skglControl_Radar_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
-        {
-
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

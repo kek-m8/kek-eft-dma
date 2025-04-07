@@ -695,7 +695,6 @@ namespace eft_dma_radar.UI.Radar
             skglControl_Radar.Size = new Size(1250, 647);
             skglControl_Radar.TabIndex = 18;
             skglControl_Radar.VSync = true;
-            skglControl_Radar.PaintSurface += skglControl_Radar_PaintSurface;
             // 
             // tabPage2
             // 

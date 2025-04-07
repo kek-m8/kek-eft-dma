@@ -47,7 +47,8 @@ namespace eft_dma_radar.UI.SKWidgetControl
             var filteredPlayers = players.Where(x => x.IsHumanHostileActive)
                 .OrderBy(x => Vector3.Distance(localPlayerPos, x.Position));
             var sb = new StringBuilder();
-            sb.AppendFormat("{0,-52}", "Fac/ Prestige/ Lvl/ Name     Updated")
+            sb.AppendFormat("{0,-37}", "Fac/ Prestige/ Lvl/ Name")
+                .AppendFormat("{0,-25}", "Updated")
                 .AppendFormat("{0,-5}", "Acct")
                 .AppendFormat("{0,-7}", "K/D")
                 .AppendFormat("{0,-7}", "Hours")
@@ -110,7 +111,8 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 
                 var grp = player.GroupID != -1 ? player.GroupID.ToString() : "--";
                 var focused = player.IsFocused ? "*" : null;
-                sb.AppendFormat("{0,-52}", $"{focused}{faction}:      P{prestige} |   L{level}: {name} |     {updated}");
+                sb.AppendFormat("{0,-37}", $"{focused}{faction}:      P{(Convert.ToInt32(prestige) < 10 ? (prestige + " ") : prestige)}|   L{(Convert.ToInt32(level) < 10 ? (level+" ") : level)}: {name}");
+                sb.AppendFormat("{0,-25}", updated);
                 sb.AppendFormat("{0,-5}", edition)
                     .AppendFormat("{0,-7}", kd)
                     .AppendFormat("{0,-7}", hours)
