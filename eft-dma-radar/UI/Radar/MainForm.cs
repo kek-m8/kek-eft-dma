@@ -1619,6 +1619,8 @@ namespace eft_dma_radar.UI.Radar
         /// <summary>
         /// Refresh quest helper (if enabled).
         /// </summary>
+        /// 
+        public bool kappa_ = false;
         private async void RefreshQuestHelper()
         {
             var currentList = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
@@ -1660,12 +1662,14 @@ namespace eft_dma_radar.UI.Radar
                                 Config.QuestHelper.BlacklistedQuests.Add(existing.Id);
                                 // checkedListBox_QuestHelper.Items.Remove(existing);
                                 checkedListBox_QuestHelper.SetItemChecked(listidforid[existing.Id], false);
+                                kappa_ = true;
                             }
-                            else if (!checkBox_KappaOnly.Checked) // if kappa only is not on, and quest was removed due to it being on previously
+                            else if (!checkBox_KappaOnly.Checked && kappa_) // if kappa only is not on, and quest was removed due to it being on previously
                             {
                                 Config.QuestHelper.BlacklistedQuests.Remove(existing.Id);
                                 //checkedListBox_QuestHelper.Items.Add(existing);
                                 checkedListBox_QuestHelper.SetItemChecked(listidforid[existing.Id], true);
+                                kappa_ = false;
                             }
                         }
                     }
