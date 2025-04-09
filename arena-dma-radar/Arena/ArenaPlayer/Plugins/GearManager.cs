@@ -16,6 +16,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
         /// </summary>
         public IReadOnlyDictionary<string, string> Equipment { get; private set; }
 
+        public bool hasBomb = false;
+
         public GearManager(ArenaObservedPlayer player)
         {
             var inventorycontroller = Memory.ReadPtr(player.InventoryControllerAddr);

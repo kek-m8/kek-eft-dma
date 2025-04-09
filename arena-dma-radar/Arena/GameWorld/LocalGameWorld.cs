@@ -88,6 +88,8 @@ namespace arena_dma_radar.Arena.GameWorld
         /// </summary>
         public bool InRaid => !_disposed;
 
+        public Enums.ERaidMode matchMode => MatchMode;
+
         public CameraManager CameraManager { get; }
         public IReadOnlyCollection<Player> Players => _rgtPlayers;
         public LocalPlayer LocalPlayer => _rgtPlayers?.LocalPlayer;

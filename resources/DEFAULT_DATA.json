@@ -2335,6 +2335,20 @@
       ]
     },
     {
+      "bsgID": "6669a73bef0f6220df0ed178",
+      "name": "BlastGang attacker's backpack",
+      "shortName": "BlastGang",
+      "price": 0,
+      "fleaPrice": 0,
+      "slots": 0,
+      "categories": [
+        "Backpack",
+        "Searchable item",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
       "bsgID": "56ea6fafd2720b844b8b4593",
       "name": "AR-15 Noveske KX3 5.56x45 flash hider",
       "shortName": "KX3 556",

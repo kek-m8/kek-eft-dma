@@ -24,6 +24,8 @@ using eft_dma_shared.Common.Unity.Collections;
 using static SDK.Enums;
 using VmmFrost;
 using arena_dma_radar.Arena;
+using eft_dma_shared.Common.Misc.Data;
+using System.Collections.Frozen;
 
 namespace arena_dma_radar.UI.Radar
 {
@@ -489,6 +491,7 @@ namespace arena_dma_radar.UI.Radar
             toolTip1.SetToolTip(checkBox_AdvancedMemWrites, "Enables Advanced Memory Writing Features. These features use a riskier injection technique. Use at your own risk. Includes (but not limited to):\n" +
                 "- Advanced Chams Options.\n" +
                 "- Enhanced reliability of some features (Passive).");
+            toolTip1.SetToolTip(checkBox_Bomb, "Display what player is carrying the Bomb in BlastGang");
         }
 
         /// <summary>
@@ -1813,6 +1816,16 @@ namespace arena_dma_radar.UI.Radar
         private void skglControl_Radar_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox_Bomb_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.PlayerRendering.ShowBomb = checkBox_Bomb.Checked;
         }
     }
 }

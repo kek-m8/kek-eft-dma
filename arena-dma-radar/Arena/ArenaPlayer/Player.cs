@@ -16,6 +16,7 @@ using eft_dma_shared.Common.ESP;
 using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Pools;
 using eft_dma_shared.Common.DMA;
+using System.Collections.Frozen;
 
 namespace arena_dma_radar.Arena.ArenaPlayer
 {
@@ -840,6 +841,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             bool showInfo = ESP.Config.PlayerRendering.ShowLabels;
             bool showDist = ESP.Config.PlayerRendering.ShowDist;
             bool showWep = ESP.Config.PlayerRendering.ShowWeapons;
+            bool showBomb = ESP.Config.PlayerRendering.ShowBomb;
             bool drawLabel = showInfo || showDist || showWep;
             var dist = Vector3.Distance(localPlayer.Position, this.Position);
             if (dist > LocalGameWorld.MAX_DIST)
@@ -883,6 +885,20 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                         lines.Add($"{(int)dist}m");
                     else
                         lines[0] += $" ({(int)dist}m)";
+                }
+                if(showBomb)
+                {
+                    if (Memory.Game.matchMode is Enums.ERaidMode.BlastGang)
+                    {
+                        GearManager a = new GearManager(observed); // get live equipment
+                        if (a.Equipment.TryGetValue("Backpack", out var _))
+                            lines.Add("(BOMB)");
+                        else
+                        {
+                            if (lines.Contains("(BOMB)"))
+                                lines.Remove("(BOMB)");
+                        }
+                    }
                 }
                 var textPt = new SKPoint(baseScrPos.X,
                     baseScrPos.Y + (paint.Item2.TextSize * ESP.Config.FontScale));

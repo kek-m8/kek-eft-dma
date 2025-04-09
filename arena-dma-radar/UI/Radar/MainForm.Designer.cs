@@ -124,6 +124,7 @@
             checkBox_ESPRender_Labels = new CheckBox();
             checkBox_ESPRender_Weapons = new CheckBox();
             checkBox_ESPRender_Dist = new CheckBox();
+            checkBox_Bomb = new CheckBox();
             flowLayoutPanel4 = new FlowLayoutPanel();
             label_EspFontScale = new Label();
             trackBar_EspFontScale = new TrackBar();
@@ -1224,9 +1225,10 @@
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_ESPRender_Labels);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_ESPRender_Weapons);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_ESPRender_Dist);
+            flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_Bomb);
             flowLayoutPanel_ESP_PlayerRender.Location = new Point(3, 96);
             flowLayoutPanel_ESP_PlayerRender.Name = "flowLayoutPanel_ESP_PlayerRender";
-            flowLayoutPanel_ESP_PlayerRender.Size = new Size(200, 77);
+            flowLayoutPanel_ESP_PlayerRender.Size = new Size(264, 77);
             flowLayoutPanel_ESP_PlayerRender.TabIndex = 5;
             // 
             // label18
@@ -1298,6 +1300,17 @@
             checkBox_ESPRender_Dist.UseVisualStyleBackColor = true;
             checkBox_ESPRender_Dist.CheckedChanged += checkBox_ESPRender_Dist_CheckedChanged;
             // 
+            // checkBox_Bomb
+            // 
+            checkBox_Bomb.AutoSize = true;
+            checkBox_Bomb.Location = new Point(201, 53);
+            checkBox_Bomb.Name = "checkBox_Bomb";
+            checkBox_Bomb.Size = new Size(58, 19);
+            checkBox_Bomb.TabIndex = 72;
+            checkBox_Bomb.Text = "Bomb";
+            checkBox_Bomb.UseVisualStyleBackColor = true;
+            checkBox_Bomb.CheckedChanged += checkBox_Bomb_CheckedChanged;
+            // 
             // flowLayoutPanel4
             // 
             flowLayoutPanel4.Anchor = AnchorStyles.Right;
@@ -1307,7 +1320,7 @@
             flowLayoutPanel4.Controls.Add(trackBar_EspFontScale);
             flowLayoutPanel4.Controls.Add(label_EspLineScale);
             flowLayoutPanel4.Controls.Add(trackBar_EspLineScale);
-            flowLayoutPanel4.Location = new Point(209, 109);
+            flowLayoutPanel4.Location = new Point(273, 109);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
             flowLayoutPanel4.Size = new Size(346, 51);
             flowLayoutPanel4.TabIndex = 4;
@@ -1646,6 +1659,7 @@
         private RadioButton radioButton_Chams_Visible;
         private FlowLayoutPanel flowLayoutPanel_MemWriteCheckbox;
         private LinkLabel linkLabel_CheckForUpdates;
+        private CheckBox checkBox_Bomb;
     }
 }
 
