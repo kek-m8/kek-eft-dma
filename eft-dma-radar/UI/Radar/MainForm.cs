@@ -266,7 +266,7 @@ namespace eft_dma_radar.UI.Radar
                 SetMapName();
                 /// Check for map switch
                 var mapID = MapID; // Cache ref
-                if (mapID.ToLower() == "lighthouse")
+                /*if (mapID.ToLower() == "lighthouse")      // removing for now
                 {
                     foreach (var quest in Memory.QuestManager.CurrentQuests)
                     {
@@ -276,7 +276,7 @@ namespace eft_dma_radar.UI.Radar
                             goto next;
                         }
                     }
-                }
+                }*/
                 if (!mapID.Equals(LoneMapManager.Map?.ID, StringComparison.OrdinalIgnoreCase)) // Map changed
                 {
                     LoneMapManager.LoadMap(mapID);

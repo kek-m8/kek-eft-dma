@@ -253,41 +253,8 @@ namespace eft_dma_radar.UI.Misc
             };
 
         /// <summary>
-        /// Gets a drawable 'Up Arrow'. IDisposable. Applies UI Scaling internally.
+        /// Gets a drawable 'Up Arrow' or 'Down Arrow'. IDisposable. Applies UI Scaling internally.
         /// </summary>
-        public static SKPath GetUpArrow(this SKPoint point, float size = 6, float offsetX = 0, float offsetY = 0)
-        {
-            float x = point.X + offsetX;
-            float y = point.Y + offsetY;
-
-            size *= MainForm.UIScale;
-            var path = new SKPath();
-            path.MoveTo(x, y);
-            path.LineTo(x - size, y + size);
-            path.LineTo(x + size, y + size);
-            path.Close();
-
-            return path;
-        }
-
-        /// <summary>
-        /// Gets a drawable 'Down Arrow'. IDisposable. Applies UI Scaling internally.
-        /// </summary>
-        public static SKPath GetDownArrow(this SKPoint point, float size = 6, float offsetX = 0, float offsetY = 0)
-        {
-            float x = point.X + offsetX;
-            float y = point.Y + offsetY;
-
-            size *= MainForm.UIScale;
-            var path = new SKPath();
-            path.MoveTo(x, y);
-            path.LineTo(x - size, y - size);
-            path.LineTo(x + size, y - size);
-            path.Close();
-
-            return path;
-        }
-
         public static SKPath GetArrow(this SKPoint point, float size = 6, bool is_up = true, float offsetX = 0, float offsetY = 0)
         {
             float x = point.X + offsetX, y = point.Y + offsetY;

@@ -67,7 +67,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
             foreach (var slot in Slots)
                 try
                 {
-                    if (_isPMC && slot.Key == "Scabbard")
+                    if (_isPMC && slot.Key == "Scabbard") // melee slot
                         continue; // skip pmc scabbard
                     var containedItem = Memory.ReadPtr(slot.Value + Offsets.Slot.ContainedItem);
                     var inventorytemplate = Memory.ReadPtr(containedItem + Offsets.LootItem.Template);
@@ -87,7 +87,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     if (EftDataManager.AllItems.TryGetValue(id, out var entry2))
                     {
                         if (slot.Key == "FirstPrimaryWeapon" || slot.Key == "SecondPrimaryWeapon" ||
-                            slot.Key == "Headwear") // Only interested in weapons / helmets
+                            slot.Key == "Headwear") // weapons / helmet
                             try
                             {
                                 RecursePlayerGearSlots(containedItem, loot);
