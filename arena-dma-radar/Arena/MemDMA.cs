@@ -2,6 +2,7 @@
 using arena_dma_radar.Arena.ArenaPlayer;
 using arena_dma_radar.UI.Radar;
 using arena_dma_radar.UI.Misc;
+using arena_dma_radar.Arena.Loot;
 using VmmFrost;
 using arena_dma_radar.Arena.GameWorld;
 using System.Runtime;
@@ -55,6 +56,8 @@ namespace arena_dma_radar.Arena
         /// True if currently in a raid/match, otherwise False.
         /// </summary>
         public override bool InRaid => Game?.InRaid ?? false;
+
+        public LootManager Loot => Game?.Loot;
 
         private bool _ready;
         /// <summary>

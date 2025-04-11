@@ -12,6 +12,7 @@ using static arena_dma_radar.UI.Hotkeys.HotkeyManager;
 using static arena_dma_radar.UI.Hotkeys.HotkeyManager.HotkeyActionController;
 using eft_dma_shared.Common.Features;
 using eft_dma_shared.Common.Misc;
+using arena_dma_radar.Arena.Loot;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Unity.LowLevel;
 using eft_dma_shared.Common.Maps;
@@ -26,6 +27,7 @@ using VmmFrost;
 using arena_dma_radar.Arena;
 using eft_dma_shared.Common.Misc.Data;
 using System.Collections.Frozen;
+using arena_dma_radar.UI.LootFilters;
 
 namespace arena_dma_radar.UI.Radar
 {
@@ -72,6 +74,8 @@ namespace arena_dma_radar.UI.Radar
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static int? MouseoverGroup { get; private set; }
+
+        private static IEnumerable<LootItem> Loot => Memory.Loot?.FilteredLoot;
 
         /// <summary>
         /// Current Map ID
@@ -250,6 +254,14 @@ namespace arena_dma_radar.UI.Radar
                         } // end ForEach (allPlayers)
 
                     // End allPlayers not null
+                    var loot = Loot?.Reverse(); // Draw important loot last (on top)
+                    if (loot is not null)
+                    {
+                        foreach (var item in loot)
+                        {
+                            item.Draw(canvas, mapParams, localPlayer);
+                        }
+                    }
                     if (checkBox_GrpConnect.Checked) // Connect Groups together
                     {
                         var groupedPlayers = allPlayers?
@@ -1818,14 +1830,23 @@ namespace arena_dma_radar.UI.Radar
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void checkBox_Bomb_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.PlayerRendering.ShowBomb = checkBox_Bomb.Checked;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var arenaOverlay = MonoLib.MonoClass.Find("Assembly-CSharp", "Game.Mode.System.ArenaOverlaySystem", out _);
+                var arenaOverlayPtr = arenaOverlay.GetNumMethods();
+                MessageBox.Show(arenaOverlayPtr.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

@@ -389,8 +389,19 @@ namespace SDK
 
 		public readonly partial struct NetworkGameData
 		{
-			public const uint raidMode = 0x4C; // System.Int32
-		}
+			public const uint profileid = 0x10; // String
+			public const uint profileToken = 0x18; // String
+			public const uint ip = 0x20; // String
+			public const uint location = 0x28; // String
+            public const uint sid = 0x30; // String
+			public const uint gameMode = 0x38; // String
+			public const uint shortId = 0x40; // String
+			public const uint status = 0x48; // System.Int32
+            public const uint raidMode = 0x4C; // System.Int32
+            public const uint port = 0x50; // System.Int32
+			public const uint utcPenaltyTime = 0x54; // Double
+			public const uint rankingMode = 0x60; // System.Int32
+        }
 	}
 
 	public readonly partial struct Enums
@@ -414,7 +425,25 @@ namespace SDK
 			CheckPoint = 14,
 		}
 
-		public enum EMalfunctionState
+        public enum EProfileStatus
+        {
+            Free,
+            MatchWait,
+            Busy,
+            Leaving,
+            Transfer
+        }
+
+        public enum EArenaRankingMode
+        {
+            Unselected,
+            Ranked,
+            Unranked,
+            Custom,
+            Any
+        }
+
+        public enum EMalfunctionState
 		{
 			None = 0,
 			Misfire = 1,

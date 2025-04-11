@@ -2,6 +2,7 @@
 using eft_dma_radar.Tarkov.EFTPlayer.Plugins;
 using eft_dma_radar.Tarkov.Features.MemoryWrites.Patches;
 using eft_dma_radar.UI.ESP;
+using eft_dma_radar.UI.Misc;
 using eft_dma_shared.Common.DMA.ScatterAPI;
 using eft_dma_shared.Common.Features;
 using eft_dma_shared.Common.Misc.Commercial;
@@ -145,7 +146,36 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         var role = Player.GetAIRoleInfo(voice);
                         Name = role.Name;
                         Type = role.Type;
+                        switch (Name)
+                        {
+                            case "Priest":
+                                GearManager newGear = new GearManager(this);
+                                if (newGear.Equipment.TryGetValue("FaceCover", out var face))
+                                {
+                                    if (face.Short.ToLower() == "zryachiy")
+                                    {
+                                        Name = "Zryachiy";
+                                    }
+                                }
+                                break;
+                            case "Usec":
+                            case "Bear":
+                                if (Memory.MapID.ToLower() == "lighthouse")
+                                {
+                                    Name = "Rouge";
+                                    Type = PlayerType.AIRaider;
+                                }
+                                else if (Memory.MapID.ToLower() == "laboratory" || Memory.MapID.ToLower() == "rezervbase")
+                                {
+                                    Name = "Raider";
+                                    Type = PlayerType.AIRaider;
+                                }
+                                break;
+                        }
                     }
+                    
+
+
                 }
                 else
                 {

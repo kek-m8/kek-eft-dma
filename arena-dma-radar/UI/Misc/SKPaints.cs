@@ -4,6 +4,27 @@ namespace arena_dma_radar.UI.Misc
 {
     internal static class SKPaints
     {
+
+        public static SKPaint PaintBackpacks { get; } = new()
+        {
+            Color = SKColor.Parse("00b02c"),
+            StrokeWidth = 0.25f,
+            Style = SKPaintStyle.Fill,
+            IsAntialias = true,
+            FilterQuality = SKFilterQuality.High
+        };
+
+        public static SKPaint TextBackpacks { get; } = new()
+        {
+            SubpixelText = true,
+            Color = SKColor.Parse("00b02c"),
+            IsStroke = false,
+            TextSize = 12,
+            TextEncoding = SKTextEncoding.Utf8,
+            IsAntialias = true,
+            Typeface = CustomFonts.SKFontFamilyRegular,
+            FilterQuality = SKFilterQuality.High
+        };
         public static SKPaint PaintTransparentBacker { get; } = new SKPaint()
         {
             Color = SKColors.Black.WithAlpha(0xBE), // Transparent backer
@@ -256,6 +277,25 @@ namespace arena_dma_radar.UI.Misc
             FilterQuality = SKFilterQuality.High
         };
         public static SKPaint TextPlayerESP { get; } = new SKPaint()
+        {
+            SubpixelText = true,
+            IsStroke = false,
+            TextSize = 12f,
+            TextAlign = SKTextAlign.Center,
+            TextEncoding = SKTextEncoding.Utf8,
+            IsAntialias = true,
+            Typeface = CustomFonts.SKFontFamilyMedium,
+            FilterQuality = SKFilterQuality.High
+        };
+
+        public static SKPaint PaintBackpackESP { get; } = new()
+        {
+            StrokeWidth = 0.25f,
+            Style = SKPaintStyle.Fill,
+            IsAntialias = true,
+            FilterQuality = SKFilterQuality.High
+        };
+        public static SKPaint TextBackpackESP { get; } = new()
         {
             SubpixelText = true,
             IsStroke = false,

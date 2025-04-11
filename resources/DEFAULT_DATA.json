@@ -2349,6 +2349,827 @@
       ]
     },
     {
+      "bsgID": "67a4b71ad3228756b6088ee2",
+      "name": "Atomic Defense CQCM ballistic mask (Smile)",
+      "shortName": "Smile",
+      "price": 67247,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5c5b6dfdf568c9009af66",
+      "name": "Atomic Defense CQCM ballistic mask (Stop Me)",
+      "shortName": "Stop Me",
+      "price": 81160,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5c5df782ce4655104db14",
+      "name": "Atomic Defense CQCM ballistic mask (Scars)",
+      "shortName": "Scars",
+      "price": 74203,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5c5f37f52620c5b05b4d6",
+      "name": "Atomic Defense CQCM ballistic mask (Target)",
+      "shortName": "Target",
+      "price": 92754,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5c6068fcd9fb73f0752cf",
+      "name": "Atomic Defense CQCM ballistic mask (Skull)",
+      "shortName": "Skull",
+      "price": 67247,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5c61c7f52620c5b05b4d8",
+      "name": "Atomic Defense CQCM ballistic mask (Demon)",
+      "shortName": "Demon",
+      "price": 99710,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5c657782ce4655104db16",
+      "name": "Atomic Defense CQCM ballistic mask (El D\u00eda de Muertos)",
+      "shortName": "Muertos",
+      "price": 85798,
+      "fleaPrice": 0,
+      "slots": 4,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f917dfdf568c9009af6b",
+      "name": "Lower half-mask (MultiCam)",
+      "shortName": "Half-mask",
+      "price": 8088,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f94e802d287c670bb966",
+      "name": "Lower half-mask (Zombie)",
+      "shortName": "Zombie",
+      "price": 7077,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f968fafb8efd440694b6",
+      "name": "Lower half-mask (Moss)",
+      "shortName": "Moss",
+      "price": 8088,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f989f7041a25760dda36",
+      "name": "Lower half-mask (El D\u00eda de Muertos)",
+      "shortName": "Muertos",
+      "price": 14155,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f9a193f7b62b6b0f6576",
+      "name": "Lower half-mask (Wraith)",
+      "shortName": "Wraith",
+      "price": 8088,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f9c8fafb8efd440694b8",
+      "name": "Lower half-mask (Balaclavas)",
+      "shortName": "Half-mask",
+      "price": 6066,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5f9e7f7041a25760dda38",
+      "name": "Lower half-mask (Balaclavas)",
+      "shortName": "Half-mask",
+      "price": 7077,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a5fa01fafb8efd440694ba",
+      "name": "Lower half-mask (Balaclavas)",
+      "shortName": "Half-mask",
+      "price": 6066,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9cc9cf05be177170bcd76",
+      "name": "Balaclava (Green)",
+      "shortName": "Green",
+      "price": 2408,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9ccfff05be177170bcd78",
+      "name": "Balaclava (Scars)",
+      "shortName": "Scars",
+      "price": 2809,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9cd18f05be177170bcd7a",
+      "name": "Balaclava (Scratches)",
+      "shortName": "Scratches",
+      "price": 2408,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9cd28cade15e0f00123b6",
+      "name": "Balaclava (Born to Die)",
+      "shortName": "BTD",
+      "price": 3210,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9cd381fb22063280728a6",
+      "name": "Balaclava (Not Today)",
+      "shortName": "Not Today",
+      "price": 3210,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9cd55c2a2d940930aec86",
+      "name": "Balaclava (Yellow)",
+      "shortName": "Yellow",
+      "price": 6420,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9cd6ecade15e0f00123b8",
+      "name": "Balaclava (Luxury)",
+      "shortName": "Luxury",
+      "price": 5618,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dc769de6826a650ee066",
+      "name": "Cold Fear infrared balaclava (Green)",
+      "shortName": "CF",
+      "price": 3212,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dc997faa4210bb0807c6",
+      "name": "Cold Fear infrared balaclava (SBEU)",
+      "shortName": "SBEU",
+      "price": 3747,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dca99de6826a650ee068",
+      "name": "Cold Fear infrared balaclava (Oak)",
+      "shortName": "Oak",
+      "price": 4282,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dcbac185de5a4d0c2a06",
+      "name": "Cold Fear infrared balaclava (Surpat)",
+      "shortName": "Surpat",
+      "price": 3747,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dccf9de6826a650ee06a",
+      "name": "Cold Fear infrared balaclava (DPM Desert)",
+      "shortName": "DPM D",
+      "price": 3747,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dce47faa4210bb0807c8",
+      "name": "Cold Fear infrared balaclava (MultiCam Tropic)",
+      "shortName": "MCTP",
+      "price": 3212,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9dd619de6826a650ee06c",
+      "name": "Cold Fear infrared balaclava (Tiger Stripe)",
+      "shortName": "Tiger",
+      "price": 4282,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9e9d04fb4a4a8a00d2826",
+      "name": "Balaclava (Red Nose)",
+      "shortName": "Red Nose",
+      "price": 6312,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9e9e0c185de5a4d0c2a13",
+      "name": "Balaclava (Demon)",
+      "shortName": "Demon",
+      "price": 12625,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9e9f09de6826a650ee074",
+      "name": "Balaclava (Skull)",
+      "shortName": "Skull",
+      "price": 8417,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9ea004fb4a4a8a00d2828",
+      "name": "Balaclava (Fear)",
+      "shortName": "Fear",
+      "price": 8417,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9ea10c185de5a4d0c2a15",
+      "name": "Balaclava (Yellow Oni)",
+      "shortName": "Yellow Oni",
+      "price": 6312,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9ea39de7fb0f19e077da6",
+      "name": "Balaclava (Red Oni)",
+      "shortName": "Red Oni",
+      "price": 7364,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9ea7e4fb4a4a8a00d282a",
+      "name": "Balaclava (White Oni)",
+      "shortName": "White Oni",
+      "price": 10521,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67a9ea98de7fb0f19e077da8",
+      "name": "Balaclava (Smile)",
+      "shortName": "Smile",
+      "price": 16834,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67aaf808bf7609058606a926",
+      "name": "Neoprene mask (M90 Desert)",
+      "shortName": "M90 D",
+      "price": 4876,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67aaf82d508ee9b6440e9c46",
+      "name": "Neoprene mask (Louise Pitton)",
+      "shortName": "Pitton",
+      "price": 13005,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67aaf84104dca1c82c071cf6",
+      "name": "Neoprene mask (Lucha Libre)",
+      "shortName": "Lucha",
+      "price": 4876,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67aaf851bf7609058606a928",
+      "name": "Neoprene mask (Zombie)",
+      "shortName": "Zombie",
+      "price": 5689,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67aaf863de7fb0f19e077db9",
+      "name": "Neoprene mask (Say Nothing)",
+      "shortName": "Nothing",
+      "price": 16256,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67aaf879508ee9b6440e9c48",
+      "name": "Neoprene mask (ONI)",
+      "shortName": "ONI",
+      "price": 17882,
+      "fleaPrice": 0,
+      "slots": 1,
+      "categories": [
+        "Face Cover",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab2eecfe82855dcc0f2af6",
+      "name": "Hexatac HPC Plate Carrier (MultiCam)",
+      "shortName": "HPC",
+      "price": 50590,
+      "fleaPrice": 0,
+      "slots": 9,
+      "categories": [
+        "Armor",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab2f28dafe3b22670c9116",
+      "name": "BNTI Kirasa-N body armor (Green)",
+      "shortName": "Kirasa-N",
+      "price": 15482,
+      "fleaPrice": 0,
+      "slots": 9,
+      "categories": [
+        "Armor",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab2f5adafe3b22670c911f",
+      "name": "FORT Redut-M body armor (SK Woodland)",
+      "shortName": "Redut-M",
+      "price": 85489,
+      "fleaPrice": 0,
+      "slots": 12,
+      "categories": [
+        "Armor",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab2f94dafe3b22670c912c",
+      "name": "HighCom Trooper TFO body armor (Coyote)",
+      "shortName": "Trooper",
+      "price": 56365,
+      "fleaPrice": 0,
+      "slots": 9,
+      "categories": [
+        "Armor",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab3ea96d7ece17bf0096f6",
+      "name": "ANA Tactical Alpha chest rig (MultiCam)",
+      "shortName": "Alpha",
+      "price": 39879,
+      "fleaPrice": 0,
+      "slots": 16,
+      "categories": [
+        "Chest rig",
+        "Searchable item",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab3f146d7ece17bf0096ff",
+      "name": "BlackRock chest rig (Khaki)",
+      "shortName": "BlackRock",
+      "price": 34065,
+      "fleaPrice": 0,
+      "slots": 12,
+      "categories": [
+        "Chest rig",
+        "Searchable item",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab49aab9c7a1e18c095686",
+      "name": "Crye Precision AVS plate carrier (MultiCam)",
+      "shortName": "AVS",
+      "price": 43618,
+      "fleaPrice": 0,
+      "slots": 12,
+      "categories": [
+        "Chest rig",
+        "Searchable item",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67ab4b2d6f7ae4aa550bbcf6",
+      "name": "5.11 Tactical TacTec plate carrier (Storm)",
+      "shortName": "TacTec",
+      "price": 53864,
+      "fleaPrice": 0,
+      "slots": 16,
+      "categories": [
+        "Chest rig",
+        "Searchable item",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67af41dd1eb308667602db4a",
+      "name": "Dundukk sport sunglasses (Orange lenses)",
+      "shortName": "Dundukk",
+      "price": 1886,
+      "fleaPrice": 0,
+      "slots": 2,
+      "categories": [
+        "Vis. observ. device",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67af425c2676ade5750b50e6",
+      "name": "RayBench Aviator glasses (Green lenses)",
+      "shortName": "Aviator",
+      "price": 6231,
+      "fleaPrice": 0,
+      "slots": 2,
+      "categories": [
+        "Vis. observ. device",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67af42942676ade5750b50e8",
+      "name": "Oakley SI M Frame safety glasses (Orange lenses)",
+      "shortName": "M Frame",
+      "price": 8742,
+      "fleaPrice": 0,
+      "slots": 2,
+      "categories": [
+        "Vis. observ. device",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
+      "bsgID": "67af42b38d9ef5c57e0d5126",
+      "name": "Round frame sunglasses (Green lenses)",
+      "shortName": "RGlasses",
+      "price": 3824,
+      "fleaPrice": 0,
+      "slots": 2,
+      "categories": [
+        "Vis. observ. device",
+        "Armored equipment",
+        "Equipment",
+        "Compound item",
+        "Item"
+      ]
+    },
+    {
       "bsgID": "56ea6fafd2720b844b8b4593",
       "name": "AR-15 Noveske KX3 5.56x45 flash hider",
       "shortName": "KX3 556",

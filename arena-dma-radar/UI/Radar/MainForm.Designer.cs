@@ -142,6 +142,7 @@
             label_Pos = new Label();
             skglControl_Radar = new SKGLControl();
             tabControl1 = new TabControl();
+            button1 = new Button();
             tabPage2.SuspendLayout();
             flowLayoutPanel_Settings.SuspendLayout();
             flowLayoutPanel_RadarSettings.SuspendLayout();
@@ -1374,6 +1375,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.Black;
+            tabPage1.Controls.Add(button1);
             tabPage1.Controls.Add(checkBox_MapFree);
             tabPage1.Controls.Add(groupBox_MapSetup);
             tabPage1.Controls.Add(skglControl_Radar);
@@ -1495,6 +1497,16 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1264, 681);
             tabControl1.TabIndex = 8;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(78, 6);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 19;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
             // 
             // MainForm
             // 
@@ -1660,6 +1672,7 @@
         private FlowLayoutPanel flowLayoutPanel_MemWriteCheckbox;
         private LinkLabel linkLabel_CheckForUpdates;
         private CheckBox checkBox_Bomb;
+        private Button button1;
     }
 }
 

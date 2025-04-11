@@ -1,4 +1,5 @@
 ﻿using arena_dma_radar.Arena.ArenaPlayer;
+using arena_dma_radar.Arena.Loot;
 using arena_dma_radar.UI.Radar;
 using arena_dma_radar.UI.Misc;
 using eft_dma_shared.Common.Features;
@@ -34,6 +35,9 @@ namespace arena_dma_radar.Arena.GameWorld
         private readonly Thread _t2;
         private readonly Thread _t3;
         private readonly Thread _t4;
+        private readonly LootManager _lootManager;
+
+        public LootManager Loot => _lootManager;
 
         /// <summary>
         /// Current Game Instance Mode.
@@ -127,6 +131,7 @@ namespace arena_dma_radar.Arena.GameWorld
             if (_rgtPlayers.GetPlayerCount() < 1)
                 throw new ArgumentOutOfRangeException(nameof(_rgtPlayers));
             CameraManager = new();
+            _lootManager = new(localGameWorld, ct);
             _grenadeManager = new(localGameWorld);
         }
 
@@ -218,6 +223,7 @@ namespace arena_dma_radar.Arena.GameWorld
             {
                 ThrowIfMatchEnded();
                 _rgtPlayers.Refresh();
+                _lootManager.Refresh();
             }
             catch (RaidEnded)
             {
