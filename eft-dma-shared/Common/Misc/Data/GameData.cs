@@ -584,6 +584,51 @@ namespace eft_dma_shared.Common.Misc.Data
             }
 
         }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
+
+        public static FrozenDictionary<string, int> PlateLevel { get; } = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            //Class 6
+            ["Korund-VM-K ballistic plate (Back)"] = 6,
+            ["Granit 4RS ballistic plates (Back)"] = 6,
+            ["Granit 4RS ballistic plate (Front)"] = 6,
+            ["Korund-VM-K ballistic plates (Front)"] = 6,
+            ["KITECO SC-IV SA ballistic plate"] = 6,
+            ["GAC 4sss2 ballistic plate"] = 6,
+            ["Kiba Arms Steel ballistic plate"] = 6,
+            ["ESAPI level IV ballistic plate"] = 6,
+            ["NESCO 4400-SA-MC ballistic plate"] = 6,
+            ["Granit Br5 ballistic plate"] = 6,
+            ["Cult Termite ballistic plate"] = 6,
+            ["ESBI level IV ballistic plate (Side)"] = 6,
+            ["Granit ballistic plate (Side)"] = 6,
+            //Class 5
+            ["Korund-VM ballistic plate (Back)"] = 5,
+            ["Granit 4 ballistic plates (Back)"] = 5,
+            ["Granit 4 ballistic plate (Front)"] = 5,
+            ["Korund-VM ballistic plates (Front)"] = 5,
+            ["GAC 3s15m ballistic plate"] = 5,
+            ["SAPI level III+ ballistic plate"] = 5,
+            ["TallCom Guardian ballistic plate"] = 5,
+            ["Granit Br4 ballistic plate"] = 5,
+            ["Cult Locust ballistic plate"] = 5,
+            ["SSAPI level III+ ballistic plate (Side)"] = 5,
+            ["Korund-VM ballistic plate (Side)"] = 5,
+            //Class 4
+            ["6B23-2 ballistic plate (Back)"] = 4,
+            ["6B13 custom ballistic plates (Back)"] = 4,
+            ["6B33 ballistic plate (Front)"] = 4,
+            ["Monoclete level III PE ballistic plate"] = 4,
+            ["Global Armor’s Steel ballistic plate"] = 4,
+            ["NewSphereTech level III ballistic plate"] = 4,
+            ["SPRTN Elaphros ballistic plate"] = 4,
+            ["SPRTN Omega ballistic plate"] = 4,
+            ["Kiba Arms Titan ballistic plate"] = 4,
+            // Class 3
+            ["Zhuk-3 ballistic plate (Front)"] = 3,
+            ["6B12 ballistic plates (Front)"] = 3,
+            ["PRTCTR Lightweight ballistic plate"] = 3,
+
+        }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
         public static IReadOnlyDictionary<int, int> XPTable { get; } = new Dictionary<int, int>
         {
             {0, 1},

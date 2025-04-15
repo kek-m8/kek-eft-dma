@@ -1,6 +1,7 @@
 ﻿using System.Collections.Frozen;
 using eft_dma_radar.Tarkov.Loot;
 using eft_dma_radar.UI.Misc;
+using eft_dma_shared.Common.Misc;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity.Collections;
 
@@ -87,7 +88,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     if (EftDataManager.AllItems.TryGetValue(id, out var entry2))
                     {
                         if (slot.Key == "FirstPrimaryWeapon" || slot.Key == "SecondPrimaryWeapon" ||
-                            slot.Key == "Headwear") // weapons / helmet
+                            slot.Key == "Headwear" || slot.Key == "TacticalVest" || slot.Key == "ArmorVest")
                             try
                             {
                                 RecursePlayerGearSlots(containedItem, loot);
@@ -99,7 +100,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                         var gear = new GearItem
                         {
                             Long = entry2.Name ?? "None",
-                            Short = entry2.ShortName ?? "None"
+                            Short = entry2.ShortName ?? "None",
+                            Id = entry2.BsgId ?? "None"
                         };
                         gearDict.TryAdd(slot.Key, gear);
                     }

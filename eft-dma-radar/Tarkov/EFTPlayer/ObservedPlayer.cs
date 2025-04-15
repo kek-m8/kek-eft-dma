@@ -271,10 +271,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         {
             try
             {
-                int prestige = Profile.Prestige;
+                int? prestige = Profile?.Prestige;
                 if (prestige is not -1 && this.Prestige != prestige)
                 {
-                    this.Prestige = prestige;
+                    this.Prestige = prestige ?? 0;
                 }
             }
             catch (Exception ex)
@@ -290,7 +290,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 int? hours = Profile.Hours;
                 if(hours is not -1 && this.Hours != hours)
                 {
-                    this.Hours = (int)hours;
+                    this.Hours = hours ?? 0;
                 }
             }
             catch (Exception ex)
@@ -306,7 +306,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 int? level = Profile.Level;
                 if(level is not null && this.Level != level)
                 {
-                    this.Level = (int)level.Value;
+                    this.Level = level.Value;
                 }
             }
             catch (Exception ex)

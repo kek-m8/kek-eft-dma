@@ -87,7 +87,11 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showLoot")]
         public bool ShowLoot { get; set; } = true;
-
+        /// <summary>
+        /// Draws plate class levels for players/scavs on the map
+        /// </summary>
+        [JsonPropertyName("showArmourClass")]
+        public bool ShowArmourClass { get; set; } = false;
         /// <summary>
         /// Quest Helper Cfg
         /// </summary>
@@ -246,13 +250,6 @@ namespace eft_dma_radar.UI.Misc
         [JsonInclude]
         [JsonPropertyName("widgets")]
         public WidgetsConfig Widgets { get; private set; } = new();
-
-        /// <summary>
-        /// Web Radar Configuration.
-        /// </summary>
-        [JsonInclude]
-        [JsonPropertyName("webRadar")]
-        public WebRadarConfig WebRadar { get; private set; } = new();
 
         /// <summary>
         /// Containers configuration.
@@ -590,6 +587,12 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("isAiming")]
         public bool ShowIfAiming { get; set; } = true;
+
+        /// <summary>
+        /// Draw Armour plate class levels
+        /// </summary>
+        [JsonPropertyName("showArmourClass")]
+        public bool ShowArmourClass { get; set; } = false;
         /// <summary>
         /// Draws magazine ammo acount (currentCount / maxCount) next to player weapon info
         /// </summary>
@@ -1083,33 +1086,6 @@ namespace eft_dma_radar.UI.Misc
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// Configuration for Web Radar.
-    /// </summary>
-    public sealed class WebRadarConfig
-    {
-        /// <summary>
-        /// True if UPnP should be enabled.
-        /// </summary>
-        [JsonPropertyName("upnp")]
-        public bool UPnP { get; set; } = true;
-        /// <summary>
-        /// IP to bind to.
-        /// </summary>
-        [JsonPropertyName("host")]
-        public string IP { get; set; }
-        /// <summary>
-        /// TCP Port to bind to.
-        /// </summary>
-        [JsonPropertyName("port")]
-        public string Port { get; set; } = Random.Shared.Next(50000, 60000).ToString();
-        /// <summary>
-        /// Server Tick Rate (Hz).
-        /// </summary>
-        [JsonPropertyName("tickRate")]
-        public string TickRate { get; set; } = "60";
     }
 
     /// <summary>

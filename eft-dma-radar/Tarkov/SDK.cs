@@ -269,14 +269,25 @@ namespace SDK
 			public const uint AIData = 0x628; // -.IAIData
 			public const uint _healthController = 0x648; // EFT.HealthSystem.IHealthController
 			public const uint _inventoryController = 0x660; // -.Player.PlayerInventoryController
-			public const uint _handsController = 0x668; // -.Player.AbstractHandsController
+			public const uint _armorPlateColliders = 0x658; // -.ArmorPlateCollider[]
+            public const uint _handsController = 0x668; // -.Player.AbstractHandsController
 			public const uint EnabledAnimators = 0x984; // System.Int32
 			public const uint InteractionRayOriginOnStartOperation = 0x9F0; // UnityEngine.Vector3
 			public const uint InteractionRayDirectionOnStartOperation = 0x9FC; // UnityEngine.Vector3
 			public const uint IsYourPlayer = 0xA12; // Boolean
 		}
 
-		public readonly partial struct AIData
+		public readonly partial struct ArmorPlateCollider
+		{
+			public const uint PenetrationLevel = 0x40; // Single
+			public const uint PenetrationChance = 0x44; // Single
+			public const uint BodyPartType = 0x94; // System.Int32
+			public const uint BodyPartColliderType = 0x98; // System.Int32
+			public const uint ArmorPlateColliderType = 0xA0; // System.Int16
+        }
+
+
+        public readonly partial struct AIData
 		{
 			public const uint IsAI = 0xF0; // Boolean
 		}
@@ -444,7 +455,8 @@ namespace SDK
 			public const uint Skills = 0x70; // EFT.SkillManager
 			public const uint TaskConditionCounters = 0x80; // System.Collections.Generic.Dictionary<MongoID, \uF165>
 			public const uint QuestsData = 0x88; // System.Collections.Generic.List<\uF181>
-			public const uint WishlistManager = 0xC8; // -.\uE81E
+			public const uint PrestigeData = 0x98; // System.Collections.Generic.IReadOnlyList<\uEB5F>
+            public const uint WishlistManager = 0xC8; // -.\uE81E
 			public const uint Stats = 0xF8; // -.\uE3A5
 		}
 
@@ -589,7 +601,9 @@ namespace SDK
 		public readonly partial struct InventoryController
 		{
 			public const uint Inventory = 0x120; // EFT.InventoryLogic.Inventory
-		}
+			public const uint E024 = 0xB0; // EFT.InventoryLogic.ItemFilter[]
+
+        }
 
 		public readonly partial struct Inventory
 		{
@@ -619,7 +633,9 @@ namespace SDK
 			public const uint ContainedItem = 0x38; // EFT.InventoryLogic.Item
 			public const uint ID = 0x48; // String
 			public const uint Required = 0x60; // Boolean
-		}
+			public const uint ArmorColliders = 0x50; // System.Int32[]
+			public const uint ArmorPlateColliderMask = 0x68; // System.Int16
+        }
 
 		public readonly partial struct InteractiveLootItem
 		{
@@ -698,7 +714,8 @@ namespace SDK
 			public const uint _id = 0x50; // EFT.MongoID
 			public const uint Weight = 0xB0; // Single
 			public const uint QuestItem = 0xBC; // Boolean
-		}
+			public const uint _children = 0x98; // System.Collections.Generic.List<ItemTemplate>
+        }
 
 		public readonly partial struct ModTemplate
 		{
@@ -854,7 +871,64 @@ namespace SDK
 
 	public readonly partial struct Enums
 	{
-		public enum EPlayerState
+        public enum EArmorPlateCollider : short
+        {
+            Plate_Granit_SAPI_chest = 1,
+            Plate_Granit_SAPI_back = 2,
+            Plate_Granit_SSAPI_side_left_high = 4,
+            Plate_Granit_SSAPI_side_left_low = 8,
+            Plate_Granit_SSAPI_side_right_high = 16,
+            Plate_Granit_SSAPI_side_right_low = 32,
+            Plate_Korund_chest = 64,
+            Plate_6B13_back = 128,
+            Plate_Korund_side_left_high = 256,
+            Plate_Korund_side_left_low = 512,
+            Plate_Korund_side_right_high = 1024,
+            Plate_Korund_side_right_low = 2048
+        }
+
+        public enum EBodyPart : Int32
+        {
+            Head,
+            Chest,
+            Stomach,
+            LeftArm,
+            RightArm,
+            LeftLeg,
+            RightLeg,
+            Common
+        }
+        public enum EBodyPartColliderType : Int32
+        {
+            None = -1,
+            HeadCommon,
+            RibcageUp,
+            Pelvis = 3,
+            LeftUpperArm,
+            LeftForearm,
+            RightUpperArm,
+            RightForearm,
+            LeftThigh,
+            LeftCalf,
+            RightThigh,
+            RightCalf,
+            ParietalHead,
+            BackHead,
+            Ears,
+            Eyes,
+            Jaw,
+            NeckFront,
+            NeckBack,
+            RightSideChestUp,
+            LeftSideChestUp,
+            SpineTop,
+            SpineDown,
+            PelvisBack,
+            RightSideChestDown,
+            LeftSideChestDown,
+            RibcageLow
+        }
+        public enum EPlayerState
 		{
 			None = 0,
 			Idle = 1,

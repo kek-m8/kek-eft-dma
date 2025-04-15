@@ -1546,6 +1546,36 @@ namespace eft_dma_radar.UI.Radar
 
         #endregion
 
+        public sealed class ItemQuery
+        {
+            [JsonPropertyName("data")]
+            public ItemData Data { get; set; }
+        }
+
+        public sealed class ItemData
+        {
+            [JsonPropertyName("item")]
+            public ItemItems Item { get; set; }
+        }
+
+        public sealed class ItemItems
+        {
+            [JsonPropertyName("id")]
+            public string Id { get; set; }
+            [JsonPropertyName("name")]
+            public string Name { get; set; }
+            [JsonPropertyName("shortName")]
+            public string ShortName { get; set; }
+            [JsonPropertyName("properties")]
+            public ItemProperties Properties { get; set; }
+        }
+
+        public sealed class ItemProperties
+        {
+            [JsonPropertyName("class")]
+            public int Class { get; set; }
+        }
+
         public sealed class TaskQuery
         {
             [JsonPropertyName("data")]
@@ -1872,13 +1902,6 @@ namespace eft_dma_radar.UI.Radar
                 "NOTE: It is possible to 're-lock' another target (or the same target) after unlocking.");
             toolTip1.SetToolTip(checkBox_AimRandomBone, "Will select a random aimbot bone after each shot. You can set custom percentage values for body zones.\nNOTE: This will supersede silent aim 'auto bone'.");
             toolTip1.SetToolTip(button_RandomBoneCfg, "Set random bone percentages (must add up to 100%).");
-            toolTip1.SetToolTip(checkBox_WebRadarUPNP, "Attempts to automatically Port Map using UPnP. If disabled, you will need to forward port(s) manually on your Router.");
-            toolTip1.SetToolTip(button_WebRadarStart, "Starts the Web Radar Service.");
-            toolTip1.SetToolTip(label_WebRadarHost, "Sets the IP Address/Hostname for the Web Radar Service to be bound to. Usually your LAN IP.");
-            toolTip1.SetToolTip(label_WebRadarPort, "Sets the Port (TCP) for the Web Radar Service to be bound to. Recommend using a random port between 50000-60000.");
-            toolTip1.SetToolTip(label_WebRadarPassword, "Randomized password for the Web Radar Service. This is used to authenticate with the Web Radar Service.");
-            toolTip1.SetToolTip(label_WebRadarTickRate, "Sets the Server Tickrate for the Web Radar Service. This is how often (per second) the server updates the client with new data.");
-            toolTip1.SetToolTip(linkLabel_WebRadarLink, "Web Radar Link to access the Web Radar Service. You can share this with your friend(s). Click to copy to clipboard.");
             toolTip1.SetToolTip(comboBox_WideLeanMode, "Sets the Wide Lean Mode for the Wide Lean feature.\nHold = Must press and hold the hotkey to remain leaned.\nToggle = Must press the hotkey once to toggle on/off.");
             toolTip1.SetToolTip(trackBar_WideLeanAmt, "Sets the amount of lean to apply when using the Wide Lean feature. You may need to lower this if shots fail.");
             toolTip1.SetToolTip(label_WideLean, "Wide Lean allows you to move your weapon left/right/up. This can be useful for peeking corners with silent aim. Set your hotkey(s) in Hotkey Manager.");
@@ -2159,11 +2182,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowMines.Checked = Config.ShowMines;
             checkBox_TeammateAimlines.Checked = Config.TeammateAimlines;
             checkBox_AIAimlines.Checked = Config.AIAimlines;
-            checkBox_WebRadarUPNP.Checked = Config.WebRadar.UPnP;
-            textBox_WebRadarBindIP.Text = Config.WebRadar.IP;
-            textBox_WebRadarPort.Text = Config.WebRadar.Port;
-            textBox_WebRadarTickRate.Text = Config.WebRadar.TickRate;
-            textBox_WebRadarPassword.Text = WebRadarServer.Password;
             checkBox_Aimview.Checked = Config.ESPWidgetEnabled;
             trackBar_UIScale.Value = (int)Math.Round(Config.UIScale * 100);
             trackBar_MaxDist.Value = (int)Config.MaxDistance;
@@ -2807,6 +2825,9 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_StatusText.Checked = Config.ESP.ShowStatusText;
             checkBox_ESP_FPS.Checked = Config.ESP.ShowFPS;
             checkBox_TrapSwitches.Checked = Config.ESP.ShowEventStuff;
+            checkBox_IsAiming.Checked = Config.ESP.ShowIfAiming;
+            checkBox_ShowPlates.Checked = Config.ESP.ShowArmourClass;
+            checkBox3.Checked = Config.ShowArmourClass;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
             trackBar_EspImpLootDist.Value = (int)Config.ESP.ImpLootDrawDistance;
             trackBar_EspQuestHelperDist.Value = (int)Config.ESP.QuestHelperDrawDistance;
@@ -3605,69 +3626,6 @@ namespace eft_dma_radar.UI.Radar
 
         #endregion
 
-        #region Web Radar
-
-        /// <summary>
-        /// Startup Web Radar. Can only be done once for the program lifetime.
-        /// </summary>
-        private async void StartWebRadar()
-        {
-            button_WebRadarStart.Enabled = false;
-            checkBox_WebRadarUPNP.Enabled = false;
-            textBox_WebRadarTickRate.Enabled = false;
-            textBox_WebRadarBindIP.Enabled = false;
-            textBox_WebRadarPort.Enabled = false;
-            button_WebRadarStart.Text = "Starting...";
-            try
-            {
-                var tickRate = TimeSpan.FromMilliseconds(1000d / int.Parse(textBox_WebRadarTickRate.Text.Trim()));
-                string bindIP = textBox_WebRadarBindIP.Text.Trim();
-                int port = int.Parse(textBox_WebRadarPort.Text.Trim());
-                var externalIP = await WebRadarServer.GetExternalIPAsync();
-                await WebRadarServer.StartAsync(bindIP, port, tickRate, checkBox_WebRadarUPNP.Checked);
-                button_WebRadarStart.Text = "Running...";
-                linkLabel_WebRadarLink.Text = $"http://d3ibl7ms0iloq6.cloudfront.net/?host={externalIP}&port={port}&password={textBox_WebRadarPassword.Text}";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, $"ERROR Starting Web Radar Server: {ex.Message}", Program.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                button_WebRadarStart.Text = "Start";
-                button_WebRadarStart.Enabled = true;
-                checkBox_WebRadarUPNP.Enabled = true;
-                textBox_WebRadarTickRate.Enabled = true;
-                textBox_WebRadarBindIP.Enabled = true;
-                textBox_WebRadarPort.Enabled = true;
-            }
-        }
-
-        private void button_WebRadarStart_Click(object sender, EventArgs e) =>
-            StartWebRadar();
-
-        private void checkBox_WebRadarUPNP_CheckedChanged(object sender, EventArgs e)
-        {
-            Config.WebRadar.UPnP = checkBox_WebRadarUPNP.Checked;
-        }
-
-        private void textBox_WebRadarHost_TextChanged(object sender, EventArgs e)
-        {
-            Config.WebRadar.IP = textBox_WebRadarBindIP.Text;
-        }
-
-        private void textBox_WebRadarPort_TextChanged(object sender, EventArgs e)
-        {
-            Config.WebRadar.Port = textBox_WebRadarPort.Text;
-        }
-        private void textBox_WebRadarTickRate_TextChanged(object sender, EventArgs e)
-        {
-            Config.WebRadar.TickRate = textBox_WebRadarTickRate.Text;
-        }
-        private void linkLabel_WebRadarLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Clipboard.SetText(linkLabel_WebRadarLink.Text);
-            MessageBox.Show(this, "Copied to clipboard!");
-        }
-        #endregion
-
         #region Containers
         /// <summary>
         /// Tracked Containers Dictionary.
@@ -4037,6 +3995,31 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_IsAiming_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowIfAiming = checkBox_IsAiming.Checked;
+        }
+
+        private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox_ShowPlates_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowArmourClass = checkBox_ShowPlates.Checked;
+        }
+
+        private void checkBox_EnableMemWrite_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowArmourClass = checkBox3.Checked;
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

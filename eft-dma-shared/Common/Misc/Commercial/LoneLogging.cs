@@ -1,20 +1,28 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace eft_dma_shared.Common.Misc.Commercial
 {
     public static class LoneLogging
     {
-#pragma warning disable CS0649
         private static readonly Action<string> _writeLine;
-#pragma warning restore CS0649
 
         static LoneLogging()
         {
-            //if (AppContext.TryGetSwitch("LonesClient.Diagnostics.LoneLogging.Enabled", out bool enabled) && enabled)
-            //{
-            //    _writeLine = (Action<string>)AppContext.GetData("LonesClient.Diagnostics.LoneLogging.WriteLine");
-            //}
+            /*string logFilePath = "dma.log";
+            _writeLine = message =>
+            {
+                try
+                {
+                    File.AppendAllText(logFilePath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} - {message}{Environment.NewLine}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Logging failed: {ex}");
+                }
+            };*/
         }
 
         /// <summary>
@@ -25,7 +33,7 @@ namespace eft_dma_shared.Common.Misc.Commercial
         public static void WriteLine(object data)
         {
             Debug.WriteLine(data);
-            _writeLine?.Invoke(data.ToString()); // no-op'd if not enabled
+            _writeLine?.Invoke(data.ToString());
         }
     }
 }

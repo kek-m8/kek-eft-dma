@@ -153,6 +153,7 @@ sealed partial class AimbotRandomBoneForm
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(313, 192);
         Controls.Add(groupBox_RandomBone);
+        Cursor = Cursors.Arrow;
         FormBorderStyle = FormBorderStyle.FixedSingle;
         Icon = (Icon)resources.GetObject("$this.Icon");
         MaximizeBox = false;

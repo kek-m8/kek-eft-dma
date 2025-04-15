@@ -16,6 +16,7 @@ namespace eft_dma_radar.UI.Misc
     {
         public string Long { get; init; }
         public string Short { get; init; }
+        public string Id { get; init; }
     }
 
     /// <summary>

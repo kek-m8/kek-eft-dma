@@ -369,5 +369,10 @@ namespace eft_dma_radar.UI.Hotkeys
         }
 
         #endregion
+
+        private void HotkeyManager_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

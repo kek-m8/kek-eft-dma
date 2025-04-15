@@ -96,7 +96,6 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 throw new Exception("Invalid Player Side/Faction!");
             if (this is LocalPlayer) // Handled in derived class
                 return;
-
             bool isAI = Memory.ReadValue<int>(Info + Offsets.PlayerInfo.RegistrationDate) == 0;
             if (IsScav)
             {

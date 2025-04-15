@@ -130,7 +130,6 @@
             // listBox_Values
             // 
             listBox_Values.FormattingEnabled = true;
-            listBox_Values.ItemHeight = 15;
             listBox_Values.Location = new Point(12, 86);
             listBox_Values.Name = "listBox_Values";
             listBox_Values.Size = new Size(414, 214);
@@ -150,6 +149,7 @@
             Name = "HotkeyManager";
             Text = "Hotkey Manager";
             TopMost = true;
+            Load += HotkeyManager_Load;
             groupBox_Main.ResumeLayout(false);
             groupBox_Main.PerformLayout();
             ResumeLayout(false);
