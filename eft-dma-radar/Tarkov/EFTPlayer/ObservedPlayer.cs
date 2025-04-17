@@ -165,7 +165,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                     Name = "Rouge";
                                     Type = PlayerType.AIRaider;
                                 }
-                                else if (Memory.MapID.ToLower() == "laboratory" || Memory.MapID.ToLower() == "rezervbase")
+                                else if (Memory.MapID.ToLower() == "rezervbase")
                                 {
                                     Name = "Raider";
                                     Type = PlayerType.AIRaider;
@@ -173,9 +173,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                 break;
                         }
                     }
-                    
-
-
+                    if(Memory.MapID.ToLower() == "laboratory")
+                    {
+                        Name = "Rogue";
+                        Type = PlayerType.AIRaider;
+                    }
                 }
                 else
                 {
