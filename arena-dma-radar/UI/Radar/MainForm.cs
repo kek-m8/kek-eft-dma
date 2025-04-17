@@ -504,6 +504,7 @@ namespace arena_dma_radar.UI.Radar
                 "- Advanced Chams Options.\n" +
                 "- Enhanced reliability of some features (Passive).");
             toolTip1.SetToolTip(checkBox_Bomb, "Display what player is carrying the Bomb in BlastGang");
+            toolTip1.SetToolTip(checkBox_RadarBomb, "Display what player is carrying the Bomb in BlastGang on the radar");
         }
 
         /// <summary>
@@ -528,6 +529,8 @@ namespace arena_dma_radar.UI.Radar
         {
             trackBar_AimlineLength.Value = Config.AimLineLength;
             checkBox_Aimview.Checked = Config.ShowESPWidget;
+            checkBox_Bomb.Checked = Config.ESP.ShowBomb;
+            checkBox_RadarBomb.Checked = Config.ShowBomb;
             trackBar_UIScale.Value = (int)Math.Round(Config.UIScale * 100);
             textBox_ResWidth.Text = Config.MonitorWidth.ToString();
             textBox_ResHeight.Text = Config.MonitorHeight.ToString();
@@ -1847,6 +1850,11 @@ namespace arena_dma_radar.UI.Radar
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void checkBox_RadarBomb_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowBomb = checkBox_RadarBomb.Checked;
         }
     }
 }

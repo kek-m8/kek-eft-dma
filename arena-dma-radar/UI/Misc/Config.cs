@@ -118,6 +118,9 @@ namespace arena_dma_radar.UI.Misc
         [JsonPropertyName("monitorHeight")]
         public int MonitorHeight { get; set; } = 1080;
 
+        [JsonPropertyName("showBombRadar")]
+        public bool ShowBomb { get; set; } = false;
+
         /// <summary>
         /// Hotkeys Dictionary for Radar.
         /// </summary>

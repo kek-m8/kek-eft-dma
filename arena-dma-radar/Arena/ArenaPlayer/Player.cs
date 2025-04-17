@@ -17,6 +17,7 @@ using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Pools;
 using eft_dma_shared.Common.DMA;
 using System.Collections.Frozen;
+using System;
 
 namespace arena_dma_radar.Arena.ArenaPlayer
 {
@@ -98,6 +99,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// Player Class Base Address
         /// </summary>
         public ulong Base { get; }
+
+        private Config Config { get; set; } = Program.Config;
         /// <summary>
         /// True if the Player is Active (in the player list).
         /// </summary>
@@ -672,6 +675,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             try
             {
                 var point = this.Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
+                var showBomb = Config.ShowBomb;
                 this.MouseoverPosition = new(point.X, point.Y);
                 if (!this.IsAlive) // Player Dead -- Draw 'X' death marker and move on
                     DrawDeathMarker(canvas, point);
@@ -682,7 +686,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                         return;
                     var height = this.Position.Y - localPlayer.Position.Y;
                     var dist = Vector3.Distance(localPlayer.Position, this.Position);
-                    string[] lines = null;
+                    var lines = new List<string>();
                     if (!MainForm.Config.HideNames) // show full names & info
                     {
                         string name = null;
@@ -694,20 +698,28 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                         if (this is ArenaObservedPlayer observed)
                             health = observed.HealthStatus is Enums.ETagStatus.Healthy ?
                             null : $" ({observed.HealthStatus.GetDescription()})"; // Only display abnormal health status
-                        lines = new string[2]
-                        {
-                        $"{name}{health}",
-                        $"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}"
-                        };
+                        lines.Add($"{name}{health}");
+                        lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                     }
                     else // just height, distance
                     {
-                        lines = new string[1]
-                        {
-                        $"{(int)Math.Round(height)},{(int)Math.Round(dist)}"
-                        };
+                        lines.Add($"{(int)Math.Round(height)},{(int)Math.Round(dist)}");
                         if (this.ErrorTimer.ElapsedMilliseconds > 100)
                             lines[0] = "ERROR"; // In case POS stops updating, let us know!
+                    }
+                    if (showBomb && this is ArenaObservedPlayer observed_)
+                    {
+                        if (Memory.Game.matchMode is Enums.ERaidMode.BlastGang)
+                        {
+                            GearManager a = new GearManager(observed_); // get live equipment
+                            if (a.Equipment.TryGetValue("Backpack", out var _))
+                                lines.Add("(BOMB)");
+                            else
+                            {
+                                if (lines.Contains("(BOMB)"))
+                                    lines.Remove("(BOMB)");
+                            }
+                        }
                     }
                     DrawPlayerText(canvas, point, lines);
                 }
@@ -764,7 +776,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// <summary>
         /// Draws Player Text on this location.
         /// </summary>
-        private void DrawPlayerText(SKCanvas canvas, SKPoint point, string[] lines)
+        private void DrawPlayerText(SKCanvas canvas, SKPoint point, List<string> lines)
         {
             var paints = GetPaints();
             if (MainForm.MouseoverGroup is int grp && grp == this.TeamID)

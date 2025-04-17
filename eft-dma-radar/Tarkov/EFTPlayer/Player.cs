@@ -1495,6 +1495,50 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     else // just height, distance
                     {
                         lines.Add($"{(int)Math.Round(height)},{(int)Math.Round(dist)}");
+                        if (this is ObservedPlayer player && showClass)
+                        {
+                            int back = 0, front = 0, side1 = 0, side2 = 0;
+                            bool firstSide = false, first = false, hasPlates = player.Gear.Loot.Contains(player.Gear.Loot.Where(Loot => Loot.Name.ToLower().Contains("plate")).FirstOrDefault());
+                            if (hasPlates)
+                            {
+                                foreach (var x in player.Gear.Loot)
+                                {
+                                    if (x.Name.ToLower().Contains("plate"))
+                                    {
+                                        if (x.Name.ToLower().Contains("carrier"))
+                                            continue;
+                                        if (x.Name.ToLower().Contains("side"))
+                                        {
+                                            if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
+                                            {
+                                                if (firstSide)
+                                                    side2 = lvl;
+                                                else
+                                                {
+                                                    side1 = lvl;
+                                                    firstSide = true;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
+                                            {
+                                                if (first)
+                                                    back = lvl;
+                                                else
+                                                {
+                                                    front = lvl;
+                                                    first = true;
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+                                lines.Add($"F: {front}, B: {back}" + ((side1 > 0) ? $", L: {side1}" : "") + ((side2 > 0) ? $", R: {side2}" : ""));
+                            }
+                        }
                         if (ErrorTimer.ElapsedMilliseconds > 100)
                             lines[0] = "ERROR"; // In case POS stops updating, let us know!
                     }

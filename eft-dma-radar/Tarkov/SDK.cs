@@ -342,7 +342,10 @@ namespace SDK
 			public const uint Player = 0x10; // EFT.NextObservedPlayer.ObservedPlayerView
 			public const uint PlayerCorpse = 0x18; // EFT.Interactive.ObservedCorpse
 			public const uint HealthStatus = 0xD8; // System.Int32
-		}
+			public const uint HealthRate = 0x13C; // Single
+			public const uint IsAlive = 0xDC; // Boolean
+
+        }
 
 		public readonly partial struct SimpleCharacterController
 		{

@@ -96,7 +96,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// Player's Current Health Status
         /// </summary>
         public Enums.ETagStatus HealthStatus { get; private set; } = Enums.ETagStatus.Healthy;
-        
+
 
         internal ObservedPlayer(ulong playerBase) : base(playerBase)
         {
