@@ -175,7 +175,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     }
                     if(Memory.MapID.ToLower() == "laboratory")
                     {
-                        Name = "Rogue";
+                        Name = "Raider";
                         Type = PlayerType.AIRaider;
                     }
                 }
