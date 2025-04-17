@@ -247,7 +247,7 @@ namespace eft_dma_radar.Tarkov.Loot
                                               Offsets.InteractiveLootItem.Item); //EFT.InventoryLogic.Item
                     var itemTemplate = Memory.ReadPtr(item + Offsets.LootItem.Template); //EFT.InventoryLogic.ItemTemplate
                     var isQuestItem = Memory.ReadValue<bool>(itemTemplate + Offsets.ItemTemplate.QuestItem);
-
+                    var isSpawnedinSession = Memory.ReadValue<bool>(item + Offsets.LootItem.SpawnedInSession);
                     //If NOT a quest item. Quest items are like the quest related things you need to find like the pocket watch or Jaeger's Letter etc. We want to ignore these quest items.
                     var BSGIdPtr = Memory.ReadValue<Types.MongoID>(itemTemplate + Offsets.ItemTemplate._id);
                     var id = Memory.ReadUnityString(BSGIdPtr.StringID);
@@ -258,7 +258,8 @@ namespace eft_dma_radar.Tarkov.Loot
                         {
                             questItem = new QuestItem(entry)
                             {
-                                Position = pos
+                                Position = pos,
+                                IsFIR = isSpawnedinSession
                             };
                         }
                         else
@@ -269,7 +270,8 @@ namespace eft_dma_radar.Tarkov.Loot
                                 shortName = "Item";
                             questItem = new QuestItem(id, $"Q_{shortName}")
                             {
-                                Position = pos
+                                Position = pos,
+                                IsFIR = isSpawnedinSession
                             };
                         }
                         loot.Add(questItem);
@@ -280,7 +282,8 @@ namespace eft_dma_radar.Tarkov.Loot
                         {
                             loot.Add(new LootItem(entry)
                             {
-                                Position = pos
+                                Position = pos,
+                                IsFIR = isSpawnedinSession
                             });
                         }
                     }
@@ -290,7 +293,7 @@ namespace eft_dma_radar.Tarkov.Loot
 
         private static readonly FrozenSet<string> _skipSlots = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "SecuredContainer", "Dogtag", "Compass", "Eyewear", "ArmBand"
+            "SecuredContainer", "Dogtag", "Compass", "ArmBand"
         }.ToFrozenSet(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>

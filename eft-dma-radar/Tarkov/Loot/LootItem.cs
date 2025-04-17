@@ -174,6 +174,20 @@ namespace eft_dma_radar.Tarkov.Loot
             }
         }
 
+        public bool isFIR
+        {
+            get
+            {
+                if (Blacklisted)
+                    return false;
+                if (this is LootContainer container)
+                {
+                    return true;
+                }
+                return _fir;
+            }
+        }
+
         /// <summary>
         /// Checks if an item exceeds valuable loot price threshold.
         /// </summary>
@@ -289,7 +303,8 @@ namespace eft_dma_radar.Tarkov.Loot
             {
                 return;
             }
-
+            if (IsQuestCondition && !isFIR)
+                return;
             if (this is LootCorpse && Config.HideCorpses)
                 return;
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
@@ -308,12 +323,18 @@ namespace eft_dma_radar.Tarkov.Loot
 
         private Vector3 _position;
         public ref Vector3 Position => ref _position;
+
+        private bool _fir;
+
+        public ref bool IsFIR => ref _fir;
         public Vector2 MouseoverPosition { get; set; }
 
         public virtual void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
         {
             var label = GetUILabel(MainForm.Config.QuestHelper.Enabled);
             var paints = GetPaints();
+            if(IsQuestCondition && !isFIR)
+                return;
             var heightDiff = Position.Y - localPlayer.Position.Y;
             if (MainForm.Config.MapFollowTeammate == 1 && this is not QuestItem)
             {
@@ -414,7 +435,7 @@ namespace eft_dma_radar.Tarkov.Loot
                 if (this is not LootCorpse && loot.Count() == 1)
                 {
                     var firstItem = loot.First();
-                    label = firstItem.Name.ToLower().Contains("poster") ? firstItem.Name : firstItem.ShortName;
+                    label = firstItem.ShortName;
                 }
                 else
                 {
@@ -431,7 +452,7 @@ namespace eft_dma_radar.Tarkov.Loot
                 else if (Price > 0)
                     label += $"[{TarkovMarketItem.FormatPrice(Price)}] ";
                 label += ShortName;
-                if (showQuest && IsQuestCondition)
+                if (showQuest && IsQuestCondition && isFIR)
                     label += " (Quest)";
             }
 
