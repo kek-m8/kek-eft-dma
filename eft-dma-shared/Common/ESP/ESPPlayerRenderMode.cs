@@ -17,6 +17,10 @@
         /// <summary>
         /// Renders a dot showing unit's presence.
         /// </summary>
-        Presence = 3
+        Presence = 3,
+        /// <summary>
+        /// Renders a box with bones inside
+        /// </summary>
+        BonesNBox = 4
     }
 }

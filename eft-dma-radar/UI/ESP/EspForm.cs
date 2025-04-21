@@ -594,6 +594,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                             }
                             container.DrawESP(canvas, localPlayer);
                         }
+                        
                     }
                 }
             }

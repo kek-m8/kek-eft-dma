@@ -874,11 +874,37 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             if (!CameraManagerBase.WorldToScreen(ref Position, out var baseScrPos))
                 return;
             var paint = this.GetEspPlayerPaint();
-            if (ESP.Config.PlayerRendering.RenderingMode is ESPPlayerRenderMode.Bones) // Draw Player Bones
+            var renderMode = ESP.Config.PlayerRendering.RenderingMode;
+            if (renderMode is ESPPlayerRenderMode.Bones) // draw skeleton (bones)
             {
                 if (!this.Skeleton_.UpdateESPBuffer())
                     return;
-                canvas.DrawPoints(SKPointMode.Lines, Skeleton.ESPBuffer, paint.Item1);
+                canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, paint.Item1);
+            }
+            else if (renderMode is ESPPlayerRenderMode.Box) // draw box
+            {
+                var getBox = Skeleton_.GetESPBox(baseScrPos);
+                if (getBox is not SKRect box)
+                    return;
+                canvas.DrawRect(box, paint.Item1);
+                baseScrPos.X = box.MidX;
+                baseScrPos.Y = box.Bottom;
+            }
+            else if (renderMode is ESPPlayerRenderMode.Presence) // draw presence (dot on head only)
+            {
+                if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanHead].Position, out var presenceScrPos, true, true))
+                    return;
+                canvas.DrawCircle(presenceScrPos, 1.5f * ESP.Config.FontScale, paint.Item1);
+            }
+            else if (renderMode is ESPPlayerRenderMode.BonesNBox) // draw box with skeleton (bones) inside
+            {
+                if (!this.Skeleton_.UpdateESPBuffer()) return;
+                var box = Skeleton_.GetESPBox(baseScrPos);
+                if (box is not SKRect box_) return;
+                canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, paint.Item1);
+                canvas.DrawRect(box_, paint.Item1);
+                baseScrPos.X = box_.MidX;
+                baseScrPos.Y = box_.Bottom;
             }
             if (drawLabel && this is ArenaObservedPlayer observed)
             {
@@ -898,11 +924,11 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     else
                         lines[0] += $" ({(int)dist}m)";
                 }
-                if(showBomb)
+                if(showBomb && this is ArenaObservedPlayer observed_)
                 {
                     if (Memory.Game.matchMode is Enums.ERaidMode.BlastGang)
                     {
-                        GearManager a = new GearManager(observed); // get live equipment
+                        GearManager a = new GearManager(observed_); // get live equipment
                         if (a.Equipment.TryGetValue("Backpack", out var _))
                             lines.Add("(BOMB)");
                         else

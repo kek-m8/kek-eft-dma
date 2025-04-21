@@ -529,7 +529,7 @@ namespace arena_dma_radar.UI.Radar
         {
             trackBar_AimlineLength.Value = Config.AimLineLength;
             checkBox_Aimview.Checked = Config.ShowESPWidget;
-            checkBox_Bomb.Checked = Config.ESP.ShowBomb;
+            checkBox_Bomb.Checked = Config.ESP.PlayerRendering.ShowBomb;
             checkBox_RadarBomb.Checked = Config.ShowBomb;
             trackBar_UIScale.Value = (int)Math.Round(Config.UIScale * 100);
             textBox_ResWidth.Text = Config.MonitorWidth.ToString();
@@ -1606,6 +1606,15 @@ namespace arena_dma_radar.UI.Radar
                 case ESPPlayerRenderMode.Bones:
                     radioButton_ESPRender_Bones.Checked = true;
                     break;
+                case ESPPlayerRenderMode.Box:
+                    radioButton_Box.Checked = true;
+                    break;
+                case ESPPlayerRenderMode.Presence:
+                    radioButton_P.Checked = true;
+                    break;
+                case ESPPlayerRenderMode.BonesNBox:
+                    radioButton_Box.Checked = true;
+                    break;
             }
 
             checkBox_ESPRender_Labels.Checked = Config.ESP.PlayerRendering.ShowLabels;
@@ -1855,6 +1864,24 @@ namespace arena_dma_radar.UI.Radar
         private void checkBox_RadarBomb_CheckedChanged(object sender, EventArgs e)
         {
             Config.ShowBomb = checkBox_RadarBomb.Checked;
+        }
+
+        private void radioButton_Box_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_Box.Checked)
+                Config.ESP.PlayerRendering.RenderingMode = ESPPlayerRenderMode.Box;
+        }
+
+        private void radioButton_P_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_P.Checked)
+                Config.ESP.PlayerRendering.RenderingMode = ESPPlayerRenderMode.Presence;
+        }
+
+        private void radioButton_BoxBones_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_BoxBones.Checked)
+                Config.ESP.PlayerRendering.RenderingMode = ESPPlayerRenderMode.BonesNBox;
         }
     }
 }

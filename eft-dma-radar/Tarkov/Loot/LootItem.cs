@@ -156,6 +156,7 @@ namespace eft_dma_radar.Tarkov.Loot
         }
         public bool IsWeapon => _item.IsWeapon;
         public bool IsCurrency => _item.IsCurrency;
+        public bool IsWeaponMod => _item.IsWeaponMod;
 
         /// <summary>
         /// Checks if an item exceeds regular loot price threshold.
@@ -288,6 +289,11 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
+            if (this is LootItem && this is not QuestItem)
+            {
+                if (IsQuestCondition && !IsFIR)
+                    return;
+            }
             var dist = Vector3.Distance(localPlayer.Position, Position);
             if (this is QuestItem)
             {
@@ -303,8 +309,6 @@ namespace eft_dma_radar.Tarkov.Loot
             {
                 return;
             }
-            if (IsQuestCondition && !isFIR)
-                return;
             if (this is LootCorpse && Config.HideCorpses)
                 return;
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
@@ -331,10 +335,13 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
         {
+            if (this is LootItem && this is not QuestItem)
+            {
+                if (IsQuestCondition && !IsFIR)
+                    return;
+            }
             var label = GetUILabel(MainForm.Config.QuestHelper.Enabled);
             var paints = GetPaints();
-            if(IsQuestCondition && !isFIR)
-                return;
             var heightDiff = Position.Y - localPlayer.Position.Y;
             if (MainForm.Config.MapFollowTeammate == 1 && this is not QuestItem)
             {
@@ -451,8 +458,8 @@ namespace eft_dma_radar.Tarkov.Loot
                     label += "!!";
                 else if (Price > 0)
                     label += $"[{TarkovMarketItem.FormatPrice(Price)}] ";
-                label += ShortName;
-                if (showQuest && IsQuestCondition && isFIR)
+                label += (!ShortName.Equals("Poster") ? ShortName : this.Name);
+                if (showQuest && IsQuestCondition && IsFIR)
                     label += " (Quest)";
             }
 

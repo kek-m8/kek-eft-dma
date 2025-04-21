@@ -30,6 +30,7 @@ using eft_dma_shared.Common.Unity.LowLevel;
 using LonesEFTRadar.Tarkov.Features.MemoryWrites;
 using SkiaSharp;
 using System;
+using System.CodeDom;
 using System.Net.Http.Json;
 using System.Security.Authentication.ExtendedProtection;
 using System.Timers;
@@ -1650,64 +1651,72 @@ namespace eft_dma_radar.UI.Radar
         /// Refresh quest helper (if enabled).
         /// </summary>
         /// 
-        public bool kappa_ = false;
-        private async void RefreshQuestHelper()
+        private bool _kappa = false;
+        QuestListItem[] nonKappa = null;
+        private void RefreshQuestHelper()
         {
             var currentList = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
             Dictionary<string, int> listidforid = new Dictionary<string, int>();
-            for (int i = 0; i < checkedListBox_QuestHelper.Items.Count; i++)
+            for (int i = 0; i < currentList.Length; i++)
             {
                 listidforid[currentList[i].Id] = i;
             }
+
             if (Config.QuestHelper.Enabled && Memory.InRaid && Memory.QuestManager is QuestManager quests)
             {
+                checkedListBox_QuestHelper.BeginUpdate();
 
-                foreach (var quest in quests.CurrentQuests)
+                foreach (var questId in quests.CurrentQuests)
                 {
-                    if (!currentList.Any(x => x.Id.Equals(quest, StringComparison.OrdinalIgnoreCase)))
+                    if (!currentList.Any(x => x.Id.Equals(questId, StringComparison.OrdinalIgnoreCase)))
                     {
-                        bool enabled = !Config.QuestHelper.BlacklistedQuests.Contains(quest, StringComparer.OrdinalIgnoreCase);
-                        checkedListBox_QuestHelper.Items.Add(new QuestListItem(quest), enabled);
+                        bool enabled = !Config.QuestHelper.BlacklistedQuests.Contains(questId, StringComparer.OrdinalIgnoreCase);
+                        checkedListBox_QuestHelper.Items.Add(new QuestListItem(questId), enabled);
                     }
                 }
+
+                List<QuestListItem> questsToBlacklist = new();
+                List<QuestListItem> questsToUnblacklist = new();
+
                 foreach (var existing in currentList)
                 {
                     if (!quests.CurrentQuests.Contains(existing.Id))
+                    {
                         checkedListBox_QuestHelper.Items.Remove(existing);
-                    var data = new Dictionary<string, string>()
+                        continue;
+                    }
+
+                    if (checkBox_KappaOnly.Checked)
                     {
-                        {"query", "{task(gameMode: regular, id: \"" + existing.Id + "\") {     kappaRequired   }}"}
-                    };
-                    try
-                    {
-                        using (var httpClient = new HttpClient())
+                        if (!existing.KappaRequired)
                         {
-
-                            var httpResponse = await httpClient.PostAsJsonAsync("https://api.tarkov.dev/graphql", data);
-                            var responseContent = await httpResponse.Content.ReadAsStreamAsync();
-                            var jsonObj = JsonSerializer.Deserialize<TaskQuery>(responseContent);
-
-                            if (!jsonObj.Data.Task.KappaRequired && checkBox_KappaOnly.Checked) // if task is not kappa, but kappa only is on
-                            {
+                            if (!Config.QuestHelper.BlacklistedQuests.Contains(existing.Id))
                                 Config.QuestHelper.BlacklistedQuests.Add(existing.Id);
-                                // checkedListBox_QuestHelper.Items.Remove(existing);
-                                checkedListBox_QuestHelper.SetItemChecked(listidforid[existing.Id], false);
-                                kappa_ = true;
-                            }
-                            else if (!checkBox_KappaOnly.Checked && kappa_) // if kappa only is not on, and quest was removed due to it being on previously
-                            {
-                                Config.QuestHelper.BlacklistedQuests.Remove(existing.Id);
-                                //checkedListBox_QuestHelper.Items.Add(existing);
-                                checkedListBox_QuestHelper.SetItemChecked(listidforid[existing.Id], true);
-                                kappa_ = false;
-                            }
+
+                            if (listidforid.TryGetValue(existing.Id, out int idx))
+                                checkedListBox_QuestHelper.SetItemChecked(idx, false);
+
+                            questsToBlacklist.Add(existing);
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        LoneLogging.WriteLine("Error getting quest data: " + ex.Message);
+                        if (Config.QuestHelper.BlacklistedQuests.Contains(existing.Id))
+                        {
+                            Config.QuestHelper.BlacklistedQuests.Remove(existing.Id);
+
+                            if (listidforid.TryGetValue(existing.Id, out int idx))
+                                checkedListBox_QuestHelper.SetItemChecked(idx, true);
+
+                            questsToUnblacklist.Add(existing);
+                        }
                     }
                 }
+
+                nonKappa = checkBox_KappaOnly.Checked ? questsToBlacklist.ToArray() : null;
+                _kappa = checkBox_KappaOnly.Checked;
+
+                checkedListBox_QuestHelper.EndUpdate();
             }
         }
 
@@ -2784,6 +2793,9 @@ namespace eft_dma_radar.UI.Radar
                 case ESPPlayerRenderMode.Presence:
                     radioButton_ESPRender_Presence.Checked = true;
                     break;
+                case ESPPlayerRenderMode.BonesNBox:
+                    radioButton_ESPRender_BoneBox.Checked = true;
+                    break;
             }
 
             switch (Config.ESP.AIRendering.RenderingMode)
@@ -2800,6 +2812,9 @@ namespace eft_dma_radar.UI.Radar
                 case ESPPlayerRenderMode.Presence:
                     radioButton_ESPAIRender_Presence.Checked = true;
                     break;
+                case ESPPlayerRenderMode.BonesNBox:
+                    radioButton_ESPAIRender_BoneBox.Checked = true;
+                    break;
             }
 
             checkBox_ESPRender_Labels.Checked = Config.ESP.PlayerRendering.ShowLabels;
@@ -2807,6 +2822,8 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESPRender_Dist.Checked = Config.ESP.PlayerRendering.ShowDist;
             checkBox_ESPAIRender_Labels.Checked = Config.ESP.AIRendering.ShowLabels;
             checkBox_ESPAIRender_Weapons.Checked = Config.ESP.AIRendering.ShowWeapons;
+            checkBox_IsAimingPMC.Checked = Config.ESP.PlayerRendering.ShowAiming;
+            checkBox_IsAimingAI.Checked = Config.ESP.AIRendering.ShowAiming;
             checkBox_ShowRank.Checked = Config.ESP.PlayerRendering.ShowRank;
             checkBox_ESPAIRender_Dist.Checked = Config.ESP.AIRendering.ShowDist;
             textBox_EspFpsCap.Text = Config.ESP.FPSCap.ToString();
@@ -2821,11 +2838,9 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_ShowMines.Checked = Config.ESP.ShowMines;
             checkBox_ESP_ShowMag.Checked = Config.ESP.ShowMagazine;
             checkBox_ESP_RaidStats.Checked = Config.ESP.ShowRaidStats;
-            checkBox_IsAiming.Checked = Config.ESP.ShowIfAiming;
             checkBox_ESP_StatusText.Checked = Config.ESP.ShowStatusText;
             checkBox_ESP_FPS.Checked = Config.ESP.ShowFPS;
             checkBox_TrapSwitches.Checked = Config.ESP.ShowEventStuff;
-            checkBox_IsAiming.Checked = Config.ESP.ShowIfAiming;
             checkBox_ShowPlates.Checked = Config.ESP.ShowArmourClass;
             checkBox3.Checked = Config.ShowArmourClass;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
@@ -3994,7 +4009,7 @@ namespace eft_dma_radar.UI.Radar
 
         private void checkBox_IsAiming_CheckedChanged(object sender, EventArgs e)
         {
-            Config.ESP.ShowIfAiming = checkBox_IsAiming.Checked;
+            Config.ESP.PlayerRendering.ShowAiming = checkBox_IsAimingPMC.Checked;
         }
 
         private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
@@ -4020,6 +4035,53 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            foreach (var x in Memory.Players)
+            {
+                if (x.IsAI && x is ObservedPlayer observed)
+                {
+                    MessageBox.Show($"{observed.Position}\n{observed.Hands.CurrentItem}\n{observed.VoiceLine}");
+                }
+            }
+        }
+
+        private void checkedListBox_Containers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox_IsAimingAI_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.AIRendering.ShowAiming = checkBox_IsAimingAI.Checked;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_ESPRender_BoneBox.Checked)
+                Config.ESP.PlayerRendering.RenderingMode = ESPPlayerRenderMode.BonesNBox;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_ESPAIRender_BoneBox.Checked)
+                Config.ESP.AIRendering.RenderingMode = ESPPlayerRenderMode.BonesNBox;
+        }
+
+        private void checkBox_QuestSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_QuestSelectAll.Checked)
+            {
+                if (checkBox_QuestHelper_Enabled.Checked && checkedListBox_QuestHelper.Items is not null)
+                {
+                    for (int i = 0; i < checkedListBox_QuestHelper.Items.Count; i++)
+                    {
+                        checkedListBox_QuestHelper.SetItemChecked(i, true);
+                    }
+                }
+            }
         }
     }
 }

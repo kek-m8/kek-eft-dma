@@ -265,7 +265,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     {
                         var magChambersPtr = Memory.ReadPtr(magItem + Offsets.LootItemMod.Slots);
                         using var magChambers = MemArray<Chamber>.Get(magChambersPtr);
-                        if (magChambers.Count > 0) // Revolvers, etc.
+                        if (magChambers.Count > 0 || ammoInChamber is null) // Revolvers, etc.
                         {
                             maxCount += magChambers.Count;
                             currentCount += magChambers.Count(x => x.HasBullet());

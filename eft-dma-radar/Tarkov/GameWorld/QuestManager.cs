@@ -23,6 +23,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
             { "woods", "5704e3c2d2720bac5b8b4567" },
             { "lighthouse", "5704e4dad2720bb55b8b4567" },
             { "shoreline", "5704e554d2720bac5b8b456e" },
+            { "labyrinth", "6733700029c367a3d40b02af" },
             { "rezervbase", "5704e5fad2720bc05b8b4567" },
             { "interchange", "5714dbc024597771384a510d" },
             { "tarkovstreets", "5714dc692459777137212e12" },
@@ -248,15 +249,6 @@ namespace eft_dma_radar.Tarkov.GameWorld
             MouseoverPosition = new Vector2(point.X, point.Y);
             var heightDiff = Position.Y - localPlayer.Position.Y;
             SKPaints.ShapeOutline.StrokeWidth = 2f;
-            switch(Name)
-            {
-                case "Easy Job - Part 2":
-                    if(Memory.MapID.ToLower().Equals("lighthouse", StringComparison.OrdinalIgnoreCase))
-                    {
-                        // draw lines around watertreatment in pink to show task area
-                    }
-                    break;
-            }
             if (heightDiff > 1.45) // marker is above player
             {
                 using var path = point.GetArrow();

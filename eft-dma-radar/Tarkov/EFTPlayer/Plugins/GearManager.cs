@@ -88,7 +88,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     if (EftDataManager.AllItems.TryGetValue(id, out var entry2))
                     {
                         if (slot.Key == "FirstPrimaryWeapon" || slot.Key == "SecondPrimaryWeapon" ||
-                            slot.Key == "Headwear" || slot.Key == "TacticalVest" || slot.Key == "ArmorVest")
+                            slot.Key == "Holster" || slot.Key == "Headwear" || slot.Key == "TacticalVest" || slot.Key == "ArmorVest")
                             try
                             {
                                 RecursePlayerGearSlots(containedItem, loot);

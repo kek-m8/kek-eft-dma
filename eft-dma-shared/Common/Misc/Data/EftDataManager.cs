@@ -131,6 +131,9 @@ namespace eft_dma_shared.Common.Misc.Data
             [JsonPropertyName("name")]
             public string Name { get; set; }
 
+            [JsonPropertyName("kappaRequired")]
+            public bool KappaRequired { get; set; }
+
             [JsonPropertyName("objectives")]
             public List<ObjectiveElement> Objectives { get; set; }
 

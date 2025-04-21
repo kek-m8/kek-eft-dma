@@ -1790,20 +1790,20 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 return;
             var espPaints = GetESPPaints();
             var renderMode = IsAI ? ESP.Config.AIRendering.RenderingMode : ESP.Config.PlayerRendering.RenderingMode;
-            if (renderMode is not ESPPlayerRenderMode.None && this is BtrOperator btr)
+            if (renderMode is not ESPPlayerRenderMode.None && this is BtrOperator btr) // draw btr
             {
                 if (CameraManagerBase.WorldToScreen(ref btr.Position, out var btrScrPos))
                     btrScrPos.DrawESPText(canvas, btr, localPlayer, showDist, espPaints.Item2, "BTR Vehicle");
                 return; // Done drawing BTR - move on
             }
 
-            if (renderMode is ESPPlayerRenderMode.Bones)
+            if (renderMode is ESPPlayerRenderMode.Bones) // draw skeleton (bones)
             {
                 if (!this.Skeleton_.UpdateESPBuffer())
                     return;
                 canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, espPaints.Item1);
             }
-            else if (renderMode is ESPPlayerRenderMode.Box)
+            else if (renderMode is ESPPlayerRenderMode.Box) // draw box
             {
                 var getBox = Skeleton_.GetESPBox(baseScrPos);
                 if (getBox is not SKRect box)
@@ -1812,11 +1812,21 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 baseScrPos.X = box.MidX;
                 baseScrPos.Y = box.Bottom;
             }
-            else if (renderMode is ESPPlayerRenderMode.Presence)
+            else if (renderMode is ESPPlayerRenderMode.Presence) // draw presence (dot on head only)
             {
                 if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanHead].Position, out var presenceScrPos, true, true))
                     return;
                 canvas.DrawCircle(presenceScrPos, 1.5f * ESP.Config.FontScale, espPaints.Item1);
+            }
+            else if (renderMode is ESPPlayerRenderMode.BonesNBox) // draw box with skeleton (bones) inside
+            {
+                if(!this.Skeleton_.UpdateESPBuffer()) return;
+                var box = Skeleton_.GetESPBox(baseScrPos);
+                if (box is not SKRect box_) return;
+                canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, espPaints.Item1);
+                canvas.DrawRect(box_, espPaints.Item1);
+                baseScrPos.X = box_.MidX;
+                baseScrPos.Y = box_.Bottom;
             }
 
             if (drawLabel)
@@ -1884,26 +1894,30 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     }
                 }
 
-                if (showWep) {
+                if (showWep)
+                {
                     lines.Add($"{Hands?.CurrentItem}");
 
-                    if (this is ObservedPlayer observed && Config.ESP.ShowIfAiming)
+                    if ((Config.ESP.PlayerRendering.ShowAiming && this.IsHumanActive) || (Config.ESP.AIRendering.ShowAiming && this.IsAI))
                     {
-                        var handCtrlPtr = Memory.ReadPtr(observed.HandsControllerAddr);
-                        bool isAiming = Memory.ReadValue<bool>(Memory.ReadPtrChain(handCtrlPtr, new uint[] { Offsets.ObservedHandsController.BundleAnimationBones, Offsets.BundleAnimationBonesController.ProceduralWeaponAnimation }) + Offsets.ProceduralWeaponAnimationController.IsAiming);
-                        if (isAiming)
+                        if (this is ObservedPlayer observed)
                         {
-                            lines.Add("(AIMING)");
-                        }
-                        else
-                        {
-                            if (lines.Exists(x => x.Contains("(AIMING)")))
+                            var handCtrlPtr = Memory.ReadPtr(observed.HandsControllerAddr);
+                            bool isAiming = Memory.ReadValue<bool>(Memory.ReadPtrChain(handCtrlPtr, new uint[] { Offsets.ObservedHandsController.BundleAnimationBones, Offsets.BundleAnimationBonesController.ProceduralWeaponAnimation }) + Offsets.ProceduralWeaponAnimationController.IsAiming);
+                            if (isAiming)
                             {
-                                lines.Remove("(AIMING)");
+                                lines.Add("(AIMING)");
+                            }
+                            else
+                            {
+                                if (lines.Exists(x => x.Contains("(AIMING)")))
+                                {
+                                    lines.Remove("(AIMING)");
+                                }
                             }
                         }
                     }
-                
+
                 }
                 if (showDist)
                 {

@@ -50,6 +50,7 @@
             checkBox_Aimview = new CheckBox();
             checkBox_GrpConnect = new CheckBox();
             checkBox_HideNames = new CheckBox();
+            checkBox_RadarBomb = new CheckBox();
             flowLayoutPanel_MemWriteCheckbox = new FlowLayoutPanel();
             checkBox_EnableMemWrite = new CheckBox();
             flowLayoutPanel_MemWrites = new FlowLayoutPanel();
@@ -119,7 +120,10 @@
             flowLayoutPanel_ESP_PlayerRender = new FlowLayoutPanel();
             label18 = new Label();
             radioButton_ESPRender_None = new RadioButton();
+            radioButton_Box = new RadioButton();
             radioButton_ESPRender_Bones = new RadioButton();
+            radioButton_P = new RadioButton();
+            radioButton_BoxBones = new RadioButton();
             checkBox_ESPRender_Labels = new CheckBox();
             checkBox_ESPRender_Weapons = new CheckBox();
             checkBox_ESPRender_Dist = new CheckBox();
@@ -141,7 +145,6 @@
             label_Pos = new Label();
             skglControl_Radar = new SKGLControl();
             tabControl1 = new TabControl();
-            checkBox_RadarBomb = new CheckBox();
             tabPage2.SuspendLayout();
             flowLayoutPanel_Settings.SuspendLayout();
             flowLayoutPanel_RadarSettings.SuspendLayout();
@@ -396,6 +399,17 @@
             checkBox_HideNames.Text = "Hide Names";
             checkBox_HideNames.UseVisualStyleBackColor = true;
             checkBox_HideNames.CheckedChanged += checkBox_HideNames_CheckedChanged;
+            // 
+            // checkBox_RadarBomb
+            // 
+            checkBox_RadarBomb.AutoSize = true;
+            checkBox_RadarBomb.Location = new Point(469, 122);
+            checkBox_RadarBomb.Name = "checkBox_RadarBomb";
+            checkBox_RadarBomb.Size = new Size(128, 19);
+            checkBox_RadarBomb.TabIndex = 47;
+            checkBox_RadarBomb.Text = "Show Bomb Carrier";
+            checkBox_RadarBomb.UseVisualStyleBackColor = true;
+            checkBox_RadarBomb.CheckedChanged += checkBox_RadarBomb_CheckedChanged;
             // 
             // flowLayoutPanel_MemWriteCheckbox
             // 
@@ -1207,14 +1221,17 @@
             flowLayoutPanel_ESP_PlayerRender.BorderStyle = BorderStyle.FixedSingle;
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(label18);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(radioButton_ESPRender_None);
+            flowLayoutPanel_ESP_PlayerRender.Controls.Add(radioButton_Box);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(radioButton_ESPRender_Bones);
+            flowLayoutPanel_ESP_PlayerRender.Controls.Add(radioButton_P);
+            flowLayoutPanel_ESP_PlayerRender.Controls.Add(radioButton_BoxBones);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_ESPRender_Labels);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_ESPRender_Weapons);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_ESPRender_Dist);
             flowLayoutPanel_ESP_PlayerRender.Controls.Add(checkBox_Bomb);
             flowLayoutPanel_ESP_PlayerRender.Location = new Point(3, 96);
             flowLayoutPanel_ESP_PlayerRender.Name = "flowLayoutPanel_ESP_PlayerRender";
-            flowLayoutPanel_ESP_PlayerRender.Size = new Size(264, 77);
+            flowLayoutPanel_ESP_PlayerRender.Size = new Size(351, 77);
             flowLayoutPanel_ESP_PlayerRender.TabIndex = 5;
             // 
             // label18
@@ -1239,12 +1256,23 @@
             radioButton_ESPRender_None.UseVisualStyleBackColor = true;
             radioButton_ESPRender_None.CheckedChanged += radioButton_ESPRender_None_CheckedChanged;
             // 
+            // radioButton_Box
+            // 
+            radioButton_Box.AutoSize = true;
+            radioButton_Box.Location = new Point(63, 28);
+            radioButton_Box.Name = "radioButton_Box";
+            radioButton_Box.Size = new Size(45, 19);
+            radioButton_Box.TabIndex = 73;
+            radioButton_Box.TabStop = true;
+            radioButton_Box.Text = "Box";
+            radioButton_Box.UseVisualStyleBackColor = true;
+            radioButton_Box.CheckedChanged += radioButton_Box_CheckedChanged;
+            // 
             // radioButton_ESPRender_Bones
             // 
             radioButton_ESPRender_Bones.AutoSize = true;
             radioButton_ESPRender_Bones.Checked = true;
-            flowLayoutPanel_ESP_PlayerRender.SetFlowBreak(radioButton_ESPRender_Bones, true);
-            radioButton_ESPRender_Bones.Location = new Point(63, 28);
+            radioButton_ESPRender_Bones.Location = new Point(114, 28);
             radioButton_ESPRender_Bones.Name = "radioButton_ESPRender_Bones";
             radioButton_ESPRender_Bones.Size = new Size(57, 19);
             radioButton_ESPRender_Bones.TabIndex = 64;
@@ -1252,6 +1280,31 @@
             radioButton_ESPRender_Bones.Text = "Bones";
             radioButton_ESPRender_Bones.UseVisualStyleBackColor = true;
             radioButton_ESPRender_Bones.CheckedChanged += radioButton_ESPRender_Bones_CheckedChanged;
+            // 
+            // radioButton_P
+            // 
+            radioButton_P.AutoSize = true;
+            radioButton_P.Location = new Point(177, 28);
+            radioButton_P.Name = "radioButton_P";
+            radioButton_P.Size = new Size(72, 19);
+            radioButton_P.TabIndex = 75;
+            radioButton_P.TabStop = true;
+            radioButton_P.Text = "Presence";
+            radioButton_P.UseVisualStyleBackColor = true;
+            radioButton_P.CheckedChanged += radioButton_P_CheckedChanged;
+            // 
+            // radioButton_BoxBones
+            // 
+            radioButton_BoxBones.AutoSize = true;
+            flowLayoutPanel_ESP_PlayerRender.SetFlowBreak(radioButton_BoxBones, true);
+            radioButton_BoxBones.Location = new Point(255, 28);
+            radioButton_BoxBones.Name = "radioButton_BoxBones";
+            radioButton_BoxBones.Size = new Size(91, 19);
+            radioButton_BoxBones.TabIndex = 74;
+            radioButton_BoxBones.TabStop = true;
+            radioButton_BoxBones.Text = "Box + Bones";
+            radioButton_BoxBones.UseVisualStyleBackColor = true;
+            radioButton_BoxBones.CheckedChanged += radioButton_BoxBones_CheckedChanged;
             // 
             // checkBox_ESPRender_Labels
             // 
@@ -1306,7 +1359,7 @@
             flowLayoutPanel4.Controls.Add(trackBar_EspFontScale);
             flowLayoutPanel4.Controls.Add(label_EspLineScale);
             flowLayoutPanel4.Controls.Add(trackBar_EspLineScale);
-            flowLayoutPanel4.Location = new Point(273, 109);
+            flowLayoutPanel4.Location = new Point(360, 109);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
             flowLayoutPanel4.Size = new Size(346, 51);
             flowLayoutPanel4.TabIndex = 4;
@@ -1482,17 +1535,6 @@
             tabControl1.Size = new Size(1264, 681);
             tabControl1.TabIndex = 8;
             // 
-            // checkBox_RadarBomb
-            // 
-            checkBox_RadarBomb.AutoSize = true;
-            checkBox_RadarBomb.Location = new Point(469, 122);
-            checkBox_RadarBomb.Name = "checkBox_RadarBomb";
-            checkBox_RadarBomb.Size = new Size(128, 19);
-            checkBox_RadarBomb.TabIndex = 47;
-            checkBox_RadarBomb.Text = "Show Bomb Carrier";
-            checkBox_RadarBomb.UseVisualStyleBackColor = true;
-            checkBox_RadarBomb.CheckedChanged += checkBox_RadarBomb_CheckedChanged;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1657,6 +1699,9 @@
         private FlowLayoutPanel flowLayoutPanel_MemWriteCheckbox;
         private CheckBox checkBox_Bomb;
         private CheckBox checkBox_RadarBomb;
+        private RadioButton radioButton_Box;
+        private RadioButton radioButton_BoxBones;
+        private RadioButton radioButton_P;
     }
 }
 

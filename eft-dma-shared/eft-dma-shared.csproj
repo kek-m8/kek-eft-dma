@@ -22,11 +22,12 @@
 		<EmbeddedResource Include="..\Resources\visible.bundle" />
 		<EmbeddedResource Include="..\Resources\visibilitycheck.bundle" />
 		<EmbeddedResource Include="..\Resources\FILE_CRYPT_KEY.bin" />
+		<EmbeddedResource Include="..\Resources\DEFAULT_DATA.json" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdRegular.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdMedium.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdBold.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdItalic.otf" />
-		<EmbeddedResource Include="..\Resources\DEFAULT_DATA.json" />
+
 	</ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

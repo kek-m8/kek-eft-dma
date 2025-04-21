@@ -31,6 +31,10 @@ namespace eft_dma_radar.Tarkov.Loot
             {
                 this.Name = container.ShortName ?? "Container";
             }
+            else
+            {
+                this.Name = containerId;
+            }
         }
 
         public override void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)

@@ -77,6 +77,10 @@ namespace eft_dma_shared.Common.Misc.Data
         [JsonIgnore]
         public bool IsWeapon => Tags.Contains("Weapon");
         /// <summary>
+        /// Is a Weapon Mod.
+        /// </summary>
+        public bool IsWeaponMod => Tags.Contains("Weapon mod");
+        /// <summary>
         /// Is Currency (Roubles,etc.)
         /// </summary>
         [JsonIgnore]

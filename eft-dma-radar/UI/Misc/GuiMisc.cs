@@ -176,16 +176,19 @@ namespace eft_dma_radar.UI.Misc
     {
         public string Id { get; }
         public string Name { get; }
+        public bool KappaRequired { get; }
         public QuestListItem(string id)
         {
             Id = id;
             if (EftDataManager.TaskData.TryGetValue(id, out var task))
             {
                 Name = task.Name ?? id;
+                KappaRequired = task.KappaRequired;
             }
             else
             {
                 Name = id;
+                KappaRequired = false;
             }
         }
         public override string ToString() => Name;

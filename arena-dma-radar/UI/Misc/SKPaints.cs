@@ -272,7 +272,7 @@ namespace arena_dma_radar.UI.Misc
         public static SKPaint PaintPlayerESP { get; } = new SKPaint()
         {
             StrokeWidth = 1.5f,
-            Style = SKPaintStyle.StrokeAndFill,
+            Style = SKPaintStyle.Stroke,
             IsAntialias = true,
             FilterQuality = SKFilterQuality.High
         };
@@ -309,7 +309,7 @@ namespace arena_dma_radar.UI.Misc
         public static SKPaint PaintAIESP { get; } = new SKPaint()
         {
             StrokeWidth = 1.5f,
-            Style = SKPaintStyle.StrokeAndFill,
+            Style = SKPaintStyle.Stroke,
             IsAntialias = true,
             FilterQuality = SKFilterQuality.High
         };
@@ -327,7 +327,7 @@ namespace arena_dma_radar.UI.Misc
         public static SKPaint PaintStreamerESP { get; } = new SKPaint()
         {
             StrokeWidth = 1.5f,
-            Style = SKPaintStyle.StrokeAndFill,
+            Style = SKPaintStyle.Stroke,
             IsAntialias = true,
             FilterQuality = SKFilterQuality.High
         };
@@ -345,7 +345,7 @@ namespace arena_dma_radar.UI.Misc
         public static SKPaint PaintTeammateESP { get; } = new SKPaint()
         {
             StrokeWidth = 1.5f,
-            Style = SKPaintStyle.StrokeAndFill,
+            Style = SKPaintStyle.Stroke,
             IsAntialias = true,
             FilterQuality = SKFilterQuality.High
         };
@@ -370,7 +370,7 @@ namespace arena_dma_radar.UI.Misc
         public static SKPaint PaintAimbotLockedESP { get; } = new SKPaint()
         {
             StrokeWidth = 1.5f,
-            Style = SKPaintStyle.StrokeAndFill,
+            Style = SKPaintStyle.Stroke,
             IsAntialias = true,
             FilterQuality = SKFilterQuality.High
         };

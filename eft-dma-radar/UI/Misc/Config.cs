@@ -549,6 +549,7 @@ namespace eft_dma_radar.UI.Misc
             RenderingMode = ESPPlayerRenderMode.Bones,
             ShowLabels = true,
             ShowWeapons = true,
+            ShowAiming = false,
             ShowDist = false,
             ShowRank = true
         };
@@ -562,6 +563,7 @@ namespace eft_dma_radar.UI.Misc
             RenderingMode = ESPPlayerRenderMode.Bones,
             ShowLabels = false,
             ShowWeapons = false,
+            ShowAiming = false,
             ShowDist = false
         };
 
@@ -582,11 +584,6 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showRaidStats")]
         public bool ShowRaidStats { get; set; } = false;
-        /// <summary>
-        /// Draw "(AIMING)" when a player is Aiming Down Sight
-        /// </summary>
-        [JsonPropertyName("isAiming")]
-        public bool ShowIfAiming { get; set; } = true;
 
         /// <summary>
         /// Draw Armour plate class levels
@@ -703,11 +700,18 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showDist")]
         public bool ShowDist { get; set; }
+
         /// <summary>
         /// Show rank above this player.
         /// </summary>
         [JsonPropertyName("showRank")]
         public bool ShowRank { get; set; }
+
+        /// <summary>
+        /// Show if this player is aiming down sights
+        /// </summary>
+        [JsonPropertyName("showAiming")]
+        public bool ShowAiming { get; set; }
     }
 
     public sealed class MemWritesConfig
