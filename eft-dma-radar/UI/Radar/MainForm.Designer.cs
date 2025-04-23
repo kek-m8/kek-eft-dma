@@ -105,6 +105,7 @@ namespace eft_dma_radar.UI.Radar
             label34 = new Label();
             flowLayoutPanel3 = new FlowLayoutPanel();
             checkBox_QuestHelper_Enabled = new CheckBox();
+            checkBox_QuestSelectAll = new CheckBox();
             checkBox_KappaOnly = new CheckBox();
             checkedListBox_QuestHelper = new CheckedListBox();
             splitter1 = new Splitter();
@@ -295,7 +296,6 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
-            checkBox_QuestSelectAll = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -1053,11 +1053,12 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Loot_Containers.Controls.Add(checkBox_Containers_SelectAll);
             flowLayoutPanel_Loot_Containers.Controls.Add(comboBox1);
             flowLayoutPanel_Loot_Containers.Controls.Add(checkBox1);
-            flowLayoutPanel_Loot_Containers.Enabled = false;
+            flowLayoutPanel_Loot_Containers.Enabled = true;
             flowLayoutPanel_Loot_Containers.Location = new Point(3, 3);
             flowLayoutPanel_Loot_Containers.Name = "flowLayoutPanel_Loot_Containers";
             flowLayoutPanel_Loot_Containers.Size = new Size(438, 194);
             flowLayoutPanel_Loot_Containers.TabIndex = 60;
+            flowLayoutPanel_Loot_Containers.Paint += flowLayoutPanel_Loot_Containers_Paint;
             // 
             // label31
             // 
@@ -1106,6 +1107,8 @@ namespace eft_dma_radar.UI.Radar
             // 
             checkBox_ShowContainers.Anchor = AnchorStyles.Right;
             checkBox_ShowContainers.AutoSize = true;
+            checkBox_ShowContainers.Checked = true;
+            checkBox_ShowContainers.CheckState = CheckState.Checked;
             flowLayoutPanel_Loot_Containers.SetFlowBreak(checkBox_ShowContainers, true);
             checkBox_ShowContainers.Location = new Point(246, 24);
             checkBox_ShowContainers.Name = "checkBox_ShowContainers";
@@ -1240,6 +1243,17 @@ namespace eft_dma_radar.UI.Radar
             checkBox_QuestHelper_Enabled.Text = "Enabled";
             checkBox_QuestHelper_Enabled.UseVisualStyleBackColor = true;
             checkBox_QuestHelper_Enabled.CheckedChanged += checkBox_QuestHelper_CheckedChanged;
+            // 
+            // checkBox_QuestSelectAll
+            // 
+            checkBox_QuestSelectAll.AutoSize = true;
+            checkBox_QuestSelectAll.Location = new Point(83, 24);
+            checkBox_QuestSelectAll.Name = "checkBox_QuestSelectAll";
+            checkBox_QuestSelectAll.Size = new Size(74, 19);
+            checkBox_QuestSelectAll.TabIndex = 64;
+            checkBox_QuestSelectAll.Text = "Select All";
+            checkBox_QuestSelectAll.UseVisualStyleBackColor = true;
+            checkBox_QuestSelectAll.CheckedChanged += checkBox_QuestSelectAll_CheckedChanged;
             // 
             // checkBox_KappaOnly
             // 
@@ -3496,17 +3510,6 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.AutoPopDelay = 20000;
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
-            // 
-            // checkBox_QuestSelectAll
-            // 
-            checkBox_QuestSelectAll.AutoSize = true;
-            checkBox_QuestSelectAll.Location = new Point(83, 24);
-            checkBox_QuestSelectAll.Name = "checkBox_QuestSelectAll";
-            checkBox_QuestSelectAll.Size = new Size(74, 19);
-            checkBox_QuestSelectAll.TabIndex = 64;
-            checkBox_QuestSelectAll.Text = "Select All";
-            checkBox_QuestSelectAll.UseVisualStyleBackColor = true;
-            checkBox_QuestSelectAll.CheckedChanged += checkBox_QuestSelectAll_CheckedChanged;
             // 
             // MainForm
             // 

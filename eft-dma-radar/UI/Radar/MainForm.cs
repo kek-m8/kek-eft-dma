@@ -685,7 +685,6 @@ namespace eft_dma_radar.UI.Radar
         {
             bool enabled = checkBox_ShowContainers.Checked;
             Config.Containers.Show = enabled;
-            flowLayoutPanel_Loot_Containers.Enabled = enabled;
         }
         private void TrackBar_LTWAmount_ValueChanged(object sender, EventArgs e)
         {
@@ -4082,6 +4081,11 @@ namespace eft_dma_radar.UI.Radar
                     }
                 }
             }
+        }
+
+        private void flowLayoutPanel_Loot_Containers_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
