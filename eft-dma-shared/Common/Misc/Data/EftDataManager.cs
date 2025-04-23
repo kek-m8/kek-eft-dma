@@ -210,6 +210,9 @@ namespace eft_dma_shared.Common.Misc.Data
                     [JsonPropertyName("position")]
                     public PositionElement Position { get; set; }
 
+                    [JsonPropertyName("outline")]
+                    public List<PositionElement> Outline { get; set; }
+
                     [JsonPropertyName("map")]
                     public BasicDataElement Map { get; set; }
                 }

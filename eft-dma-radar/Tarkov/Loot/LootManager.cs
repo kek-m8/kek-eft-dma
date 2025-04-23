@@ -280,14 +280,69 @@ namespace eft_dma_radar.Tarkov.Loot
                     {
                         if (EftDataManager.AllItems.TryGetValue(id, out var entry))
                         {
-                            loot.Add(new LootItem(entry)
+                            if(!loot.Where(x => x.IsWeapon).Any())
                             {
-                                Position = pos,
-                                IsFIR = isSpawnedinSession
-                            });
+                                loot.Add(new LootItem(entry)
+                                {
+                                    Position = pos,
+                                    IsFIR = isSpawnedinSession
+                                });
+                            }
+                            else
+                            {
+                                List<LootItem> attachmentLoot = new List<LootItem>();
+                                RecursePlayerGearSlots(item, attachmentLoot);
+                                loot.Add(new LootItem(entry)
+                                {
+                                    Position = pos,
+                                    IsFIR = isSpawnedinSession,
+                                    childItems = attachmentLoot
+                                });
+                            }
+                            
                         }
                     }
                 }
+            }
+        }
+
+        private static void RecursePlayerGearSlots(ulong lootItemBase, List<LootItem> loot)
+        {
+            try
+            {
+                var parentSlots = Memory.ReadPtr(lootItemBase + Offsets.LootItemMod.Slots);
+                using var slotsArray = MemArray<ulong>.Get(parentSlots);
+                var slotDict = new Dictionary<string, ulong>(StringComparer.OrdinalIgnoreCase);
+
+                foreach (var slotPtr in slotsArray)
+                {
+                    var namePtr = Memory.ReadPtr(slotPtr + Offsets.Slot.ID);
+                    var name = Memory.ReadUnityString(namePtr);
+                    slotDict.TryAdd(name, slotPtr);
+                }
+
+                foreach (var slotName in slotDict.Keys)
+                    try
+                    {
+                        if (slotDict.TryGetValue(slotName, out var slot))
+                        {
+                            var containedItem = Memory.ReadPtr(slot + Offsets.Slot.ContainedItem);
+                            if (containedItem == 0)
+                                continue;
+                            var inventorytemplate = Memory.ReadPtr(containedItem + Offsets.LootItem.Template);
+                            var idPtr = Memory.ReadValue<Types.MongoID>(inventorytemplate + Offsets.ItemTemplate._id);
+                            var id = Memory.ReadUnityString(idPtr.StringID);
+                            if (EftDataManager.AllItems.TryGetValue(id, out var entry))
+                                loot.Add(new LootItem(entry)); // Add to loot, get weapon attachment values
+                            RecursePlayerGearSlots(containedItem, loot);
+                        }
+                    }
+                    catch
+                    {
+                    } // Skip over empty slots
+            }
+            catch
+            {
             }
         }
 

@@ -85,6 +85,34 @@ namespace eft_dma_shared.Common.Misc.Data
         /// </summary>
         [JsonIgnore]
         public bool IsCurrency => Tags.Contains("Money");
+        [JsonIgnore]
+        public bool IsBullet => Tags.Contains("Ammo");
+        [JsonIgnore]
+        public bool IsAmmo => Tags.Contains("Ammo container");
+        [JsonIgnore]
+        public bool IsContainer => Tags.Contains("Common container");
+        [JsonIgnore]
+        public bool IsThrowable => Tags.Contains("Throwable weapon");
+        [JsonIgnore]
+        public bool IsKey => Tags.Contains("Key");
+        [JsonIgnore]
+        public bool IsHeadset => Tags.Contains("Headphones");
+        [JsonIgnore]
+        public bool IsRig => Tags.Contains("Chest rig");
+        [JsonIgnore]
+        public bool IsArmband => Tags.Contains("Arm Band");
+        [JsonIgnore]
+        public bool IsGlasses => Tags.Contains("Vis. observ. device");
+        [JsonIgnore]
+        public bool IsMelee => Tags.Contains("Knife");
+        [JsonIgnore]
+        public bool IsArmorPlate => Tags.Contains("Armor Plate");
+        [JsonIgnore]
+        public bool IsBodyArmor => Tags.Contains("Armor");
+        [JsonIgnore]
+        public bool IsArmoredRig => (IsRig && Name.ToLower().Contains("plate carrier"));
+        [JsonIgnore]
+        public bool IsSpecialItem => Tags.Contains("Special item");
 
         /// <summary>
         /// This field is set if this item has a special filter.
@@ -111,6 +139,8 @@ namespace eft_dma_shared.Common.Misc.Data
         /// <param name="price">Price to convert to string format.</param>
         public static string FormatPrice(int price)
         {
+            if (price >= 1000000000)
+                return (price / 1000000000D).ToString("0.##") + "B";
             if (price >= 1000000)
                 return (price / 1000000D).ToString("0.##") + "M";
             if (price >= 1000)

@@ -652,14 +652,25 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             var pscavCount = hostiles.Count(x => x.Type is Player.PlayerType.PScav);
             var aiCount = hostiles.Count(x => x.IsAI);
             var bossCount = hostiles.Count(x => x.Type is Player.PlayerType.AIBoss);
+            LootItem looseLoot = Memory.Loot.UnfilteredLoot.Where(x => x.IsFIR).OrderByDescending(item => item.FlatPrice).FirstOrDefault();
+            LootItem looseLoot2 = Memory.Loot.UnfilteredLoot.Where(x => !x.IsFIR && x is not QuestItem && !x.IsCurrency && !x.IsBullet).OrderByDescending(item => item.FlatPrice).FirstOrDefault();
             var lines = new string[]
             {
                 $"PMC: {pmcCount}",
                 $"PScav: {pscavCount}",
                 $"AI: {aiCount}",
-                $"Boss: {bossCount}"
+                $"Boss: {bossCount}",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                (looseLoot is not null && looseLoot.FlatPrice > 0) ? $"Highest value FIR loot: {looseLoot.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {(uint)Math.Round(Vector3.Distance(LocalPlayer.Position, looseLoot.Position))}m)" : "",
+                "",
+                (looseLoot2 is not null && looseLoot2.FlatPrice > 0) ? $"Highest value non-FIR loot {looseLoot2.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot2.FlatPrice)}] (H: {(int)Math.Round(looseLoot2.Position.Y - LocalPlayer.Position.Y) } D: {(uint)Math.Round(Vector3.Distance(LocalPlayer.Position, looseLoot2.Position))}m)" : ""
             };
-            var x = CameraManagerBase.Viewport.Right - 3f * Config.ESP.FontScale;
+            var x = CameraManagerBase.Viewport.Right - 8f * Config.ESP.FontScale;
             var y = CameraManagerBase.Viewport.Top + SKPaints.TextBasicESPRightAligned.TextSize +
                     CameraManagerBase.Viewport.Height * 0.0575f * Config.ESP.FontScale;
             foreach (var line in lines)

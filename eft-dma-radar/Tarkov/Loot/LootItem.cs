@@ -83,6 +83,14 @@ namespace eft_dma_radar.Tarkov.Loot
             }
         }
 
+        public int FlatPrice
+        {
+            get
+            {
+                return (int)((int)Math.Max(_item.FleaPrice, _item.TraderPrice) + ((childItems is null || childItems.Count == 0) ? 0 : childItems.Sum(item => Math.Max(item._item.TraderPrice, item._item.FleaPrice))));
+            }
+        }
+
         /// <summary>
         /// Number of grid spaces this item takes up.
         /// </summary>
@@ -157,6 +165,14 @@ namespace eft_dma_radar.Tarkov.Loot
         public bool IsWeapon => _item.IsWeapon;
         public bool IsCurrency => _item.IsCurrency;
         public bool IsWeaponMod => _item.IsWeaponMod;
+
+        public bool IsArmorPlate => _item.IsArmorPlate;
+
+        public bool IsBullet => _item.IsBullet;
+
+        public bool IsAmmo => _item.IsAmmo;
+
+        public bool IsSpecialItem => _item.IsSpecialItem;
 
         /// <summary>
         /// Checks if an item exceeds regular loot price threshold.
@@ -329,8 +345,8 @@ namespace eft_dma_radar.Tarkov.Loot
         public ref Vector3 Position => ref _position;
 
         private bool _fir;
-
         public ref bool IsFIR => ref _fir;
+        public List<LootItem> childItems = new List<LootItem>();
         public Vector2 MouseoverPosition { get; set; }
 
         public virtual void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)

@@ -143,8 +143,18 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     {
                 { "AK-103", new List<List<string>> { new List<string> { "B10M+B19", "SAW", "B-33" } } },
                 { "AKS-74N", new List<List<string>> { new List<string> { "TRAX 1", "PK-06" } } },
-                { "AK-74M", new List<List<string>> { new List<string> { "B10M+B19", "OKP-7 DT", "RK-3" } } },
-                { "VPO-209", new List<List<string>> { new List<string> { "VS Combo", "SAW", "R43 .366TKM" } } },
+                { "VPO-209", new List<List<string>>
+                        {
+                            new List<string> { "VS Combo", "SAW", "R43 .366TKM" },
+                            new List<string> { "VS Combo" }
+                        }
+                },
+                { "AK-74M", new List<List<string>>
+                    {
+                        new List<string> { "B10M+B19", "OKP-7 DT", "RK-3" },
+                        new List<string> { "B10M+B19", "OKP-7", "RK-3" }
+                    }
+                },
                 { "ADAR 2-15", new List<List<string>> { new List<string> { "GL-SHOCK", "Compact 2x32", "Stark AR" } } }
                     }
                 );

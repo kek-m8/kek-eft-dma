@@ -156,6 +156,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
                 if (completedConditions.Contains(condID))
                     return;
                 var condName = ObjectClass.ReadName(condition);
+                // ConditionWeaponAssembly = gunsmith
                 if (condName == "ConditionFindItem" || condName == "ConditionHandoverItem")
                 {
                     var targetArray =
@@ -196,6 +197,32 @@ namespace eft_dma_radar.Tarkov.GameWorld
                     using var counterList = MemList<ulong>.Get(conditionsListPtr);
                     foreach (var childCond in counterList)
                         GetQuestConditions(questID, childCond, completedConditions, items, locations);
+                }
+                else if (condName == "ConditionLaunchFlare")
+                {
+                    var zonePtr = Memory.ReadPtr(condition + Offsets.QuestConditionLaunchFlare.zoneId);
+                    var target = Memory.ReadUnityString(zonePtr);
+                    if (_mapToId.TryGetValue(MapID, out var id) &&
+                        _questZones.TryGetValue(id, out var zones) &&
+                        zones.TryGetValue(target, out var loc))
+                    {
+                        locations.Add(new QuestLocation(questID, target, loc));
+                    }
+                }
+                else if (condName == "ConditionZone")
+                {
+                    var zonePtr = Memory.ReadPtr(condition + Offsets.QuestConditionZone.zoneId);
+                    var targetPtr = Memory.ReadPtr(condition + Offsets.QuestConditionZone.target);
+                    var zone = Memory.ReadUnityString(zonePtr);
+                    using var targets = MemArray<ulong>.Get(targetPtr);
+                    foreach (var targetPtr2 in targets)
+                        items.Add(Memory.ReadUnityString(targetPtr2));
+                    if (_mapToId.TryGetValue(MapID, out var id) &&
+                        _questZones.TryGetValue(id, out var zones) &&
+                        zones.TryGetValue(zone, out var loc))
+                    {
+                        locations.Add(new QuestLocation(questID, zone, loc));
+                    }
                 }
             }
             catch (Exception ex)
