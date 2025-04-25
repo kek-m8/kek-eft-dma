@@ -1446,49 +1446,24 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
 
                         }
                         lines.Add($"{level}{name}{health}");
-                        if (this is ObservedPlayer player && showClass)
+                        if(this is ObservedPlayer player && showClass)
                         {
-                            int back = 0, front = 0, side1 = 0, side2 = 0;
-                            bool firstSide = false, first = false, hasPlates = player.Gear.Loot.Contains(player.Gear.Loot.Where(Loot => Loot.Name.ToLower().Contains("plate")).FirstOrDefault());
-                            if (hasPlates)
+                            int index = 0, back = 0, front = 0, left = 0, right = 0;
+                            foreach(var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                             {
-                                foreach (var x in player.Gear.Loot)
+                                if(GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
                                 {
-                                    if (x.Name.ToLower().Contains("plate"))
+                                    switch (index)
                                     {
-                                        if (x.Name.ToLower().Contains("carrier"))
-                                            continue;
-                                        if (x.Name.ToLower().Contains("side"))
-                                        {
-                                            if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
-                                            {
-                                                if (firstSide)
-                                                    side2 = lvl;
-                                                else
-                                                {
-                                                    side1 = lvl;
-                                                    firstSide = true;
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
-                                            {
-                                                if (first)
-                                                    back = lvl;
-                                                else
-                                                {
-                                                    front = lvl;
-                                                    first = true;
-                                                }
-                                            }
-                                        }
-
+                                        case 0: front = lvl; break;
+                                        case 1: back = lvl; break;
+                                        case 2: left = lvl; break;
+                                        case 3: right = lvl; break;
                                     }
+                                    index++;
                                 }
-                                lines.Add($"F: {front}, B: {back}" + ((side1 > 0) ? $", L: {side1}" : "") + ((side2 > 0) ? $", R: {side2}" : ""));
                             }
+                            lines.Add($"F: {front}, B: {back}" + ((left > 0) ? $", L: {left}" : "") + ((right > 0) ? $", R: {right}" : ""));
                         }
                         lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                     }
@@ -1497,47 +1472,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         lines.Add($"{(int)Math.Round(height)},{(int)Math.Round(dist)}");
                         if (this is ObservedPlayer player && showClass)
                         {
-                            int back = 0, front = 0, side1 = 0, side2 = 0;
-                            bool firstSide = false, first = false, hasPlates = player.Gear.Loot.Contains(player.Gear.Loot.Where(Loot => Loot.Name.ToLower().Contains("plate")).FirstOrDefault());
-                            if (hasPlates)
+                            int index = 0, back = 0, front = 0, left = 0, right = 0;
+                            foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                             {
-                                foreach (var x in player.Gear.Loot)
+                                if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
                                 {
-                                    if (x.Name.ToLower().Contains("plate"))
+                                    switch (index)
                                     {
-                                        if (x.Name.ToLower().Contains("carrier"))
-                                            continue;
-                                        if (x.Name.ToLower().Contains("side"))
-                                        {
-                                            if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
-                                            {
-                                                if (firstSide)
-                                                    side2 = lvl;
-                                                else
-                                                {
-                                                    side1 = lvl;
-                                                    firstSide = true;
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
-                                            {
-                                                if (first)
-                                                    back = lvl;
-                                                else
-                                                {
-                                                    front = lvl;
-                                                    first = true;
-                                                }
-                                            }
-                                        }
-
+                                        case 0: front = lvl; break;
+                                        case 1: back = lvl; break;
+                                        case 2: left = lvl; break;
+                                        case 3: right = lvl; break;
                                     }
+                                    index++;
                                 }
-                                lines.Add($"F: {front}, B: {back}" + ((side1 > 0) ? $", L: {side1}" : "") + ((side2 > 0) ? $", R: {side2}" : ""));
                             }
+                            lines.Add($"F: {front}, B: {back}" + ((left > 0) ? $", L: {left}" : "") + ((right > 0) ? $", R: {right}" : ""));
                         }
                         if (ErrorTimer.ElapsedMilliseconds > 100)
                             lines[0] = "ERROR"; // In case POS stops updating, let us know!
@@ -1851,47 +1801,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 }
                 if (this is ObservedPlayer player && showClass)
                 {
-                    int back = 0, front = 0, side1 = 0, side2 = 0;
-                    bool firstSide = false, first = false, hasPlates = player.Gear.Loot.Contains(player.Gear.Loot.Where(Loot => Loot.Name.ToLower().Contains("plate")).FirstOrDefault());
-                    if (hasPlates)
+                    int index = 0, back = 0, front = 0, left = 0, right = 0;
+                    foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                     {
-                        foreach (var x in player.Gear.Loot)
+                        if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
                         {
-                            if (x.Name.ToLower().Contains("plate"))
+                            switch (index)
                             {
-                                if (x.Name.ToLower().Contains("carrier"))
-                                    continue;
-                                if (x.Name.ToLower().Contains("side"))
-                                {
-                                    if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
-                                    {
-                                        if (firstSide)
-                                            side2 = lvl;
-                                        else
-                                        {
-                                            side1 = lvl;
-                                            firstSide = true;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (GameData.PlateLevel.TryGetValue(x.Name, out var lvl))
-                                    {
-                                        if (first)
-                                            back = lvl;
-                                        else
-                                        {
-                                            front = lvl;
-                                            first = true;
-                                        }
-                                    }
-                                }
-
+                                case 0: front = lvl; break;
+                                case 1: back = lvl; break;
+                                case 2: left = lvl; break;
+                                case 3: right = lvl; break;
                             }
+                            index++;
                         }
-                        lines.Add($"F: {front}, B: {back}" + ((side1 > 0) ? $", L: {side1}" : "") + ((side2 > 0) ? $", R: {side2}" : ""));
                     }
+                    lines.Add($"F: {front}, B: {back}" + ((left > 0) ? $", L: {left}" : "") + ((right > 0) ? $", R: {right}" : ""));
                 }
 
                 if (showWep)

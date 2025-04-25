@@ -928,21 +928,31 @@ namespace eft_dma_radar.UI.Radar
                         {
                             var playerValue = TarkovMarketItem.FormatPrice(gear.Value);
                             sb.Append(@"\b Value: \b0 ");
-                            sb.Append(playerValue); // print player loot/gear value
+                            sb.Append(playerValue);
                             sb.Append(@" \line ");
                             var inHands = player.Hands?.CurrentItem;
                             if (inHands is not null)
                             {
                                 sb.Append(@"\b In Hands: \b0 ");
-                                sb.Append(inHands); // print item in hands
+                                sb.Append(inHands);
                                 sb.Append(@" \line ");
                             }
 
                             foreach (var slot in gear.Equipment)
                             {
                                 sb.Append(@$"\b {slot.Key}: \b0 ");
-                                sb.Append(slot.Value.Long); // Use long item name
+                                sb.Append(slot.Value.Long);
                                 sb.Append(@" \line ");
+                                sb.Append(@" \line ");
+                            }
+                            int index = 0;
+                            foreach(var loot in gear.Loot.Where(x => x.IsArmorPlate))
+                            {
+                                if (!GameData.PlateLevel.TryGetValue(loot.Name, out var lvl))
+                                    continue;
+                                sb.Append(@$"\b Plate {(index == 0 ? "Front" : (index == 1 ? "Back" : (index >= 2 ? $"Side {index - 1}" : "")))}: \b0 {loot.ShortName} (LVL {lvl})");
+                                sb.Append(@" \line ");
+                                index++;
                             }
                         }
                         else
@@ -3854,78 +3864,83 @@ namespace eft_dma_radar.UI.Radar
             ContainersUnSelectAll();
             switch (comboBox1.SelectedIndex)
             {
-                case 0: // STASHES
+                case 0: // STASHES  
                     for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
                     {
-                        if (checkedListBox_Containers.Items[i].ToString().Contains("cache", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Contains("body", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Contains("dead scav", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("plastic suitcase", StringComparison.CurrentCultureIgnoreCase))
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && (item.Contains("cache", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Contains("body", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("plastic suitcase", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Contains("dead scav", StringComparison.CurrentCultureIgnoreCase)))
                         {
                             checkedListBox_Containers.SetItemChecked(i, true);
                         }
                     }
                     break;
-                case 1: // BAGS + JACKETS + SAFES
+                case 1: // BAGS + JACKETS + SAFES  
                     for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
                     {
-                        if (checkedListBox_Containers.Items[i].ToString().Equals("duffle bag", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("jacket", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("safe", StringComparison.CurrentCultureIgnoreCase))
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && (item.Equals("duffle bag", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("jacket", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("safe", StringComparison.CurrentCultureIgnoreCase)))
                         {
                             checkedListBox_Containers.SetItemChecked(i, true);
                         }
                     }
                     break;
-                case 2: // MEDICAL
+                case 2: // MEDICAL  
                     for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
                     {
-                        if (checkedListBox_Containers.Items[i].ToString().Contains("smu06", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("Medcase", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("Medical supply crate", StringComparison.CurrentCultureIgnoreCase))
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && (item.Contains("smu06", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("Medcase", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("Medical supply crate", StringComparison.CurrentCultureIgnoreCase)))
                         {
                             checkedListBox_Containers.SetItemChecked(i, true);
                         }
                     }
                     break;
-                case 3: // TECHNICAL
-
+                case 3: // TECHNICAL  
                     for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
                     {
-                        if (checkedListBox_Containers.Items[i].ToString().Equals("Drawer", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("Technical supply crate", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("Toolbox", StringComparison.CurrentCultureIgnoreCase))
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && (item.Equals("Drawer", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("Technical supply crate", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("Toolbox", StringComparison.CurrentCultureIgnoreCase)))
                         {
                             checkedListBox_Containers.SetItemChecked(i, true);
                         }
                     }
                     break;
-                case 4: // PC
+                case 4: // PC  
                     for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
                     {
-                        if (checkedListBox_Containers.Items[i].ToString().Equals("PC block", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            checkedListBox_Containers.SetItemChecked(i, true);
-                        }
-
-                    }
-                    break;
-                case 5: // AMMO
-                    for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
-                    {
-                        if (checkedListBox_Containers.Items[i].ToString().Equals("PC block", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("Grenade box", StringComparison.CurrentCultureIgnoreCase) ||
-                            checkedListBox_Containers.Items[i].ToString().Equals("Wooden crate", StringComparison.CurrentCultureIgnoreCase))
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && item.Equals("PC block", StringComparison.CurrentCultureIgnoreCase))
                         {
                             checkedListBox_Containers.SetItemChecked(i, true);
                         }
                     }
                     break;
-                case 6: // GEAR (guns/armor)
+                case 5: // AMMO  
+                    for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
+                    {
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && (item.Equals("PC block", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("Grenade box", StringComparison.CurrentCultureIgnoreCase) ||
+                                             item.Equals("Wooden crate", StringComparison.CurrentCultureIgnoreCase)))
+                        {
+                            checkedListBox_Containers.SetItemChecked(i, true);
+                        }
+                    }
+                    break;
+                case 6: // GEAR (guns/armor)  
                     ContainersSelectAllStashes();
                     for (int i = 0; i < checkedListBox_Containers.Items.Count; i++)
                     {
-                        if (checkedListBox_Containers.Items[i].ToString().Equals("Weapon box", StringComparison.CurrentCultureIgnoreCase))
+                        var item = checkedListBox_Containers.Items[i]?.ToString();
+                        if (item != null && item.Equals("Weapon box", StringComparison.CurrentCultureIgnoreCase))
                         {
                             checkedListBox_Containers.SetItemChecked(i, true);
                         }
@@ -3950,11 +3965,6 @@ namespace eft_dma_radar.UI.Radar
             {
                 MessageBox.Show($"Instant Plant failed to set, you are maybe paged out, try restarting your game.\n{ex}", "Instant Plant", MessageBoxButtons.OK);
             }
-        }
-
-        private void comboBox_WideLeanMode_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void checkBox_ThermalVision_CheckedChanged(object sender, EventArgs e)
@@ -4011,45 +4021,14 @@ namespace eft_dma_radar.UI.Radar
             Config.ESP.PlayerRendering.ShowAiming = checkBox_IsAimingPMC.Checked;
         }
 
-        private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void checkBox_ShowPlates_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowArmourClass = checkBox_ShowPlates.Checked;
         }
 
-        private void checkBox_EnableMemWrite_CheckedChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             Config.ShowArmourClass = checkBox3.Checked;
-        }
-
-        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            foreach (var x in Memory.Players)
-            {
-                if (x.IsAI && x is ObservedPlayer observed)
-                {
-                    MessageBox.Show($"{observed.Position}\n{observed.Hands.CurrentItem}\n{observed.VoiceLine}");
-                }
-            }
-        }
-
-        private void checkedListBox_Containers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void checkBox_IsAimingAI_CheckedChanged(object sender, EventArgs e)
@@ -4083,9 +4062,26 @@ namespace eft_dma_radar.UI.Radar
             }
         }
 
-        private void flowLayoutPanel_Loot_Containers_Paint(object sender, PaintEventArgs e)
+        private void dataGridView_PlayerHistory_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (dataGridView_PlayerHistory.CurrentCell is null)
+                return;
+            if (dataGridView_PlayerHistory.Columns[dataGridView_PlayerHistory.CurrentCell.ColumnIndex].HeaderText.Contains("Account ID"))
+            {
+                var cellValue = dataGridView_PlayerHistory.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() ?? "";
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "https://tarkov.dev/players/regular/" + Uri.EscapeDataString(cellValue),
+                        UseShellExecute = true
+                    });
+                }
+                catch
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", "https://tarkov.dev/players/regular/" + Uri.EscapeDataString(cellValue));
+                }
+            }
         }
     }
 }

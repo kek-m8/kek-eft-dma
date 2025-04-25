@@ -261,7 +261,7 @@ namespace eft_dma_radar.UI.Radar
             tabPage4 = new TabPage();
             dataGridView_PlayerHistory = new DataGridView();
             PHistory_Name = new DataGridViewTextBoxColumn();
-            PHistory_AccountID = new DataGridViewTextBoxColumn();
+            PHistory_AccountID = new DataGridViewLinkColumn();
             PHistory_Acct = new DataGridViewTextBoxColumn();
             PHistory_Type = new DataGridViewTextBoxColumn();
             PHistory_KD = new DataGridViewTextBoxColumn();
@@ -752,7 +752,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_RadarSettings, true);
             flowLayoutPanel_RadarSettings.Location = new Point(3, 3);
             flowLayoutPanel_RadarSettings.Name = "flowLayoutPanel_RadarSettings";
-            flowLayoutPanel_RadarSettings.Size = new Size(921, 171);
+            flowLayoutPanel_RadarSettings.Size = new Size(1082, 146);
             flowLayoutPanel_RadarSettings.TabIndex = 0;
             // 
             // label2
@@ -1007,7 +1007,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_AIAimlines.AutoSize = true;
             checkBox_AIAimlines.Checked = true;
             checkBox_AIAimlines.CheckState = CheckState.Checked;
-            flowLayoutPanel_RadarSettings.SetFlowBreak(checkBox_AIAimlines, true);
             checkBox_AIAimlines.Location = new Point(830, 122);
             checkBox_AIAimlines.Name = "checkBox_AIAimlines";
             checkBox_AIAimlines.Size = new Size(86, 19);
@@ -1019,7 +1018,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox3
             // 
             checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(3, 147);
+            checkBox3.Location = new Point(922, 122);
             checkBox3.Name = "checkBox3";
             checkBox3.Size = new Size(155, 19);
             checkBox3.TabIndex = 61;
@@ -1034,7 +1033,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel5.BorderStyle = BorderStyle.FixedSingle;
             flowLayoutPanel5.Controls.Add(flowLayoutPanel_Loot_Containers);
             flowLayoutPanel5.Controls.Add(flowLayoutPanel1);
-            flowLayoutPanel5.Location = new Point(3, 180);
+            flowLayoutPanel5.Location = new Point(3, 155);
             flowLayoutPanel5.Name = "flowLayoutPanel5";
             flowLayoutPanel5.Size = new Size(803, 202);
             flowLayoutPanel5.TabIndex = 61;
@@ -1053,12 +1052,10 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Loot_Containers.Controls.Add(checkBox_Containers_SelectAll);
             flowLayoutPanel_Loot_Containers.Controls.Add(comboBox1);
             flowLayoutPanel_Loot_Containers.Controls.Add(checkBox1);
-            flowLayoutPanel_Loot_Containers.Enabled = true;
             flowLayoutPanel_Loot_Containers.Location = new Point(3, 3);
             flowLayoutPanel_Loot_Containers.Name = "flowLayoutPanel_Loot_Containers";
             flowLayoutPanel_Loot_Containers.Size = new Size(438, 194);
             flowLayoutPanel_Loot_Containers.TabIndex = 60;
-            flowLayoutPanel_Loot_Containers.Paint += flowLayoutPanel_Loot_Containers_Paint;
             // 
             // label31
             // 
@@ -1136,7 +1133,6 @@ namespace eft_dma_radar.UI.Radar
             checkedListBox_Containers.Name = "checkedListBox_Containers";
             checkedListBox_Containers.Size = new Size(419, 94);
             checkedListBox_Containers.TabIndex = 60;
-            checkedListBox_Containers.SelectedIndexChanged += checkedListBox_Containers_SelectedIndexChanged;
             // 
             // checkBox_Containers_HideSearched
             // 
@@ -1188,7 +1184,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox1.TabIndex = 65;
             checkBox1.Text = "Container Preset";
             checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged_1;
             // 
             // flowLayoutPanel1
             // 
@@ -1278,7 +1273,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             // splitter1
             // 
-            splitter1.Location = new Point(3, 388);
+            splitter1.Location = new Point(3, 363);
             splitter1.Name = "splitter1";
             splitter1.Size = new Size(3, 3);
             splitter1.TabIndex = 63;
@@ -1286,7 +1281,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             // splitter2
             // 
-            splitter2.Location = new Point(3, 397);
+            splitter2.Location = new Point(3, 372);
             splitter2.Name = "splitter2";
             splitter2.Size = new Size(3, 3);
             splitter2.TabIndex = 64;
@@ -1296,20 +1291,19 @@ namespace eft_dma_radar.UI.Radar
             // 
             checkBox_EnableMemWrite.AutoSize = true;
             checkBox_EnableMemWrite.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox_EnableMemWrite.Location = new Point(3, 406);
+            checkBox_EnableMemWrite.Location = new Point(3, 381);
             checkBox_EnableMemWrite.Name = "checkBox_EnableMemWrite";
             checkBox_EnableMemWrite.Size = new Size(184, 19);
             checkBox_EnableMemWrite.TabIndex = 44;
             checkBox_EnableMemWrite.Text = "Enable Memory Writes (Risky)";
             checkBox_EnableMemWrite.UseVisualStyleBackColor = true;
-            checkBox_EnableMemWrite.CheckedChanged += checkBox_EnableMemWrite_CheckedChanged_1;
             // 
             // flowLayoutPanel_MemWriteCheckbox
             // 
             flowLayoutPanel_MemWriteCheckbox.AutoSize = true;
             flowLayoutPanel_MemWriteCheckbox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWriteCheckbox, true);
-            flowLayoutPanel_MemWriteCheckbox.Location = new Point(3, 431);
+            flowLayoutPanel_MemWriteCheckbox.Location = new Point(3, 406);
             flowLayoutPanel_MemWriteCheckbox.Name = "flowLayoutPanel_MemWriteCheckbox";
             flowLayoutPanel_MemWriteCheckbox.Size = new Size(0, 0);
             flowLayoutPanel_MemWriteCheckbox.TabIndex = 62;
@@ -1349,7 +1343,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_MemWrites.Controls.Add(flowLayoutPanel_LTW);
             flowLayoutPanel_MemWrites.Dock = DockStyle.Fill;
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWrites, true);
-            flowLayoutPanel_MemWrites.Location = new Point(3, 437);
+            flowLayoutPanel_MemWrites.Location = new Point(3, 412);
             flowLayoutPanel_MemWrites.Name = "flowLayoutPanel_MemWrites";
             flowLayoutPanel_MemWrites.Size = new Size(1171, 371);
             flowLayoutPanel_MemWrites.TabIndex = 1;
@@ -2089,7 +2083,6 @@ namespace eft_dma_radar.UI.Radar
             comboBox_WideLeanMode.Name = "comboBox_WideLeanMode";
             comboBox_WideLeanMode.Size = new Size(121, 23);
             comboBox_WideLeanMode.TabIndex = 62;
-            comboBox_WideLeanMode.SelectedIndexChanged += comboBox_WideLeanMode_SelectedIndexChanged_1;
             // 
             // label_WideLeanAmt
             // 
@@ -2176,7 +2169,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_MonitorSettings.Controls.Add(textBox_ResHeight);
             flowLayoutPanel_MonitorSettings.Controls.Add(button_DetectRes);
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MonitorSettings, true);
-            flowLayoutPanel_MonitorSettings.Location = new Point(3, 814);
+            flowLayoutPanel_MonitorSettings.Location = new Point(3, 789);
             flowLayoutPanel_MonitorSettings.Name = "flowLayoutPanel_MonitorSettings";
             flowLayoutPanel_MonitorSettings.Size = new Size(323, 70);
             flowLayoutPanel_MonitorSettings.TabIndex = 2;
@@ -2273,15 +2266,15 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_AimLock);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_RaidStats);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_StatusText);
+            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ShowPlates);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_displayRaidTIme);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_FPS);
             flowLayoutPanel_ESPSettings.Controls.Add(label27);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel_ESP_PlayerRender);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel_ESP_AIRender);
-            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ShowPlates);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel4);
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
-            flowLayoutPanel_ESPSettings.Location = new Point(3, 890);
+            flowLayoutPanel_ESPSettings.Location = new Point(3, 865);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
             flowLayoutPanel_ESPSettings.Size = new Size(1171, 343);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
@@ -2530,7 +2523,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_displayRaidTIme
             // 
             checkBox_displayRaidTIme.AutoSize = true;
-            checkBox_displayRaidTIme.Location = new Point(238, 96);
+            checkBox_displayRaidTIme.Location = new Point(399, 96);
             checkBox_displayRaidTIme.Name = "checkBox_displayRaidTIme";
             checkBox_displayRaidTIme.Size = new Size(93, 19);
             checkBox_displayRaidTIme.TabIndex = 74;
@@ -2541,7 +2534,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FPS
             // 
             checkBox_ESP_FPS.AutoSize = true;
-            checkBox_ESP_FPS.Location = new Point(337, 96);
+            checkBox_ESP_FPS.Location = new Point(498, 96);
             checkBox_ESP_FPS.Name = "checkBox_ESP_FPS";
             checkBox_ESP_FPS.Size = new Size(86, 19);
             checkBox_ESP_FPS.TabIndex = 5;
@@ -2553,7 +2546,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label27.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(label27, true);
-            label27.Location = new Point(429, 93);
+            label27.Location = new Point(590, 93);
             label27.Name = "label27";
             label27.Size = new Size(0, 15);
             label27.TabIndex = 72;
@@ -2845,8 +2838,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowPlates
             // 
             checkBox_ShowPlates.AutoSize = true;
-            flowLayoutPanel_ESPSettings.SetFlowBreak(checkBox_ShowPlates, true);
-            checkBox_ShowPlates.Location = new Point(707, 121);
+            checkBox_ShowPlates.Location = new Point(238, 96);
             checkBox_ShowPlates.Name = "checkBox_ShowPlates";
             checkBox_ShowPlates.Size = new Size(155, 19);
             checkBox_ShowPlates.TabIndex = 75;
@@ -3140,6 +3132,7 @@ namespace eft_dma_radar.UI.Radar
             dataGridView_PlayerHistory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView_PlayerHistory.Size = new Size(1256, 653);
             dataGridView_PlayerHistory.TabIndex = 0;
+            dataGridView_PlayerHistory.CellContentClick += dataGridView_PlayerHistory_CellContentClick;
             // 
             // PHistory_Name
             // 
@@ -3157,10 +3150,10 @@ namespace eft_dma_radar.UI.Radar
             PHistory_AccountID.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             PHistory_AccountID.DataPropertyName = "ID";
             PHistory_AccountID.HeaderText = "Account ID";
-            PHistory_AccountID.MaxInputLength = 16;
+            PHistory_AccountID.LinkBehavior = LinkBehavior.HoverUnderline;
             PHistory_AccountID.Name = "PHistory_AccountID";
             PHistory_AccountID.ReadOnly = true;
-            PHistory_AccountID.SortMode = DataGridViewColumnSortMode.NotSortable;
+            PHistory_AccountID.Resizable = DataGridViewTriState.True;
             PHistory_AccountID.Width = 72;
             // 
             // PHistory_Acct
@@ -3273,8 +3266,8 @@ namespace eft_dma_radar.UI.Radar
             Column_PWAcctID.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             Column_PWAcctID.DataPropertyName = "AcctID";
             Column_PWAcctID.HeaderText = "Account ID";
-            Column_PWAcctID.MaxInputLength = 12;
             Column_PWAcctID.Name = "Column_PWAcctID";
+            Column_PWAcctID.Resizable = DataGridViewTriState.True;
             Column_PWAcctID.ToolTipText = "Player's Account ID (as obtained from Player History)";
             Column_PWAcctID.Width = 91;
             // 
@@ -3652,9 +3645,6 @@ namespace eft_dma_radar.UI.Radar
         private TrackBar trackBar_MaxDist;
         private Label label_MaxDist;
         private DataGridView dataGridView_PlayerHistory;
-        private DataGridViewTextBoxColumn Column_PWAcctID;
-        private DataGridViewTextBoxColumn Column_PWReason;
-        private DataGridViewTextBoxColumn Column_PWTimestamp;
         private CheckBox checkBox_QuestHelper_Enabled;
         private CheckBox checkBox_Chams;
         private RadioButton radioButton_AimTarget_CQB;
@@ -3743,16 +3733,6 @@ namespace eft_dma_radar.UI.Radar
         private Button button_AntiAfk;
         private CheckBox checkBox_NoWepMalf;
         private SKGLControl skglControl_Radar;
-        private DataGridViewTextBoxColumn PHistory_Name;
-        private DataGridViewTextBoxColumn PHistory_AccountID;
-        private DataGridViewTextBoxColumn PHistory_Acct;
-        private DataGridViewTextBoxColumn PHistory_Type;
-        private DataGridViewTextBoxColumn PHistory_KD;
-        private DataGridViewTextBoxColumn PHistory_Hours;
-        private DataGridViewTextBoxColumn PHistory_Raids;
-        private DataGridViewTextBoxColumn PHistory_SR;
-        private DataGridViewTextBoxColumn PHistory_Group;
-        private DataGridViewTextBoxColumn PHistory_Alerts;
         private FlowLayoutPanel flowLayoutPanel_Settings;
         private FlowLayoutPanel flowLayoutPanel_RadarSettings;
         private FlowLayoutPanel flowLayoutPanel_MemWrites;
@@ -3862,6 +3842,19 @@ namespace eft_dma_radar.UI.Radar
         private RadioButton radioButton_ESPRender_BoneBox;
         private RadioButton radioButton_ESPAIRender_BoneBox;
         private CheckBox checkBox_QuestSelectAll;
+        private DataGridViewTextBoxColumn Column_PWAcctID;
+        private DataGridViewTextBoxColumn Column_PWReason;
+        private DataGridViewTextBoxColumn Column_PWTimestamp;
+        private DataGridViewTextBoxColumn PHistory_Name;
+        private DataGridViewLinkColumn PHistory_AccountID;
+        private DataGridViewTextBoxColumn PHistory_Acct;
+        private DataGridViewTextBoxColumn PHistory_Type;
+        private DataGridViewTextBoxColumn PHistory_KD;
+        private DataGridViewTextBoxColumn PHistory_Hours;
+        private DataGridViewTextBoxColumn PHistory_Raids;
+        private DataGridViewTextBoxColumn PHistory_SR;
+        private DataGridViewTextBoxColumn PHistory_Group;
+        private DataGridViewTextBoxColumn PHistory_Alerts;
     }
 }
 
