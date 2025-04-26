@@ -118,6 +118,10 @@ namespace eft_dma_radar.UI.Misc
         public bool ShowMines { get; set; } = true;
 
         /// <summary>
+        /// Show BorderZone for KillTask
+        /// </summary>
+        public bool ShowZone { get; set; }
+        /// <summary>
         /// Enables ESP Widget window in Main Window.
         /// </summary>
         [JsonPropertyName("aimviewEnabled")]

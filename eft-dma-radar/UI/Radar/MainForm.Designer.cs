@@ -210,6 +210,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_AimLock = new CheckBox();
             checkBox_ESP_RaidStats = new CheckBox();
             checkBox_ESP_StatusText = new CheckBox();
+            checkBox_ShowPlates = new CheckBox();
             checkBox_displayRaidTIme = new CheckBox();
             checkBox_ESP_FPS = new CheckBox();
             label27 = new Label();
@@ -236,7 +237,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESPAIRender_Weapons = new CheckBox();
             checkBox_ESPAIRender_Dist = new CheckBox();
             checkBox_IsAimingAI = new CheckBox();
-            checkBox_ShowPlates = new CheckBox();
             flowLayoutPanel4 = new FlowLayoutPanel();
             label9 = new Label();
             checkBox4 = new CheckBox();
@@ -296,6 +296,7 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
+            checkBox_KillTask = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -1035,7 +1036,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel5.Controls.Add(flowLayoutPanel1);
             flowLayoutPanel5.Location = new Point(3, 155);
             flowLayoutPanel5.Name = "flowLayoutPanel5";
-            flowLayoutPanel5.Size = new Size(803, 202);
+            flowLayoutPanel5.Size = new Size(911, 202);
             flowLayoutPanel5.TabIndex = 61;
             // 
             // flowLayoutPanel_Loot_Containers
@@ -1196,11 +1197,11 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel1.Controls.Add(checkBox_QuestSelectAll);
             flowLayoutPanel1.Controls.Add(checkBox_KappaOnly);
             flowLayoutPanel1.Controls.Add(checkedListBox_QuestHelper);
+            flowLayoutPanel1.Controls.Add(checkBox_KillTask);
             flowLayoutPanel1.Dock = DockStyle.Top;
-            flowLayoutPanel5.SetFlowBreak(flowLayoutPanel1, true);
             flowLayoutPanel1.Location = new Point(447, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(351, 166);
+            flowLayoutPanel1.Size = new Size(459, 191);
             flowLayoutPanel1.TabIndex = 62;
             // 
             // label34
@@ -2520,6 +2521,18 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_StatusText.UseVisualStyleBackColor = true;
             checkBox_ESP_StatusText.CheckedChanged += checkBox_ESP_StatusText_CheckedChanged;
             // 
+            // checkBox_ShowPlates
+            // 
+            checkBox_ShowPlates.AutoSize = true;
+            checkBox_ShowPlates.Location = new Point(238, 96);
+            checkBox_ShowPlates.Name = "checkBox_ShowPlates";
+            checkBox_ShowPlates.Size = new Size(155, 19);
+            checkBox_ShowPlates.TabIndex = 75;
+            checkBox_ShowPlates.Text = "Show ArmourPlate Class";
+            checkBox_ShowPlates.TextAlign = ContentAlignment.MiddleCenter;
+            checkBox_ShowPlates.UseVisualStyleBackColor = true;
+            checkBox_ShowPlates.CheckedChanged += checkBox_ShowPlates_CheckedChanged;
+            // 
             // checkBox_displayRaidTIme
             // 
             checkBox_displayRaidTIme.AutoSize = true;
@@ -2834,18 +2847,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_IsAimingAI.Text = "Aiming";
             checkBox_IsAimingAI.UseVisualStyleBackColor = true;
             checkBox_IsAimingAI.CheckedChanged += checkBox_IsAimingAI_CheckedChanged;
-            // 
-            // checkBox_ShowPlates
-            // 
-            checkBox_ShowPlates.AutoSize = true;
-            checkBox_ShowPlates.Location = new Point(238, 96);
-            checkBox_ShowPlates.Name = "checkBox_ShowPlates";
-            checkBox_ShowPlates.Size = new Size(155, 19);
-            checkBox_ShowPlates.TabIndex = 75;
-            checkBox_ShowPlates.Text = "Show ArmourPlate Class";
-            checkBox_ShowPlates.TextAlign = ContentAlignment.MiddleCenter;
-            checkBox_ShowPlates.UseVisualStyleBackColor = true;
-            checkBox_ShowPlates.CheckedChanged += checkBox_ShowPlates_CheckedChanged;
             // 
             // flowLayoutPanel4
             // 
@@ -3504,6 +3505,18 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
             // 
+            // checkBox_KillTask
+            // 
+            checkBox_KillTask.AutoSize = true;
+            checkBox_KillTask.Location = new Point(3, 167);
+            checkBox_KillTask.Name = "checkBox_KillTask";
+            checkBox_KillTask.Size = new Size(102, 19);
+            checkBox_KillTask.TabIndex = 63;
+            checkBox_KillTask.Text = "KillTask Border";
+            toolTip1.SetToolTip(checkBox_KillTask, "When enabled, a rectangle border representing the zone limits for the kill task will be drawn on the radar");
+            checkBox_KillTask.UseVisualStyleBackColor = true;
+            checkBox_KillTask.CheckedChanged += checkBox_KillTask_CheckedChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -3855,6 +3868,7 @@ namespace eft_dma_radar.UI.Radar
         private DataGridViewTextBoxColumn PHistory_SR;
         private DataGridViewTextBoxColumn PHistory_Group;
         private DataGridViewTextBoxColumn PHistory_Alerts;
+        private CheckBox checkBox_KillTask;
     }
 }
 

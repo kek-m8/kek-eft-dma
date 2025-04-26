@@ -946,7 +946,7 @@ namespace eft_dma_radar.UI.Radar
                                 sb.Append(@" \line ");
                             }
                             int index = 0;
-                            foreach(var loot in gear.Loot.Where(x => x.IsArmorPlate))
+                            foreach (var loot in gear.Loot.Where(x => x.IsArmorPlate))
                             {
                                 if (!GameData.PlateLevel.TryGetValue(loot.Name, out var lvl))
                                     continue;
@@ -2198,6 +2198,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowInfoTab.Checked = Config.ShowInfoTab;
             checkBox_HideCorpses.Checked = Config.HideCorpses;
             checkBox_ShowMines.Checked = Config.ShowMines;
+            checkBox_KillTask.Checked = Config.ShowZone;
             checkBox_TeammateAimlines.Checked = Config.TeammateAimlines;
             checkBox_AIAimlines.Checked = Config.AIAimlines;
             checkBox_Aimview.Checked = Config.ESPWidgetEnabled;
@@ -4082,6 +4083,11 @@ namespace eft_dma_radar.UI.Radar
                     System.Diagnostics.Process.Start("explorer.exe", "https://tarkov.dev/players/regular/" + Uri.EscapeDataString(cellValue));
                 }
             }
+        }
+
+        private void checkBox_KillTask_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowZone = checkBox_KillTask.Checked;
         }
     }
 }

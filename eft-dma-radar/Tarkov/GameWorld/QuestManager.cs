@@ -10,11 +10,13 @@ using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.ESP;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Misc.Commercial;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace eft_dma_radar.Tarkov.GameWorld
 {
     public sealed class QuestManager
     {
+
         private static readonly FrozenDictionary<string, string> _mapToId = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             { "factory4_day", "55f2d3fd4bdc2d5f408b4567" },
@@ -53,6 +55,30 @@ namespace eft_dma_radar.Tarkov.GameWorld
                     zone => zone.pos,
                     StringComparer.OrdinalIgnoreCase
                 ).ToFrozenDictionary(StringComparer.OrdinalIgnoreCase),
+                StringComparer.OrdinalIgnoreCase
+            )
+            .ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
+
+        private static readonly FrozenDictionary<string, FrozenDictionary<string, List<Vector3>>> _questOutlines = EftDataManager.TaskData.Values
+            .Where(task => task.Objectives is not null) // Ensure the Objectives are not null
+            .SelectMany(task => task.Objectives) // Flatten the Objectives from each TaskElement
+            .Where(objective => objective.Zones is not null) // Ensure the Zones are not null
+            .SelectMany(objective => objective.Zones) // Flatten the Zones from each Objective
+            .Where(zone => zone.Outline is not null && zone.Map?.Id is not null) // Ensure Outline and Map are not null
+            .GroupBy(zone => zone.Map.Id, zone => new
+            {
+                id = zone.Id,
+                outline = zone.Outline.Select(pos => new Vector3(pos.X, pos.Y, pos.Z)).ToList()
+            }, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(
+                group => group.Key, // Map Id
+                group => group
+                    .DistinctBy(x => x.id, StringComparer.OrdinalIgnoreCase)
+                    .ToDictionary(
+                        zone => zone.id,
+                        zone => zone.outline,
+                        StringComparer.OrdinalIgnoreCase
+                    ).ToFrozenDictionary(StringComparer.OrdinalIgnoreCase),
                 StringComparer.OrdinalIgnoreCase
             )
             .ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
@@ -224,6 +250,23 @@ namespace eft_dma_radar.Tarkov.GameWorld
                         locations.Add(new QuestLocation(questID, zone, loc));
                     }
                 }
+                else if (condName == "ConditionInZone")
+                {
+                    var zonePtr2 = Memory.ReadPtr(condition + 0x70);
+                    using var zones = MemArray<ulong>.Get(zonePtr2);
+                    foreach (var zone in zones)
+                    {
+                        var id = Memory.ReadUnityString(zone);
+                        if (_mapToId.TryGetValue(MapID, out var mapId) &&
+                            _questOutlines.TryGetValue(mapId, out var outzone) &&
+                            outzone.TryGetValue(id, out var outlines) &&
+                            _questZones.TryGetValue(mapId, out var outpos) &&
+                            outpos.TryGetValue(id, out var locc))
+                        {
+                            locations.Add(new QuestLocation(questID, id, locc, outlines));
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -238,17 +281,22 @@ namespace eft_dma_radar.Tarkov.GameWorld
     public sealed class QuestLocation : IWorldEntity, IMapEntity, IMouseoverEntity, IESPEntity
     {
         /// <summary>
+        /// Main UI/Application Config.
+        /// </summary>
+        public static Config Config { get; } = Program.Config;
+        /// <summary>
         /// Name of this quest.
         /// </summary>
         public string Name { get; }
 
-        public QuestLocation(string questID, string target, Vector3 position)
+        public QuestLocation(string questID, string target, Vector3 position, List<Vector3> outline = null)
         {
             if (EftDataManager.TaskData.TryGetValue(questID, out var q))
                 Name = q.Name;
             else
                 Name = target;
             Position = position;
+            Outline = outline;
         }
 
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
@@ -272,6 +320,29 @@ namespace eft_dma_radar.Tarkov.GameWorld
         {
             if ((this is QuestLocation) && !Memory.LocalPlayer.IsPmc)
                 return;
+            if(Outline is not null && Config.ShowZone)
+            {
+                var mapPoints = Outline.Select(p => p.ToMapPos(mapParams.Map).ToZoomedPos(mapParams)).ToList();
+
+                using var path = new SKPath();
+                bool first = true;
+
+                foreach (var p in mapPoints)
+                {
+                    if (first)
+                    {
+                        path.MoveTo(p.X, p.Y);
+                        first = false;
+                    }
+                    else
+                    {
+                        path.LineTo(p.X, p.Y);
+                    }
+                }
+                path.Close(); // Close the shape
+
+                canvas.DrawPath(path, SKPaints.PaintConnectorGroup);
+            }
             var point = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
             MouseoverPosition = new Vector2(point.X, point.Y);
             var heightDiff = Position.Y - localPlayer.Position.Y;
@@ -284,7 +355,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
             }
             else if (heightDiff < -1.45) // marker is below player
             {
-                using var path = point.GetArrow(6,false);
+                using var path = point.GetArrow(6, false);
                 canvas.DrawPath(path, SKPaints.ShapeOutline);
                 canvas.DrawPath(path, SKPaints.QuestHelperPaint);
             }
@@ -307,6 +378,8 @@ namespace eft_dma_radar.Tarkov.GameWorld
         }
 
         private Vector3 _position;
+        private List<Vector3> _outline;
         public ref Vector3 Position => ref _position;
+        public ref List<Vector3> Outline => ref _outline;
     }
 }
