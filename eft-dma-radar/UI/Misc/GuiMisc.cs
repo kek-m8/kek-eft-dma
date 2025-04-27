@@ -6,6 +6,9 @@ using eft_dma_shared.Common.Maps;
 using eft_dma_shared.Common.Misc;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace eft_dma_radar.UI.Misc
 {
@@ -291,7 +294,8 @@ namespace eft_dma_radar.UI.Misc
             float maxLength = 0;
             foreach (var line in lines)
             {
-                var length = SKPaints.TextBoss.MeasureText(line);
+                //var length = SKPaints.TextBoss.MeasureText(line);
+                var length = ChineseTextHelper.MeasureChineseText(line, SKPaints.TextBoss);
                 if (length > maxLength)
                     maxLength = length;
             }
@@ -308,7 +312,8 @@ namespace eft_dma_radar.UI.Misc
             {
                 if (string.IsNullOrEmpty(line?.Trim()))
                     continue;
-                canvas.DrawText(line, zoomedMapPos, SKPaints.TextMouseover); // draw line text
+                //canvas.DrawText(line, zoomedMapPos, SKPaints.TextMouseover); // draw line text
+                ChineseTextHelper.DrawChineseText(canvas, line, zoomedMapPos.X, zoomedMapPos.Y, SKPaints.TextMouseover);
                 zoomedMapPos.Offset(0, 12f * MainForm.UIScale);
             }
         }
@@ -336,7 +341,8 @@ namespace eft_dma_radar.UI.Misc
             {
                 if (string.IsNullOrEmpty(x?.Trim()))
                     continue;
-                canvas.DrawText(x, screenPos, paint);
+                //canvas.DrawText(x, screenPos, paint);
+                ChineseTextHelper.DrawChineseText(canvas, x, screenPos.X, screenPos.Y, paint);
                 screenPos.Y += paint.TextSize;
             }
         }

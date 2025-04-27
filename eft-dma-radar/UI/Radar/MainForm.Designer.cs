@@ -421,7 +421,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label20.AutoSize = true;
             flowLayoutPanel_Loot.SetFlowBreak(label20, true);
-            label20.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label20.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label20.Location = new Point(3, 0);
             label20.Name = "label20";
             label20.Size = new Size(44, 21);
@@ -432,7 +432,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label6.AutoSize = true;
             flowLayoutPanel_Loot.SetFlowBreak(label6, true);
-            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label6.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold);
             label6.Location = new Point(3, 21);
             label6.Name = "label6";
             label6.Size = new Size(110, 15);
@@ -760,7 +760,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label2.AutoSize = true;
             flowLayoutPanel_RadarSettings.SetFlowBreak(label2, true);
-            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(3, 0);
             label2.Name = "label2";
             label2.Size = new Size(179, 21);
@@ -1070,7 +1070,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label29.AutoSize = true;
             flowLayoutPanel_Loot_Containers.SetFlowBreak(label29, true);
-            label29.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label29.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label29.Location = new Point(9, 0);
             label29.Name = "label29";
             label29.Size = new Size(44, 21);
@@ -1120,7 +1120,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label30.AutoSize = true;
             flowLayoutPanel_Loot_Containers.SetFlowBreak(label30, true);
-            label30.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label30.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label30.Location = new Point(3, 46);
             label30.Name = "label30";
             label30.Size = new Size(96, 15);
@@ -1208,7 +1208,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label34.AutoSize = true;
             flowLayoutPanel1.SetFlowBreak(label34, true);
-            label34.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label34.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label34.ImageAlign = ContentAlignment.TopLeft;
             label34.Location = new Point(3, 0);
             label34.Name = "label34";
@@ -1291,7 +1291,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_EnableMemWrite
             // 
             checkBox_EnableMemWrite.AutoSize = true;
-            checkBox_EnableMemWrite.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkBox_EnableMemWrite.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox_EnableMemWrite.Location = new Point(3, 381);
             checkBox_EnableMemWrite.Name = "checkBox_EnableMemWrite";
             checkBox_EnableMemWrite.Size = new Size(184, 19);
@@ -1353,7 +1353,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label3.AutoSize = true;
             flowLayoutPanel_MemWrites.SetFlowBreak(label3, true);
-            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(3, 0);
             label3.Name = "label3";
             label3.Size = new Size(183, 21);
@@ -1363,7 +1363,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_AdvancedMemWrites
             // 
             checkBox_AdvancedMemWrites.AutoSize = true;
-            checkBox_AdvancedMemWrites.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkBox_AdvancedMemWrites.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox_AdvancedMemWrites.Location = new Point(3, 28);
             checkBox_AdvancedMemWrites.Name = "checkBox_AdvancedMemWrites";
             checkBox_AdvancedMemWrites.Size = new Size(246, 19);
@@ -1651,7 +1651,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label13.AutoSize = true;
             flowLayoutPanel_Aimbot.SetFlowBreak(label13, true);
-            label13.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label13.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold);
             label13.Location = new Point(3, 0);
             label13.Name = "label13";
             label13.Size = new Size(113, 15);
@@ -1831,7 +1831,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label17.AutoSize = true;
             flowLayoutPanel_Chams.SetFlowBreak(label17, true);
-            label17.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label17.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label17.Location = new Point(3, 0);
             label17.Name = "label17";
             label17.Size = new Size(43, 15);
@@ -1901,7 +1901,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label14.AutoSize = true;
             flowLayoutPanel_AdvancedChams.SetFlowBreak(label14, true);
-            label14.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label14.Location = new Point(3, 0);
             label14.Name = "label14";
             label14.Size = new Size(145, 15);
@@ -1989,7 +1989,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label16.AutoSize = true;
             flowLayoutPanel_NoRecoil.SetFlowBreak(label16, true);
-            label16.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label16.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label16.Location = new Point(3, 0);
             label16.Name = "label16";
             label16.Size = new Size(58, 15);
@@ -2058,7 +2058,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label_WideLean.AutoSize = true;
             flowLayoutPanel_WideLean.SetFlowBreak(label_WideLean, true);
-            label_WideLean.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label_WideLean.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label_WideLean.Location = new Point(3, 0);
             label_WideLean.Name = "label_WideLean";
             label_WideLean.Size = new Size(63, 15);
@@ -2126,7 +2126,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label28.AutoSize = true;
             flowLayoutPanel_LTW.SetFlowBreak(label28, true);
-            label28.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label28.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label28.Location = new Point(3, 0);
             label28.Name = "label28";
             label28.Size = new Size(112, 15);
@@ -2179,7 +2179,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label11.AutoSize = true;
             flowLayoutPanel_MonitorSettings.SetFlowBreak(label11, true);
-            label11.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label11.Location = new Point(3, 0);
             label11.Name = "label11";
             label11.Size = new Size(206, 21);
@@ -2284,7 +2284,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label12.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(label12, true);
-            label12.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.Font = new Font("Microsoft YaHei", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label12.Location = new Point(3, 0);
             label12.Name = "label12";
             label12.Size = new Size(79, 21);
@@ -2589,7 +2589,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label18.AutoSize = true;
             flowLayoutPanel_ESP_PlayerRender.SetFlowBreak(label18, true);
-            label18.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label18.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label18.Location = new Point(3, 0);
             label18.Name = "label18";
             label18.Size = new Size(113, 15);
@@ -2736,7 +2736,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label19.AutoSize = true;
             flowLayoutPanel_ESP_AIRender.SetFlowBreak(label19, true);
-            label19.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label19.Location = new Point(3, 0);
             label19.Name = "label19";
             label19.Size = new Size(93, 15);
@@ -2881,7 +2881,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label9.AutoSize = true;
             flowLayoutPanel4.SetFlowBreak(label9, true);
-            label9.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label9.Font = new Font("Microsoft YaHei", 9F, FontStyle.Bold);
             label9.Location = new Point(3, 0);
             label9.Name = "label9";
             label9.Size = new Size(91, 15);

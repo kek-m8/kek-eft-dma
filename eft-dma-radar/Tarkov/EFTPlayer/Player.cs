@@ -1589,8 +1589,12 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 if (string.IsNullOrEmpty(line?.Trim()))
                     continue;
 
-                canvas.DrawText(line, point, SKPaints.TextOutline); // Draw outline
-                canvas.DrawText(line, point, importantLoot ? SKPaints.TextImportant : paints.Item2); // draw line text
+                //canvas.DrawText(line, point, SKPaints.TextOutline); // Draw outline
+                //canvas.DrawText(line, point, importantLoot ? SKPaints.TextImportant : paints.Item2); // draw line text
+                // 使用中文文本渲染方法绘制轮廓
+                ChineseTextHelper.DrawChineseText(canvas, line, point.X, point.Y, SKPaints.TextOutline);
+                // 使用中文文本渲染方法绘制文本
+                ChineseTextHelper.DrawChineseText(canvas, line, point.X, point.Y, paints.Item2);
                 point.Offset(0, 12 * MainForm.UIScale);
             }
         }

@@ -392,8 +392,10 @@ namespace eft_dma_radar.Tarkov.Loot
             }
 
             point.Offset(7 * MainForm.UIScale, 3 * MainForm.UIScale);
-            canvas.DrawText(label, point, SKPaints.TextOutline); // Draw outline
-            canvas.DrawText(label, point, paints.Item2);
+            //canvas.DrawText(label, point, SKPaints.TextOutline); // Draw outline
+            //canvas.DrawText(label, point, paints.Item2);
+            ChineseTextHelper.DrawChineseText(canvas, label, point.X, point.Y, SKPaints.TextOutline);
+            ChineseTextHelper.DrawChineseText(canvas, label, point.X, point.Y, paints.Item2);
         }
 
         public virtual void DrawMouseover(SKCanvas canvas, LoneMapParams mapParams, LocalPlayer localPlayer)
@@ -581,7 +583,8 @@ namespace eft_dma_radar.Tarkov.Loot
                         TextSize = 12f * MainForm.UIScale,
                         TextEncoding = SKTextEncoding.Utf8,
                         IsAntialias = true,
-                        Typeface = CustomFonts.SKFontFamilyRegular,
+                        //Typeface = CustomFonts.SKFontFamilyRegular,
+                        Typeface = CustomFonts.GetChineseTypeface(),
                         FilterQuality = SKFilterQuality.High
                     };
                     var espPaint = new SKPaint()
@@ -601,7 +604,8 @@ namespace eft_dma_radar.Tarkov.Loot
                         TextAlign = SKTextAlign.Center,
                         TextEncoding = SKTextEncoding.Utf8,
                         IsAntialias = true,
-                        Typeface = CustomFonts.SKFontFamilyMedium,
+                        //Typeface = CustomFonts.SKFontFamilyMedium,
+                        Typeface = CustomFonts.GetChineseTypeface(),
                         FilterQuality = SKFilterQuality.High
                     };
                     return new Tuple<SKPaint, SKPaint, SKPaint, SKPaint>(paint, text, espPaint, espText);

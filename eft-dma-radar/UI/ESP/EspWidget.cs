@@ -106,7 +106,8 @@ namespace eft_dma_radar.UI.ESP
                                     adjPos.Y + 12.5f * ScaleFactor);
                                 _espCanvas.DrawRect(boxPt, PaintESPWidgetLoot);
                                 var label = item.GetUILabel(true) + $" ({dist.ToString("n1")}m)";
-                                _espCanvas.DrawText(label, textPt, TextESPWidgetLoot);
+                                //_espCanvas.DrawText(label, textPt, TextESPWidgetLoot);
+                                ChineseTextHelper.DrawChineseText(_espCanvas, label, textPt.X, textPt.Y, TextESPWidgetLoot);
                             }
                         }
                         if (MainForm.Config.Containers.Show)
@@ -134,7 +135,8 @@ namespace eft_dma_radar.UI.ESP
                                             adjPos.Y + 12.5f * ScaleFactor);
                                         _espCanvas.DrawRect(boxPt, PaintESPWidgetLoot);
                                         var label = $"{container.Name} ({dist.ToString("n1")}m)";
-                                        _espCanvas.DrawText(label, textPt, TextESPWidgetLoot);
+                                        //_espCanvas.DrawText(label, textPt, TextESPWidgetLoot);
+                                        ChineseTextHelper.DrawChineseText(_espCanvas, label, textPt.X, textPt.Y, TextESPWidgetLoot);
                                     }
                                 }
                             }
@@ -320,7 +322,8 @@ namespace eft_dma_radar.UI.ESP
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyRegular,
+            //Typeface = CustomFonts.SKFontFamilyRegular,
+            Typeface = CustomFonts.GetChineseTypeface(),
             FilterQuality = SKFilterQuality.High
         };
 
