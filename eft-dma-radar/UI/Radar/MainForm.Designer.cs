@@ -108,6 +108,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_QuestSelectAll = new CheckBox();
             checkBox_KappaOnly = new CheckBox();
             checkedListBox_QuestHelper = new CheckedListBox();
+            checkBox_KillTask = new CheckBox();
             splitter1 = new Splitter();
             splitter2 = new Splitter();
             checkBox_EnableMemWrite = new CheckBox();
@@ -296,7 +297,6 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
-            checkBox_KillTask = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -1272,6 +1272,18 @@ namespace eft_dma_radar.UI.Radar
             checkedListBox_QuestHelper.Size = new Size(343, 112);
             checkedListBox_QuestHelper.TabIndex = 48;
             // 
+            // checkBox_KillTask
+            // 
+            checkBox_KillTask.AutoSize = true;
+            checkBox_KillTask.Location = new Point(3, 167);
+            checkBox_KillTask.Name = "checkBox_KillTask";
+            checkBox_KillTask.Size = new Size(102, 19);
+            checkBox_KillTask.TabIndex = 63;
+            checkBox_KillTask.Text = "KillTask Border";
+            toolTip1.SetToolTip(checkBox_KillTask, "When enabled, a rectangle border representing the zone limits for the kill task will be drawn on the radar");
+            checkBox_KillTask.UseVisualStyleBackColor = true;
+            checkBox_KillTask.CheckedChanged += checkBox_KillTask_CheckedChanged;
+            // 
             // splitter1
             // 
             splitter1.Location = new Point(3, 363);
@@ -1346,7 +1358,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWrites, true);
             flowLayoutPanel_MemWrites.Location = new Point(3, 412);
             flowLayoutPanel_MemWrites.Name = "flowLayoutPanel_MemWrites";
-            flowLayoutPanel_MemWrites.Size = new Size(1171, 371);
+            flowLayoutPanel_MemWrites.Size = new Size(1192, 371);
             flowLayoutPanel_MemWrites.TabIndex = 1;
             // 
             // label3
@@ -2277,7 +2289,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
             flowLayoutPanel_ESPSettings.Location = new Point(3, 865);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
-            flowLayoutPanel_ESPSettings.Size = new Size(1171, 343);
+            flowLayoutPanel_ESPSettings.Size = new Size(1192, 343);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
             // 
             // label12
@@ -2416,16 +2428,16 @@ namespace eft_dma_radar.UI.Radar
             checkBox_TrapSwitches.AutoSize = true;
             checkBox_TrapSwitches.Location = new Point(182, 71);
             checkBox_TrapSwitches.Name = "checkBox_TrapSwitches";
-            checkBox_TrapSwitches.Size = new Size(168, 19);
+            checkBox_TrapSwitches.Size = new Size(189, 19);
             checkBox_TrapSwitches.TabIndex = 61;
-            checkBox_TrapSwitches.Text = "Show Event Traps/Switches";
+            checkBox_TrapSwitches.Text = "Show Labyrinth Traps/Switches";
             checkBox_TrapSwitches.UseVisualStyleBackColor = true;
             checkBox_TrapSwitches.CheckedChanged += checkBox_TrapSwitches_CheckedChanged;
             // 
             // checkBox_ESP_Explosives
             // 
             checkBox_ESP_Explosives.AutoSize = true;
-            checkBox_ESP_Explosives.Location = new Point(356, 71);
+            checkBox_ESP_Explosives.Location = new Point(377, 71);
             checkBox_ESP_Explosives.Name = "checkBox_ESP_Explosives";
             checkBox_ESP_Explosives.Size = new Size(112, 19);
             checkBox_ESP_Explosives.TabIndex = 8;
@@ -2436,7 +2448,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_ShowMag
             // 
             checkBox_ESP_ShowMag.AutoSize = true;
-            checkBox_ESP_ShowMag.Location = new Point(474, 71);
+            checkBox_ESP_ShowMag.Location = new Point(495, 71);
             checkBox_ESP_ShowMag.Name = "checkBox_ESP_ShowMag";
             checkBox_ESP_ShowMag.Size = new Size(109, 19);
             checkBox_ESP_ShowMag.TabIndex = 60;
@@ -2447,7 +2459,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_Dist
             // 
             checkBox_ESP_Dist.AutoSize = true;
-            checkBox_ESP_Dist.Location = new Point(589, 71);
+            checkBox_ESP_Dist.Location = new Point(610, 71);
             checkBox_ESP_Dist.Name = "checkBox_ESP_Dist";
             checkBox_ESP_Dist.Size = new Size(108, 19);
             checkBox_ESP_Dist.TabIndex = 48;
@@ -2458,7 +2470,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_ShowMines
             // 
             checkBox_ESP_ShowMines.AutoSize = true;
-            checkBox_ESP_ShowMines.Location = new Point(703, 71);
+            checkBox_ESP_ShowMines.Location = new Point(724, 71);
             checkBox_ESP_ShowMines.Name = "checkBox_ESP_ShowMines";
             checkBox_ESP_ShowMines.Size = new Size(90, 19);
             checkBox_ESP_ShowMines.TabIndex = 59;
@@ -2469,7 +2481,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FireportAim
             // 
             checkBox_ESP_FireportAim.AutoSize = true;
-            checkBox_ESP_FireportAim.Location = new Point(799, 71);
+            checkBox_ESP_FireportAim.Location = new Point(820, 71);
             checkBox_ESP_FireportAim.Name = "checkBox_ESP_FireportAim";
             checkBox_ESP_FireportAim.Size = new Size(124, 19);
             checkBox_ESP_FireportAim.TabIndex = 71;
@@ -2480,7 +2492,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_AimFov
             // 
             checkBox_ESP_AimFov.AutoSize = true;
-            checkBox_ESP_AimFov.Location = new Point(929, 71);
+            checkBox_ESP_AimFov.Location = new Point(950, 71);
             checkBox_ESP_AimFov.Name = "checkBox_ESP_AimFov";
             checkBox_ESP_AimFov.Size = new Size(105, 19);
             checkBox_ESP_AimFov.TabIndex = 43;
@@ -2491,7 +2503,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_AimLock
             // 
             checkBox_ESP_AimLock.AutoSize = true;
-            checkBox_ESP_AimLock.Location = new Point(1040, 71);
+            checkBox_ESP_AimLock.Location = new Point(1061, 71);
             checkBox_ESP_AimLock.Name = "checkBox_ESP_AimLock";
             checkBox_ESP_AimLock.Size = new Size(126, 19);
             checkBox_ESP_AimLock.TabIndex = 49;
@@ -2530,6 +2542,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowPlates.TabIndex = 75;
             checkBox_ShowPlates.Text = "Show ArmourPlate Class";
             checkBox_ShowPlates.TextAlign = ContentAlignment.MiddleCenter;
+            toolTip1.SetToolTip(checkBox_ShowPlates, "WARNING: Unstable, can break ESP randomly.");
             checkBox_ShowPlates.UseVisualStyleBackColor = true;
             checkBox_ShowPlates.CheckedChanged += checkBox_ShowPlates_CheckedChanged;
             // 
@@ -3504,18 +3517,6 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.AutoPopDelay = 20000;
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
-            // 
-            // checkBox_KillTask
-            // 
-            checkBox_KillTask.AutoSize = true;
-            checkBox_KillTask.Location = new Point(3, 167);
-            checkBox_KillTask.Name = "checkBox_KillTask";
-            checkBox_KillTask.Size = new Size(102, 19);
-            checkBox_KillTask.TabIndex = 63;
-            checkBox_KillTask.Text = "KillTask Border";
-            toolTip1.SetToolTip(checkBox_KillTask, "When enabled, a rectangle border representing the zone limits for the kill task will be drawn on the radar");
-            checkBox_KillTask.UseVisualStyleBackColor = true;
-            checkBox_KillTask.CheckedChanged += checkBox_KillTask_CheckedChanged;
             // 
             // MainForm
             // 

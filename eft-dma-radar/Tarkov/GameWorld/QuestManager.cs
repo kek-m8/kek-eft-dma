@@ -299,6 +299,26 @@ namespace eft_dma_radar.Tarkov.GameWorld
             Outline = outline;
         }
 
+        public static bool IsPointInPolygon(Vector2 point, List<Vector2> polygon)
+        {
+            bool inside = false;
+            int count = polygon.Count;
+
+            for (int i = 0, j = count - 1; i < count; j = i++)
+            {
+                var pi = polygon[i];
+                var pj = polygon[j];
+
+                if (((pi.Y > point.Y) != (pj.Y > point.Y)) &&
+                    (point.X < (pj.X - pi.X) * (point.Y - pi.Y) / (pj.Y - pi.Y) + pi.X))
+                {
+                    inside = !inside;
+                }
+            }
+
+            return inside;
+        }
+
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
             if ((this is QuestLocation) && !localPlayer.IsPmc)
@@ -375,6 +395,10 @@ namespace eft_dma_radar.Tarkov.GameWorld
         {
             string[] lines = new string[] { Name };
             Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams).DrawMouseoverText(canvas, lines);
+            foreach (var vector in Outline.Select(p => p.ToMapPos(mapParams.Map).ToZoomedPos(mapParams)))
+            {
+                vector.DrawMouseoverText(canvas, lines);
+            }
         }
 
         private Vector3 _position;

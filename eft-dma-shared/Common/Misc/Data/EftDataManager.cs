@@ -9,7 +9,7 @@ namespace eft_dma_shared.Common.Misc.Data
 {
     public static class EftDataManager
     {
-        private const string _dataFileName = "data.json";
+        private const string _dataFileName = "kek_data.json";
         private static readonly string _dataFile = Path.Combine(SharedProgram.ConfigPath.FullName, _dataFileName);
 
         /// <summary>

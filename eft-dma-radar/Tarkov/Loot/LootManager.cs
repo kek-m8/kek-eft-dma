@@ -216,7 +216,7 @@ namespace eft_dma_radar.Tarkov.Loot
                 {
                     try
                     {
-                        if (objectName.Equals("container_crete_04_COLLIDER(1)", StringComparison.OrdinalIgnoreCase))
+                        if (objectName.Equals("container_supplyBox_opened_Cap", StringComparison.OrdinalIgnoreCase))
                         {
                             loot.Add(new LootAirdrop()
                             {

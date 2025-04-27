@@ -635,7 +635,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             try
             {
                 int? hours = Profile.Hours;
-                if(hours is not -1 && this.Hours != hours)
+                if (hours is not -1 && this.Hours != hours)
                 {
                     this.Hours = hours ?? 0;
                 }
@@ -651,7 +651,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             try
             {
                 int? level = Profile.Level;
-                if(level is not null && this.Level != level)
+                if (level is not null && this.Level != level)
                 {
                     this.Level = level.Value;
                 }
