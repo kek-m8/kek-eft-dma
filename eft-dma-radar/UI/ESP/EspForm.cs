@@ -574,13 +574,19 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                 {
                     if (Config.ESP.ShowOnlyWishlist && !item.IsWishlisted) 
                         continue;
-                    if (item.Name.ToLower().Contains("q_") && !localPlayer.IsPmc)
-                        continue;
                     item.DrawESP(canvas, localPlayer);
                 }
             }
             if (Config.Containers.Show)
             {
+                var airdrops = Memory.Loot.UnfilteredLoot.Where(x => x is LootAirdrop);
+                if(airdrops.Count() > 0)
+                {
+                    foreach (var airdrop in airdrops)
+                    {
+                        airdrop.DrawESP(canvas, localPlayer);
+                    }
+                }
                 var containers = Containers;
                 if (containers is not null)
                 {
@@ -627,8 +633,6 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
         /// </summary>
         private static void DrawQuests(SKCanvas canvas, LocalPlayer localPlayer)
         {
-            if (!localPlayer.IsPmc)
-                return;
             var questItems = Loot?.Where(x => x is QuestItem);
             if (questItems is not null)
                 foreach (var item in questItems)

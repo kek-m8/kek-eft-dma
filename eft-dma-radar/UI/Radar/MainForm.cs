@@ -358,6 +358,14 @@ namespace eft_dma_radar.UI.Radar
                         }
                         if (Config.Containers.Show) // Draw Containers
                         {
+                            var airdrops = Memory.Loot.UnfilteredLoot.Where(x => x is LootAirdrop);
+                            if (airdrops.Count() > 0)
+                            {
+                                foreach (var airdrop in airdrops)
+                                {
+                                    airdrop.Draw(canvas, mapParams, localPlayer);
+                                }
+                            }
                             var containers = Containers;
                             if (containers is not null)
                             {

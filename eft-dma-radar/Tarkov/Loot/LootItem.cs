@@ -305,6 +305,8 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
+            if ((this is QuestItem && this is not LootItem) && !localPlayer.IsPmc)
+                return;
             if (this is LootItem && this is not QuestItem)
             {
                 if (IsQuestCondition && !IsFIR)
