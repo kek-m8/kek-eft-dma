@@ -113,6 +113,10 @@ namespace eft_dma_shared.Common.Misc.Data
         public bool IsArmoredRig => (IsRig && Name.ToLower().Contains("plate carrier"));
         [JsonIgnore]
         public bool IsSpecialItem => Tags.Contains("Special item");
+        [JsonIgnore]
+        public bool IsRocket => Tags.Contains("Rocket") && Tags.Contains("Ammo");
+        [JsonIgnore]
+        public bool IsRocketLauncher => Tags.Contains("Rocket Launcher") && Tags.Contains("Weapon");
 
         /// <summary>
         /// This field is set if this item has a special filter.

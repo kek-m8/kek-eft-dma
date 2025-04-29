@@ -174,6 +174,9 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public bool IsSpecialItem => _item.IsSpecialItem;
 
+        public bool IsRocket => _item.IsRocket;
+        public bool IsRocketLauncher => _item.IsRocketLauncher;
+
         /// <summary>
         /// Checks if an item exceeds regular loot price threshold.
         /// </summary>
@@ -476,7 +479,7 @@ namespace eft_dma_radar.Tarkov.Loot
                     label += "!!";
                 else if (Price > 0)
                     label += $"[{TarkovMarketItem.FormatPrice(Price)}] ";
-                label += (!ShortName.Equals("Poster") ? ShortName : this.Name);
+                label += (!ShortName.Equals("Poster") ? ShortName ?? this.ID : this.Name);
                 if (showQuest && IsQuestCondition && IsFIR)
                     label += " (Quest)";
             }
