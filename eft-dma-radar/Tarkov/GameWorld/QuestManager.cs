@@ -45,7 +45,6 @@ namespace eft_dma_radar.Tarkov.GameWorld
                 id = zone.Id,
                 pos = new Vector3(zone.Position.X, zone.Position.Y, zone.Position.Z)
             }, StringComparer.OrdinalIgnoreCase)
-            .DistinctBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(
                 group => group.Key, // Map Id
                 group => group
@@ -191,7 +190,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
                     foreach (var targetPtr in targets)
                     {
                         var target = Memory.ReadUnityString(targetPtr);
-                        items.Add(target);
+                        items.Add(target);  
                     }
                 }
                 else if (condName == "ConditionPlaceBeacon" || condName == "ConditionLeaveItemAtLocation")

@@ -10,7 +10,7 @@ namespace eft_dma_shared.Common.Players
     /// </summary>
     public sealed class Skeleton
     {
-        private const int JOINTS_COUNT = 34;
+        private const int JOINTS_COUNT = 42;
 
         /// <summary>
         /// Bones Buffer for Fuser ESP.
@@ -100,6 +100,10 @@ namespace eft_dma_shared.Common.Players
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRCollarbone].Position, out var rightCollarScreen))
                 return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLUpperarm].Position, out var leftUpperAScreen))
+                return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRUpperarm].Position, out var rightUpperAScreen))
+                return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLPalm].Position, out var leftHandScreen))
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRPalm].Position, out var rightHandScreen))
@@ -114,13 +118,17 @@ namespace eft_dma_shared.Common.Players
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRFoot].Position, out var rightFootScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLThigh2].Position, out var leftKneeScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLThigh1].Position, out var leftKneeScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRThigh2].Position, out var rightKneeScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLCalf].Position, out var leftCalfScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLForearm2].Position, out var leftElbowScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRCalf].Position, out var rightCalfScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRForearm2].Position, out var rightElbowScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRThigh1].Position, out var rightKneeScreen))
+                return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLForearm1].Position, out var leftElbowScreen))
+                return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRForearm1].Position, out var rightElbowScreen))
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLToe].Position, out var leftToeScreen))
                 return false;
@@ -137,38 +145,46 @@ namespace eft_dma_shared.Common.Players
             ESPBuffer[index++] = midTorsoScreen;
             ESPBuffer[index++] = lowerTorsoScreen;
             ESPBuffer[index++] = lowerTorsoScreen;
-            ESPBuffer[index++] = pelvisScreen;
+            ESPBuffer[index++] = pelvisScreen; // 10
             // Pelvis to left foot
             ESPBuffer[index++] = pelvisScreen;
             ESPBuffer[index++] = leftKneeScreen;
             ESPBuffer[index++] = leftKneeScreen;
-            ESPBuffer[index++] = leftFootScreen; // 14
+            ESPBuffer[index++] = leftCalfScreen;
+            ESPBuffer[index++] = leftCalfScreen;
+            ESPBuffer[index++] = leftFootScreen; // 16
             // Left foot to left toe
             ESPBuffer[index++] = leftFootScreen;
-            ESPBuffer[index++] = leftToeScreen; // 16
+            ESPBuffer[index++] = leftToeScreen; // 18
             // Pelvis to right foot
             ESPBuffer[index++] = pelvisScreen;
             ESPBuffer[index++] = rightKneeScreen;
             ESPBuffer[index++] = rightKneeScreen;
-            ESPBuffer[index++] = rightFootScreen; // 20
+            ESPBuffer[index++] = rightCalfScreen;
+            ESPBuffer[index++] = rightCalfScreen;
+            ESPBuffer[index++] = rightFootScreen; // 24
             // Right foot to right toe
             ESPBuffer[index++] = rightFootScreen;
-            ESPBuffer[index++] = rightToeScreen; // 22
+            ESPBuffer[index++] = rightToeScreen; // 26
             // Left collar to left hand
-            ESPBuffer[index++] = leftCollarScreen;
+            ESPBuffer[index++] = leftUpperAScreen;
+            ESPBuffer[index++] = leftUpperAScreen;
+            ESPBuffer[index++] = leftUpperAScreen;
             ESPBuffer[index++] = leftElbowScreen;
             ESPBuffer[index++] = leftElbowScreen;
-            ESPBuffer[index++] = leftHandScreen; // 26
+            ESPBuffer[index++] = leftHandScreen; // 32
             // Right collar to right hand
-            ESPBuffer[index++] = rightCollarScreen;
+            ESPBuffer[index++] = rightUpperAScreen;
+            ESPBuffer[index++] = rightUpperAScreen;
+            ESPBuffer[index++] = rightUpperAScreen;
             ESPBuffer[index++] = rightElbowScreen;
             ESPBuffer[index++] = rightElbowScreen;
-            ESPBuffer[index++] = rightHandScreen; // 30
+            ESPBuffer[index++] = rightHandScreen; // 38
             // Left collar to right collar
-            ESPBuffer[index++] = leftCollarScreen;
+            ESPBuffer[index++] = leftUpperAScreen;
             ESPBuffer[index++] = neckScreen;
             ESPBuffer[index++] = neckScreen;
-            ESPBuffer[index++] = rightCollarScreen; // 34
+            ESPBuffer[index++] = rightUpperAScreen; // 42
             return true;
         }
 
@@ -192,6 +208,10 @@ namespace eft_dma_shared.Common.Players
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRCollarbone].Position, out var rightCollarScreen))
                 return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLUpperarm].Position, out var leftUpperAScreen))
+                return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRUpperarm].Position, out var rightUpperAScreen))
+                return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLPalm].Position, out var leftHandScreen))
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRPalm].Position, out var rightHandScreen))
@@ -206,21 +226,24 @@ namespace eft_dma_shared.Common.Players
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRFoot].Position, out var rightFootScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLThigh2].Position, out var leftKneeScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLThigh1].Position, out var leftKneeScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRThigh2].Position, out var rightKneeScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLCalf].Position, out var leftCalfScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLForearm2].Position, out var leftElbowScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRCalf].Position, out var rightCalfScreen))
                 return false;
-            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRForearm2].Position, out var rightElbowScreen))
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRThigh1].Position, out var rightKneeScreen))
+                return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLForearm1].Position, out var leftElbowScreen))
+                return false;
+            if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRForearm1].Position, out var rightElbowScreen))
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanLToe].Position, out var leftToeScreen))
                 return false;
             if (!CameraManagerBase.WorldToScreen(ref _bones[Unity.Bones.HumanRToe].Position, out var rightToeScreen))
                 return false;
-
             int index = 0;
-            // Head to left foot
+            // Head to lower body
             ScaleAimviewPoint(headScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(neckScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(neckScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
@@ -230,31 +253,47 @@ namespace eft_dma_shared.Common.Players
             ScaleAimviewPoint(midTorsoScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(lowerTorsoScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(lowerTorsoScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
-            ScaleAimviewPoint(pelvisScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(pelvisScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 10
+            // Pelvis to left foot
             ScaleAimviewPoint(pelvisScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(leftKneeScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(leftKneeScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftCalfScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftCalfScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftFootScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 16
+            // Left foot to left toe
             ScaleAimviewPoint(leftFootScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftToeScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 18
             // Pelvis to right foot
             ScaleAimviewPoint(pelvisScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(rightKneeScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(rightKneeScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightCalfScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightCalfScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightFootScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 24
+            // Right foot to right toe
             ScaleAimviewPoint(rightFootScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightToeScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 26
             // Left collar to left hand
-            ScaleAimviewPoint(leftCollarScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(leftElbowScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(leftElbowScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
-            ScaleAimviewPoint(leftHandScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftHandScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 32
             // Right collar to right hand
-            ScaleAimviewPoint(rightCollarScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(rightElbowScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(rightElbowScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
-            ScaleAimviewPoint(rightHandScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightHandScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 38
             // Left collar to right collar
-            ScaleAimviewPoint(leftCollarScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(leftUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(neckScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
             ScaleAimviewPoint(neckScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
-            ScaleAimviewPoint(rightCollarScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY);
+            ScaleAimviewPoint(rightUpperAScreen, ref ESPWidgetBuffer[index++], scaleX, scaleY); // 42
+
             return true;
 
             static void ScaleAimviewPoint(SKPoint original, ref SKPoint result, float scaleX, float scaleY)
@@ -298,15 +337,19 @@ namespace eft_dma_shared.Common.Players
             LowerTorso = eft_dma_shared.Common.Unity.Bones.HumanSpine1,
             LeftShoulder = eft_dma_shared.Common.Unity.Bones.HumanLCollarbone,
             RightShoulder = eft_dma_shared.Common.Unity.Bones.HumanRCollarbone,
-            LeftElbow = eft_dma_shared.Common.Unity.Bones.HumanLForearm2,
-            RightElbow = eft_dma_shared.Common.Unity.Bones.HumanRForearm2,
-            LeftElbowTest = Unity.Bones.HumanLForearm1,
-            RIghtElbowTest = Unity.Bones.HumanRForearm1,
+            LeftUpperArm = eft_dma_shared.Common.Unity.Bones.HumanLUpperarm,
+            RightUpperArm = eft_dma_shared.Common.Unity.Bones.HumanRUpperarm,
+            LeftElbow = Unity.Bones.HumanLForearm1,
+            RIghtElbow = Unity.Bones.HumanRForearm1,
             LeftHand = eft_dma_shared.Common.Unity.Bones.HumanLPalm,
             RightHand = eft_dma_shared.Common.Unity.Bones.HumanRPalm,
             Pelvis = eft_dma_shared.Common.Unity.Bones.HumanPelvis,
+            LeftCalf = eft_dma_shared.Common.Unity.Bones.HumanLCalf,
+            RightCalf = eft_dma_shared.Common.Unity.Bones.HumanRCalf,
             LeftKnee = eft_dma_shared.Common.Unity.Bones.HumanLThigh2,
             RightKnee = eft_dma_shared.Common.Unity.Bones.HumanRThigh2,
+            LeftKneeTest = eft_dma_shared.Common.Unity.Bones.HumanLThigh1,
+            RightKneeTest = eft_dma_shared.Common.Unity.Bones.HumanRThigh1,
             LeftFoot = eft_dma_shared.Common.Unity.Bones.HumanLFoot,
             RightFoot = eft_dma_shared.Common.Unity.Bones.HumanRFoot,
             LeftToe = Unity.Bones.HumanLToe,
@@ -335,6 +378,8 @@ namespace eft_dma_shared.Common.Players
             RightElbow = eft_dma_shared.Common.Unity.Bones.HumanRForearm2,
             LeftElbowTest = Unity.Bones.HumanLForearm1,
             RIghtElbowTest = Unity.Bones.HumanRForearm1,
+            LeftElbowTest2 = eft_dma_shared.Common.Unity.Bones.HumanLForearm3,
+            RIghtElbowTest2 = eft_dma_shared.Common.Unity.Bones.HumanRForearm3,
             LeftHand = eft_dma_shared.Common.Unity.Bones.HumanLPalm,
             RightHand = eft_dma_shared.Common.Unity.Bones.HumanRPalm
         }
