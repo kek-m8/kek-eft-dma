@@ -29,7 +29,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
             get
             {
                 string at = $"{_ammo} {_thermal}".Trim();
-                var item = _cachedItem?.ShortName;
+                var item = (_cachedItem?.ID.Equals("67b49e7335dec48e3e05e057") ?? false ? "F-1 (delayed)" : _cachedItem?.ShortName);
                 if (item is null) return "--";
                 if (item.Contains("127x108"))
                     return $"NSV Ulyos ({_ammo ?? "Unknown"})";
