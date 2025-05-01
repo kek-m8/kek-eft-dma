@@ -133,7 +133,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_NoWepMalf = new CheckBox();
             checkBox_FullBright = new CheckBox();
             checkBox_RageMode = new CheckBox();
-            button_instaPlant = new Button();
             button_AntiAfk = new Button();
             button_GymHack = new Button();
             label22 = new Label();
@@ -1345,7 +1344,6 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_MemWrites.Controls.Add(checkBox_NoWepMalf);
             flowLayoutPanel_MemWrites.Controls.Add(checkBox_FullBright);
             flowLayoutPanel_MemWrites.Controls.Add(checkBox_RageMode);
-            flowLayoutPanel_MemWrites.Controls.Add(button_instaPlant);
             flowLayoutPanel_MemWrites.Controls.Add(button_AntiAfk);
             flowLayoutPanel_MemWrites.Controls.Add(button_GymHack);
             flowLayoutPanel_MemWrites.Controls.Add(label22);
@@ -1590,22 +1588,11 @@ namespace eft_dma_radar.UI.Radar
             checkBox_RageMode.UseVisualStyleBackColor = true;
             checkBox_RageMode.CheckedChanged += checkBox_RageMode_CheckedChanged;
             // 
-            // button_instaPlant
-            // 
-            button_instaPlant.AutoSize = true;
-            button_instaPlant.Location = new Point(3, 153);
-            button_instaPlant.Name = "button_instaPlant";
-            button_instaPlant.Size = new Size(83, 25);
-            button_instaPlant.TabIndex = 78;
-            button_instaPlant.Text = "Instant Plant";
-            button_instaPlant.UseVisualStyleBackColor = true;
-            button_instaPlant.Click += button_instaPlant_Click;
-            // 
             // button_AntiAfk
             // 
             button_AntiAfk.Anchor = AnchorStyles.Right;
             button_AntiAfk.AutoSize = true;
-            button_AntiAfk.Location = new Point(92, 153);
+            button_AntiAfk.Location = new Point(3, 153);
             button_AntiAfk.Name = "button_AntiAfk";
             button_AntiAfk.Size = new Size(96, 25);
             button_AntiAfk.TabIndex = 57;
@@ -1618,7 +1605,7 @@ namespace eft_dma_radar.UI.Radar
             button_GymHack.Anchor = AnchorStyles.Right;
             button_GymHack.AutoSize = true;
             flowLayoutPanel_MemWrites.SetFlowBreak(button_GymHack, true);
-            button_GymHack.Location = new Point(194, 153);
+            button_GymHack.Location = new Point(105, 153);
             button_GymHack.Name = "button_GymHack";
             button_GymHack.Size = new Size(96, 25);
             button_GymHack.TabIndex = 70;
@@ -3839,7 +3826,6 @@ namespace eft_dma_radar.UI.Radar
         private Splitter splitter2;
         private FlowLayoutPanel flowLayoutPanel3;
         private CheckBox checkBox_displayRaidTIme;
-        private Button button_instaPlant;
         private CheckBox checkBox_ThermalVision;
         private CheckBox checkBox_NightVision;
         private Label label_ESPPlayerDist;

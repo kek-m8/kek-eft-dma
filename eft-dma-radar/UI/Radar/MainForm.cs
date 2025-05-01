@@ -3962,20 +3962,6 @@ namespace eft_dma_radar.UI.Radar
             Config.ESP.ShowTime = checkBox_displayRaidTIme.Checked;
         }
 
-        private void button_instaPlant_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                MemWriteFeature<InstantPlant>.Instance.Enabled = true;
-                MessageBox.Show("Instant Plant set! enabled until game restart.", "Instant Plant", MessageBoxButtons.OK);
-                button_instaPlant.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Instant Plant failed to set, you are maybe paged out, try restarting your game.\n{ex}", "Instant Plant", MessageBoxButtons.OK);
-            }
-        }
-
         private void checkBox_ThermalVision_CheckedChanged(object sender, EventArgs e)
         {
             try
