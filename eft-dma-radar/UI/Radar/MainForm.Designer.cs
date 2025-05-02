@@ -202,6 +202,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_Exfils = new CheckBox();
             checkBox_TrapSwitches = new CheckBox();
             checkBox_ESP_Explosives = new CheckBox();
+            checkBox_ThrowableIcons = new CheckBox();
             checkBox_ESP_ShowMag = new CheckBox();
             checkBox_ESP_Dist = new CheckBox();
             checkBox_ESP_ShowMines = new CheckBox();
@@ -1356,7 +1357,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWrites, true);
             flowLayoutPanel_MemWrites.Location = new Point(3, 412);
             flowLayoutPanel_MemWrites.Name = "flowLayoutPanel_MemWrites";
-            flowLayoutPanel_MemWrites.Size = new Size(1192, 371);
+            flowLayoutPanel_MemWrites.Size = new Size(1120, 371);
             flowLayoutPanel_MemWrites.TabIndex = 1;
             // 
             // label3
@@ -2258,6 +2259,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Exfils);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_TrapSwitches);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Explosives);
+            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ThrowableIcons);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_ShowMag);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Dist);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_ShowMines);
@@ -2276,7 +2278,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
             flowLayoutPanel_ESPSettings.Location = new Point(3, 865);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
-            flowLayoutPanel_ESPSettings.Size = new Size(1192, 343);
+            flowLayoutPanel_ESPSettings.Size = new Size(969, 343);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
             // 
             // label12
@@ -2432,10 +2434,21 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_Explosives.UseVisualStyleBackColor = true;
             checkBox_ESP_Explosives.CheckedChanged += checkBox_ESP_Explosives_CheckedChanged;
             // 
+            // checkBox_ThrowableIcons
+            // 
+            checkBox_ThrowableIcons.AutoSize = true;
+            checkBox_ThrowableIcons.Location = new Point(495, 71);
+            checkBox_ThrowableIcons.Name = "checkBox_ThrowableIcons";
+            checkBox_ThrowableIcons.Size = new Size(144, 19);
+            checkBox_ThrowableIcons.TabIndex = 76;
+            checkBox_ThrowableIcons.Text = "Show Throwable Icons";
+            checkBox_ThrowableIcons.UseVisualStyleBackColor = true;
+            checkBox_ThrowableIcons.CheckedChanged += checkBox_ThrowableIcons_CheckedChanged;
+            // 
             // checkBox_ESP_ShowMag
             // 
             checkBox_ESP_ShowMag.AutoSize = true;
-            checkBox_ESP_ShowMag.Location = new Point(495, 71);
+            checkBox_ESP_ShowMag.Location = new Point(645, 71);
             checkBox_ESP_ShowMag.Name = "checkBox_ESP_ShowMag";
             checkBox_ESP_ShowMag.Size = new Size(109, 19);
             checkBox_ESP_ShowMag.TabIndex = 60;
@@ -2446,7 +2459,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_Dist
             // 
             checkBox_ESP_Dist.AutoSize = true;
-            checkBox_ESP_Dist.Location = new Point(610, 71);
+            checkBox_ESP_Dist.Location = new Point(760, 71);
             checkBox_ESP_Dist.Name = "checkBox_ESP_Dist";
             checkBox_ESP_Dist.Size = new Size(108, 19);
             checkBox_ESP_Dist.TabIndex = 48;
@@ -2457,7 +2470,8 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_ShowMines
             // 
             checkBox_ESP_ShowMines.AutoSize = true;
-            checkBox_ESP_ShowMines.Location = new Point(724, 71);
+            flowLayoutPanel_ESPSettings.SetFlowBreak(checkBox_ESP_ShowMines, true);
+            checkBox_ESP_ShowMines.Location = new Point(874, 71);
             checkBox_ESP_ShowMines.Name = "checkBox_ESP_ShowMines";
             checkBox_ESP_ShowMines.Size = new Size(90, 19);
             checkBox_ESP_ShowMines.TabIndex = 59;
@@ -2468,7 +2482,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FireportAim
             // 
             checkBox_ESP_FireportAim.AutoSize = true;
-            checkBox_ESP_FireportAim.Location = new Point(820, 71);
+            checkBox_ESP_FireportAim.Location = new Point(3, 96);
             checkBox_ESP_FireportAim.Name = "checkBox_ESP_FireportAim";
             checkBox_ESP_FireportAim.Size = new Size(124, 19);
             checkBox_ESP_FireportAim.TabIndex = 71;
@@ -2479,7 +2493,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_AimFov
             // 
             checkBox_ESP_AimFov.AutoSize = true;
-            checkBox_ESP_AimFov.Location = new Point(950, 71);
+            checkBox_ESP_AimFov.Location = new Point(133, 96);
             checkBox_ESP_AimFov.Name = "checkBox_ESP_AimFov";
             checkBox_ESP_AimFov.Size = new Size(105, 19);
             checkBox_ESP_AimFov.TabIndex = 43;
@@ -2490,7 +2504,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_AimLock
             // 
             checkBox_ESP_AimLock.AutoSize = true;
-            checkBox_ESP_AimLock.Location = new Point(1061, 71);
+            checkBox_ESP_AimLock.Location = new Point(244, 96);
             checkBox_ESP_AimLock.Name = "checkBox_ESP_AimLock";
             checkBox_ESP_AimLock.Size = new Size(126, 19);
             checkBox_ESP_AimLock.TabIndex = 49;
@@ -2501,7 +2515,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_RaidStats
             // 
             checkBox_ESP_RaidStats.AutoSize = true;
-            checkBox_ESP_RaidStats.Location = new Point(3, 96);
+            checkBox_ESP_RaidStats.Location = new Point(376, 96);
             checkBox_ESP_RaidStats.Name = "checkBox_ESP_RaidStats";
             checkBox_ESP_RaidStats.Size = new Size(109, 19);
             checkBox_ESP_RaidStats.TabIndex = 68;
@@ -2512,7 +2526,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_StatusText
             // 
             checkBox_ESP_StatusText.AutoSize = true;
-            checkBox_ESP_StatusText.Location = new Point(118, 96);
+            checkBox_ESP_StatusText.Location = new Point(491, 96);
             checkBox_ESP_StatusText.Name = "checkBox_ESP_StatusText";
             checkBox_ESP_StatusText.Size = new Size(114, 19);
             checkBox_ESP_StatusText.TabIndex = 73;
@@ -2523,7 +2537,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowPlates
             // 
             checkBox_ShowPlates.AutoSize = true;
-            checkBox_ShowPlates.Location = new Point(238, 96);
+            checkBox_ShowPlates.Location = new Point(611, 96);
             checkBox_ShowPlates.Name = "checkBox_ShowPlates";
             checkBox_ShowPlates.Size = new Size(155, 19);
             checkBox_ShowPlates.TabIndex = 75;
@@ -2536,7 +2550,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_displayRaidTIme
             // 
             checkBox_displayRaidTIme.AutoSize = true;
-            checkBox_displayRaidTIme.Location = new Point(399, 96);
+            checkBox_displayRaidTIme.Location = new Point(772, 96);
             checkBox_displayRaidTIme.Name = "checkBox_displayRaidTIme";
             checkBox_displayRaidTIme.Size = new Size(93, 19);
             checkBox_displayRaidTIme.TabIndex = 74;
@@ -2547,7 +2561,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FPS
             // 
             checkBox_ESP_FPS.AutoSize = true;
-            checkBox_ESP_FPS.Location = new Point(498, 96);
+            checkBox_ESP_FPS.Location = new Point(871, 96);
             checkBox_ESP_FPS.Name = "checkBox_ESP_FPS";
             checkBox_ESP_FPS.Size = new Size(86, 19);
             checkBox_ESP_FPS.TabIndex = 5;
@@ -2559,7 +2573,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label27.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(label27, true);
-            label27.Location = new Point(590, 93);
+            label27.Location = new Point(963, 93);
             label27.Name = "label27";
             label27.Size = new Size(0, 15);
             label27.TabIndex = 72;
@@ -3856,6 +3870,7 @@ namespace eft_dma_radar.UI.Radar
         private DataGridViewTextBoxColumn PHistory_Group;
         private DataGridViewTextBoxColumn PHistory_Alerts;
         private CheckBox checkBox_KillTask;
+        private CheckBox checkBox_ThrowableIcons;
     }
 }
 

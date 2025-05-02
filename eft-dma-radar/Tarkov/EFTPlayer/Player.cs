@@ -1369,6 +1369,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             }
         }
 
+
         /// <summary>
         /// Write Chams Material to the specified Renderer/Materials.
         /// </summary>

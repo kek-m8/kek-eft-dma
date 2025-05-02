@@ -92,6 +92,8 @@ namespace SDK
         {
             public const uint Rotation = 0x88; // UnityEngine.Vector2
             public const uint Velocity = 0x120; // UnityEngine.Vector3
+            public const uint PreviousStateName = 0xD8; // System.Byte
+            public const uint CurrentStateName = 0xD9; // System.Byte
         }
 
         public readonly partial struct ObservedHandsController
@@ -395,6 +397,46 @@ namespace SDK
 
     public readonly partial struct Enums
     {
+        public enum EPlayerState : byte
+        {
+            None,
+            Idle,
+            ProneIdle,
+            ProneMove,
+            Run,
+            Sprint,
+            Jump,
+            FallDown,
+            Transition,
+            BreachDoor,
+            Loot,
+            Pickup,
+            Open,
+            Close,
+            Unlock,
+            Sidestep,
+            DoorInteraction,
+            Approach,
+            Prone2Stand,
+            Transit2Prone,
+            Plant,
+            Stationary,
+            Roll,
+            JumpLanding,
+            ClimbOver,
+            ClimbUp,
+            VaultingFallDown,
+            VaultingLanding,
+            BlindFire,
+            IdleWeaponMounting,
+            IdleZombieState,
+            MoveZombieState,
+            TurnZombieState,
+            StartMoveZombieState,
+            EndMoveZombieState,
+            DoorInteractionZombieState
+        }
+
         public enum ERaidMode
         {
             Online = 0,

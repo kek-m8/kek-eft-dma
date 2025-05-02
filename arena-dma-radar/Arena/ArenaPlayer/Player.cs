@@ -924,7 +924,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     else
                         lines[0] += $" ({(int)dist}m)";
                 }
-                if(showBomb && this is ArenaObservedPlayer observed_)
+                if (showBomb && this is ArenaObservedPlayer observed_)
                 {
                     if (Memory.Game.matchMode is Enums.ERaidMode.BlastGang)
                     {

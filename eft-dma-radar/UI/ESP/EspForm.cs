@@ -226,12 +226,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     }
                     else
                     {
-                        /*if(GetPlayerInFOV(localPlayer) is Player target)
-                        {
-                            
-                            DrawHealthStatus(canvas, localPlayer, target);
-
-                        }*/
+                        
                         if (Config.ESP.ShowLoot && Config.ShowLoot)
                             DrawLoot(canvas, localPlayer);
                         if (MainForm.Config.QuestHelper.Enabled)
@@ -277,7 +272,6 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             // draw skeleton
             var textPt = new SKPoint(CameraManagerBase.Viewport.Right - 550f * Config.ESP.FontScale,
                 CameraManagerBase.Viewport.Top * Config.ESP.FontScale);
-            DrawCustomImage(canvas, textPt);
             // draw text
             var textPt2 = new SKPoint(CameraManagerBase.Viewport.Right - 550f * Config.ESP.FontScale,
                 CameraManagerBase.Viewport.Top + 400f * Config.ESP.FontScale);
@@ -333,9 +327,9 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             return targets.MinBy(x => x.FOV).Player;
         }
 
-        public void DrawCustomImage(SKCanvas canvas, SKPoint point)
+        public void DrawCustomImage(ref string bitMap, SKCanvas canvas, SKPoint point)
         {
-            using var bitmap = SKBitmap.Decode(new MemoryStream(Convert.FromBase64String(skeletonBase64)));
+            using var bitmap = SKBitmap.Decode(new MemoryStream(Convert.FromBase64String(bitMap)));
             using var image = SKImage.FromBitmap(bitmap);
             var paint = new SKPaint
             {
