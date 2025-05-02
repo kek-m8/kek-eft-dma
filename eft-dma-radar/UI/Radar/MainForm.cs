@@ -1890,7 +1890,6 @@ namespace eft_dma_radar.UI.Radar
                 "Sets the ESP Rendering Options for Human Players in Fuser ESP.");
             toolTip1.SetToolTip(flowLayoutPanel_ESP_AIRender, "Sets the ESP Rendering Options for AI Bots in Fuser ESP.");
             toolTip1.SetToolTip(checkBox_ESP_Exfils, "Enables the rendering of Exfil Points in the ESP Window.");
-            toolTip1.SetToolTip(checkBox_ESP_Explosives, "Enables the rendering of Grenades in the ESP Window.");
             toolTip1.SetToolTip(checkBox_ESP_AimFov,
                 "Enables the rendering of an 'Aim FOV Circle' in the center of your ESP Window. This is used for Aimbot Targeting.");
             toolTip1.SetToolTip(checkBox_ESP_FPS,
@@ -2848,7 +2847,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_displayRaidTIme.Checked = Config.ESP.ShowTime;
             checkBox_ESP_Exfils.Checked = Config.ESP.ShowExfils;
             checkBox_ESP_Loot.Checked = Config.ESP.ShowLoot;
-            checkBox_ThrowableIcons.Checked = (Config.ESP.ShowThrowableIcons && checkBox_ESP_Explosives.Checked);
             checkBox_ESP_AimFov.Checked = Config.ESP.ShowAimFOV;
             checkBox_ESP_Dist.Checked = Config.ESP.ShowDistances;
             checkBox_ESP_AimLock.Checked = Config.ESP.ShowAimLock;
@@ -3019,11 +3017,6 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_ESP_Exfils_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowExfils = checkBox_ESP_Exfils.Checked;
-        }
-
-        private void checkBox_ESP_Explosives_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox_ThrowableIcons.Enabled = checkBox_ESP_Explosives.Checked;
         }
 
         private void checkBox_ESP_FPS_CheckedChanged(object sender, EventArgs e)
@@ -4089,11 +4082,6 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_KillTask_CheckedChanged(object sender, EventArgs e)
         {
             Config.ShowZone = checkBox_KillTask.Checked;
-        }
-
-        private void checkBox_ThrowableIcons_CheckedChanged(object sender, EventArgs e)
-        {
-            Config.ESP.ShowThrowableIcons = checkBox_ThrowableIcons.Checked;
         }
 
         private void checkBox_ESP_GrenadeShow_CheckedChanged(object sender, EventArgs e)
