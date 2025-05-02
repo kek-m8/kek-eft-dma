@@ -201,8 +201,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_Loot = new CheckBox();
             checkBox_ESP_Exfils = new CheckBox();
             checkBox_TrapSwitches = new CheckBox();
-            checkBox_ESP_Explosives = new CheckBox();
-            checkBox_ThrowableIcons = new CheckBox();
             checkBox_ESP_ShowMag = new CheckBox();
             checkBox_ESP_Dist = new CheckBox();
             checkBox_ESP_ShowMines = new CheckBox();
@@ -238,6 +236,19 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESPAIRender_Weapons = new CheckBox();
             checkBox_ESPAIRender_Dist = new CheckBox();
             checkBox_IsAimingAI = new CheckBox();
+            flowLayoutPanel6 = new FlowLayoutPanel();
+            flowLayoutPanel7 = new FlowLayoutPanel();
+            label25 = new Label();
+            label32 = new Label();
+            checkBox_ESP_GrenadeShow = new CheckBox();
+            checkBox_ESP_GrenadeText = new CheckBox();
+            checkBox_ESP_GrenadeIcon = new CheckBox();
+            flowLayoutPanel8 = new FlowLayoutPanel();
+            label35 = new Label();
+            checkBox_ESP_TripwriteShow = new CheckBox();
+            checkBox_ESP_TripwireText = new CheckBox();
+            checkBox_ESP_TripwireLine = new CheckBox();
+            checkBox_ESP_TripwireIcon = new CheckBox();
             flowLayoutPanel4 = new FlowLayoutPanel();
             label9 = new Label();
             checkBox4 = new CheckBox();
@@ -327,6 +338,8 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.SuspendLayout();
             flowLayoutPanel_ESP_PlayerRender.SuspendLayout();
             flowLayoutPanel_ESP_AIRender.SuspendLayout();
+            flowLayoutPanel7.SuspendLayout();
+            flowLayoutPanel8.SuspendLayout();
             flowLayoutPanel4.SuspendLayout();
             ((ISupportInitialize)trackBar_EspLootDist).BeginInit();
             ((ISupportInitialize)trackBar_EspImpLootDist).BeginInit();
@@ -2258,8 +2271,6 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Loot);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Exfils);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_TrapSwitches);
-            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Explosives);
-            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ThrowableIcons);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_ShowMag);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Dist);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_ShowMines);
@@ -2274,11 +2285,13 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.Controls.Add(label27);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel_ESP_PlayerRender);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel_ESP_AIRender);
+            flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel6);
+            flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel7);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel4);
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
             flowLayoutPanel_ESPSettings.Location = new Point(3, 865);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
-            flowLayoutPanel_ESPSettings.Size = new Size(969, 343);
+            flowLayoutPanel_ESPSettings.Size = new Size(949, 389);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
             // 
             // label12
@@ -2423,32 +2436,10 @@ namespace eft_dma_radar.UI.Radar
             checkBox_TrapSwitches.UseVisualStyleBackColor = true;
             checkBox_TrapSwitches.CheckedChanged += checkBox_TrapSwitches_CheckedChanged;
             // 
-            // checkBox_ESP_Explosives
-            // 
-            checkBox_ESP_Explosives.AutoSize = true;
-            checkBox_ESP_Explosives.Location = new Point(377, 71);
-            checkBox_ESP_Explosives.Name = "checkBox_ESP_Explosives";
-            checkBox_ESP_Explosives.Size = new Size(112, 19);
-            checkBox_ESP_Explosives.TabIndex = 8;
-            checkBox_ESP_Explosives.Text = "Show Explosives";
-            checkBox_ESP_Explosives.UseVisualStyleBackColor = true;
-            checkBox_ESP_Explosives.CheckedChanged += checkBox_ESP_Explosives_CheckedChanged;
-            // 
-            // checkBox_ThrowableIcons
-            // 
-            checkBox_ThrowableIcons.AutoSize = true;
-            checkBox_ThrowableIcons.Location = new Point(495, 71);
-            checkBox_ThrowableIcons.Name = "checkBox_ThrowableIcons";
-            checkBox_ThrowableIcons.Size = new Size(144, 19);
-            checkBox_ThrowableIcons.TabIndex = 76;
-            checkBox_ThrowableIcons.Text = "Show Throwable Icons";
-            checkBox_ThrowableIcons.UseVisualStyleBackColor = true;
-            checkBox_ThrowableIcons.CheckedChanged += checkBox_ThrowableIcons_CheckedChanged;
-            // 
             // checkBox_ESP_ShowMag
             // 
             checkBox_ESP_ShowMag.AutoSize = true;
-            checkBox_ESP_ShowMag.Location = new Point(645, 71);
+            checkBox_ESP_ShowMag.Location = new Point(377, 71);
             checkBox_ESP_ShowMag.Name = "checkBox_ESP_ShowMag";
             checkBox_ESP_ShowMag.Size = new Size(109, 19);
             checkBox_ESP_ShowMag.TabIndex = 60;
@@ -2459,7 +2450,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_Dist
             // 
             checkBox_ESP_Dist.AutoSize = true;
-            checkBox_ESP_Dist.Location = new Point(760, 71);
+            checkBox_ESP_Dist.Location = new Point(492, 71);
             checkBox_ESP_Dist.Name = "checkBox_ESP_Dist";
             checkBox_ESP_Dist.Size = new Size(108, 19);
             checkBox_ESP_Dist.TabIndex = 48;
@@ -2470,8 +2461,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_ShowMines
             // 
             checkBox_ESP_ShowMines.AutoSize = true;
-            flowLayoutPanel_ESPSettings.SetFlowBreak(checkBox_ESP_ShowMines, true);
-            checkBox_ESP_ShowMines.Location = new Point(874, 71);
+            checkBox_ESP_ShowMines.Location = new Point(606, 71);
             checkBox_ESP_ShowMines.Name = "checkBox_ESP_ShowMines";
             checkBox_ESP_ShowMines.Size = new Size(90, 19);
             checkBox_ESP_ShowMines.TabIndex = 59;
@@ -2482,7 +2472,8 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FireportAim
             // 
             checkBox_ESP_FireportAim.AutoSize = true;
-            checkBox_ESP_FireportAim.Location = new Point(3, 96);
+            flowLayoutPanel_ESPSettings.SetFlowBreak(checkBox_ESP_FireportAim, true);
+            checkBox_ESP_FireportAim.Location = new Point(702, 71);
             checkBox_ESP_FireportAim.Name = "checkBox_ESP_FireportAim";
             checkBox_ESP_FireportAim.Size = new Size(124, 19);
             checkBox_ESP_FireportAim.TabIndex = 71;
@@ -2493,7 +2484,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_AimFov
             // 
             checkBox_ESP_AimFov.AutoSize = true;
-            checkBox_ESP_AimFov.Location = new Point(133, 96);
+            checkBox_ESP_AimFov.Location = new Point(3, 96);
             checkBox_ESP_AimFov.Name = "checkBox_ESP_AimFov";
             checkBox_ESP_AimFov.Size = new Size(105, 19);
             checkBox_ESP_AimFov.TabIndex = 43;
@@ -2504,7 +2495,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_AimLock
             // 
             checkBox_ESP_AimLock.AutoSize = true;
-            checkBox_ESP_AimLock.Location = new Point(244, 96);
+            checkBox_ESP_AimLock.Location = new Point(114, 96);
             checkBox_ESP_AimLock.Name = "checkBox_ESP_AimLock";
             checkBox_ESP_AimLock.Size = new Size(126, 19);
             checkBox_ESP_AimLock.TabIndex = 49;
@@ -2515,7 +2506,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_RaidStats
             // 
             checkBox_ESP_RaidStats.AutoSize = true;
-            checkBox_ESP_RaidStats.Location = new Point(376, 96);
+            checkBox_ESP_RaidStats.Location = new Point(246, 96);
             checkBox_ESP_RaidStats.Name = "checkBox_ESP_RaidStats";
             checkBox_ESP_RaidStats.Size = new Size(109, 19);
             checkBox_ESP_RaidStats.TabIndex = 68;
@@ -2526,7 +2517,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_StatusText
             // 
             checkBox_ESP_StatusText.AutoSize = true;
-            checkBox_ESP_StatusText.Location = new Point(491, 96);
+            checkBox_ESP_StatusText.Location = new Point(361, 96);
             checkBox_ESP_StatusText.Name = "checkBox_ESP_StatusText";
             checkBox_ESP_StatusText.Size = new Size(114, 19);
             checkBox_ESP_StatusText.TabIndex = 73;
@@ -2537,7 +2528,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowPlates
             // 
             checkBox_ShowPlates.AutoSize = true;
-            checkBox_ShowPlates.Location = new Point(611, 96);
+            checkBox_ShowPlates.Location = new Point(481, 96);
             checkBox_ShowPlates.Name = "checkBox_ShowPlates";
             checkBox_ShowPlates.Size = new Size(155, 19);
             checkBox_ShowPlates.TabIndex = 75;
@@ -2550,7 +2541,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_displayRaidTIme
             // 
             checkBox_displayRaidTIme.AutoSize = true;
-            checkBox_displayRaidTIme.Location = new Point(772, 96);
+            checkBox_displayRaidTIme.Location = new Point(642, 96);
             checkBox_displayRaidTIme.Name = "checkBox_displayRaidTIme";
             checkBox_displayRaidTIme.Size = new Size(93, 19);
             checkBox_displayRaidTIme.TabIndex = 74;
@@ -2561,7 +2552,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FPS
             // 
             checkBox_ESP_FPS.AutoSize = true;
-            checkBox_ESP_FPS.Location = new Point(871, 96);
+            checkBox_ESP_FPS.Location = new Point(741, 96);
             checkBox_ESP_FPS.Name = "checkBox_ESP_FPS";
             checkBox_ESP_FPS.Size = new Size(86, 19);
             checkBox_ESP_FPS.TabIndex = 5;
@@ -2573,7 +2564,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label27.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(label27, true);
-            label27.Location = new Point(963, 93);
+            label27.Location = new Point(833, 93);
             label27.Name = "label27";
             label27.Size = new Size(0, 15);
             label27.TabIndex = 72;
@@ -2862,6 +2853,161 @@ namespace eft_dma_radar.UI.Radar
             checkBox_IsAimingAI.UseVisualStyleBackColor = true;
             checkBox_IsAimingAI.CheckedChanged += checkBox_IsAimingAI_CheckedChanged;
             // 
+            // flowLayoutPanel6
+            // 
+            flowLayoutPanel6.AutoSize = true;
+            flowLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel6.Location = new Point(707, 121);
+            flowLayoutPanel6.Name = "flowLayoutPanel6";
+            flowLayoutPanel6.Size = new Size(0, 0);
+            flowLayoutPanel6.TabIndex = 77;
+            // 
+            // flowLayoutPanel7
+            // 
+            flowLayoutPanel7.AutoSize = true;
+            flowLayoutPanel7.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel7.BorderStyle = BorderStyle.FixedSingle;
+            flowLayoutPanel7.Controls.Add(label25);
+            flowLayoutPanel7.Controls.Add(label32);
+            flowLayoutPanel7.Controls.Add(checkBox_ESP_GrenadeShow);
+            flowLayoutPanel7.Controls.Add(checkBox_ESP_GrenadeText);
+            flowLayoutPanel7.Controls.Add(checkBox_ESP_GrenadeIcon);
+            flowLayoutPanel7.Controls.Add(flowLayoutPanel8);
+            flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel7, true);
+            flowLayoutPanel7.Location = new Point(713, 121);
+            flowLayoutPanel7.Name = "flowLayoutPanel7";
+            flowLayoutPanel7.Size = new Size(231, 123);
+            flowLayoutPanel7.TabIndex = 1;
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            flowLayoutPanel7.SetFlowBreak(label25, true);
+            label25.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label25.Location = new Point(3, 0);
+            label25.Name = "label25";
+            label25.Size = new Size(61, 15);
+            label25.TabIndex = 0;
+            label25.Text = "Explosives";
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            flowLayoutPanel7.SetFlowBreak(label32, true);
+            label32.Location = new Point(3, 15);
+            label32.Name = "label32";
+            label32.Size = new Size(56, 15);
+            label32.TabIndex = 0;
+            label32.Text = "Grenades";
+            // 
+            // checkBox_ESP_GrenadeShow
+            // 
+            checkBox_ESP_GrenadeShow.AutoSize = true;
+            checkBox_ESP_GrenadeShow.Location = new Point(3, 43);
+            checkBox_ESP_GrenadeShow.Name = "checkBox_ESP_GrenadeShow";
+            checkBox_ESP_GrenadeShow.Size = new Size(55, 19);
+            checkBox_ESP_GrenadeShow.TabIndex = 1;
+            checkBox_ESP_GrenadeShow.Text = "Show";
+            toolTip1.SetToolTip(checkBox_ESP_GrenadeShow, "Enabled, draws grenade positions in ESP.");
+            checkBox_ESP_GrenadeShow.UseVisualStyleBackColor = true;
+            checkBox_ESP_GrenadeShow.CheckedChanged += checkBox_ESP_GrenadeShow_CheckedChanged;
+            // 
+            // checkBox_ESP_GrenadeText
+            // 
+            checkBox_ESP_GrenadeText.AutoSize = true;
+            checkBox_ESP_GrenadeText.Location = new Point(64, 43);
+            checkBox_ESP_GrenadeText.Name = "checkBox_ESP_GrenadeText";
+            checkBox_ESP_GrenadeText.Size = new Size(47, 19);
+            checkBox_ESP_GrenadeText.TabIndex = 2;
+            checkBox_ESP_GrenadeText.Text = "Text";
+            toolTip1.SetToolTip(checkBox_ESP_GrenadeText, "Enabled, draws grenade name on its position in ESP.");
+            checkBox_ESP_GrenadeText.UseVisualStyleBackColor = true;
+            checkBox_ESP_GrenadeText.CheckedChanged += checkBox_ESP_GrenadeText_CheckedChanged;
+            // 
+            // checkBox_ESP_GrenadeIcon
+            // 
+            checkBox_ESP_GrenadeIcon.AutoSize = true;
+            flowLayoutPanel7.SetFlowBreak(checkBox_ESP_GrenadeIcon, true);
+            checkBox_ESP_GrenadeIcon.Location = new Point(117, 43);
+            checkBox_ESP_GrenadeIcon.Name = "checkBox_ESP_GrenadeIcon";
+            checkBox_ESP_GrenadeIcon.Size = new Size(49, 19);
+            checkBox_ESP_GrenadeIcon.TabIndex = 3;
+            checkBox_ESP_GrenadeIcon.Text = "Icon";
+            toolTip1.SetToolTip(checkBox_ESP_GrenadeIcon, "Enabled, draws grenade icon on position in ESP.");
+            checkBox_ESP_GrenadeIcon.UseVisualStyleBackColor = true;
+            checkBox_ESP_GrenadeIcon.CheckedChanged += checkBox_ESP_GrenadeIcon_CheckedChanged;
+            // 
+            // flowLayoutPanel8
+            // 
+            flowLayoutPanel8.AutoSize = true;
+            flowLayoutPanel8.Controls.Add(label35);
+            flowLayoutPanel8.Controls.Add(checkBox_ESP_TripwriteShow);
+            flowLayoutPanel8.Controls.Add(checkBox_ESP_TripwireText);
+            flowLayoutPanel8.Controls.Add(checkBox_ESP_TripwireLine);
+            flowLayoutPanel8.Controls.Add(checkBox_ESP_TripwireIcon);
+            flowLayoutPanel8.Location = new Point(3, 68);
+            flowLayoutPanel8.Name = "flowLayoutPanel8";
+            flowLayoutPanel8.Size = new Size(223, 50);
+            flowLayoutPanel8.TabIndex = 4;
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            flowLayoutPanel8.SetFlowBreak(label35, true);
+            label35.Location = new Point(3, 0);
+            label35.Name = "label35";
+            label35.Size = new Size(48, 15);
+            label35.TabIndex = 0;
+            label35.Text = "Tripwire";
+            // 
+            // checkBox_ESP_TripwriteShow
+            // 
+            checkBox_ESP_TripwriteShow.AutoSize = true;
+            checkBox_ESP_TripwriteShow.Location = new Point(3, 28);
+            checkBox_ESP_TripwriteShow.Name = "checkBox_ESP_TripwriteShow";
+            checkBox_ESP_TripwriteShow.Size = new Size(55, 19);
+            checkBox_ESP_TripwriteShow.TabIndex = 1;
+            checkBox_ESP_TripwriteShow.Text = "Show";
+            toolTip1.SetToolTip(checkBox_ESP_TripwriteShow, "Enabled, draws grenade position on an active tripwire in ESP.");
+            checkBox_ESP_TripwriteShow.UseVisualStyleBackColor = true;
+            checkBox_ESP_TripwriteShow.CheckedChanged += checkBox_ESP_TripwriteShow_CheckedChanged;
+            // 
+            // checkBox_ESP_TripwireText
+            // 
+            checkBox_ESP_TripwireText.AutoSize = true;
+            checkBox_ESP_TripwireText.Location = new Point(64, 28);
+            checkBox_ESP_TripwireText.Name = "checkBox_ESP_TripwireText";
+            checkBox_ESP_TripwireText.Size = new Size(47, 19);
+            checkBox_ESP_TripwireText.TabIndex = 2;
+            checkBox_ESP_TripwireText.Text = "Text";
+            toolTip1.SetToolTip(checkBox_ESP_TripwireText, "Enabled, draws grenade name under its position in ESP.");
+            checkBox_ESP_TripwireText.UseVisualStyleBackColor = true;
+            checkBox_ESP_TripwireText.CheckedChanged += checkBox_ESP_TripwireText_CheckedChanged;
+            // 
+            // checkBox_ESP_TripwireLine
+            // 
+            checkBox_ESP_TripwireLine.AutoSize = true;
+            checkBox_ESP_TripwireLine.Location = new Point(117, 28);
+            checkBox_ESP_TripwireLine.Name = "checkBox_ESP_TripwireLine";
+            checkBox_ESP_TripwireLine.Size = new Size(48, 19);
+            checkBox_ESP_TripwireLine.TabIndex = 3;
+            checkBox_ESP_TripwireLine.Text = "Line";
+            toolTip1.SetToolTip(checkBox_ESP_TripwireLine, "Enabled, draws a line representing the tripwire string in ESP.");
+            checkBox_ESP_TripwireLine.UseVisualStyleBackColor = true;
+            checkBox_ESP_TripwireLine.CheckedChanged += checkBox_ESP_TripwireLine_CheckedChanged;
+            // 
+            // checkBox_ESP_TripwireIcon
+            // 
+            checkBox_ESP_TripwireIcon.AutoSize = true;
+            checkBox_ESP_TripwireIcon.Location = new Point(171, 28);
+            checkBox_ESP_TripwireIcon.Name = "checkBox_ESP_TripwireIcon";
+            checkBox_ESP_TripwireIcon.Size = new Size(49, 19);
+            checkBox_ESP_TripwireIcon.TabIndex = 4;
+            checkBox_ESP_TripwireIcon.Text = "Icon";
+            toolTip1.SetToolTip(checkBox_ESP_TripwireIcon, "Enabled, draws grenade icon at its position in ESP.");
+            checkBox_ESP_TripwireIcon.UseVisualStyleBackColor = true;
+            checkBox_ESP_TripwireIcon.CheckedChanged += checkBox_ESP_TripwireIcon_CheckedChanged;
+            // 
             // flowLayoutPanel4
             // 
             flowLayoutPanel4.AutoSize = true;
@@ -2886,7 +3032,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel4.Controls.Add(label_EspLineScale);
             flowLayoutPanel4.Controls.Add(trackBar_EspLineScale);
             flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel4, true);
-            flowLayoutPanel4.Location = new Point(3, 204);
+            flowLayoutPanel4.Location = new Point(3, 250);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
             flowLayoutPanel4.Size = new Size(738, 134);
             flowLayoutPanel4.TabIndex = 4;
@@ -3579,6 +3725,10 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESP_PlayerRender.PerformLayout();
             flowLayoutPanel_ESP_AIRender.ResumeLayout(false);
             flowLayoutPanel_ESP_AIRender.PerformLayout();
+            flowLayoutPanel7.ResumeLayout(false);
+            flowLayoutPanel7.PerformLayout();
+            flowLayoutPanel8.ResumeLayout(false);
+            flowLayoutPanel8.PerformLayout();
             flowLayoutPanel4.ResumeLayout(false);
             flowLayoutPanel4.PerformLayout();
             ((ISupportInitialize)trackBar_EspLootDist).EndInit();
@@ -3665,7 +3815,6 @@ namespace eft_dma_radar.UI.Radar
         private RadioButton radioButton_AimTarget_CQB;
         private RadioButton radioButton_AimTarget_FOV;
         private Button button_StartESP;
-        private CheckBox checkBox_ESP_Explosives;
         private CheckBox checkBox_ESP_Exfils;
         private CheckBox checkBox_ESP_FPS;
         private TrackBar trackBar_EspLootDist;
@@ -3870,7 +4019,19 @@ namespace eft_dma_radar.UI.Radar
         private DataGridViewTextBoxColumn PHistory_Group;
         private DataGridViewTextBoxColumn PHistory_Alerts;
         private CheckBox checkBox_KillTask;
-        private CheckBox checkBox_ThrowableIcons;
+        private FlowLayoutPanel flowLayoutPanel6;
+        private Label label25;
+        private FlowLayoutPanel flowLayoutPanel7;
+        private Label label32;
+        private CheckBox checkBox_ESP_GrenadeShow;
+        private CheckBox checkBox_ESP_GrenadeText;
+        private CheckBox checkBox_ESP_GrenadeIcon;
+        private FlowLayoutPanel flowLayoutPanel8;
+        private Label label35;
+        private CheckBox checkBox_ESP_TripwriteShow;
+        private CheckBox checkBox_ESP_TripwireText;
+        private CheckBox checkBox_ESP_TripwireLine;
+        private CheckBox checkBox_ESP_TripwireIcon;
     }
 }
 

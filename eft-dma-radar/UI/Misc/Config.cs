@@ -513,8 +513,39 @@ namespace eft_dma_radar.UI.Misc
         /// <summary>
         /// Display grenades in ESP.
         /// </summary>
-        [JsonPropertyName("showExplosives")]
-        public bool ShowExplosives { get; set; } = true;
+        [JsonPropertyName("showGrenades")]
+        public bool ShowGrenades { get; set; } = true;
+        /// <summary>
+        /// Display tripwires in ESP
+        /// </summary>
+        [JsonPropertyName("showTripwires")]
+        public bool ShowTripwires { get; set; } = true;
+        /// <summary>
+        /// Display grenade name in ESP
+        /// </summary>
+        [JsonPropertyName("showGrenadeName")]
+        public bool ShowGrenadeName { get; set; } = false;
+        /// <summary>
+        /// Display tripwire grenade name in ESP
+        /// </summary>
+        [JsonPropertyName("showTripwireName")]
+        public bool ShowTripwireName { get; set; } = false;
+        /// <summary>
+        /// Display grenades as icons in ESP
+        /// </summary>
+        [JsonPropertyName("showGrenadesAsIcons")]
+        public bool ShowGrenadeIcons { get; set; } = false;
+        /// <summary>
+        /// Display tripwire grenades as icons in ESP
+        /// </summary>
+        [JsonPropertyName("showTripwiresAsIcons")]
+        public bool ShowTripwireIcon { get; set; } = false;
+        
+        /// <summary>
+        /// Display line representing tripwrire string in ESP
+        /// </summary>
+        [JsonPropertyName("showTripwireLine")]
+        public bool ShowTripwireLine { get; set; } = false;
         /// <summary>
         /// Display grenades as icons in ESP
         /// </summary>

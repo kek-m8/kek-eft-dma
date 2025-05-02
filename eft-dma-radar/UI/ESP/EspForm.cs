@@ -235,7 +235,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                             DrawMines(canvas, localPlayer, mines);
                         if (Config.ESP.ShowExfils)
                             DrawExfils(canvas, localPlayer);
-                        if (Config.ESP.ShowExplosives)
+                        if (Config.ESP.ShowGrenades || Config.ESP.ShowTripwires)
                             DrawExplosives(canvas, localPlayer);
                         foreach (var player in allPlayers)
                             player.DrawESP(canvas, localPlayer);
