@@ -2849,6 +2849,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_Exfils.Checked = Config.ESP.ShowExfils;
             checkBox_ESP_Loot.Checked = Config.ESP.ShowLoot;
             checkBox_ESP_Explosives.Checked = Config.ESP.ShowExplosives;
+            checkBox_ThrowableIcons.Checked = (Config.ESP.ShowThrowableIcons && checkBox_ESP_Explosives.Checked);
             checkBox_ESP_AimFov.Checked = Config.ESP.ShowAimFOV;
             checkBox_ESP_Dist.Checked = Config.ESP.ShowDistances;
             checkBox_ESP_AimLock.Checked = Config.ESP.ShowAimLock;
@@ -3017,6 +3018,7 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_ESP_Explosives_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowExplosives = checkBox_ESP_Explosives.Checked;
+            checkBox_ThrowableIcons.Enabled = checkBox_ESP_Explosives.Checked;
         }
 
         private void checkBox_ESP_FPS_CheckedChanged(object sender, EventArgs e)
@@ -4082,6 +4084,11 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_KillTask_CheckedChanged(object sender, EventArgs e)
         {
             Config.ShowZone = checkBox_KillTask.Checked;
+        }
+
+        private void checkBox_ThrowableIcons_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowThrowableIcons = checkBox_ThrowableIcons.Checked;
         }
     }
 }

@@ -4,6 +4,7 @@ using eft_dma_radar.UI.Misc;
 using eft_dma_radar.UI.Radar;
 using eft_dma_shared.Common.ESP;
 using eft_dma_shared.Common.Maps;
+using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
 
@@ -19,6 +20,8 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
             ObjectClass.To_GameObject.Concat(new uint[] { GameObject.ComponentsOffset, 0x8, 0x38 }).ToArray();
         private readonly Stopwatch _sw = Stopwatch.StartNew();
         private readonly ConcurrentDictionary<ulong, IExplosiveItem> _parent;
+
+        private readonly Config _config = Program.Config;
 
         /// <summary>
         /// Base Address of Grenade Object.
@@ -44,6 +47,28 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
             get
             {
                 return Memory.ReadValue<bool>(this + Offsets.Grenade.IsDestroyed, false);
+            }
+        }
+
+        /// <summary>
+        /// Get name of grenade
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                var weaponSource = Memory.ReadPtr(this + Offsets.Grenade.WeaponSource, false);
+                var template = Memory.ReadPtr(weaponSource + Offsets.LootItem.Template, false);
+                var idPtr = Memory.ReadValue<Types.MongoID>(template + Offsets.ItemTemplate._id, false);
+                var id = Memory.ReadUnityString(idPtr.StringID, useCache: false);
+                if(EftDataManager.AllItems.TryGetValue(id, out var item))
+                {
+                    return item.ShortName;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -92,14 +117,45 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
 
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
+            
             if (!IsActive)
                 return;
             if (Vector3.Distance(localPlayer.Position, Position) > ESP.Config.GrenadeDrawDistance)
                 return;
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
                 return;
+            if (Name is not null && _config.ESP.ShowThrowableIcons)
+            {
+                if(GameData.GrenadeData.TryGetValue(Name, out var grenadeData))
+                {
+                    SKPoint grenadePos = scrPos;
+                    grenadePos.Y -= 15f;
+                    grenadePos.X -= 11f;
+                    if (grenadeData != null)
+                    {
+                        DrawCustomImage(ref grenadeData, canvas, grenadePos);
+                    }
+                }
+                canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
+                goto end;
+            }
+            canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
             var circleRadius = 8f * ESP.Config.LineScale;
             canvas.DrawCircle(scrPos, circleRadius, SKPaints.PaintGrenadeESP);
+        end:
+            return;
+        }
+
+        public void DrawCustomImage(ref string bitMap, SKCanvas canvas, SKPoint point)
+        {
+            using var bitmap = SKBitmap.Decode(new MemoryStream(Convert.FromBase64String(bitMap)));
+            using var image = SKImage.FromBitmap(bitmap);
+            var paint = new SKPaint
+            {
+                IsAntialias = true,
+                FilterQuality = SKFilterQuality.High
+            };
+            canvas.DrawImage(image, point, paint);
         }
 
         #endregion

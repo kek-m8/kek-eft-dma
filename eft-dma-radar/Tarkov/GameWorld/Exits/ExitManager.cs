@@ -38,7 +38,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Exits
                 list.Add(exfil);
             }
             /// Secret Extracts
-            var secretExfil = Memory.ReadPtr(exfilController + Offsets.ExfilController.SecretExfiltrationPointArray);
+            var secretExfil = Memory.ReadPtr(exfilController + Offsets.ExfilController.SecretExfiltrationPointArray, false);
             using var secrets = MemArray<ulong>.Get(secretExfil, false);
             foreach (var secretAddr in secrets)
             {

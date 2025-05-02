@@ -75,6 +75,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
                         string ammoId = Memory.ReadUnityString(ammoIdPtr.StringID);
                         if (EftDataManager.AllItems.TryGetValue(ammoId, out var ammo))
                             _ammo = ammo?.ShortName;
+
                     }
                 }
             }

@@ -73,6 +73,10 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// </summary>
         public Enums.ETagStatus HealthStatus { get; private set; } = Enums.ETagStatus.Healthy;
         /// <summary>
+        /// Current state of the player
+        /// </summary>
+        public Enums.EPlayerState PlayerState { get; private set; }
+        /// <summary>
         /// Player's Gear/Loadout Information and contained items.
         /// </summary>
         public GearManager Gear { get; private set; }
@@ -105,6 +109,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             IsFocused = CheckIfFocused();
             TeamID = GetTeamID();
             MovementContext = GetMovementContext();
+            SetPlayerState();
             RotationAddress = ValidateRotationAddr(MovementContext + Offsets.ObservedMovementController.Rotation);
             /// Setup Transforms
             this.Skeleton_ = new Skeleton(this, GetTransformInternalChain);
@@ -161,6 +166,11 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             return name;
         }
 
+        private void SetPlayerState()
+        {
+            PlayerState = (Enums.EPlayerState)Memory.ReadValue<byte>(MovementContext + Offsets.ObservedMovementController.CurrentStateName);
+        }
+
         /// <summary>
         /// Get Movement Context Instance.
         /// </summary>
@@ -179,6 +189,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             if (isActive)
             {
                 UpdateHealthStatus();
+                SetPlayerState();
             }
             base.OnRegRefresh(index, registered, isActive);
         }

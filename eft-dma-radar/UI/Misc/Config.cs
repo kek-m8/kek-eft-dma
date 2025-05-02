@@ -515,7 +515,11 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showExplosives")]
         public bool ShowExplosives { get; set; } = true;
-
+        /// <summary>
+        /// Display grenades as icons in ESP
+        /// </summary>
+        [JsonPropertyName("showExplosivesAsIcons")]
+        public bool ShowThrowableIcons { get; set; } = false;
         /// <summary>
         /// Display Distance of targets in ESP.
         /// </summary>
