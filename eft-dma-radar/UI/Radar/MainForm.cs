@@ -267,17 +267,6 @@ namespace eft_dma_radar.UI.Radar
                 SetMapName();
                 /// Check for map switch
                 var mapID = MapID; // Cache ref
-                /*if (mapID.ToLower() == "lighthouse")      // removing for now
-                {
-                    foreach (var quest in Memory.QuestManager.CurrentQuests)
-                    {
-                        if (quest.Equals("6179acbdc760af5ad2053585"))
-                        {
-                            LoneMapManager.LoadMap("lighthouse_ejp2");
-                            goto next;
-                        }
-                    }
-                }*/
                 if (!mapID.Equals(LoneMapManager.Map?.ID, StringComparison.OrdinalIgnoreCase)) // Map changed
                 {
                     LoneMapManager.LoadMap(mapID);
@@ -548,7 +537,13 @@ namespace eft_dma_radar.UI.Radar
             {
                 if (checkedListBox_QuestHelper.Items[e.Index] is QuestListItem item)
                 {
-                    Config.QuestHelper.BlacklistedQuests.Remove(item.Id.ToLower());
+                    if(!item.KappaRequired && checkBox_KappaOnly.Checked)
+                    {
+                        e.NewValue = CheckState.Unchecked;
+                        Config.QuestHelper.BlacklistedQuests.Add(item.Id.ToLower());
+                    }
+                    else
+                        Config.QuestHelper.BlacklistedQuests.Remove(item.Id.ToLower());
                 }
             }
             else if (e.NewValue == CheckState.Unchecked)
@@ -1668,73 +1663,68 @@ namespace eft_dma_radar.UI.Radar
         /// Refresh quest helper (if enabled).
         /// </summary>
         /// 
-        private bool _kappa = false;
-        QuestListItem[] nonKappa = null;
+        private bool _isRefreshing = false;
+
         private void RefreshQuestHelper()
         {
-            var currentList = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
-            Dictionary<string, int> listidforid = new Dictionary<string, int>();
-            for (int i = 0; i < currentList.Length; i++)
+            if (!Config.QuestHelper.Enabled || !Memory.InRaid || Memory.QuestManager is not QuestManager quests)
+                return;
+
+            var currentItems = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
+            Dictionary<string, int> listIdToIndex = currentItems
+                .Select((item, index) => new { item.Id, index })
+                .ToDictionary(x => x.Id, x => x.index, StringComparer.OrdinalIgnoreCase);
+
+            _isRefreshing = true;
+            checkedListBox_QuestHelper.BeginUpdate();
+
+            HashSet<string> currentQuestIds = quests.CurrentQuests.ToHashSet(StringComparer.OrdinalIgnoreCase);
+            List<QuestListItem> kappaFiltered = new();
+
+            foreach (var item in currentItems)
             {
-                listidforid[currentList[i].Id] = i;
+                if (!currentQuestIds.Contains(item.Id))
+                {
+                    checkedListBox_QuestHelper.Items.Remove(item);
+                }
             }
 
-            if (Config.QuestHelper.Enabled && Memory.InRaid && Memory.QuestManager is QuestManager quests)
+            foreach (var questId in currentQuestIds)
             {
-                checkedListBox_QuestHelper.BeginUpdate();
-
-                foreach (var questId in quests.CurrentQuests)
+                if (!listIdToIndex.ContainsKey(questId))
                 {
-                    if (!currentList.Any(x => x.Id.Equals(questId, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        bool enabled = !Config.QuestHelper.BlacklistedQuests.Contains(questId, StringComparer.OrdinalIgnoreCase);
-                        checkedListBox_QuestHelper.Items.Add(new QuestListItem(questId), enabled);
-                    }
+                    var newItem = new QuestListItem(questId);
+                    bool isManuallyBlacklisted = Config.QuestHelper.BlacklistedQuests.Contains(questId, StringComparer.OrdinalIgnoreCase);
+                    bool checkState = !isManuallyBlacklisted;
+
+                    checkedListBox_QuestHelper.Items.Add(newItem, checkState);
                 }
+            }
 
-                List<QuestListItem> questsToBlacklist = new();
-                List<QuestListItem> questsToUnblacklist = new();
+            currentItems = checkedListBox_QuestHelper.Items.Cast<QuestListItem>().ToArray();
+            listIdToIndex = currentItems
+                .Select((item, index) => new { item.Id, index })
+                .ToDictionary(x => x.Id, x => x.index, StringComparer.OrdinalIgnoreCase);
 
-                foreach (var existing in currentList)
+            if (checkBox_KappaOnly.Checked)
+            {
+                foreach (var item in currentItems)
                 {
-                    if (!quests.CurrentQuests.Contains(existing.Id))
-                    {
-                        checkedListBox_QuestHelper.Items.Remove(existing);
-                        continue;
-                    }
+                    bool isManuallyBlacklisted = Config.QuestHelper.BlacklistedQuests.Contains(item.Id, StringComparer.OrdinalIgnoreCase);
 
-                    if (checkBox_KappaOnly.Checked)
+                    if (!item.KappaRequired && !isManuallyBlacklisted)
                     {
-                        if (!existing.KappaRequired)
+                        if (listIdToIndex.TryGetValue(item.Id, out int idx))
                         {
-                            if (!Config.QuestHelper.BlacklistedQuests.Contains(existing.Id))
-                                Config.QuestHelper.BlacklistedQuests.Add(existing.Id);
-
-                            if (listidforid.TryGetValue(existing.Id, out int idx))
-                                checkedListBox_QuestHelper.SetItemChecked(idx, false);
-
-                            questsToBlacklist.Add(existing);
-                        }
-                    }
-                    else
-                    {
-                        if (Config.QuestHelper.BlacklistedQuests.Contains(existing.Id))
-                        {
-                            Config.QuestHelper.BlacklistedQuests.Remove(existing.Id);
-
-                            if (listidforid.TryGetValue(existing.Id, out int idx))
-                                checkedListBox_QuestHelper.SetItemChecked(idx, true);
-
-                            questsToUnblacklist.Add(existing);
+                            checkedListBox_QuestHelper.SetItemChecked(idx, false);
+                            kappaFiltered.Add(item);
                         }
                     }
                 }
-
-                nonKappa = checkBox_KappaOnly.Checked ? questsToBlacklist.ToArray() : null;
-                _kappa = checkBox_KappaOnly.Checked;
-
-                checkedListBox_QuestHelper.EndUpdate();
             }
+
+            checkedListBox_QuestHelper.EndUpdate();
+            _isRefreshing = false;
         }
 
         /// <summary>
@@ -4122,6 +4112,11 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_ESP_TripwireIcon_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowTripwireIcon = checkBox_ESP_TripwireIcon.Checked;
+        }
+
+        private void checkedListBox_QuestHelper_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
