@@ -651,8 +651,9 @@ namespace eft_dma_shared.Common.Misc.Data
             ["Red"] = null,
             ["Green"] = null,
             ["Blue"] = null,
-            ["Special Yellow"] = null,
+            ["S-Yellow"] = null,
             ["Yellow"] = null,
+            ["Firework"] = null,
         }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
 public static IReadOnlyDictionary<int, int> XPTable { get; } = new Dictionary<int, int>
         {

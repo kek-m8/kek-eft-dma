@@ -53,25 +53,23 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
         /// <summary>
         /// Get name of grenade
         /// </summary>
-        public string Name
+        public string getName()
         {
-            get
+            var weaponSource = Memory.ReadPtr(this + Offsets.Grenade.WeaponSource, false);
+            var template = Memory.ReadPtr(weaponSource + Offsets.LootItem.Template, false);
+            var idPtr = Memory.ReadValue<Types.MongoID>(template + Offsets.ItemTemplate._id, false);
+            var id = Memory.ReadUnityString(idPtr.StringID, useCache: false);
+            if(EftDataManager.AllItems.TryGetValue(id, out var item))
             {
-                var weaponSource = Memory.ReadPtr(this + Offsets.Grenade.WeaponSource, false);
-                var template = Memory.ReadPtr(weaponSource + Offsets.LootItem.Template, false);
-                var idPtr = Memory.ReadValue<Types.MongoID>(template + Offsets.ItemTemplate._id, false);
-                var id = Memory.ReadUnityString(idPtr.StringID, useCache: false);
-                if(EftDataManager.AllItems.TryGetValue(id, out var item))
-                {
-                    return item.ShortName;
-                }
-                else
-                {
-                    return null;
-                }
+                return item.ShortName;
+            }
+            else
+            {
+                return null;
             }
         }
 
+        public string Name;
         public Grenade(ulong baseAddr, ConcurrentDictionary<ulong, IExplosiveItem> parent)
         {
             Addr = baseAddr;
@@ -79,6 +77,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
             if (IsDetonated)
                 throw new Exception("Grenade is already detonated.");
             PosAddr = Memory.ReadPtrChain(baseAddr, _toPosChain, false);
+            Name = getName();
             Refresh();
         }
 
@@ -117,14 +116,15 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
 
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
-            
+            if(!_config.ESP.ShowGrenades)
+                return;
             if (!IsActive)
                 return;
             if (Vector3.Distance(localPlayer.Position, Position) > ESP.Config.GrenadeDrawDistance)
                 return;
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
                 return;
-            if (Name is not null && _config.ESP.ShowThrowableIcons)
+            if (Name is not null && _config.ESP.ShowGrenadeIcons)
             {
                 if(GameData.GrenadeData.TryGetValue(Name, out var grenadeData))
                 {
@@ -136,14 +136,14 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
                         DrawCustomImage(ref grenadeData, canvas, grenadePos);
                     }
                 }
-                canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
-                goto end;
+                if(_config.ESP.ShowGrenadeName)
+                    canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
+                return;
             }
-            canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
+            if (_config.ESP.ShowGrenadeName)
+                canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
             var circleRadius = 8f * ESP.Config.LineScale;
             canvas.DrawCircle(scrPos, circleRadius, SKPaints.PaintGrenadeESP);
-        end:
-            return;
         }
 
         public void DrawCustomImage(ref string bitMap, SKCanvas canvas, SKPoint point)

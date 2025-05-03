@@ -153,10 +153,12 @@ namespace SDK
 
         public readonly partial struct TripwireSynchronizableObject
         {
+            public const uint PlacerPlayerId = 0x140; // EFT.MongoID
             public const uint GrenadeTemplateId = 0x110; // EFT.MongoID
             public const uint _tripwireState = 0x16C; // System.Int32
             public const uint FromPosition = 0x170; // UnityEngine.Vector3
             public const uint ToPosition = 0x17C; // UnityEngine.Vector3
+            public static readonly uint[] grenadeRendererList = new uint[] { 0xF0,  0x38 }; // -.GrenadePrefab // System.Collections.Generic.List<Renderer>
         }
 
         public readonly partial struct MineDirectional
