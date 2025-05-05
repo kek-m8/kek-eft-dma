@@ -5,3 +5,5 @@ This is an up-to-date build of my version of Lone DMA EFT/Arena Radar. This is a
 - Arena is supported and will be maintained going forward.
 
 Compiled releases can be found [here](https://github.com/kek-m8/kek-eft-dma/releases)
+
+If you wish to support me you can do so [here](https://buymeacoffee.com/kekmate)
