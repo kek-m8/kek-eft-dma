@@ -15,6 +15,7 @@ using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
+using eft_dma_shared.Misc;
 using OpenTK.Graphics.OpenGL;
 
 namespace eft_dma_radar.UI.ESP
@@ -664,9 +665,9 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                 "",
                 "",
                 "",
-                (looseLoot is not null && looseLoot.FlatPrice > 0) ? $"Highest value FIR loot: {looseLoot.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {(uint)Math.Round(Vector3.Distance(LocalPlayer.Position, looseLoot.Position))}m)" : "",
+                (looseLoot is not null && looseLoot.FlatPrice > 0) && Config.ESP.ShowFIRItem ? $"Highest value FIR loot: {looseLoot.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot.Position)}m)" : "",
                 "",
-                (looseLoot2 is not null && looseLoot2.FlatPrice > 0) ? $"Highest value non-FIR loot {looseLoot2.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot2.FlatPrice)}] (H: {(int)Math.Round(looseLoot2.Position.Y - LocalPlayer.Position.Y) } D: {(uint)Math.Round(Vector3.Distance(LocalPlayer.Position, looseLoot2.Position))}m)" : ""
+                (looseLoot2 is not null && looseLoot2.FlatPrice > 0) && Config.ESP.ShowNFIRItem ? $"Highest value non-FIR loot {looseLoot2.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot2.FlatPrice)}] (H: {(int)Math.Round(looseLoot2.Position.Y - LocalPlayer.Position.Y) } D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot2.Position)}m)" : ""
             };
             var x = CameraManagerBase.Viewport.Right - 8f * Config.ESP.FontScale;
             var y = CameraManagerBase.Viewport.Top + SKPaints.TextBasicESPRightAligned.TextSize +

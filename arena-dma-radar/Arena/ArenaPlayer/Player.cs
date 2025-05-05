@@ -703,7 +703,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     }
                     else // just height, distance
                     {
-                        lines.Add($"{(int)Math.Round(height)},{(int)Math.Round(dist)}");
+                        lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                         if (this.ErrorTimer.ElapsedMilliseconds > 100)
                             lines[0] = "ERROR"; // In case POS stops updating, let us know!
                     }
@@ -711,14 +711,19 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     {
                         if (Memory.Game.matchMode is Enums.ERaidMode.BlastGang)
                         {
-                            GearManager a = new GearManager(observed_); // get live equipment
-                            if (a.Equipment.TryGetValue("Backpack", out var _))
-                                lines.Add("(BOMB)");
-                            else
+                            try
                             {
-                                if (lines.Contains("(BOMB)"))
-                                    lines.Remove("(BOMB)");
+                                GearManager a = new GearManager(observed_); // get live equipment
+                                if (a.Equipment.TryGetValue("Backpack", out var _))
+                                    lines.Add("(BOMB)");
+                                else
+                                {
+                                    if (lines.Contains("(BOMB)"))
+                                        lines.Remove("(BOMB)");
+                                }
                             }
+                            catch { }
+                            
                         }
                     }
                     DrawPlayerText(canvas, point, lines);

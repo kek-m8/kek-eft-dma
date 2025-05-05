@@ -86,6 +86,12 @@ namespace eft_dma_shared.Common.Misc
                 pw += chars[RandomNumberGenerator.GetInt32(chars.Length)];
             return pw;
         }
+
+        public static string GetDistPretty(Vector3 a, Vector3 b)
+        {
+            var dist = Vector3.Distance(a, b);
+            return $"{(dist < 10f ? dist.ToString("n1") : (int)dist)}";
+        }
     }
     #region Debugging/Profiling
     /// <summary>

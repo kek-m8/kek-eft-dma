@@ -87,7 +87,13 @@ namespace eft_dma_radar.Tarkov.Loot
         {
             get
             {
-                return (int)((int)Math.Max(_item.FleaPrice, _item.TraderPrice) + ((childItems is null || childItems.Count == 0) ? 0 : childItems.Sum(item => Math.Max(item._item.TraderPrice, item._item.FleaPrice))));
+                var basePrice = (int)Math.Max(_item.FleaPrice, _item.TraderPrice);
+                var add = (IsWeapon && !Config.ESP.ChildItemWeaponValue) || (IsWeapon && IsFIR) || ((IsArmoredEquipment || IsArmoredRig || IsPlateCarrier) && !Config.ESP.ChildItemArmorValue) || childItems.Count == 0
+                    ? 
+                    0 
+                    : 
+                    childItems?.Sum(item => Math.Max(item._item.TraderPrice, item._item.FleaPrice)) ?? 0;
+                return (int)(basePrice + add);
             }
         }
 
@@ -175,6 +181,8 @@ namespace eft_dma_radar.Tarkov.Loot
         public bool IsBullet => _item.IsBullet;
 
         public bool IsAmmo => _item.IsAmmo;
+
+        public bool IsArmoredEquipment => _item.IsArmoredEquipment;
 
         public bool IsSpecialItem => _item.IsSpecialItem;
 
@@ -314,9 +322,9 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
-            if ((this is QuestItem && this is not LootItem) && !localPlayer.IsPmc)
+            if (this is not LootCorpse && (this is QuestItem && this is not LootItem) && !localPlayer.IsPmc)
                 return;
-            if (this is LootItem && this is not QuestItem)
+            if (this is not LootCorpse && this is LootItem && this is not QuestItem)
             {
                 if (IsQuestCondition && !IsFIR)
                     return;
@@ -362,7 +370,7 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
         {
-            if (this is LootItem && this is not QuestItem)
+            if (this is not LootCorpse && this is LootItem && this is not QuestItem)
             {
                 if (IsQuestCondition && !IsFIR)
                     return;

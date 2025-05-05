@@ -1474,7 +1474,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     }
                     else // just height, distance
                     {
-                        lines.Add($"{(int)Math.Round(height)},{(int)Math.Round(dist)}");
+                        lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                         if (this is ObservedPlayer player && showClass)
                         {
                             if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
@@ -1686,21 +1686,28 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             }
             else if (!IsAlive)
             {
-                lines.Add($"{Type.GetDescription()}:{name}");
-                string g = null;
-                if (GroupID != -1)
-                    g = $"G:{GroupID} ";
-                if (g is not null) lines.Add(g);
-                var corpseLoot = LootObject?.Loot?.OrderLoot();
-                if (corpseLoot is not null)
+                try
                 {
-                    var sumPrice = corpseLoot.Sum(x => x.Price);
-                    var corpseValue = TarkovMarketItem.FormatPrice(sumPrice);
-                    lines.Add($"Value: {corpseValue}"); // Player name, value
-                    if (corpseLoot.Any())
-                        foreach (var item in corpseLoot)
-                            lines.Add(item.GetUILabel(MainForm.Config.QuestHelper.Enabled));
-                    else lines.Add("Empty");
+                    lines.Add($"{Type.GetDescription()}:{name}");
+                    string g = null;
+                    if (GroupID != -1)
+                        g = $"G:{GroupID} ";
+                    if (g is not null) lines.Add(g);
+                    var corpseLoot = LootObject?.Loot?.OrderLoot();
+                    if (corpseLoot is not null)
+                    {
+                        var sumPrice = corpseLoot.Sum(x => x.Price);
+                        var corpseValue = TarkovMarketItem.FormatPrice(sumPrice);
+                        lines.Add($"Value: {corpseValue}"); // Player name, value
+                        if (corpseLoot.Any())
+                            foreach (var item in corpseLoot)
+                                lines.Add(item.GetUILabel(MainForm.Config.QuestHelper.Enabled));
+                        else lines.Add("Empty");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"WARNING! Player Draw Error: {ex.Message}");
                 }
             }
             else if (IsAIActive)

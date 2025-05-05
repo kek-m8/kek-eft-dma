@@ -623,7 +623,26 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showRaidStats")]
         public bool ShowRaidStats { get; set; } = false;
-
+        /// <summary>
+        /// Highest value FIR item in the raid.
+        /// </summary>
+        [JsonPropertyName("showFIRItem")]
+        public bool ShowFIRItem { get; set; } = true;
+        /// <summary>
+        /// Highest value Non-FIR item in the raid.
+        /// </summary>
+        [JsonPropertyName("showNonFIRItem")]
+        public bool ShowNFIRItem { get; set; } = false;
+        /// <summary>
+        /// Use attachment value for final weapon price.
+        /// </summary>
+        [JsonPropertyName("childItemWeaponValue")]
+        public bool ChildItemWeaponValue { get; set; } = false;
+        /// <summary>
+        /// Use gear slots for final armor price.
+        /// </summary>
+        [JsonPropertyName("childItemArmorValue")]
+        public bool ChildItemArmorValue { get; set; } = false;
         /// <summary>
         /// Draw Armour plate class levels
         /// </summary>
