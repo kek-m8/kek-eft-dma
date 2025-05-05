@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using eft_dma_shared.Common.Misc.Config;
 using eft_dma_shared.Common.Misc.Commercial;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace eft_dma_shared
 {
@@ -17,6 +19,8 @@ namespace eft_dma_shared
 
         internal static DirectoryInfo ConfigPath { get; private set; }
         internal static IConfig Config { get; private set; }
+
+        public static HttpClient HttpClient { get; private set; }   
 
         /// <summary>
         /// Initialize the Shared State between this module and the main application.
@@ -35,9 +39,25 @@ namespace eft_dma_shared
                 throw new ApplicationException("The Application Is Already Running!");
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             SetHighPerformanceMode();
+            SetupHttpClient();
 #if !DEBUG
             VerifyDependencies();
 #endif
+        }
+
+        private static void SetupHttpClient()
+        {
+            var handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = true,
+                SslProtocols = System.Security.Authentication.SslProtocols.Tls12 | System.Security.Authentication.SslProtocols.Tls13,
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            };
+            var client = new HttpClient(handler);
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("identity"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            SharedProgram.HttpClient = client;
         }
 
         /// <summary>

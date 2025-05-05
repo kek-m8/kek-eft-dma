@@ -1,4 +1,5 @@
 ﻿using eft_dma_shared.Common.Misc.Commercial;
+using eft_dma_shared.Common.Misc.Data.TarkovMarket;
 using System.Collections.Frozen;
 using System.Reflection;
 using System.Text;
@@ -36,7 +37,7 @@ namespace eft_dma_shared.Common.Misc.Data
         {
             try
             {
-                var data = await GetDataAsync();
+                var data = await GetDataAsyncTest();
                 AllItems = data.Items.Where(x => !x.Tags?.Contains("Static Container") ?? false)
                     .DistinctBy(x => x.BsgId, StringComparer.OrdinalIgnoreCase)
                     .ToDictionary(k => k.BsgId, v => v, StringComparer.OrdinalIgnoreCase)
@@ -88,6 +89,54 @@ namespace eft_dma_shared.Common.Misc.Data
             return data;
         }
 
+        private static async Task<TarkovMarketData> GetDataAsyncTest()
+        {
+            TarkovMarketData data;
+            string json = null;
+            if ((!File.Exists(_dataFile) ||
+            File.GetLastWriteTime(_dataFile).AddHours(.5) < DateTime.Now)) // // only update every .5h. Originally set to every 4h by Lone
+            {
+                json = await GetUpdatedDataJsonAsyncTest();
+                if (json is not null)
+                {
+                    await File.WriteAllTextAsync(_dataFile, json);
+                    // Merge with default data to ensure no items are missing
+                    await TarkovDevCore.MergeDefaultDataWithDataJsonAsync();
+                }
+            }
+            var jsonOptions = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            };
+            if (json is null && File.Exists(_dataFile))
+            {
+                json = await File.ReadAllTextAsync(_dataFile);
+            }
+            json ??= await GetDefaultDataAsync();
+            try
+            {
+                data = JsonSerializer.Deserialize<TarkovMarketData>(json, jsonOptions);
+            }
+            catch (JsonException)
+            {
+                File.Delete(_dataFile); // Delete data if json is corrupt.
+                throw;
+            }
+            ArgumentNullException.ThrowIfNull(data, nameof(data));
+            return data;
+        }
+
+        private static async Task<string> GetDefaultDataAsync()
+        {
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.DEFAULT_DATA.json"))
+            {
+                var data = new byte[stream!.Length];
+                await stream.ReadExactlyAsync(data);
+                return Encoding.UTF8.GetString(data);
+            }
+        }
+
         /// <summary>
         /// Contacts the Loot Server for an updated Loot List.
         /// </summary>
@@ -107,6 +156,24 @@ namespace eft_dma_shared.Common.Misc.Data
             catch (Exception ex)
             {
                 MessageBox.Show("ERROR getting updated Data File. Will use old file (if possible): " + ex.ToString());
+                return null;
+            }
+        }
+
+        private static async Task<string> GetUpdatedDataJsonAsyncTest()
+        {
+            try
+            {
+                return await TarkovMarketJob.GetUpdatedMarketDataAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"WARNING: Failed to retrieve updated Tarkov Market Data. Will use backup source(s).\n\n{ex}",
+                    nameof(EftDataManager),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1,
+                    MessageBoxOptions.DefaultDesktopOnly);
                 return null;
             }
         }

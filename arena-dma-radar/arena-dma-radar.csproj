@@ -70,4 +70,10 @@
 	  </Reference>
 	</ItemGroup>
 
+	<Target Name="CopyNativeDLLs" AfterTargets="Build">
+		<ItemGroup>
+			<NativeLibs Include="$(OutputPath)runtimes\win-x64\native\*.dll" />
+		</ItemGroup>
+		<Copy SourceFiles="@(NativeLibs)" DestinationFolder="$(OutputPath)" />
+	</Target>
 </Project>
