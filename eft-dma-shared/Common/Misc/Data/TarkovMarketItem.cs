@@ -77,8 +77,13 @@ namespace eft_dma_shared.Common.Misc.Data
         [JsonIgnore]
         public bool IsWeapon => Tags.Contains("Weapon");
         /// <summary>
+        /// Is gear equipment
+        /// </summary>
+        public bool IsGear => Tags.Contains("Equipment") || IsPlateCarrier;
+        /// <summary>
         /// Is a Weapon Mod.
         /// </summary>
+        [JsonIgnore]
         public bool IsWeaponMod => Tags.Contains("Weapon mod");
         /// <summary>
         /// Is Currency (Roubles,etc.)
@@ -109,6 +114,8 @@ namespace eft_dma_shared.Common.Misc.Data
         public bool IsArmorPlate => Tags.Contains("Armor Plate");
         [JsonIgnore]
         public bool IsBodyArmor => Tags.Contains("Armor");
+        [JsonIgnore]
+        public bool IsArmoredEquipment => Tags.Contains("Armored equipment");
         [JsonIgnore]
         public bool IsPlateCarrier => Name.ToLower().Contains("plate carrier");
         [JsonIgnore]

@@ -537,7 +537,7 @@ namespace eft_dma_radar.UI.Radar
             {
                 if (checkedListBox_QuestHelper.Items[e.Index] is QuestListItem item)
                 {
-                    if(!item.KappaRequired && checkBox_KappaOnly.Checked)
+                    if (!item.KappaRequired && checkBox_KappaOnly.Checked)
                     {
                         e.NewValue = CheckState.Unchecked;
                         Config.QuestHelper.BlacklistedQuests.Add(item.Id.ToLower());
@@ -1909,8 +1909,6 @@ namespace eft_dma_radar.UI.Radar
                 "Enables the 'High Alert' ESP Feature. This will activate when you are being aimed at for longer than 0.5 seconds.\nTargets in your FOV (in front of you) will draw an aimline towards your character.\nTargets outside your FOV will draw the border of your screen red.");
             toolTip1.SetToolTip(comboBox_ESP_HighAlert,
                 "None = Feature Disabled\nAllPlayers = Enabled for both players and bots (AI)\nHumansOnly = Enabled only for human-controlled players.");
-            toolTip1.SetToolTip(checkBox_ESP_RaidStats,
-                "Displays Raid Stats (Player counts, etc.) in top right corner of ESP window.");
             toolTip1.SetToolTip(checkBox_SA_AutoBone, "Automatically selects best bone target based on where you are aiming.");
             toolTip1.SetToolTip(checkBox_AimHeadAI, "Always headshot AI Targets regardless of other settings.");
             toolTip1.SetToolTip(checkBox_SA_SafeLock, "Unlocks the aimbot if your target leaves your FOV Radius.\n" +
@@ -2850,7 +2848,11 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_TripwireIcon.Checked = Config.ESP.ShowTripwireIcon;
             checkBox_ESP_ShowMines.Checked = Config.ESP.ShowMines;
             checkBox_ESP_ShowMag.Checked = Config.ESP.ShowMagazine;
-            checkBox_ESP_RaidStats.Checked = Config.ESP.ShowRaidStats;
+            checkBox_ESP_RaidStatShow.Checked = Config.ESP.ShowRaidStats;
+            checkBox_ESP_RaidStatFIR.Checked = Config.ESP.ShowFIRItem;
+            checkBox_ESP_RaidStatNFIR.Checked = Config.ESP.ShowNFIRItem;
+            checkBox_ESP_WeapAttach.Checked = Config.ESP.ChildItemWeaponValue;
+            checkBox_ESP_GearSlots.Checked = Config.ESP.ChildItemArmorValue;
             checkBox_ESP_StatusText.Checked = Config.ESP.ShowStatusText;
             checkBox_ESP_FPS.Checked = Config.ESP.ShowFPS;
             checkBox_TrapSwitches.Checked = Config.ESP.ShowEventStuff;
@@ -3210,11 +3212,6 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_ESPAIRender_Dist_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.AIRendering.ShowDist = checkBox_ESPAIRender_Dist.Checked;
-        }
-
-        private void checkBox_ESP_RaidStats_CheckedChanged(object sender, EventArgs e)
-        {
-            Config.ESP.ShowRaidStats = checkBox_ESP_RaidStats.Checked;
         }
 
         private void checkBox_ESP_StatusText_CheckedChanged(object sender, EventArgs e)
@@ -4114,9 +4111,29 @@ namespace eft_dma_radar.UI.Radar
             Config.ESP.ShowTripwireIcon = checkBox_ESP_TripwireIcon.Checked;
         }
 
-        private void checkedListBox_QuestHelper_SelectedIndexChanged(object sender, EventArgs e)
+        private void checkBox_ESP_RaidStatShow_CheckedChanged(object sender, EventArgs e)
         {
+            Config.ESP.ShowRaidStats = checkBox_ESP_RaidStatShow.Checked;
+        }
 
+        private void checkBox_ESP_RaidStatFIR_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowFIRItem = checkBox_ESP_RaidStatFIR.Checked;
+        }
+
+        private void checkBox_ESP_RaidStatNFIR_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowNFIRItem = checkBox_ESP_RaidStatNFIR.Checked;
+        }
+
+        private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
+        {
+            Config.ESP.ChildItemWeaponValue = checkBox_ESP_WeapAttach.Checked;
+        }
+
+        private void checkBox_ESP_ArmorPlate_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ChildItemArmorValue = checkBox_ESP_GearSlots.Checked;
         }
     }
 }
