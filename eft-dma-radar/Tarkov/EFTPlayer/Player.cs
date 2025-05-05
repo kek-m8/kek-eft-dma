@@ -1534,19 +1534,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             canvas.DrawCircle(point, size, paints.Item1); // draw LocalPlayer marker
             var aimlineLength = this == localPlayer || (this.IsFriendly && MainForm.Config.TeammateAimlines) ? 
                 MainForm.Config.AimLineLength : 15;
-            if ((Config.MapFollowTeammate == 0 || Config.MapFollowTeammate == 2) && !IsFriendly && 
+            if ((Config.MapFollowTeammate == 0 || Config.MapFollowTeammate == 2) && !IsFriendly &&
                 !(this.IsAI && !MainForm.Config.AIAimlines) &&
-                this.IsFacingTarget(localPlayer, Program.Config.MaxDistance)) // Hostile Player, check if aiming at a friendly (High Alert)
-                aimlineLength = 9999;
+                this.IsFacingTarget(localPlayer, Program.Config.MaxDistance))
+            {// Hostile Player, check if aiming at a friendly (High Alert)
+                //aimlineLength = 9999;
+            }
+
             else if (Config.MapFollowTeammate == 1 && !IsFriendly && !(this.IsAI && !MainForm.Config.AIAimlines))
             {
-                foreach(var player in Memory.Players)
+                foreach (var player in Memory.Players)
                 {
                     if (player.GroupID == Memory.LocalPlayer.GroupID && player.IsFriendly)
                     {
                         if (this.IsFacingTarget(player, Program.Config.MaxDistance))
                         {
-                            aimlineLength = 9999;
+                            //aimlineLength = 9999;
                         }
                     }
                 }

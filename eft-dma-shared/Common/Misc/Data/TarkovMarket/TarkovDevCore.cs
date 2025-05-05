@@ -23,7 +23,7 @@ namespace eft_dma_shared.Common.Misc.Data.TarkovMarket
                 { "query",
                 """
                 {
-                  items(limit: 10000) {
+                  items(lang:zh) {
                     id
                     name
                     shortName
@@ -42,16 +42,16 @@ namespace eft_dma_shared.Common.Misc.Data.TarkovMarket
                         price
                     }
                   }
-                  questItems {
+                  questItems(lang:zh) {
                     id
                     shortName
                   }
-                  lootContainers {
+                  lootContainers(lang:zh) {
                     id
                     name
                     normalizedName
                   }
-                  tasks {
+                  tasks(lang:zh) {
                     id
                     name
                     kappaRequired
