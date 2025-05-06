@@ -544,9 +544,9 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             DateTime tarkovTimeDay = epoch.AddSeconds(((offsetDay + (time * 7)) % oneDay) / 1000);
             DateTime tarkovTimeNight = epoch.AddSeconds(((offsetNight + (time * 7)) % oneDay) / 1000);
             string raidTime = tarkovTimeDay.ToString("HH:mm:ss") + " - " + tarkovTimeNight.ToString("HH:mm:ss");
-            var textPt = new SKPoint(CameraManagerBase.Viewport.Left + 80f * Config.ESP.FontScale,
-                CameraManagerBase.Viewport.Top + 533f * Config.ESP.FontScale);
-            canvas.DrawText(raidTime, textPt, SKPaints.TextBasicESPLeftAligned);
+            var textPt = new SKPoint(CameraManagerBase.Viewport.Left + 300 + 80f * Config.ESP.FontScale,
+                CameraManagerBase.Viewport.Top + 533f * Config.ESP.FontScale - 400);
+            canvas.DrawText(raidTime, textPt, SKPaints.TextBasicESPTime);
         }
 
         /// <summary>

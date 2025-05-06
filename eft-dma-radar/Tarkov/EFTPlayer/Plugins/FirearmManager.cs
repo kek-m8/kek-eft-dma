@@ -268,7 +268,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     var ammoIdPtr = Memory.ReadValue<Types.MongoID>(ammoTemplate_ + Offsets.ItemTemplate._id);
                     string ammoId = Memory.ReadUnityString(ammoIdPtr.StringID);
                     if (EftDataManager.AllItems.TryGetValue(ammoId, out var ammo))
-                        ammoFromMag  = ammo?.ShortName;
+                        ammoFromMag = ammo?.ShortName;
                     var magItemPtr = Memory.ReadPtr(magSlotPtr + Offsets.Slot.ContainedItem);
                     var cartridges = Memory.ReadPtr(magItemPtr + Offsets.LootItemMagazine.Cartridges);
                     var magStackPtr = Memory.ReadPtr(cartridges + Offsets.StackSlot._items);
