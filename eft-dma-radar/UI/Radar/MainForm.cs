@@ -62,6 +62,7 @@ namespace eft_dma_radar.UI.Radar
         private Vector2 _mapPanPosition;
         private EspWidget _aimview;
         private PlayerInfoWidget _playerInfo;
+        private LootInfoWidget _lootInfo;
         public bool isWishlistOnly;
 
         /// <summary>
@@ -261,6 +262,8 @@ namespace eft_dma_radar.UI.Radar
             var inRaid = InRaid; // cache bool
             var localPlayer = LocalPlayer; // cache ref to current player
             var canvas = e.Surface.Canvas; // get Canvas reference to draw on
+            var mousePos = GetMousePosition(); // Implement this to track mouse position
+            var mouseClicked = CheckMouseClick();
             try
             {
                 SetFPS(inRaid);
@@ -451,10 +454,16 @@ namespace eft_dma_radar.UI.Radar
                         }
                     } // End Grp Connect
 
+                    DrawSelectedLootLine(canvas, localPlayer, mapParams);
+
                     if (allPlayers is not null &&
                         checkBox_ShowInfoTab.Checked) // Players Overlay
                         _playerInfo?.Draw(canvas, localPlayer, allPlayers);
                     closestToMouse?.DrawMouseover(canvas, mapParams, localPlayer);// draw tooltip for object the mouse is closest to
+
+
+                    // Draw the LootInfoWidget without rotation
+                    _lootInfo?.Draw(canvas, localPlayer, mousePos, mouseClicked);
 
                     if (Config.ESPWidgetEnabled)
                         _aimview?.Draw(canvas);
@@ -476,6 +485,38 @@ namespace eft_dma_radar.UI.Radar
                 LoneLogging.WriteLine($"CRITICAL RENDER ERROR: {ex}");
             }
         }
+
+        private void DrawSelectedLootLine(SKCanvas canvas, Player localPlayer, LoneMapParams mapParams)
+        {
+            var selectedLoot = _lootInfo?.GetSelectedLoot();
+            if (selectedLoot == null) return; // No selected loot, no line
+
+            var playerPos = localPlayer.Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
+            var lootPos = selectedLoot.Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
+
+            using var paint = new SKPaint
+            {
+                Color = SKColors.Red,
+                StrokeWidth = 3f,
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true
+            };
+            canvas.DrawLine(playerPos, lootPos, paint);
+        }
+
+        private SKPoint GetMousePosition()
+        {
+            var mouse = skglControl_Radar.PointToClient(Cursor.Position);
+            float dpiScaleX = skglControl_Radar.Width / (float)skglControl_Radar.ClientSize.Width;
+            float dpiScaleY = skglControl_Radar.Height / (float)skglControl_Radar.ClientSize.Height;
+
+            return new SKPoint(mouse.X * dpiScaleX, mouse.Y * dpiScaleY);
+        }
+        private bool CheckMouseClick()
+        {
+            return (Control.MouseButtons & MouseButtons.Left) != 0;
+        }
+
 
         private readonly Stopwatch _statusSw = Stopwatch.StartNew();
         private int _statusOrder = 1;
@@ -996,7 +1037,7 @@ namespace eft_dma_radar.UI.Radar
             // Update Widgets
             _aimview?.SetScaleFactor(newScale);
             _playerInfo?.SetScaleFactor(newScale);
-
+            _lootInfo?.SetScaleFactor(newScale);    
             #region UpdatePaints
 
             /// Outlines
@@ -1979,6 +2020,10 @@ namespace eft_dma_radar.UI.Radar
                 UIScale);
             _playerInfo = new PlayerInfoWidget(skglControl_Radar, Config.Widgets.PlayerInfoLocation,
                 Config.Widgets.PlayerInfoMinimized, UIScale);
+
+            var x = new SKRect(0, 901.5f, 310, 1314);
+            _lootInfo = new LootInfoWidget(skglControl_Radar, x,
+                false, UIScale);
         }
 
         private void SetMemWriteFeatures()
@@ -2393,6 +2438,11 @@ namespace eft_dma_radar.UI.Radar
         /// </summary>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (_lootInfo != null && _lootInfo.IsMouseOver()) // Use IsMouseOver method
+            {
+                return; // Ignore mouse wheel event when over the LootInfoWidget
+            }
+
             if (tabControl1.SelectedIndex == 0) // Main Radar Tab should be open
             {
                 if (e.Delta > 0) // mouse wheel up (zoom in)
