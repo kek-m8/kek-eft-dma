@@ -49,56 +49,70 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 return;
             }
 
+            float pad = 5f * ScaleFactor;
+            float textOffsetX = 4f * ScaleFactor;
+            float textOffsetY = 6f * ScaleFactor;
+
             var localPlayerPos = localPlayer.Position;
             var hostiles = players
-                 .Where(x => x.IsHostileActive)
-                 .ToArray();
+                .Where(x => x.IsHostileActive)
+                .ToList();
+
             var pmcCount = hostiles.Count(x => x.IsPmc);
-            var hostileCount = hostiles.Count();
+            var hostileCount = hostiles.Count;
             var pscavCount = hostiles.Count(x => x.Type is Player.PlayerType.PScav);
             var aiCount = hostiles.Count(x => x.IsAI);
             var bossCount = hostiles.Count(x => x.Type is Player.PlayerType.AIBoss);
-            var filteredPlayers = players.Where(x => x.IsHumanHostileActive)
-                .OrderBy(x => Vector3.Distance(localPlayerPos, x.Position));
+
+            var filteredPlayers = players
+                .Where(x => x.IsHumanHostileActive)
+                .OrderBy(x => Vector3.Distance(localPlayerPos, x.Position))
+                .ToList();
 
             var headers = new[]
             {
-                "Fac/Prestige/Lvl/Name", "Last Updated", "Acct", "K/D", "Hours", "Raids", "S/R%", "Grp", "Value", "In Hands", "Dist"
-            };
+        "Fac/Prestige/Lvl/Name", "Last Updated", "Acct", "K/D", "Hours", "Raids", "S/R%", "Grp", "Value", "In Hands", "Dist"
+    };
 
-            var columnWidths = new float[] { 230, 160, 40, 50, 50, 50, 50, 40, 70, 180, 40 };
-            var rowHeight = TextPlayersOverlay.FontSpacing + 4f;
-            var pad = 5f * ScaleFactor;
+            var baseColumnWidths = new float[] { 230, 160, 40, 50, 50, 50, 50, 40, 70, 180, 40 };
+            var columnWidths = baseColumnWidths.Select(w => w * ScaleFactor).ToArray();
+
+            var rowHeight = (TextPlayersOverlay.FontSpacing + 4f) * ScaleFactor;
             var origin = new SKPoint(ClientRectangle.Left + pad, ClientRectangle.Top + pad);
 
             float totalWidth = columnWidths.Sum();
-            float totalHeight = (filteredPlayers.Count() + 1) * rowHeight;
+            float totalHeight = (filteredPlayers.Count + 1) * rowHeight;
 
             Size = new SKSize(totalWidth + pad * 2, totalHeight + pad * 2);
             Draw(canvas);
 
-            canvas.DrawText($"Hostile Count: {hostileCount} | PMC: {pmcCount} | PScav: {pscavCount} | AI: {aiCount} | Boss: {bossCount}", origin.X + 560, (origin.Y - rowHeight / 2) + 2, TextPlayersOverlay);
-            float x = origin.X, y = origin.Y;
-            
+            canvas.DrawText(
+                $"Hostile Count: {hostileCount} | PMC: {pmcCount} | PScav: {pscavCount} | AI: {aiCount} | Boss: {bossCount}",
+                origin.X + 560f * ScaleFactor,
+                (origin.Y - rowHeight / 2f) + 2f * ScaleFactor,
+                TextPlayersOverlay
+            );
+
+            float x = origin.X;
+            float y = origin.Y;
+
             for (int i = 0; i < headers.Length; i++)
             {
-                canvas.DrawText(headers[i], x + 4, y + rowHeight - 6, TextPlayersOverlay);
+                canvas.DrawText(headers[i], x + textOffsetX, y + rowHeight - textOffsetY, TextPlayersOverlay);
                 x += columnWidths[i];
             }
+
             canvas.DrawLine(origin.X, y + rowHeight, origin.X + totalWidth, y + rowHeight, TextBorderPaint);
             y += rowHeight;
 
             foreach (var player in filteredPlayers)
             {
-                notFound_ = false;
+                bool profileFound = Program.Config.Cache.ProfileAPI.Profiles.ContainsKey(player.AccountID);
 
-                foreach (var notFound in Program.Config.Cache.ProfileAPI.Profiles)
-                {
-                    if (notFound.Key == player.AccountID)
-                        notFound_ = true;
-                }
+                var name = MainForm.Config.HideNames && player.IsHuman
+                    ? "<Hidden>"
+                    : (!profileFound ? "PMC" : player.Name);
 
-                var name = MainForm.Config.HideNames && player.IsHuman ? "<Hidden>" : (!notFound_ ? "PMC" : player.Name);
                 var faction = player.PlayerSide.GetDescription()[0];
                 var hands = player.Hands?.CurrentItem ?? "--";
 
@@ -106,7 +120,7 @@ namespace eft_dma_radar.UI.SKWidgetControl
 
                 try
                 {
-                    if (notFound_ && player is ObservedPlayer observed)
+                    if (profileFound && player is ObservedPlayer observed)
                     {
                         updated = observed.Profile.Updated ?? "--";
                         edition = observed.Profile?.Acct ?? "--";
@@ -138,14 +152,13 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 x = origin.X;
                 for (int i = 0; i < values.Length; i++)
                 {
-                    canvas.DrawText(values[i], x + 4, y + rowHeight - 6, TextPlayersOverlay);
+                    canvas.DrawText(values[i], x + textOffsetX, y + rowHeight - textOffsetY, TextPlayersOverlay);
                     canvas.DrawLine(x, y - rowHeight, x, y + rowHeight, TextBorderPaint);
-
                     x += columnWidths[i];
                 }
+
                 canvas.DrawLine(x, y - rowHeight, x, y + rowHeight, TextBorderPaint);
                 canvas.DrawLine(origin.X, y + rowHeight, origin.X + totalWidth, y + rowHeight, TextBorderPaint);
-
                 y += rowHeight;
             }
         }

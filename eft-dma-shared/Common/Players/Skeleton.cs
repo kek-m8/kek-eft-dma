@@ -344,12 +344,12 @@ namespace eft_dma_shared.Common.Players
             LeftHand = eft_dma_shared.Common.Unity.Bones.HumanLPalm,
             RightHand = eft_dma_shared.Common.Unity.Bones.HumanRPalm,
             Pelvis = eft_dma_shared.Common.Unity.Bones.HumanPelvis,
-            LeftCalf = eft_dma_shared.Common.Unity.Bones.HumanLCalf,
-            RightCalf = eft_dma_shared.Common.Unity.Bones.HumanRCalf,
-            LeftKnee = eft_dma_shared.Common.Unity.Bones.HumanLThigh2,
-            RightKnee = eft_dma_shared.Common.Unity.Bones.HumanRThigh2,
-            LeftKneeTest = eft_dma_shared.Common.Unity.Bones.HumanLThigh1,
-            RightKneeTest = eft_dma_shared.Common.Unity.Bones.HumanRThigh1,
+            LeftKnee = eft_dma_shared.Common.Unity.Bones.HumanLCalf,
+            RightKnee = eft_dma_shared.Common.Unity.Bones.HumanRCalf,
+            LeftThighMid = eft_dma_shared.Common.Unity.Bones.HumanLThigh2,
+            RightThighMid = eft_dma_shared.Common.Unity.Bones.HumanRThigh2,
+            LeftThigh = eft_dma_shared.Common.Unity.Bones.HumanLThigh1,
+            RightThigh = eft_dma_shared.Common.Unity.Bones.HumanRThigh1,
             LeftFoot = eft_dma_shared.Common.Unity.Bones.HumanLFoot,
             RightFoot = eft_dma_shared.Common.Unity.Bones.HumanRFoot,
             LeftToe = Unity.Bones.HumanLToe,
@@ -364,7 +364,10 @@ namespace eft_dma_shared.Common.Players
             Neck = eft_dma_shared.Common.Unity.Bones.HumanNeck,
             UpperTorso = eft_dma_shared.Common.Unity.Bones.HumanSpine3,
             MidTorso = eft_dma_shared.Common.Unity.Bones.HumanSpine2,
-            LowerTorso = eft_dma_shared.Common.Unity.Bones.HumanSpine1
+            LowerTorso = eft_dma_shared.Common.Unity.Bones.HumanSpine1,
+            Stomach = eft_dma_shared.Common.Unity.Bones.HumanPelvis,
+            LeftCollar = eft_dma_shared.Common.Unity.Bones.HumanLCollarbone,
+            RightCollar = eft_dma_shared.Common.Unity.Bones.HumanRCollarbone,
         }
 
         /// <summary>
@@ -372,14 +375,12 @@ namespace eft_dma_shared.Common.Players
         /// </summary>
         public enum ArmsBones : uint
         {
-            LeftShoulder = eft_dma_shared.Common.Unity.Bones.HumanLCollarbone,
-            RightShoulder = eft_dma_shared.Common.Unity.Bones.HumanRCollarbone,
-            LeftElbow = eft_dma_shared.Common.Unity.Bones.HumanLForearm2,
-            RightElbow = eft_dma_shared.Common.Unity.Bones.HumanRForearm2,
-            LeftElbowTest = Unity.Bones.HumanLForearm1,
-            RIghtElbowTest = Unity.Bones.HumanRForearm1,
-            LeftElbowTest2 = eft_dma_shared.Common.Unity.Bones.HumanLForearm3,
-            RIghtElbowTest2 = eft_dma_shared.Common.Unity.Bones.HumanRForearm3,
+            LeftUpperArm = eft_dma_shared.Common.Unity.Bones.HumanLUpperarm,
+            RightUpperArm = eft_dma_shared.Common.Unity.Bones.HumanRUpperarm,
+            LeftElbow = Unity.Bones.HumanLForearm1,
+            RIghtElbow = Unity.Bones.HumanRForearm1,
+            LeftForearmMid = eft_dma_shared.Common.Unity.Bones.HumanLForearm2,
+            RightForearmMid = eft_dma_shared.Common.Unity.Bones.HumanRForearm2,
             LeftHand = eft_dma_shared.Common.Unity.Bones.HumanLPalm,
             RightHand = eft_dma_shared.Common.Unity.Bones.HumanRPalm
         }
@@ -389,8 +390,12 @@ namespace eft_dma_shared.Common.Players
         public enum LegsBones : uint
         {
             Pelvis = eft_dma_shared.Common.Unity.Bones.HumanPelvis,
-            LeftKnee = eft_dma_shared.Common.Unity.Bones.HumanLThigh2,
-            RightKnee = eft_dma_shared.Common.Unity.Bones.HumanRThigh2,
+            LeftThigh = eft_dma_shared.Common.Unity.Bones.HumanLThigh1,
+            RightThigh = eft_dma_shared.Common.Unity.Bones.HumanRThigh1,
+            LeftThighMid = eft_dma_shared.Common.Unity.Bones.HumanLThigh2,
+            RightThighMid = eft_dma_shared.Common.Unity.Bones.HumanRThigh2,
+            LeftKnee = eft_dma_shared.Common.Unity.Bones.HumanLCalf,
+            RightKnee = eft_dma_shared.Common.Unity.Bones.HumanRCalf,
             LeftFoot = eft_dma_shared.Common.Unity.Bones.HumanLFoot,
             RightFoot = eft_dma_shared.Common.Unity.Bones.HumanRFoot,
             LeftToe = Unity.Bones.HumanLToe,

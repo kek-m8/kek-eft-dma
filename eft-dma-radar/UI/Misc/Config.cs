@@ -13,6 +13,7 @@ using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Unity.LowLevel;
 using LonesEFTRadar.UI.ColorPicker.Container;
 using static eft_dma_radar.Tarkov.API.EFTProfileService;
+using OpenTK.Input;
 
 namespace eft_dma_radar.UI.Misc
 {
@@ -1032,21 +1033,25 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("enabled")]
         public bool Enabled { get; set; } = false;
+
         /// <summary>
         /// Head shot percentage.
         /// </summary>
         [JsonPropertyName("headPercent")]
         public int HeadPercent { get; set; } = 1;
+
         /// <summary>
         /// Torso shot percentage.
         /// </summary>
         [JsonPropertyName("torsoPercent")]
         public int TorsoPercent { get; set; } = 33;
+
         /// <summary>
         /// Arms shot percentage.
         /// </summary>
         [JsonPropertyName("armsPercent")]
         public int ArmsPercent { get; set; } = 33;
+
         /// <summary>
         /// Legs shot percentage.
         /// </summary>
