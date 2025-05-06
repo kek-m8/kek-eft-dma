@@ -74,8 +74,8 @@ namespace eft_dma_shared.Common.Misc.Data
         private static async Task<TarkovMarketData> GetDataAsync()
         {
             TarkovMarketData data;
-            string json = null;
-            if (!File.Exists(_dataFile) ||
+            string json = await GetUpdatedDataJsonAsync();
+            /*if (!File.Exists(_dataFile) ||
             File.GetLastWriteTime(_dataFile).AddHours(4) < DateTime.Now) // only update every 4h
             {
                 json = await GetUpdatedDataJsonAsync();
@@ -89,7 +89,12 @@ namespace eft_dma_shared.Common.Misc.Data
                 PropertyNameCaseInsensitive = true,
                 NumberHandling = JsonNumberHandling.AllowReadingFromString
             };
-            json ??= await File.ReadAllTextAsync(_dataFile);
+            json ??= await File.ReadAllTextAsync(_dataFile);*/
+            var jsonOptions = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            };
             data = JsonSerializer.Deserialize<TarkovMarketData>(json, jsonOptions);
             ArgumentNullException.ThrowIfNull(data, nameof(data));
             return data;
