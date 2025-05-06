@@ -1531,6 +1531,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         lines[0] = $"!!{lines[0]}"; // Notify important loot
                         important = true;
                     }
+                    DrawPlayerHeight(canvas, point, localPlayer.Position.Y, Position.Y);
                     DrawPlayerText(canvas, point, lines, important);
                 }
             }
@@ -1637,41 +1638,41 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// </summary>
         public void DrawPlayerHeight(SKCanvas canvas, SKPoint point, float localPlayerHeight, float playerHeight)
         {
-            //var paints = GetPaints();
-            //var localPlayerLayer = GetMapLayer(localPlayerHeight);
-            //var playerLayer = GetMapLayer(playerHeight);
+            var paints = GetPaints();
+            var localPlayerLayer = GetMapLayer(localPlayerHeight);
+            var playerLayer = GetMapLayer(playerHeight);
 
-            //var numArrows = Math.Abs(playerLayer - localPlayerLayer);
+            var numArrows = Math.Abs(playerLayer - localPlayerLayer);
 
-            //if (numArrows == 0)
-            //{
-            //    // Check for height difference if players are on the same layer
-            //    var heightDiff = playerHeight - localPlayerHeight;
-            //    if (Math.Abs(heightDiff) < 1.85f) // No significant height difference
-            //        return;
+            if (numArrows == 0)
+            {
+                // Check for height difference if players are on the same layer
+                var heightDiff = playerHeight - localPlayerHeight;
+                if (Math.Abs(heightDiff) < 1.85f) // No significant height difference
+                    return;
 
-            //    numArrows = 1; // Draw a single arrow for height difference
-            //}
+                numArrows = 1; // Draw a single arrow for height difference
+            }
 
-            //var up = playerLayer - localPlayerLayer > 0 || (numArrows == 1 && playerHeight > localPlayerHeight);
+            var up = playerLayer - localPlayerLayer > 0 || (numArrows == 1 && playerHeight > localPlayerHeight);
 
-            //int arrowX = -20;
-            //int arrowY = -3;
-            //int arrowYOffset = 5;
-            //float arrowSize = 6.5f;
+            int arrowX = -20;
+            int arrowY = -3;
+            int arrowYOffset = 5;
+            float arrowSize = 6.5f;
 
-            //SKPaints.ShapeOutline.StrokeWidth = 2f;
+            SKPaints.ShapeOutline.StrokeWidth = 2f;
 
-            //point.Offset(arrowX * MainForm.UIScale, arrowY * MainForm.UIScale);
+            point.Offset(arrowX * MainForm.UIScale, arrowY * MainForm.UIScale);
 
-            //for (int i = 0; i < numArrows; i++)
-            //{
-            //    using var path = up ? point.GetUpArrow(arrowSize) : point.GetDownArrow(arrowSize);
+            for (int i = 0; i < numArrows; i++)
+            {
+                using var path = up ? point.GetUpArrow(arrowSize) : point.GetDownArrow(arrowSize);
 
-            //    canvas.DrawPath(path, SKPaints.ShapeOutline);
-            //    canvas.DrawPath(path, SKPaints.PaintFood);
-            //    point.Offset(0, arrowYOffset * MainForm.UIScale);
-            //}
+                canvas.DrawPath(path, SKPaints.ShapeOutline);
+                canvas.DrawPath(path, SKPaints.PaintFood);
+                point.Offset(0, arrowYOffset * MainForm.UIScale);
+            }
         }
 
         private ValueTuple<SKPaint, SKPaint> GetPaints()

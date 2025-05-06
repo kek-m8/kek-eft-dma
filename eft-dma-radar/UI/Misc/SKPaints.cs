@@ -1133,12 +1133,25 @@ namespace eft_dma_radar.UI.Misc
             FilterQuality = SKFilterQuality.High
         };
 
+        public static SKPaint TextBasicESPTime { get; } = new()
+        {
+            SubpixelText = true,
+            Color = SKColors.LimeGreen,
+            IsStroke = false,
+            TextSize = 25f,
+            TextAlign = SKTextAlign.Left,
+            TextEncoding = SKTextEncoding.Utf8,
+            IsAntialias = true,
+            Typeface = CustomFonts.SKFontFamilyBold,
+            FilterQuality = SKFilterQuality.High
+        };
+
         public static SKPaint TextBasicESPRightAligned { get; } = new()
         {
             SubpixelText = true,
-            Color = SKColors.White,
+            Color = SKColors.Pink,
             IsStroke = false,
-            TextSize = 12f,
+            TextSize = 25f,
             TextAlign = SKTextAlign.Right,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
