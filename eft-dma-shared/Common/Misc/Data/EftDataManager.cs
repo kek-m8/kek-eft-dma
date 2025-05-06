@@ -17,6 +17,7 @@ namespace eft_dma_shared.Common.Misc.Data
         /// Master items dictionary - mapped via BSGID String.
         /// </summary>
         public static FrozenDictionary<string, TarkovMarketItem> AllItems { get; private set; }
+        public static FrozenDictionary<string, TarkovMarketItem> AllItemsArena { get; private set; }
 
         /// <summary>
         /// Master containers dictionary - mapped via BSGID String.
@@ -38,7 +39,12 @@ namespace eft_dma_shared.Common.Misc.Data
             try
             {
                 var data = await GetDataAsyncTest();
+                var dataA = await GetDataAsync();
                 AllItems = data.Items.Where(x => !x.Tags?.Contains("Static Container") ?? false)
+                    .DistinctBy(x => x.BsgId, StringComparer.OrdinalIgnoreCase)
+                    .ToDictionary(k => k.BsgId, v => v, StringComparer.OrdinalIgnoreCase)
+                    .ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
+                AllItemsArena = data.Items.Where(x => !x.Tags?.Contains("Static Container") ?? false)
                     .DistinctBy(x => x.BsgId, StringComparer.OrdinalIgnoreCase)
                     .ToDictionary(k => k.BsgId, v => v, StringComparer.OrdinalIgnoreCase)
                     .ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);

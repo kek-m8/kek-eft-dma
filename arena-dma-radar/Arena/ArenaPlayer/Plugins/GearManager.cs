@@ -42,7 +42,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
                     var inventorytemplate = Memory.ReadPtr(containedItem + Offsets.LootItem.Template);
                     var idPtr = Memory.ReadValue<Types.MongoID>(inventorytemplate + Offsets.ItemTemplate._id);
                     string id = Memory.ReadUnityString(idPtr.StringID);
-                    if (EftDataManager.AllItems.TryGetValue(id, out var entry))
+                    if (EftDataManager.AllItemsArena.TryGetValue(id, out var entry))
                         gearDict.TryAdd(name, entry.Name);
                 }
                 catch { } // Skip over empty slots
