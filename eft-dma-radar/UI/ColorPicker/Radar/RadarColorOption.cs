@@ -10,6 +10,7 @@ namespace eft_dma_radar.UI.ColorPicker.Radar
         FriendlyPlayer,
         PMCPlayer,
         WatchlistPlayer,
+        ImportantPlayer,
         StreamerPlayer,
         AimbotLockedPlayer,
         HumanScavPlayer,
@@ -56,6 +57,7 @@ namespace eft_dma_radar.UI.ColorPicker.Radar
                 [RadarColorOption.FriendlyPlayer] = SKColors.LimeGreen.ToString(),
                 [RadarColorOption.PMCPlayer] = SKColors.Red.ToString(),
                 [RadarColorOption.WatchlistPlayer] = SKColors.HotPink.ToString(),
+                [RadarColorOption.ImportantPlayer] = SKColors.Cyan.ToString(),
                 [RadarColorOption.StreamerPlayer] = SKColors.MediumPurple.ToString(),
                 [RadarColorOption.AimbotLockedPlayer] = SKColors.Blue.ToString(),
                 [RadarColorOption.HumanScavPlayer] = SKColors.White.ToString(),
@@ -109,6 +111,9 @@ namespace eft_dma_radar.UI.ColorPicker.Radar
                             SKPaints.PaintWatchlist.Color = skColor;
                             SKPaints.TextWatchlist.Color = skColor;
                             EspWidget.PaintESPWidgetWatchlist.Color = skColor;
+                            break;
+                        case RadarColorOption.ImportantPlayer:
+                            SKPaints.TextImportant.Color = skColor;
                             break;
                         case RadarColorOption.StreamerPlayer:
                             SKPaints.PaintStreamer.Color = skColor;

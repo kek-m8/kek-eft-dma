@@ -1061,7 +1061,7 @@ namespace eft_dma_radar.UI.Radar
             SKPaints.PaintExfilPending.StrokeWidth = 1 * newScale;
             SKPaints.PaintExfilClosed.StrokeWidth = 1 * newScale;
             SKPaints.PaintExfilInactive.StrokeWidth = 1 * newScale;
-
+            SKPaints.TextImportant.TextSize = 12 * newScale;
             #endregion
         }
 
