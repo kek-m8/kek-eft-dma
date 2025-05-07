@@ -494,7 +494,7 @@ namespace eft_dma_radar.UI.Misc
             SubpixelText = true,
             Color = SKColors.Cyan,
             IsStroke = false,
-            TextSize = 12,
+            TextSize = 12f,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
             Typeface = CustomFonts.SKFontFamilyRegular,

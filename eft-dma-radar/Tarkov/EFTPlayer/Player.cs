@@ -287,6 +287,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// </summary>
         public virtual bool IsAiming { get; set; } = false;
 
+        public virtual bool IsVisible { get; set; }
+
         /// <summary>
         /// MovementContext / StateContext
         /// </summary>
@@ -1401,7 +1403,12 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             try
             {
                 var point = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
-                var showClass = Config.ShowArmourClass;
+                var showClass = Config.ShowArmourClassPlayer && IsHumanActive || Config.ShowArmourClassAI && IsAIActive;
+                var showClassLvl = Config.ShowArmourClassPlayer && IsHumanActive ? 
+                    Config.PlayerArmourClassMin : 
+                    Config.ShowArmourClassAI && IsAIActive ? 
+                    Config.AIArmourClassMin : 3;
+                var showAiming = Config.ShowPlayerAiming && IsHumanActive || Config.ShowAIAiming && IsAIActive;
                 float dist = 0f; float height = 0f; bool important = false;
                 MouseoverPosition = new Vector2(point.X, point.Y);
                 if (!IsAlive) // Player Dead -- Draw 'X' death marker and move on
@@ -1448,53 +1455,106 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
 
                         }
                         lines.Add($"{level}{name}{health}");
-                        if(this is ObservedPlayer player && showClass)
+                        if(this is ObservedPlayer player)
                         {
-                            if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
-                                goto skip0;
-                            int index = 0, back = 0, front = 0, left = 0, right = 0;
-                            foreach(var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
+                            if (showClass)
                             {
-                                if(GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
+                                if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
+                                    goto skip0;
+                                int index = 0, back = 0, front = 0, left = 0, right = 0;
+                                foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                                 {
-                                    switch (index)
+                                    if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
                                     {
-                                        case 0: front = lvl; break;
-                                        case 1: back = lvl; break;
-                                        case 2: left = lvl; break;
-                                        case 3: right = lvl; break;
+                                        switch (index)
+                                        {
+                                            case 0: front = lvl; break;
+                                            case 1: back = lvl; break;
+                                            case 2: left = lvl; break;
+                                            case 3: right = lvl; break;
+                                        }
+                                        index++;
                                     }
-                                    index++;
+                                }
+                                string final = "";
+                                if(front >= showClassLvl)
+                                    final += $"F: {front} ";
+                                if (back >= showClassLvl)
+                                    final += $"B: {back}";
+                                if(final.Count() > 0)
+                                    lines.Add(final);
+                            }
+                            if (showAiming)
+                            {
+                                var handCtrlPtr = Memory.ReadPtr(player.HandsControllerAddr);
+                                bool isAiming = Memory.ReadValue<bool>(Memory.ReadPtrChain(handCtrlPtr, new uint[] { Offsets.ObservedHandsController.BundleAnimationBones, Offsets.BundleAnimationBonesController.ProceduralWeaponAnimation }) + Offsets.ProceduralWeaponAnimationController.IsAiming);
+                                if (isAiming)
+                                {
+                                    lines.Add("(AIMING)");
+                                }
+                                else
+                                {
+                                    if (lines.Exists(x => x.Contains("(AIMING)")))
+                                    {
+                                        lines.Remove("(AIMING)");
+                                    }
                                 }
                             }
-                            lines.Add($"F: {front}, B: {back}" + ((left > 0) ? $", L: {left}" : "") + ((right > 0) ? $", R: {right}" : ""));
+                            
                         }
                     skip0:
                         lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                     }
                     else // just height, distance
                     {
+
                         lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
-                        if (this is ObservedPlayer player && showClass)
+                        if (this is ObservedPlayer player)
                         {
-                            if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
-                                goto skip1;
-                            int index = 0, back = 0, front = 0, left = 0, right = 0;
-                            foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
+                            if (showClass)
                             {
-                                if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
+                                if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
+                                    goto skip1;
+                                int index = 0, back = 0, front = 0, left = 0, right = 0;
+                                foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                                 {
-                                    switch (index)
+                                    if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
                                     {
-                                        case 0: front = lvl; break;
-                                        case 1: back = lvl; break;
-                                        case 2: left = lvl; break;
-                                        case 3: right = lvl; break;
+                                        switch (index)
+                                        {
+                                            case 0: front = lvl; break;
+                                            case 1: back = lvl; break;
+                                            case 2: left = lvl; break;
+                                            case 3: right = lvl; break;
+                                        }
+                                        index++;
                                     }
-                                    index++;
+                                }
+                                string final = "";
+                                if (front >= showClassLvl)
+                                    final += $"F: {front} ";
+                                if (back >= showClassLvl)
+                                    final += $"B: {back}";
+                                if (final.Count() > 0)
+                                    lines.Add(final);
+                            }
+                            if (showAiming)
+                            {
+                                var handCtrlPtr = Memory.ReadPtr(player.HandsControllerAddr);
+                                bool isAiming = Memory.ReadValue<bool>(Memory.ReadPtrChain(handCtrlPtr, new uint[] { Offsets.ObservedHandsController.BundleAnimationBones, Offsets.BundleAnimationBonesController.ProceduralWeaponAnimation }) + Offsets.ProceduralWeaponAnimationController.IsAiming);
+                                if (isAiming)
+                                {
+                                    lines.Add("(AIMING)");
+                                }
+                                else
+                                {
+                                    if (lines.Exists(x => x.Contains("(AIMING)")))
+                                    {
+                                        lines.Remove("(AIMING)");
+                                    }
                                 }
                             }
-                            lines.Add($"F: {front}, B: {back}" + ((left > 0) ? $", L: {left}" : "") + ((right > 0) ? $", R: {right}" : ""));
+
                         }
                     skip1:
                         if (ErrorTimer.ElapsedMilliseconds > 100)
@@ -1877,10 +1937,23 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     rankLine.Add($"LVL: {Prestige} / {Level} | {Hours}h");
                     rankScreenPos.DrawESPText(canvas, this, localPlayer, false, espPaints.Item2, rankLine.ToArray());
                 }
-
+                /*if (this is ObservedPlayer guy)
+                {
+                    if (guy.IsVisible)
+                        lines.Add("(Visible)");     // when player is < 40m from local player, and are within our view (you are looking in their direction) IsVisible = true (does not care about obstacles, only that the player entity is in our view)
+                                                    // can maybe be used with physx raycasting to check if the player is actually visible, but distance would make it unreliable
+                                                    // basically like onScreenCheck paramater in WorldToScreen for the player
+                }
+                if(this is ObservedPlayer guy)
+                {
+                    bool test = Memory.ReadValue<bool>(guy + Offsets.ObservedPlayerView.IsVisibleToCamera);
+                    if (test)
+                        lines.Add("(Visible)");     // always true, no matter what (bugged?)
+                }*/
                 var textPt = new SKPoint(baseScrPos.X,
                     baseScrPos.Y + espPaints.Item2.TextSize * ESP.Config.FontScale);
                 textPt.DrawESPText(canvas, this, localPlayer, false, espPaints.Item2, lines.ToArray());
+                
             }
 
             if (ESP.Config.ShowAimLock && IsAimbotLocked) // Show aim lock

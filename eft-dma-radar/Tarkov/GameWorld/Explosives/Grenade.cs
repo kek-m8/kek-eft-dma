@@ -4,9 +4,12 @@ using eft_dma_radar.UI.Misc;
 using eft_dma_radar.UI.Radar;
 using eft_dma_shared.Common.ESP;
 using eft_dma_shared.Common.Maps;
+using eft_dma_shared.Common.Misc;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
+using Microsoft.AspNetCore.Http.HttpResults;
+using OpenTK.Graphics.OpenGL;
 
 namespace eft_dma_radar.Tarkov.GameWorld.Explosives
 {
@@ -59,7 +62,8 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
             var template = Memory.ReadPtr(weaponSource + Offsets.LootItem.Template, false);
             var idPtr = Memory.ReadValue<Types.MongoID>(template + Offsets.ItemTemplate._id, false);
             var id = Memory.ReadUnityString(idPtr.StringID, useCache: false);
-            if(EftDataManager.AllItems.TryGetValue(id, out var item))
+            ID = id;
+            if (EftDataManager.AllItems.TryGetValue(id, out var item))
             {
                 return item.ShortName;
             }
@@ -70,6 +74,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
         }
 
         public string Name;
+        private string ID;
         public Grenade(ulong baseAddr, ConcurrentDictionary<ulong, IExplosiveItem> parent)
         {
             Addr = baseAddr;
@@ -136,12 +141,29 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
                         DrawCustomImage(ref grenadeData, canvas, grenadePos);
                     }
                 }
-                if(_config.ESP.ShowGrenadeName)
-                    canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
+                else
+                {
+                    goto notFound;
+                }
+                if (_config.ESP.ShowGrenadeName)
+                {
+                    //canvas.DrawText(ID.Equals("67b49e7335dec48e3e05e057") ? "F-1 (delay)" : Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
+                    var grenadeName = 
+                        new List<string> { ID.Equals("67b49e7335dec48e3e05e057") ? Name + " ( DELAY )" : Name, Utils.GetDistPretty(Position, localPlayer.Position) };
+                    new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }
+                    .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
+                }
+
                 return;
             }
             if (_config.ESP.ShowGrenadeName)
-                canvas.DrawText(Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
+            {
+                var grenadeName =
+                        new List<string> { ID.Equals("67b49e7335dec48e3e05e057") ? Name + " ( DELAY )" : Name, Utils.GetDistPretty(Position, localPlayer.Position) };
+                new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }
+                .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
+            }
+         notFound:
             var circleRadius = 8f * ESP.Config.LineScale;
             canvas.DrawCircle(scrPos, circleRadius, SKPaints.PaintGrenadeESP);
         }

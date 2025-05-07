@@ -93,6 +93,24 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showArmourClass")]
         public bool ShowArmourClass { get; set; } = false;
+        [JsonPropertyName("showArmourClassPlayer")]
+        public bool ShowArmourClassPlayer { get; set; } = false;
+        [JsonPropertyName("playerArmourClassMin")]
+        public int PlayerArmourClassMin { get; set; } = 3;
+        [JsonPropertyName("showArmourClassAI")]
+        public bool ShowArmourClassAI { get; set; } = false;
+        [JsonPropertyName("aiArmourClassMin")]
+        public int AIArmourClassMin { get; set; } = 3;
+        /// <summary>
+        /// Draws (AIMING) under a player on the map
+        /// </summary>
+        [JsonPropertyName("showPlayerAiming")]
+        public bool ShowPlayerAiming { get; set; } = false;
+        /// <summary>
+        /// Draws (AIMING) under an AI on the map
+        /// </summary>
+        [JsonPropertyName("showAIAiming")]
+        public bool ShowAIAiming { get; set; } = false;
         /// <summary>
         /// Quest Helper Cfg
         /// </summary>
@@ -336,7 +354,7 @@ namespace eft_dma_radar.UI.Misc
                         catch (JsonException ex)
                         {
                             MessageBox.Show(
-                                $"Config File Corruption Detected! If you backed up your config, you may attempt to restore it to \\%AppData%\\Lones-Client (Close the Program *before* attempting restoration).\n\n" +
+                                $"Config File Corruption Detected! If you backed up your config, you may attempt to restore it (Close the Program *before* attempting restoration).\n\n" +
                                 $"Error: {ex.Message}",
                                 Program.Name,
                                 MessageBoxButtons.OK,

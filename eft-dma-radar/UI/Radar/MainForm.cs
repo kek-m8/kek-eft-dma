@@ -2829,6 +2829,8 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESPAIRender_Weapons.Checked = Config.ESP.AIRendering.ShowWeapons;
             checkBox_IsAimingPMC.Checked = Config.ESP.PlayerRendering.ShowAiming;
             checkBox_IsAimingAI.Checked = Config.ESP.AIRendering.ShowAiming;
+            checkBox_IsAiming_PMCRadar.Checked = Config.ShowPlayerAiming;
+            checkBox_IsAiming_AIRadar.Checked = Config.ShowAIAiming;
             checkBox_ShowRank.Checked = Config.ESP.PlayerRendering.ShowRank;
             checkBox_ESPAIRender_Dist.Checked = Config.ESP.AIRendering.ShowDist;
             textBox_EspFpsCap.Text = Config.ESP.FPSCap.ToString();
@@ -2857,7 +2859,10 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_FPS.Checked = Config.ESP.ShowFPS;
             checkBox_TrapSwitches.Checked = Config.ESP.ShowEventStuff;
             checkBox_ShowPlates.Checked = Config.ESP.ShowArmourClass;
-            checkBox3.Checked = Config.ShowArmourClass;
+            checkBox_ShowClass_AIRadar.Checked = Config.ShowArmourClassAI;
+            checkBox_ShowClass_PMCRadar.Checked = Config.ShowArmourClassPlayer;
+            numericUpDown_AI.Value = Config.AIArmourClassMin;
+            numericUpDown_PMC.Value = Config.PlayerArmourClassMin;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
             trackBar_EspImpLootDist.Value = (int)Config.ESP.ImpLootDrawDistance;
             trackBar_EspQuestHelperDist.Value = (int)Config.ESP.QuestHelperDrawDistance;
@@ -4008,11 +4013,6 @@ namespace eft_dma_radar.UI.Radar
             Config.ESP.ShowArmourClass = checkBox_ShowPlates.Checked;
         }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            Config.ShowArmourClass = checkBox3.Checked;
-        }
-
         private void checkBox_IsAimingAI_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.AIRendering.ShowAiming = checkBox_IsAimingAI.Checked;
@@ -4134,6 +4134,36 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_ESP_ArmorPlate_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ChildItemArmorValue = checkBox_ESP_GearSlots.Checked;
+        }
+
+        private void checkBox_IsAiming_PMCRadar_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowPlayerAiming = checkBox_IsAiming_PMCRadar.Checked;
+        }
+
+        private void checkBox_IsAiming_AIRadar_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowAIAiming = checkBox_IsAiming_AIRadar.Checked;
+        }
+
+        private void checkBox_ShowClass_PMCRadar_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowArmourClassPlayer = checkBox_ShowClass_PMCRadar.Checked;
+        }
+
+        private void checkBox_ShowClass_AIRadar_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ShowArmourClassAI = checkBox_ShowClass_AIRadar.Checked;
+        }
+
+        private void numericUpDown_PMC_ValueChanged(object sender, EventArgs e)
+        {
+            Config.PlayerArmourClassMin = (int)numericUpDown_PMC.Value;
+        }
+
+        private void numericUpDown_AI_ValueChanged(object sender, EventArgs e)
+        {
+            Config.AIArmourClassMin = (int)numericUpDown_AI.Value;
         }
     }
 }

@@ -291,9 +291,16 @@ namespace SDK
             public const uint PlayerBody = 0x68; // EFT.PlayerBody
             public const uint ObservedPlayerController = 0x88; // -.\uECBE
             public const uint Voice = 0x98; // String
+            public const uint FollowerCullingObject = 0xF0; // -.FollowerCullingObject
             public const uint Side = 0x100; // System.Int32
             public const uint IsAI = 0x111; // Boolean
             public const uint VisibleToCameraType = 0x114; // System.Int32
+            public const uint IsVisibleToCamera = 0x118; // Boolean
+        }
+
+        public readonly partial struct FollowerCullingObject
+        {
+            public const uint _isVisible = 0x78; // Boolean
         }
 
         public readonly partial struct ObservedPlayerController

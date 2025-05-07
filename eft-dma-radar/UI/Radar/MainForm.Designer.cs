@@ -71,6 +71,16 @@ namespace eft_dma_radar.UI.Radar
             button_HotkeyManager = new Button();
             button_Radar_ColorPicker = new Button();
             button_BackupConfig = new Button();
+            flowLayoutPanel10 = new FlowLayoutPanel();
+            label39 = new Label();
+            checkBox_IsAiming_PMCRadar = new CheckBox();
+            checkBox_IsAiming_AIRadar = new CheckBox();
+            flowLayoutPanel11 = new FlowLayoutPanel();
+            label40 = new Label();
+            checkBox_ShowClass_PMCRadar = new CheckBox();
+            numericUpDown_PMC = new NumericUpDown();
+            checkBox_ShowClass_AIRadar = new CheckBox();
+            numericUpDown_AI = new NumericUpDown();
             label_AimlineLength = new Label();
             trackBar_AimlineLength = new TrackBar();
             label_MaxDist = new Label();
@@ -87,7 +97,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowMines = new CheckBox();
             checkBox_TeammateAimlines = new CheckBox();
             checkBox_AIAimlines = new CheckBox();
-            checkBox3 = new CheckBox();
             flowLayoutPanel5 = new FlowLayoutPanel();
             flowLayoutPanel_Loot_Containers = new FlowLayoutPanel();
             label31 = new Label();
@@ -235,16 +244,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESPAIRender_Weapons = new CheckBox();
             checkBox_ESPAIRender_Dist = new CheckBox();
             checkBox_IsAimingAI = new CheckBox();
-            flowLayoutPanel9 = new FlowLayoutPanel();
-            label36 = new Label();
-            checkBox_ESP_RaidStatShow = new CheckBox();
-            label38 = new Label();
-            checkBox_ESP_RaidStatFIR = new CheckBox();
-            checkBox_ESP_RaidStatNFIR = new CheckBox();
-            label37 = new Label();
-            checkBox_ESP_WeapAttach = new CheckBox();
-            checkBox_ESP_GearSlots = new CheckBox();
-            flowLayoutPanel6 = new FlowLayoutPanel();
             flowLayoutPanel7 = new FlowLayoutPanel();
             label25 = new Label();
             label32 = new Label();
@@ -257,6 +256,16 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_TripwireText = new CheckBox();
             checkBox_ESP_TripwireLine = new CheckBox();
             checkBox_ESP_TripwireIcon = new CheckBox();
+            flowLayoutPanel9 = new FlowLayoutPanel();
+            label36 = new Label();
+            checkBox_ESP_RaidStatShow = new CheckBox();
+            label38 = new Label();
+            checkBox_ESP_RaidStatFIR = new CheckBox();
+            checkBox_ESP_RaidStatNFIR = new CheckBox();
+            label37 = new Label();
+            checkBox_ESP_WeapAttach = new CheckBox();
+            checkBox_ESP_GearSlots = new CheckBox();
+            flowLayoutPanel6 = new FlowLayoutPanel();
             flowLayoutPanel4 = new FlowLayoutPanel();
             label9 = new Label();
             checkBox4 = new CheckBox();
@@ -323,6 +332,10 @@ namespace eft_dma_radar.UI.Radar
             tabPage2.SuspendLayout();
             flowLayoutPanel_Settings.SuspendLayout();
             flowLayoutPanel_RadarSettings.SuspendLayout();
+            flowLayoutPanel10.SuspendLayout();
+            flowLayoutPanel11.SuspendLayout();
+            ((ISupportInitialize)numericUpDown_PMC).BeginInit();
+            ((ISupportInitialize)numericUpDown_AI).BeginInit();
             ((ISupportInitialize)trackBar_AimlineLength).BeginInit();
             ((ISupportInitialize)trackBar_MaxDist).BeginInit();
             ((ISupportInitialize)trackBar_UIScale).BeginInit();
@@ -346,9 +359,9 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.SuspendLayout();
             flowLayoutPanel_ESP_PlayerRender.SuspendLayout();
             flowLayoutPanel_ESP_AIRender.SuspendLayout();
-            flowLayoutPanel9.SuspendLayout();
             flowLayoutPanel7.SuspendLayout();
             flowLayoutPanel8.SuspendLayout();
+            flowLayoutPanel9.SuspendLayout();
             flowLayoutPanel4.SuspendLayout();
             ((ISupportInitialize)trackBar_EspLootDist).BeginInit();
             ((ISupportInitialize)trackBar_EspImpLootDist).BeginInit();
@@ -755,6 +768,8 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_RadarSettings.Controls.Add(button_HotkeyManager);
             flowLayoutPanel_RadarSettings.Controls.Add(button_Radar_ColorPicker);
             flowLayoutPanel_RadarSettings.Controls.Add(button_BackupConfig);
+            flowLayoutPanel_RadarSettings.Controls.Add(flowLayoutPanel10);
+            flowLayoutPanel_RadarSettings.Controls.Add(flowLayoutPanel11);
             flowLayoutPanel_RadarSettings.Controls.Add(label_AimlineLength);
             flowLayoutPanel_RadarSettings.Controls.Add(trackBar_AimlineLength);
             flowLayoutPanel_RadarSettings.Controls.Add(label_MaxDist);
@@ -771,11 +786,10 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_RadarSettings.Controls.Add(checkBox_ShowMines);
             flowLayoutPanel_RadarSettings.Controls.Add(checkBox_TeammateAimlines);
             flowLayoutPanel_RadarSettings.Controls.Add(checkBox_AIAimlines);
-            flowLayoutPanel_RadarSettings.Controls.Add(checkBox3);
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_RadarSettings, true);
             flowLayoutPanel_RadarSettings.Location = new Point(3, 3);
             flowLayoutPanel_RadarSettings.Name = "flowLayoutPanel_RadarSettings";
-            flowLayoutPanel_RadarSettings.Size = new Size(1082, 146);
+            flowLayoutPanel_RadarSettings.Size = new Size(1125, 161);
             flowLayoutPanel_RadarSettings.TabIndex = 0;
             // 
             // label2
@@ -841,7 +855,6 @@ namespace eft_dma_radar.UI.Radar
             // 
             // button_BackupConfig
             // 
-            flowLayoutPanel_RadarSettings.SetFlowBreak(button_BackupConfig, true);
             button_BackupConfig.Location = new Point(525, 24);
             button_BackupConfig.Name = "button_BackupConfig";
             button_BackupConfig.Size = new Size(107, 41);
@@ -850,11 +863,129 @@ namespace eft_dma_radar.UI.Radar
             button_BackupConfig.UseVisualStyleBackColor = true;
             button_BackupConfig.Click += button_BackupConfig_Click;
             // 
+            // flowLayoutPanel10
+            // 
+            flowLayoutPanel10.BorderStyle = BorderStyle.FixedSingle;
+            flowLayoutPanel10.Controls.Add(label39);
+            flowLayoutPanel10.Controls.Add(checkBox_IsAiming_PMCRadar);
+            flowLayoutPanel10.Controls.Add(checkBox_IsAiming_AIRadar);
+            flowLayoutPanel10.Location = new Point(638, 24);
+            flowLayoutPanel10.Name = "flowLayoutPanel10";
+            flowLayoutPanel10.Size = new Size(109, 41);
+            flowLayoutPanel10.TabIndex = 62;
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            flowLayoutPanel10.SetFlowBreak(label39, true);
+            label39.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label39.Location = new Point(3, 0);
+            label39.Name = "label39";
+            label39.Size = new Size(80, 15);
+            label39.TabIndex = 0;
+            label39.Text = "Show Aiming";
+            // 
+            // checkBox_IsAiming_PMCRadar
+            // 
+            checkBox_IsAiming_PMCRadar.AutoSize = true;
+            checkBox_IsAiming_PMCRadar.Location = new Point(3, 18);
+            checkBox_IsAiming_PMCRadar.Name = "checkBox_IsAiming_PMCRadar";
+            checkBox_IsAiming_PMCRadar.Size = new Size(58, 19);
+            checkBox_IsAiming_PMCRadar.TabIndex = 1;
+            checkBox_IsAiming_PMCRadar.Text = "Player";
+            checkBox_IsAiming_PMCRadar.UseVisualStyleBackColor = true;
+            checkBox_IsAiming_PMCRadar.CheckedChanged += checkBox_IsAiming_PMCRadar_CheckedChanged;
+            // 
+            // checkBox_IsAiming_AIRadar
+            // 
+            checkBox_IsAiming_AIRadar.AutoSize = true;
+            checkBox_IsAiming_AIRadar.Location = new Point(67, 18);
+            checkBox_IsAiming_AIRadar.Name = "checkBox_IsAiming_AIRadar";
+            checkBox_IsAiming_AIRadar.Size = new Size(37, 19);
+            checkBox_IsAiming_AIRadar.TabIndex = 2;
+            checkBox_IsAiming_AIRadar.Text = "AI";
+            checkBox_IsAiming_AIRadar.UseVisualStyleBackColor = true;
+            checkBox_IsAiming_AIRadar.CheckedChanged += checkBox_IsAiming_AIRadar_CheckedChanged;
+            // 
+            // flowLayoutPanel11
+            // 
+            flowLayoutPanel11.AutoSize = true;
+            flowLayoutPanel11.BorderStyle = BorderStyle.FixedSingle;
+            flowLayoutPanel11.Controls.Add(label40);
+            flowLayoutPanel11.Controls.Add(checkBox_ShowClass_PMCRadar);
+            flowLayoutPanel11.Controls.Add(numericUpDown_PMC);
+            flowLayoutPanel11.Controls.Add(checkBox_ShowClass_AIRadar);
+            flowLayoutPanel11.Controls.Add(numericUpDown_AI);
+            flowLayoutPanel_RadarSettings.SetFlowBreak(flowLayoutPanel11, true);
+            flowLayoutPanel11.Location = new Point(753, 24);
+            flowLayoutPanel11.Name = "flowLayoutPanel11";
+            flowLayoutPanel11.Size = new Size(179, 56);
+            flowLayoutPanel11.TabIndex = 63;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            flowLayoutPanel11.SetFlowBreak(label40, true);
+            label40.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label40.Location = new Point(3, 0);
+            label40.Name = "label40";
+            label40.Size = new Size(98, 15);
+            label40.TabIndex = 0;
+            label40.Text = "Show Plate Class";
+            // 
+            // checkBox_ShowClass_PMCRadar
+            // 
+            checkBox_ShowClass_PMCRadar.AutoSize = true;
+            checkBox_ShowClass_PMCRadar.Location = new Point(3, 28);
+            checkBox_ShowClass_PMCRadar.Name = "checkBox_ShowClass_PMCRadar";
+            checkBox_ShowClass_PMCRadar.Size = new Size(58, 19);
+            checkBox_ShowClass_PMCRadar.TabIndex = 1;
+            checkBox_ShowClass_PMCRadar.Text = "Player";
+            checkBox_ShowClass_PMCRadar.UseVisualStyleBackColor = true;
+            checkBox_ShowClass_PMCRadar.CheckedChanged += checkBox_ShowClass_PMCRadar_CheckedChanged;
+            // 
+            // numericUpDown_PMC
+            // 
+            numericUpDown_PMC.AutoSize = true;
+            numericUpDown_PMC.Location = new Point(67, 28);
+            numericUpDown_PMC.Maximum = new decimal(new int[] { 6, 0, 0, 0 });
+            numericUpDown_PMC.Minimum = new decimal(new int[] { 3, 0, 0, 0 });
+            numericUpDown_PMC.Name = "numericUpDown_PMC";
+            numericUpDown_PMC.Size = new Size(29, 23);
+            numericUpDown_PMC.TabIndex = 3;
+            toolTip1.SetToolTip(numericUpDown_PMC, "Minimum class level to draw for Players (level3, level4, level5, level6)");
+            numericUpDown_PMC.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            numericUpDown_PMC.ValueChanged += numericUpDown_PMC_ValueChanged;
+            // 
+            // checkBox_ShowClass_AIRadar
+            // 
+            checkBox_ShowClass_AIRadar.AutoSize = true;
+            checkBox_ShowClass_AIRadar.Location = new Point(102, 28);
+            checkBox_ShowClass_AIRadar.Name = "checkBox_ShowClass_AIRadar";
+            checkBox_ShowClass_AIRadar.Size = new Size(37, 19);
+            checkBox_ShowClass_AIRadar.TabIndex = 2;
+            checkBox_ShowClass_AIRadar.Text = "AI";
+            checkBox_ShowClass_AIRadar.UseVisualStyleBackColor = true;
+            checkBox_ShowClass_AIRadar.CheckedChanged += checkBox_ShowClass_AIRadar_CheckedChanged;
+            // 
+            // numericUpDown_AI
+            // 
+            numericUpDown_AI.AutoSize = true;
+            numericUpDown_AI.Location = new Point(145, 28);
+            numericUpDown_AI.Maximum = new decimal(new int[] { 6, 0, 0, 0 });
+            numericUpDown_AI.Minimum = new decimal(new int[] { 3, 0, 0, 0 });
+            numericUpDown_AI.Name = "numericUpDown_AI";
+            numericUpDown_AI.Size = new Size(29, 23);
+            numericUpDown_AI.TabIndex = 4;
+            toolTip1.SetToolTip(numericUpDown_AI, "Minimum class level to draw for AI (level3, level4, level5, level6)");
+            numericUpDown_AI.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            numericUpDown_AI.ValueChanged += numericUpDown_AI_ValueChanged;
+            // 
             // label_AimlineLength
             // 
             label_AimlineLength.Anchor = AnchorStyles.Right;
             label_AimlineLength.AutoSize = true;
-            label_AimlineLength.Location = new Point(4, 86);
+            label_AimlineLength.Location = new Point(4, 101);
             label_AimlineLength.Margin = new Padding(4, 0, 4, 0);
             label_AimlineLength.Name = "label_AimlineLength";
             label_AimlineLength.Size = new Size(88, 15);
@@ -867,7 +998,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_AimlineLength.Anchor = AnchorStyles.Right;
             trackBar_AimlineLength.BackColor = SystemColors.Window;
             trackBar_AimlineLength.LargeChange = 50;
-            trackBar_AimlineLength.Location = new Point(100, 71);
+            trackBar_AimlineLength.Location = new Point(100, 86);
             trackBar_AimlineLength.Margin = new Padding(4, 3, 4, 3);
             trackBar_AimlineLength.Maximum = 1500;
             trackBar_AimlineLength.Minimum = 10;
@@ -882,7 +1013,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label_MaxDist.Anchor = AnchorStyles.Right;
             label_MaxDist.AutoSize = true;
-            label_MaxDist.Location = new Point(199, 86);
+            label_MaxDist.Location = new Point(199, 101);
             label_MaxDist.Name = "label_MaxDist";
             label_MaxDist.Size = new Size(74, 15);
             label_MaxDist.TabIndex = 35;
@@ -893,7 +1024,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_MaxDist.Anchor = AnchorStyles.Right;
             trackBar_MaxDist.BackColor = SystemColors.Window;
             trackBar_MaxDist.LargeChange = 20;
-            trackBar_MaxDist.Location = new Point(279, 71);
+            trackBar_MaxDist.Location = new Point(279, 86);
             trackBar_MaxDist.Maximum = 1500;
             trackBar_MaxDist.Minimum = 100;
             trackBar_MaxDist.Name = "trackBar_MaxDist";
@@ -906,7 +1037,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label_UIScale.Anchor = AnchorStyles.Right;
             label_UIScale.AutoSize = true;
-            label_UIScale.Location = new Point(377, 86);
+            label_UIScale.Location = new Point(377, 101);
             label_UIScale.Name = "label_UIScale";
             label_UIScale.Size = new Size(72, 15);
             label_UIScale.TabIndex = 28;
@@ -918,7 +1049,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_UIScale.Anchor = AnchorStyles.Right;
             trackBar_UIScale.BackColor = SystemColors.Window;
             trackBar_UIScale.LargeChange = 10;
-            trackBar_UIScale.Location = new Point(455, 71);
+            trackBar_UIScale.Location = new Point(455, 86);
             trackBar_UIScale.Maximum = 200;
             trackBar_UIScale.Minimum = 50;
             trackBar_UIScale.Name = "trackBar_UIScale";
@@ -931,7 +1062,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label_ContainerDist.Anchor = AnchorStyles.Right;
             label_ContainerDist.AutoSize = true;
-            label_ContainerDist.Location = new Point(553, 86);
+            label_ContainerDist.Location = new Point(553, 101);
             label_ContainerDist.Name = "label_ContainerDist";
             label_ContainerDist.Size = new Size(103, 15);
             label_ContainerDist.TabIndex = 59;
@@ -941,8 +1072,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             trackBar_ContainerDist.Anchor = AnchorStyles.Right;
             trackBar_ContainerDist.BackColor = SystemColors.Window;
-            flowLayoutPanel_RadarSettings.SetFlowBreak(trackBar_ContainerDist, true);
-            trackBar_ContainerDist.Location = new Point(662, 71);
+            trackBar_ContainerDist.Location = new Point(662, 86);
             trackBar_ContainerDist.Maximum = 1000;
             trackBar_ContainerDist.Minimum = 5;
             trackBar_ContainerDist.Name = "trackBar_ContainerDist";
@@ -954,7 +1084,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_MapSetup
             // 
             checkBox_MapSetup.AutoSize = true;
-            checkBox_MapSetup.Location = new Point(3, 122);
+            checkBox_MapSetup.Location = new Point(746, 86);
             checkBox_MapSetup.Name = "checkBox_MapSetup";
             checkBox_MapSetup.Size = new Size(153, 19);
             checkBox_MapSetup.TabIndex = 9;
@@ -965,7 +1095,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_Aimview
             // 
             checkBox_Aimview.AutoSize = true;
-            checkBox_Aimview.Location = new Point(162, 122);
+            checkBox_Aimview.Location = new Point(905, 86);
             checkBox_Aimview.Name = "checkBox_Aimview";
             checkBox_Aimview.Size = new Size(86, 19);
             checkBox_Aimview.TabIndex = 19;
@@ -976,7 +1106,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowInfoTab
             // 
             checkBox_ShowInfoTab.AutoSize = true;
-            checkBox_ShowInfoTab.Location = new Point(254, 122);
+            checkBox_ShowInfoTab.Location = new Point(997, 86);
             checkBox_ShowInfoTab.Name = "checkBox_ShowInfoTab";
             checkBox_ShowInfoTab.Size = new Size(123, 19);
             checkBox_ShowInfoTab.TabIndex = 31;
@@ -986,7 +1116,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_GrpConnect
             // 
             checkBox_GrpConnect.AutoSize = true;
-            checkBox_GrpConnect.Location = new Point(383, 122);
+            checkBox_GrpConnect.Location = new Point(3, 137);
             checkBox_GrpConnect.Name = "checkBox_GrpConnect";
             checkBox_GrpConnect.Size = new Size(112, 19);
             checkBox_GrpConnect.TabIndex = 33;
@@ -996,7 +1126,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_HideNames
             // 
             checkBox_HideNames.AutoSize = true;
-            checkBox_HideNames.Location = new Point(501, 122);
+            checkBox_HideNames.Location = new Point(121, 137);
             checkBox_HideNames.Name = "checkBox_HideNames";
             checkBox_HideNames.Size = new Size(91, 19);
             checkBox_HideNames.TabIndex = 26;
@@ -1007,7 +1137,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowMines
             // 
             checkBox_ShowMines.AutoSize = true;
-            checkBox_ShowMines.Location = new Point(598, 122);
+            checkBox_ShowMines.Location = new Point(218, 137);
             checkBox_ShowMines.Name = "checkBox_ShowMines";
             checkBox_ShowMines.Size = new Size(90, 19);
             checkBox_ShowMines.TabIndex = 38;
@@ -1017,7 +1147,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_TeammateAimlines
             // 
             checkBox_TeammateAimlines.AutoSize = true;
-            checkBox_TeammateAimlines.Location = new Point(694, 122);
+            checkBox_TeammateAimlines.Location = new Point(314, 137);
             checkBox_TeammateAimlines.Name = "checkBox_TeammateAimlines";
             checkBox_TeammateAimlines.Size = new Size(130, 19);
             checkBox_TeammateAimlines.TabIndex = 39;
@@ -1030,24 +1160,13 @@ namespace eft_dma_radar.UI.Radar
             checkBox_AIAimlines.AutoSize = true;
             checkBox_AIAimlines.Checked = true;
             checkBox_AIAimlines.CheckState = CheckState.Checked;
-            checkBox_AIAimlines.Location = new Point(830, 122);
+            checkBox_AIAimlines.Location = new Point(450, 137);
             checkBox_AIAimlines.Name = "checkBox_AIAimlines";
             checkBox_AIAimlines.Size = new Size(86, 19);
             checkBox_AIAimlines.TabIndex = 60;
             checkBox_AIAimlines.Text = "AI Aimlines";
             checkBox_AIAimlines.UseVisualStyleBackColor = true;
             checkBox_AIAimlines.CheckedChanged += checkBox_AIAimlines_CheckedChanged;
-            // 
-            // checkBox3
-            // 
-            checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(922, 122);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(155, 19);
-            checkBox3.TabIndex = 61;
-            checkBox3.Text = "Show ArmourPlate Class";
-            checkBox3.UseVisualStyleBackColor = true;
-            checkBox3.CheckedChanged += checkBox3_CheckedChanged;
             // 
             // flowLayoutPanel5
             // 
@@ -1056,7 +1175,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel5.BorderStyle = BorderStyle.FixedSingle;
             flowLayoutPanel5.Controls.Add(flowLayoutPanel_Loot_Containers);
             flowLayoutPanel5.Controls.Add(flowLayoutPanel1);
-            flowLayoutPanel5.Location = new Point(3, 155);
+            flowLayoutPanel5.Location = new Point(3, 170);
             flowLayoutPanel5.Name = "flowLayoutPanel5";
             flowLayoutPanel5.Size = new Size(911, 202);
             flowLayoutPanel5.TabIndex = 61;
@@ -1308,7 +1427,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             // splitter1
             // 
-            splitter1.Location = new Point(3, 363);
+            splitter1.Location = new Point(3, 378);
             splitter1.Name = "splitter1";
             splitter1.Size = new Size(3, 3);
             splitter1.TabIndex = 63;
@@ -1316,7 +1435,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             // splitter2
             // 
-            splitter2.Location = new Point(3, 372);
+            splitter2.Location = new Point(3, 387);
             splitter2.Name = "splitter2";
             splitter2.Size = new Size(3, 3);
             splitter2.TabIndex = 64;
@@ -1326,7 +1445,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             checkBox_EnableMemWrite.AutoSize = true;
             checkBox_EnableMemWrite.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox_EnableMemWrite.Location = new Point(3, 381);
+            checkBox_EnableMemWrite.Location = new Point(3, 396);
             checkBox_EnableMemWrite.Name = "checkBox_EnableMemWrite";
             checkBox_EnableMemWrite.Size = new Size(184, 19);
             checkBox_EnableMemWrite.TabIndex = 44;
@@ -1338,7 +1457,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_MemWriteCheckbox.AutoSize = true;
             flowLayoutPanel_MemWriteCheckbox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWriteCheckbox, true);
-            flowLayoutPanel_MemWriteCheckbox.Location = new Point(3, 406);
+            flowLayoutPanel_MemWriteCheckbox.Location = new Point(3, 421);
             flowLayoutPanel_MemWriteCheckbox.Name = "flowLayoutPanel_MemWriteCheckbox";
             flowLayoutPanel_MemWriteCheckbox.Size = new Size(0, 0);
             flowLayoutPanel_MemWriteCheckbox.TabIndex = 62;
@@ -1377,9 +1496,9 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_MemWrites.Controls.Add(flowLayoutPanel_LTW);
             flowLayoutPanel_MemWrites.Dock = DockStyle.Fill;
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWrites, true);
-            flowLayoutPanel_MemWrites.Location = new Point(3, 412);
+            flowLayoutPanel_MemWrites.Location = new Point(3, 427);
             flowLayoutPanel_MemWrites.Name = "flowLayoutPanel_MemWrites";
-            flowLayoutPanel_MemWrites.Size = new Size(1120, 371);
+            flowLayoutPanel_MemWrites.Size = new Size(1125, 371);
             flowLayoutPanel_MemWrites.TabIndex = 1;
             // 
             // label3
@@ -2192,7 +2311,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_MonitorSettings.Controls.Add(textBox_ResHeight);
             flowLayoutPanel_MonitorSettings.Controls.Add(button_DetectRes);
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MonitorSettings, true);
-            flowLayoutPanel_MonitorSettings.Location = new Point(3, 789);
+            flowLayoutPanel_MonitorSettings.Location = new Point(3, 804);
             flowLayoutPanel_MonitorSettings.Name = "flowLayoutPanel_MonitorSettings";
             flowLayoutPanel_MonitorSettings.Size = new Size(323, 70);
             flowLayoutPanel_MonitorSettings.TabIndex = 2;
@@ -2298,7 +2417,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel6);
             flowLayoutPanel_ESPSettings.Controls.Add(flowLayoutPanel4);
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
-            flowLayoutPanel_ESPSettings.Location = new Point(3, 865);
+            flowLayoutPanel_ESPSettings.Location = new Point(3, 880);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
             flowLayoutPanel_ESPSettings.Size = new Size(831, 521);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
@@ -2852,131 +2971,6 @@ namespace eft_dma_radar.UI.Radar
             checkBox_IsAimingAI.UseVisualStyleBackColor = true;
             checkBox_IsAimingAI.CheckedChanged += checkBox_IsAimingAI_CheckedChanged;
             // 
-            // flowLayoutPanel9
-            // 
-            flowLayoutPanel9.AutoSize = true;
-            flowLayoutPanel9.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel9.BorderStyle = BorderStyle.FixedSingle;
-            flowLayoutPanel9.Controls.Add(label36);
-            flowLayoutPanel9.Controls.Add(checkBox_ESP_RaidStatShow);
-            flowLayoutPanel9.Controls.Add(label38);
-            flowLayoutPanel9.Controls.Add(checkBox_ESP_RaidStatFIR);
-            flowLayoutPanel9.Controls.Add(checkBox_ESP_RaidStatNFIR);
-            flowLayoutPanel9.Controls.Add(label37);
-            flowLayoutPanel9.Controls.Add(checkBox_ESP_WeapAttach);
-            flowLayoutPanel9.Controls.Add(checkBox_ESP_GearSlots);
-            flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel9, true);
-            flowLayoutPanel9.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel9.Location = new Point(240, 204);
-            flowLayoutPanel9.Name = "flowLayoutPanel9";
-            flowLayoutPanel9.Size = new Size(149, 172);
-            flowLayoutPanel9.TabIndex = 78;
-            flowLayoutPanel9.WrapContents = false;
-            // 
-            // label36
-            // 
-            label36.AutoSize = true;
-            flowLayoutPanel9.SetFlowBreak(label36, true);
-            label36.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label36.Location = new Point(3, 0);
-            label36.Name = "label36";
-            label36.Size = new Size(59, 15);
-            label36.TabIndex = 0;
-            label36.Text = "Raid Stats";
-            // 
-            // checkBox_ESP_RaidStatShow
-            // 
-            checkBox_ESP_RaidStatShow.AutoSize = true;
-            flowLayoutPanel9.SetFlowBreak(checkBox_ESP_RaidStatShow, true);
-            checkBox_ESP_RaidStatShow.Location = new Point(3, 18);
-            checkBox_ESP_RaidStatShow.Name = "checkBox_ESP_RaidStatShow";
-            checkBox_ESP_RaidStatShow.Size = new Size(55, 19);
-            checkBox_ESP_RaidStatShow.TabIndex = 1;
-            checkBox_ESP_RaidStatShow.Text = "Show";
-            toolTip1.SetToolTip(checkBox_ESP_RaidStatShow, "Draws stats from the raid, such is PMC count, Boss count & AI count.");
-            checkBox_ESP_RaidStatShow.UseVisualStyleBackColor = true;
-            checkBox_ESP_RaidStatShow.CheckedChanged += checkBox_ESP_RaidStatShow_CheckedChanged;
-            // 
-            // label38
-            // 
-            label38.AutoSize = true;
-            flowLayoutPanel9.SetFlowBreak(label38, true);
-            label38.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label38.Location = new Point(3, 40);
-            label38.Name = "label38";
-            label38.Size = new Size(79, 15);
-            label38.TabIndex = 7;
-            label38.Text = "Highest value";
-            // 
-            // checkBox_ESP_RaidStatFIR
-            // 
-            checkBox_ESP_RaidStatFIR.AutoSize = true;
-            checkBox_ESP_RaidStatFIR.Location = new Point(3, 58);
-            checkBox_ESP_RaidStatFIR.Name = "checkBox_ESP_RaidStatFIR";
-            checkBox_ESP_RaidStatFIR.Size = new Size(42, 19);
-            checkBox_ESP_RaidStatFIR.TabIndex = 2;
-            checkBox_ESP_RaidStatFIR.Text = "FIR";
-            toolTip1.SetToolTip(checkBox_ESP_RaidStatFIR, "Draws the current highest value FIR item in raid, with distance & height.");
-            checkBox_ESP_RaidStatFIR.UseVisualStyleBackColor = true;
-            checkBox_ESP_RaidStatFIR.CheckedChanged += checkBox_ESP_RaidStatFIR_CheckedChanged;
-            // 
-            // checkBox_ESP_RaidStatNFIR
-            // 
-            checkBox_ESP_RaidStatNFIR.AutoSize = true;
-            flowLayoutPanel9.SetFlowBreak(checkBox_ESP_RaidStatNFIR, true);
-            checkBox_ESP_RaidStatNFIR.Location = new Point(3, 83);
-            checkBox_ESP_RaidStatNFIR.Name = "checkBox_ESP_RaidStatNFIR";
-            checkBox_ESP_RaidStatNFIR.Size = new Size(70, 19);
-            checkBox_ESP_RaidStatNFIR.TabIndex = 3;
-            checkBox_ESP_RaidStatNFIR.Text = "Non-FIR";
-            toolTip1.SetToolTip(checkBox_ESP_RaidStatNFIR, "Draws the current highest value Non-FIR item in raid, with distance & height.");
-            checkBox_ESP_RaidStatNFIR.UseVisualStyleBackColor = true;
-            checkBox_ESP_RaidStatNFIR.CheckedChanged += checkBox_ESP_RaidStatNFIR_CheckedChanged;
-            // 
-            // label37
-            // 
-            label37.AutoSize = true;
-            flowLayoutPanel9.SetFlowBreak(label37, true);
-            label37.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label37.Location = new Point(3, 105);
-            label37.Name = "label37";
-            label37.Size = new Size(63, 15);
-            label37.TabIndex = 4;
-            label37.Text = "Child Slots";
-            // 
-            // checkBox_ESP_WeapAttach
-            // 
-            checkBox_ESP_WeapAttach.AutoSize = true;
-            checkBox_ESP_WeapAttach.Location = new Point(3, 123);
-            checkBox_ESP_WeapAttach.Name = "checkBox_ESP_WeapAttach";
-            checkBox_ESP_WeapAttach.Size = new Size(141, 19);
-            checkBox_ESP_WeapAttach.TabIndex = 5;
-            checkBox_ESP_WeapAttach.Text = "Weapon Attachments";
-            toolTip1.SetToolTip(checkBox_ESP_WeapAttach, "Enabled, will take into account weapon attachments when calculating price for Highest value.");
-            checkBox_ESP_WeapAttach.UseVisualStyleBackColor = true;
-            checkBox_ESP_WeapAttach.CheckedChanged += checkBox2_CheckedChanged_1;
-            // 
-            // checkBox_ESP_GearSlots
-            // 
-            checkBox_ESP_GearSlots.AutoSize = true;
-            checkBox_ESP_GearSlots.Location = new Point(3, 148);
-            checkBox_ESP_GearSlots.Name = "checkBox_ESP_GearSlots";
-            checkBox_ESP_GearSlots.Size = new Size(78, 19);
-            checkBox_ESP_GearSlots.TabIndex = 6;
-            checkBox_ESP_GearSlots.Text = "Gear Slots";
-            toolTip1.SetToolTip(checkBox_ESP_GearSlots, "Enabled, will take into account gear slots (night vision on helmet, plate on armor etc) when calculating the final price.");
-            checkBox_ESP_GearSlots.UseVisualStyleBackColor = true;
-            checkBox_ESP_GearSlots.CheckedChanged += checkBox_ESP_ArmorPlate_CheckedChanged;
-            // 
-            // flowLayoutPanel6
-            // 
-            flowLayoutPanel6.AutoSize = true;
-            flowLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel6.Location = new Point(3, 382);
-            flowLayoutPanel6.Name = "flowLayoutPanel6";
-            flowLayoutPanel6.Size = new Size(0, 0);
-            flowLayoutPanel6.TabIndex = 77;
-            // 
             // flowLayoutPanel7
             // 
             flowLayoutPanel7.AutoSize = true;
@@ -3121,6 +3115,131 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.SetToolTip(checkBox_ESP_TripwireIcon, "Enabled, draws grenade icon at its position in ESP.");
             checkBox_ESP_TripwireIcon.UseVisualStyleBackColor = true;
             checkBox_ESP_TripwireIcon.CheckedChanged += checkBox_ESP_TripwireIcon_CheckedChanged;
+            // 
+            // flowLayoutPanel9
+            // 
+            flowLayoutPanel9.AutoSize = true;
+            flowLayoutPanel9.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel9.BorderStyle = BorderStyle.FixedSingle;
+            flowLayoutPanel9.Controls.Add(label36);
+            flowLayoutPanel9.Controls.Add(checkBox_ESP_RaidStatShow);
+            flowLayoutPanel9.Controls.Add(label38);
+            flowLayoutPanel9.Controls.Add(checkBox_ESP_RaidStatFIR);
+            flowLayoutPanel9.Controls.Add(checkBox_ESP_RaidStatNFIR);
+            flowLayoutPanel9.Controls.Add(label37);
+            flowLayoutPanel9.Controls.Add(checkBox_ESP_WeapAttach);
+            flowLayoutPanel9.Controls.Add(checkBox_ESP_GearSlots);
+            flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel9, true);
+            flowLayoutPanel9.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel9.Location = new Point(240, 204);
+            flowLayoutPanel9.Name = "flowLayoutPanel9";
+            flowLayoutPanel9.Size = new Size(149, 172);
+            flowLayoutPanel9.TabIndex = 78;
+            flowLayoutPanel9.WrapContents = false;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            flowLayoutPanel9.SetFlowBreak(label36, true);
+            label36.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label36.Location = new Point(3, 0);
+            label36.Name = "label36";
+            label36.Size = new Size(59, 15);
+            label36.TabIndex = 0;
+            label36.Text = "Raid Stats";
+            // 
+            // checkBox_ESP_RaidStatShow
+            // 
+            checkBox_ESP_RaidStatShow.AutoSize = true;
+            flowLayoutPanel9.SetFlowBreak(checkBox_ESP_RaidStatShow, true);
+            checkBox_ESP_RaidStatShow.Location = new Point(3, 18);
+            checkBox_ESP_RaidStatShow.Name = "checkBox_ESP_RaidStatShow";
+            checkBox_ESP_RaidStatShow.Size = new Size(55, 19);
+            checkBox_ESP_RaidStatShow.TabIndex = 1;
+            checkBox_ESP_RaidStatShow.Text = "Show";
+            toolTip1.SetToolTip(checkBox_ESP_RaidStatShow, "Draws stats from the raid, such is PMC count, Boss count & AI count.");
+            checkBox_ESP_RaidStatShow.UseVisualStyleBackColor = true;
+            checkBox_ESP_RaidStatShow.CheckedChanged += checkBox_ESP_RaidStatShow_CheckedChanged;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            flowLayoutPanel9.SetFlowBreak(label38, true);
+            label38.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label38.Location = new Point(3, 40);
+            label38.Name = "label38";
+            label38.Size = new Size(79, 15);
+            label38.TabIndex = 7;
+            label38.Text = "Highest value";
+            // 
+            // checkBox_ESP_RaidStatFIR
+            // 
+            checkBox_ESP_RaidStatFIR.AutoSize = true;
+            checkBox_ESP_RaidStatFIR.Location = new Point(3, 58);
+            checkBox_ESP_RaidStatFIR.Name = "checkBox_ESP_RaidStatFIR";
+            checkBox_ESP_RaidStatFIR.Size = new Size(42, 19);
+            checkBox_ESP_RaidStatFIR.TabIndex = 2;
+            checkBox_ESP_RaidStatFIR.Text = "FIR";
+            toolTip1.SetToolTip(checkBox_ESP_RaidStatFIR, "Draws the current highest value FIR item in raid, with distance & height.");
+            checkBox_ESP_RaidStatFIR.UseVisualStyleBackColor = true;
+            checkBox_ESP_RaidStatFIR.CheckedChanged += checkBox_ESP_RaidStatFIR_CheckedChanged;
+            // 
+            // checkBox_ESP_RaidStatNFIR
+            // 
+            checkBox_ESP_RaidStatNFIR.AutoSize = true;
+            flowLayoutPanel9.SetFlowBreak(checkBox_ESP_RaidStatNFIR, true);
+            checkBox_ESP_RaidStatNFIR.Location = new Point(3, 83);
+            checkBox_ESP_RaidStatNFIR.Name = "checkBox_ESP_RaidStatNFIR";
+            checkBox_ESP_RaidStatNFIR.Size = new Size(70, 19);
+            checkBox_ESP_RaidStatNFIR.TabIndex = 3;
+            checkBox_ESP_RaidStatNFIR.Text = "Non-FIR";
+            toolTip1.SetToolTip(checkBox_ESP_RaidStatNFIR, "Draws the current highest value Non-FIR item in raid, with distance & height.");
+            checkBox_ESP_RaidStatNFIR.UseVisualStyleBackColor = true;
+            checkBox_ESP_RaidStatNFIR.CheckedChanged += checkBox_ESP_RaidStatNFIR_CheckedChanged;
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            flowLayoutPanel9.SetFlowBreak(label37, true);
+            label37.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label37.Location = new Point(3, 105);
+            label37.Name = "label37";
+            label37.Size = new Size(63, 15);
+            label37.TabIndex = 4;
+            label37.Text = "Child Slots";
+            // 
+            // checkBox_ESP_WeapAttach
+            // 
+            checkBox_ESP_WeapAttach.AutoSize = true;
+            checkBox_ESP_WeapAttach.Location = new Point(3, 123);
+            checkBox_ESP_WeapAttach.Name = "checkBox_ESP_WeapAttach";
+            checkBox_ESP_WeapAttach.Size = new Size(141, 19);
+            checkBox_ESP_WeapAttach.TabIndex = 5;
+            checkBox_ESP_WeapAttach.Text = "Weapon Attachments";
+            toolTip1.SetToolTip(checkBox_ESP_WeapAttach, "Enabled, will take into account weapon attachments when calculating price for Highest value.");
+            checkBox_ESP_WeapAttach.UseVisualStyleBackColor = true;
+            checkBox_ESP_WeapAttach.CheckedChanged += checkBox2_CheckedChanged_1;
+            // 
+            // checkBox_ESP_GearSlots
+            // 
+            checkBox_ESP_GearSlots.AutoSize = true;
+            checkBox_ESP_GearSlots.Location = new Point(3, 148);
+            checkBox_ESP_GearSlots.Name = "checkBox_ESP_GearSlots";
+            checkBox_ESP_GearSlots.Size = new Size(78, 19);
+            checkBox_ESP_GearSlots.TabIndex = 6;
+            checkBox_ESP_GearSlots.Text = "Gear Slots";
+            toolTip1.SetToolTip(checkBox_ESP_GearSlots, "Enabled, will take into account gear slots (night vision on helmet, plate on armor etc) when calculating the final price.");
+            checkBox_ESP_GearSlots.UseVisualStyleBackColor = true;
+            checkBox_ESP_GearSlots.CheckedChanged += checkBox_ESP_ArmorPlate_CheckedChanged;
+            // 
+            // flowLayoutPanel6
+            // 
+            flowLayoutPanel6.AutoSize = true;
+            flowLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel6.Location = new Point(3, 382);
+            flowLayoutPanel6.Name = "flowLayoutPanel6";
+            flowLayoutPanel6.Size = new Size(0, 0);
+            flowLayoutPanel6.TabIndex = 77;
             // 
             // flowLayoutPanel4
             // 
@@ -3802,6 +3921,12 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.PerformLayout();
             flowLayoutPanel_RadarSettings.ResumeLayout(false);
             flowLayoutPanel_RadarSettings.PerformLayout();
+            flowLayoutPanel10.ResumeLayout(false);
+            flowLayoutPanel10.PerformLayout();
+            flowLayoutPanel11.ResumeLayout(false);
+            flowLayoutPanel11.PerformLayout();
+            ((ISupportInitialize)numericUpDown_PMC).EndInit();
+            ((ISupportInitialize)numericUpDown_AI).EndInit();
             ((ISupportInitialize)trackBar_AimlineLength).EndInit();
             ((ISupportInitialize)trackBar_MaxDist).EndInit();
             ((ISupportInitialize)trackBar_UIScale).EndInit();
@@ -3839,12 +3964,12 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESP_PlayerRender.PerformLayout();
             flowLayoutPanel_ESP_AIRender.ResumeLayout(false);
             flowLayoutPanel_ESP_AIRender.PerformLayout();
-            flowLayoutPanel9.ResumeLayout(false);
-            flowLayoutPanel9.PerformLayout();
             flowLayoutPanel7.ResumeLayout(false);
             flowLayoutPanel7.PerformLayout();
             flowLayoutPanel8.ResumeLayout(false);
             flowLayoutPanel8.PerformLayout();
+            flowLayoutPanel9.ResumeLayout(false);
+            flowLayoutPanel9.PerformLayout();
             flowLayoutPanel4.ResumeLayout(false);
             flowLayoutPanel4.PerformLayout();
             ((ISupportInitialize)trackBar_EspLootDist).EndInit();
@@ -4114,7 +4239,6 @@ namespace eft_dma_radar.UI.Radar
         private CheckBox checkBox_IsAimingPMC;
         private CheckBox checkBox_ShowPlates;
         private Label label9;
-        private CheckBox checkBox3;
         private CheckBox checkBox4;
         private CheckBox checkBox_IsAimingAI;
         private RadioButton radioButton_ESPRender_BoneBox;
@@ -4156,6 +4280,16 @@ namespace eft_dma_radar.UI.Radar
         private Label label38;
         private CheckBox checkBox_ESP_WeapAttach;
         private CheckBox checkBox_ESP_GearSlots;
+        private FlowLayoutPanel flowLayoutPanel10;
+        private Label label39;
+        private CheckBox checkBox_IsAiming_PMCRadar;
+        private CheckBox checkBox_IsAiming_AIRadar;
+        private FlowLayoutPanel flowLayoutPanel11;
+        private Label label40;
+        private CheckBox checkBox_ShowClass_PMCRadar;
+        private CheckBox checkBox_ShowClass_AIRadar;
+        private NumericUpDown numericUpDown_PMC;
+        private NumericUpDown numericUpDown_AI;
     }
 }
 

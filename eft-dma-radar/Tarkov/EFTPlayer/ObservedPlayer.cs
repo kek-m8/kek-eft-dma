@@ -104,6 +104,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// </summary>
         public Enums.ETagStatus HealthStatus { get; private set; } = Enums.ETagStatus.Healthy;
 
+        public override bool IsVisible { get; set; } = false;
+
         /// <summary>
         /// System to Identify Guards.
         /// </summary>
@@ -610,6 +612,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     UpdatePlayerHours();
                 }
                 UpdateHealthStatus();
+                UpdateVisability();
             }
             base.OnRegRefresh(index, registered, isActive);
         }
@@ -738,6 +741,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             {
                 LoneLogging.WriteLine($"ERROR updating Health Status for '{Name}': {ex}");
             }
+        }
+        private void UpdateVisability()
+        {
+            try
+            {
+                var FollowerCullingObject = Memory.ReadPtr(this + Offsets.ObservedPlayerView.FollowerCullingObject);
+                if (FollowerCullingObject != 0)
+                {
+                    IsVisible = Memory.ReadValue<bool>(FollowerCullingObject + Offsets.FollowerCullingObject._isVisible);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoneLogging.WriteLine($"ERROR updating Visibility for '{Name}': {ex}");
+            }
+
         }
 
         /// <summary>

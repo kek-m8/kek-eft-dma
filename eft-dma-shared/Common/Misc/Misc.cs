@@ -87,10 +87,13 @@ namespace eft_dma_shared.Common.Misc
             return pw;
         }
 
-        public static string GetDistPretty(Vector3 a, Vector3 b)
+        public static string GetDistPretty(Vector3 a, Vector3 b, bool format = true)
         {
             var dist = Vector3.Distance(a, b);
-            return $"{(dist < 10f ? dist.ToString("n1") : (int)dist)}";
+            return format ?
+                $"{(dist < 10f ? dist.ToString("n1") : (uint)dist)}m" :
+                $"{(dist < 10f ? dist.ToString("n1") : (uint)dist)}";
+
         }
     }
     #region Debugging/Profiling

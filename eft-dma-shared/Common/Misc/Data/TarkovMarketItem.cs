@@ -79,6 +79,7 @@ namespace eft_dma_shared.Common.Misc.Data
         /// <summary>
         /// Is gear equipment
         /// </summary>
+        [JsonIgnore]
         public bool IsGear => Tags.Contains("Equipment") || IsPlateCarrier;
         /// <summary>
         /// Is a Weapon Mod.
