@@ -240,10 +240,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
             {
                 string ammoInChamber = null;
                 string fireType = null;
-                string ammoFromMag = null;
                 int maxCount = 0;
                 int currentCount = 0;
                 var fireModePtr = Memory.ReadValue<ulong>(hands.ItemAddr + Offsets.LootItemWeapon.FireMode);
+                var chambersPtr = Memory.ReadValue<ulong>(hands.ItemAddr + Offsets.LootItemWeapon.Chambers);
                 var magSlotPtr = Memory.ReadValue<ulong>(hands.ItemAddr + Offsets.LootItemWeapon._magSlotCache);
                 if (fireModePtr != 0x0)
                 {
@@ -297,7 +297,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     {
                         var magChambersPtr = Memory.ReadPtr(magItem + Offsets.LootItemMod.Slots);
                         using var magChambers = MemArray<Chamber>.Get(magChambersPtr);
-                        if (magChambers.Count > 0 || ammoInChamber is null) // Revolvers, etc.
+                        if (magChambers.Count > 0) // Revolvers, etc.
                         {
                             maxCount += magChambers.Count;
                             currentCount += magChambers.Count(x => x.HasBullet());
@@ -317,8 +317,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                         }
                     }
                 }
-            end:
-                _ammo = ammoInChamber ?? ammoFromMag;
+                _ammo = ammoInChamber;
                 _fireType = fireType;
                 Count = currentCount;
                 MaxCount = maxCount;
