@@ -200,6 +200,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// Corpse field address..
         /// </summary>
         public virtual ulong CorpseAddr { get; }
+
+        public virtual ulong BodyStateAddr { get; }
         /// <summary>
         /// Player Rotation Field Address (view angles).
         /// </summary>
@@ -696,8 +698,11 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                             name = this.Name;
                         string health = null;
                         if (this is ArenaObservedPlayer observed)
+                        {
                             health = observed.HealthStatus is Enums.ETagStatus.Healthy ?
                             null : $" ({observed.HealthStatus.GetDescription()})"; // Only display abnormal health status
+                        }
+                            
                         lines.Add($"{name}{health}");
                         lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                     }
@@ -709,7 +714,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     }
                     if (showBomb && this is ArenaObservedPlayer observed_)
                     {
-                        if (Memory.Game.matchMode is Enums.ERaidMode.BlastGang)
+                        if (Memory.Game.matchMode == Enums.ERaidMode.BlastGang)
                         {
                             try
                             {
@@ -723,7 +728,6 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                                 }
                             }
                             catch { }
-                            
                         }
                     }
                     DrawPlayerText(canvas, point, lines);

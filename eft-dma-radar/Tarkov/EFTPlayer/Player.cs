@@ -1459,9 +1459,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         {
                             if (showClass)
                             {
-                                if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
+                                if (!player.Gear.Loot.Any(x => x.CouldHavePlates))
                                     goto skip0;
-                                int index = 0, back = 0, front = 0, left = 0, right = 0;
+                                int index = 0, back = 0, front = 0;//, left = 0, right = 0;
                                 foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                                 {
                                     if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
@@ -1470,8 +1470,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                         {
                                             case 0: front = lvl; break;
                                             case 1: back = lvl; break;
-                                            case 2: left = lvl; break;
-                                            case 3: right = lvl; break;
+                                            //case 2: left = lvl; break;
+                                            //case 3: right = lvl; break;
                                         }
                                         index++;
                                     }
@@ -1484,6 +1484,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                 if(final.Count() > 0)
                                     lines.Add(final);
                             }
+                        skip0:
                             if (showAiming)
                             {
                                 var handCtrlPtr = Memory.ReadPtr(player.HandsControllerAddr);
@@ -1502,7 +1503,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             }
                             
                         }
-                    skip0:
+                    
                         lines.Add($"H: {(int)Math.Round(height)} D: {(int)Math.Round(dist)}");
                     }
                     else // just height, distance
@@ -1513,9 +1514,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         {
                             if (showClass)
                             {
-                                if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
+                                if (!player.Gear.Loot.Any(x => x.CouldHavePlates))
                                     goto skip1;
-                                int index = 0, back = 0, front = 0, left = 0, right = 0;
+                                int index = 0, back = 0, front = 0;//, left = 0, right = 0;
                                 foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                                 {
                                     if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
@@ -1524,8 +1525,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                         {
                                             case 0: front = lvl; break;
                                             case 1: back = lvl; break;
-                                            case 2: left = lvl; break;
-                                            case 3: right = lvl; break;
+                                                //case 2: left = lvl; break;
+                                                //case 3: right = lvl; break;
+
                                         }
                                         index++;
                                     }
@@ -1538,6 +1540,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                 if (final.Count() > 0)
                                     lines.Add(final);
                             }
+                        skip1:
                             if (showAiming)
                             {
                                 var handCtrlPtr = Memory.ReadPtr(player.HandsControllerAddr);
@@ -1556,7 +1559,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             }
 
                         }
-                    skip1:
+                    
                         if (ErrorTimer.ElapsedMilliseconds > 100)
                             lines[0] = "ERROR"; // In case POS stops updating, let us know!
                     }
@@ -1567,7 +1570,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         ))
                     {
                         lines[0] = $"!!{lines[0]}"; // Notify important loot
-                        important = true;
+                        important = Config.ShowImportantPlayer;
                     }
                     DrawPlayerText(canvas, point, lines, important);
                 }
@@ -1793,6 +1796,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             var showWep = IsAI ? ESP.Config.AIRendering.ShowWeapons : ESP.Config.PlayerRendering.ShowWeapons;
             var showRank = ESP.Config.PlayerRendering.ShowRank;
             var showClass = ESP.Config.ShowArmourClass;
+            var showClassLvl = Config.ShowArmourClassPlayer && IsHumanActive ?
+                    Config.PlayerArmourClassMin :
+                    Config.ShowArmourClassAI && IsAIActive ?
+                    Config.AIArmourClassMin : 3;
             var drawLabel = showInfo || showDist || showWep || showRank || showClass;
 
             if (IsHostile && (ESP.Config.HighAlertMode is HighAlertMode.AllPlayers ||
@@ -1876,9 +1883,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 }
                 if (this is ObservedPlayer player && showClass)
                 {
-                    if (!player.Gear.Loot.Any(x => x.IsPlateCarrier))
+                    if (!player.Gear.Loot.Any(x => x.CouldHavePlates))
                         goto skip0;
-                    int index = 0, back = 0, front = 0, left = 0, right = 0;
+                    int index = 0, back = 0, front = 0;//, left = 0, right = 0;
                     foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
                     {
                         if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
@@ -1887,13 +1894,19 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             {
                                 case 0: front = lvl; break;
                                 case 1: back = lvl; break;
-                                case 2: left = lvl; break;
-                                case 3: right = lvl; break;
+                                //case 2: left = lvl; break;
+                                //case 3: right = lvl; break;
                             }
                             index++;
                         }
                     }
-                    lines.Add($"F: {front}, B: {back}" + ((left > 0) ? $", L: {left}" : "") + ((right > 0) ? $", R: {right}" : ""));
+                    string final = "";
+                    if (front >= showClassLvl)
+                        final += $"F: {front} ";
+                    if (back >= showClassLvl)
+                        final += $"B: {back}";
+                    if (final.Count() > 0)
+                        lines.Add(final);
                 }
             skip0:
                 if (showWep)

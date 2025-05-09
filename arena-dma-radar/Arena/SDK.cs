@@ -105,6 +105,7 @@ namespace SDK
         {
             public const uint PlayerCorpse = 0x18; // EFT.Interactive.ObservedCorpse
             public const uint HealthStatus = 0xE0; // System.Int32
+            public const uint BodyState = 0xD8; // System.Collections.Generic.Dictionary<Int32, BodyPartState>
         }
 
         public readonly partial struct ProceduralWeaponAnimation
@@ -397,6 +398,26 @@ namespace SDK
 
     public readonly partial struct Enums
     {
+
+        public enum EBodyPart : ulong
+        {
+            // Token: 0x040031C0 RID: 12736
+            Head,
+            // Token: 0x040031C1 RID: 12737
+            Chest,
+            // Token: 0x040031C2 RID: 12738
+            Stomach,
+            // Token: 0x040031C3 RID: 12739
+            LeftArm,
+            // Token: 0x040031C4 RID: 12740
+            RightArm,
+            // Token: 0x040031C5 RID: 12741
+            LeftLeg,
+            // Token: 0x040031C6 RID: 12742
+            RightLeg,
+            // Token: 0x040031C7 RID: 12743
+            Common
+        }
         public enum EPlayerState : byte
         {
             None,

@@ -104,9 +104,13 @@ namespace eft_dma_shared.Common.Misc.Data
         [JsonIgnore]
         public bool IsHeadset => Tags.Contains("Headphones");
         [JsonIgnore]
+        public bool IsHelmet => Tags.Contains("Helmet");
+        [JsonIgnore]
         public bool IsRig => Tags.Contains("Chest rig");
         [JsonIgnore]
         public bool IsArmband => Tags.Contains("Arm Band");
+        [JsonIgnore]
+        public bool IsFaceCover => Tags.Contains("Face Cover");
         [JsonIgnore]
         public bool IsGlasses => Tags.Contains("Vis. observ. device");
         [JsonIgnore]
@@ -114,7 +118,16 @@ namespace eft_dma_shared.Common.Misc.Data
         [JsonIgnore]
         public bool IsArmorPlate => Tags.Contains("Armor Plate");
         [JsonIgnore]
-        public bool IsBodyArmor => Tags.Contains("Armor");
+        public bool CouldHavePlates => (IsArmoredEquipment &&
+            !Name.ToLower().Contains("soft") && !Name.ToLower().Contains("module-3M") && !Name.ToLower().Contains("visor") && !Name.ToLower().Contains("shield") &&
+            !Name.ToLower().Contains("ops-core") || !Name.ToLower().Contains("mf-untar") && !ShortName.ToLower().Contains("af ") && !Name.ToLower().Contains("lshz-2dtm") &&
+            !Name.ToLower().Contains("covers") && !Name.ToLower().Contains("") && !Name.ToLower().Contains("helmet") &&
+            !IsHelmet &&
+            !IsFaceCover &&
+            !IsGlasses) || IsPlateCarrier;
+        [JsonIgnore]
+
+        public bool IsBodyArmor => Name.ToLower().Contains("body armor");
         [JsonIgnore]
         public bool IsArmoredEquipment => Tags.Contains("Armored equipment");
         [JsonIgnore]

@@ -29,6 +29,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
             foreach (var slotPtr in slotsArray)
             {
                 var namePtr = Memory.ReadPtr(slotPtr + Offsets.Slot.ID);
+                if(namePtr == 0x0) continue;
                 var name = Memory.ReadUnityString(namePtr);
                 if (_skipSlots.Contains(name))
                     continue;
@@ -71,7 +72,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     if (_isPMC && slot.Key == "Scabbard") // melee slot
                         continue; // skip pmc scabbard
                     var containedItem = Memory.ReadPtr(slot.Value + Offsets.Slot.ContainedItem);
+                    if (containedItem == 0x0) continue;
                     var inventorytemplate = Memory.ReadPtr(containedItem + Offsets.LootItem.Template);
+                    if (inventorytemplate == 0x0) continue;
                     var idPtr = Memory.ReadValue<Types.MongoID>(inventorytemplate + Offsets.ItemTemplate._id);
                     var id = Memory.ReadUnityString(idPtr.StringID);
                     if (EftDataManager.AllItems.TryGetValue(id, out var entry1))
@@ -129,6 +132,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                 foreach (var slotPtr in slotsArray)
                 {
                     var namePtr = Memory.ReadPtr(slotPtr + Offsets.Slot.ID);
+                    if (namePtr == 0x0) continue;
                     var name = Memory.ReadUnityString(namePtr);
                     slotDict.TryAdd(name, slotPtr);
                 }
@@ -139,7 +143,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                         if (slotDict.TryGetValue(slotName, out var slot))
                         {
                             var containedItem = Memory.ReadPtr(slot + Offsets.Slot.ContainedItem);
+                            if (containedItem == 0x0) continue;
                             var inventorytemplate = Memory.ReadPtr(containedItem + Offsets.LootItem.Template);
+                            if (inventorytemplate == 0x0) continue;
                             var idPtr = Memory.ReadValue<Types.MongoID>(inventorytemplate + Offsets.ItemTemplate._id);
                             var id = Memory.ReadUnityString(idPtr.StringID);
                             if (EftDataManager.AllItems.TryGetValue(id, out var entry))

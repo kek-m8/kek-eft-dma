@@ -2863,6 +2863,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowClass_PMCRadar.Checked = Config.ShowArmourClassPlayer;
             numericUpDown_AI.Value = Config.AIArmourClassMin;
             numericUpDown_PMC.Value = Config.PlayerArmourClassMin;
+            checkBox_ImportantPlayer.Checked = Config.ShowImportantPlayer;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
             trackBar_EspImpLootDist.Value = (int)Config.ESP.ImpLootDrawDistance;
             trackBar_EspQuestHelperDist.Value = (int)Config.ESP.QuestHelperDrawDistance;
@@ -4164,6 +4165,11 @@ namespace eft_dma_radar.UI.Radar
         private void numericUpDown_AI_ValueChanged(object sender, EventArgs e)
         {
             Config.AIArmourClassMin = (int)numericUpDown_AI.Value;
+        }
+
+        private void checkBox2_CheckedChanged_2(object sender, EventArgs e)
+        {
+            Config.ShowImportantPlayer = checkBox_ImportantPlayer.Checked;
         }
     }
 }

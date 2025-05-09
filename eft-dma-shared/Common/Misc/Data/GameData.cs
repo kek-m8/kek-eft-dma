@@ -598,9 +598,10 @@ namespace eft_dma_shared.Common.Misc.Data
             ["ESAPI level IV ballistic plate"] = 6,
             ["NESCO 4400-SA-MC ballistic plate"] = 6,
             ["Granit Br5 ballistic plate"] = 6,
+            ["Granit ballistic plate (Side)"] = 6,
             ["Cult Termite ballistic plate"] = 6,
             ["ESBI level IV ballistic plate (Side)"] = 6,
-            ["Granit ballistic plate (Side)"] = 6,
+            ["Granit ballistic plate (Side)"] = 6, // 14
             //Class 5
             ["Korund-VM ballistic plate (Back)"] = 5,
             ["Granit 4 ballistic plates (Back)"] = 5,
@@ -612,7 +613,7 @@ namespace eft_dma_shared.Common.Misc.Data
             ["Granit Br4 ballistic plate"] = 5,
             ["Cult Locust ballistic plate"] = 5,
             ["SSAPI level III+ ballistic plate (Side)"] = 5,
-            ["Korund-VM ballistic plate (Side)"] = 5,
+            ["Korund-VM ballistic plate (Side)"] = 5, // 25
             //Class 4
             ["6B23-2 ballistic plate (Back)"] = 4,
             ["6B13 custom ballistic plates (Back)"] = 4,
@@ -622,11 +623,11 @@ namespace eft_dma_shared.Common.Misc.Data
             ["NewSphereTech level III ballistic plate"] = 4,
             ["SPRTN Elaphros ballistic plate"] = 4,
             ["SPRTN Omega ballistic plate"] = 4,
-            ["Kiba Arms Titan ballistic plate"] = 4,
+            ["Kiba Arms Titan ballistic plate"] = 4, // 34
             // Class 3
             ["Zhuk-3 ballistic plate (Front)"] = 3,
             ["6B12 ballistic plates (Front)"] = 3,
-            ["PRTCTR Lightweight ballistic plate"] = 3,
+            ["PRTCTR Lightweight ballistic plate"] = 3, // 37
 
         }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
         public static FrozenDictionary<string, string> GrenadeData { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)

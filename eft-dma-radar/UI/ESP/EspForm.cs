@@ -638,6 +638,43 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     loc.DrawESP(canvas, localPlayer);
         }
 
+        LootItem GetBestLootItem(IReadOnlyList<LootItem> lootList, Vector3 playerPosition, out int count)
+        {
+            var sorted = lootList
+                .OrderByDescending(x => x.IsFIR)
+                .ThenByDescending(x => x.FlatPrice)
+                .ToList();
+            if(MapID.Equals("tarkovstreets", StringComparison.OrdinalIgnoreCase))
+                sorted = sorted
+                    .Where(x => !x.IsKey)
+                    .OrderByDescending(x => x.IsFIR)
+                    .ThenByDescending(x => x.FlatPrice)
+                    .ToList();
+            if (sorted.Count == 0)
+            {
+                count = -1;
+                return null;
+            }
+                
+            var top = sorted[0];
+            var duplicates = sorted
+                .Where(x =>
+                    x.ID == top.ID &&
+                    x.FlatPrice == top.FlatPrice &&
+                    x.IsFIR == top.IsFIR)
+                .ToList();
+
+            if (duplicates.Count > 1)
+            {
+                count = duplicates.Count;
+                return duplicates
+                        .OrderBy(x => Vector3.Distance(playerPosition, x.Position))
+                        .First();
+            }
+            count = 0;
+            return top;
+        }
+
         /// <summary>
         /// Draw Raid Stats in top right corner.
         /// </summary>
@@ -651,8 +688,14 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             var pscavCount = hostiles.Count(x => x.Type is Player.PlayerType.PScav);
             var aiCount = hostiles.Count(x => x.IsAI);
             var bossCount = hostiles.Count(x => x.Type is Player.PlayerType.AIBoss);
-            LootItem looseLoot = Memory.Loot.UnfilteredLoot.Where(x => x.IsFIR).OrderByDescending(item => item.FlatPrice).FirstOrDefault();
-            LootItem looseLoot2 = Memory.Loot.UnfilteredLoot.Where(x => !x.IsFIR && x is not QuestItem && !x.IsCurrency && !x.IsBullet).OrderByDescending(item => item.FlatPrice).FirstOrDefault();
+            int bestLootCount = 0;
+            /*LootItem looseLoot = Memory.Loot.UnfilteredLoot.Where(x => x.IsFIR)
+                .OrderByDescending(item => item.FlatPrice)
+                .FirstOrDefault();*/
+            LootItem looseLoot = GetBestLootItem(Memory.Loot.UnfilteredLoot, LocalPlayer.Position, out bestLootCount);
+            LootItem looseLoot2 = Memory.Loot.UnfilteredLoot.Where(x => !x.IsFIR && x is not QuestItem && !x.IsCurrency && !x.IsBullet)
+                .OrderByDescending(item => item.FlatPrice)
+                .FirstOrDefault();
             var lines = new string[]
             {
                 $"PMC: {pmcCount}",
@@ -665,9 +708,9 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                 "",
                 "",
                 "",
-                (looseLoot is not null && looseLoot.FlatPrice > 0) && Config.ESP.ShowFIRItem ? $"Highest value FIR loot: {looseLoot.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot.Position)}m)" : "",
+                (looseLoot is not null && looseLoot.FlatPrice > 0) && Config.ESP.ShowFIRItem ? $"Highest value FIR loot: {looseLoot.ShortName} {(bestLootCount > 1 ? $"[{bestLootCount}]" : "")}  [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot.Position)})" : "",
                 "",
-                (looseLoot2 is not null && looseLoot2.FlatPrice > 0) && Config.ESP.ShowNFIRItem ? $"Highest value non-FIR loot {looseLoot2.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot2.FlatPrice)}] (H: {(int)Math.Round(looseLoot2.Position.Y - LocalPlayer.Position.Y) } D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot2.Position)}m)" : ""
+                (looseLoot2 is not null && looseLoot2.FlatPrice > 0) && Config.ESP.ShowNFIRItem ? $"Highest value non-FIR loot {looseLoot2.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot2.FlatPrice)}] (H: {(int)Math.Round(looseLoot2.Position.Y - LocalPlayer.Position.Y) } D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot2.Position)})" : ""
             };
             var x = CameraManagerBase.Viewport.Right - 8f * Config.ESP.FontScale;
             var y = CameraManagerBase.Viewport.Top + SKPaints.TextBasicESPRightAligned.TextSize +

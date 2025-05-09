@@ -5,6 +5,7 @@ using eft_dma_shared.Common.Misc;
 using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
+using eft_dma_shared.Common.Unity.Collections;
 using static SDK.ClassNames;
 
 namespace arena_dma_radar.Arena.ArenaPlayer
@@ -60,6 +61,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// Corpse field address..
         /// </summary>
         public override ulong CorpseAddr { get; }
+
+        public override ulong BodyStateAddr { get; }
         /// <summary>
         /// Player Rotation Field Address (view angles).
         /// </summary>
@@ -72,6 +75,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// Player's Current Health Status
         /// </summary>
         public Enums.ETagStatus HealthStatus { get; private set; } = Enums.ETagStatus.Healthy;
+
+        public float[] Health = new float[Enum.GetValues(typeof(Enums.EBodyPart)).Length];
         /// <summary>
         /// Current state of the player
         /// </summary>
@@ -102,8 +107,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             InventoryControllerAddr = ObservedPlayerController + Offsets.ObservedPlayerController.InventoryController;
             HandsControllerAddr = ObservedPlayerController + Offsets.ObservedPlayerController.HandsController;
             CorpseAddr = ObservedHealthController + Offsets.ObservedHealthController.PlayerCorpse;
+            BodyStateAddr = ObservedHealthController + Offsets.ObservedHealthController.BodyState;
 
-            
 
             AccountID = GetAccountID();
             IsFocused = CheckIfFocused();
@@ -138,6 +143,28 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         {
             var idPTR = Memory.ReadPtr(this + Offsets.ObservedPlayerView.AccountId);
             return Memory.ReadUnityString(idPTR);
+        }
+
+        private float GetHealthForBone(Enums.EBodyPart bone)
+        {
+            var dictPtr = Memory.ReadValue<ulong>(BodyStateAddr, false);
+            var dict = MemDictionary<ulong, ulong>.Get(dictPtr, false);
+            foreach (var entry in dict)
+            {
+                //entry.Key = EBodyPart
+                //entry.Value = BodyPartState
+                if(entry.Key == (ulong)bone)
+                {
+                    var bodyPartStatePtr = Memory.ReadPtr(entry.Value, false);
+                    var healthPtr = Memory.ReadPtr(bodyPartStatePtr + 0x10, false);
+                    var isDestroyed = Memory.ReadValue<bool>(healthPtr + 0x18, false);
+                    if (isDestroyed)
+                        return 0f;
+                    var valuePtr = Memory.ReadPtr(healthPtr + 0x10, false);
+                    return Memory.ReadValue<float>(valuePtr);
+                }
+            }
+            return -1f; // not found
         }
 
         /// <summary>
@@ -211,6 +238,11 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     HealthStatus = Enums.ETagStatus.Injured;
                 else
                     HealthStatus = Enums.ETagStatus.Healthy;
+                for(int i = 0; i < Health.Length; i++)
+                {
+                    var bone = (Enums.EBodyPart)i;
+                    Health[i] = GetHealthForBone(bone);
+                }
             }
             catch (Exception ex)
             {

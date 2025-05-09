@@ -1,5 +1,6 @@
 ﻿using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity.Collections;
+using arena_dma_radar.Arena.Loot;
 
 namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
 {

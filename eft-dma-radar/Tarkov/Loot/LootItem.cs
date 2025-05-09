@@ -184,6 +184,9 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public bool IsArmoredEquipment => _item.IsArmoredEquipment;
 
+        public bool IsKey => _item.IsKey;
+        public bool CouldHavePlates => _item.CouldHavePlates;
+
         public bool IsSpecialItem => _item.IsSpecialItem;
 
         public bool IsRocket => _item.IsRocket;

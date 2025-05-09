@@ -35,15 +35,25 @@ namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
                 try
                 {
                     var namePtr = Memory.ReadPtr(slot + Offsets.Slot.ID);
+                    if (namePtr == 0x0) continue;
                     var name = Memory.ReadUnityString(namePtr);
                     if (_skipSlots.Contains(name))
                         continue;
                     var containedItem = Memory.ReadPtr(slot + Offsets.Slot.ContainedItem);
+                    if(containedItem == 0x0) continue;
                     var inventorytemplate = Memory.ReadPtr(containedItem + Offsets.LootItem.Template);
+                    if (inventorytemplate == 0x0) continue;
                     var idPtr = Memory.ReadValue<Types.MongoID>(inventorytemplate + Offsets.ItemTemplate._id);
                     string id = Memory.ReadUnityString(idPtr.StringID);
+                    if (id.Equals("6669a73bef0f6220df0ed178"))
+                    {
+                        gearDict.TryAdd(name, "BlastGang attacker's backpack");
+                        continue;
+                    }
+                        
                     if (EftDataManager.AllItemsArena.TryGetValue(id, out var entry))
                         gearDict.TryAdd(name, entry.Name);
+                    
                 }
                 catch { } // Skip over empty slots
             }
