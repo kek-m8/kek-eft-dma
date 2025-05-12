@@ -17,6 +17,7 @@ using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Misc;
 using OpenTK.Graphics.OpenGL;
+using SkiaSharp.HarfBuzz;
 
 namespace eft_dma_radar.UI.ESP
 {
@@ -227,7 +228,8 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     }
                     else
                     {
-                        
+                        if (Config.ESP.DrawLootBackground)
+                            DrawLootInfo(canvas, localPlayer);
                         if (Config.ESP.ShowLoot && Config.ShowLoot)
                             DrawLoot(canvas, localPlayer);
                         if (MainForm.Config.QuestHelper.Enabled)
@@ -267,7 +269,132 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             }
             canvas.Flush();
         }
+        public void DrawLootInfo(SKCanvas canvas, LocalPlayer localPlayer)
+        {
+            float scale = Config.ESP.FontScale;
 
+            float rectWidth = 200f * scale;
+            float rectHeight = 400f * scale;
+            float margin = 15f * scale;
+
+            float x = CameraManagerBase.Viewport.Width - margin - rectWidth;
+            float y = CameraManagerBase.Viewport.Height * 0.90f - rectHeight;
+
+            float cornerRadius = 20f * scale;
+
+            var rect = new SKRoundRect(
+                new SKRect(x - 160f * scale, y + 75f * scale, (x + rectWidth) - 110f * scale, (y + rectHeight) - 6),
+                cornerRadius, cornerRadius);
+
+            var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                Shader = SKShader.CreateLinearGradient(
+                    new SKPoint(x, y),
+                    new SKPoint(x + rectWidth, y + rectHeight),
+                    new[] { SKColors.DimGray.WithAlpha(60), SKColors.DimGray },
+                    null,
+                    SKShaderTileMode.Clamp),
+                IsAntialias = true
+            };
+
+            canvas.DrawRoundRect(rect, paint);
+
+            //header
+            float headerOffsetY = 115f * scale;
+            canvas.DrawText(Config.ESP.LootHeaderState ? "HIGHEST VALUE" : " QUEST ITEMS ",
+                new SKPoint(x - 30f * scale, y + headerOffsetY), SKPaints.LootMenuHeaderESP);
+
+            var linePaint = SKPaints.PaintHighAlertAimlineESP;
+            linePaint.StrokeWidth = 2f * scale;
+
+            float lineSpacing = 22.5f * scale;
+            float textStartX = x - 28f * scale;
+
+            switch (Config.ESP.LootHeaderState)
+            {
+                case true:
+                    int lootCount = 1;
+                    var items = GetTopGroupedLootItems(Memory.Loot.UnfilteredLoot, localPlayer.Position);
+                        Config.ESP.MaxLootItemsNum = items.Count;
+                    foreach (var item in items)
+                    {
+                        bool isSelected = lootCount == Config.ESP.LootScrollIndex;
+                        var paintToUse = isSelected && Config.ESP.DrawLootSnapline ? SKPaints.TextPMCESP : SKPaints.TextImpLootESP;
+
+                        canvas.DrawText($"{(isSelected ? ">  " : "")}{item.ShortName} {(item.Count > 1 ? $"[{item.Count}]" : "")}" + " {" + TarkovMarketItem.FormatPrice(item.FlatPrice) + "} " + $"(H: {(int)Math.Round(item.Position.Y - localPlayer.Position.Y)} D: {Utils.GetDistPretty(localPlayer.Position, item.Position)})",
+                   new SKPoint(textStartX, (y + 125f * scale)  + (lootCount * lineSpacing)), paintToUse);
+
+                        if (isSelected && Config.ESP.DrawLootSnapline)
+                        {
+                            if (CameraManagerBase.WorldToScreen(ref item.Position, out var targetScrPos, true))
+                            {
+                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), linePaint);
+                            }
+                        }
+
+                        lootCount++;
+                    }
+                    break;
+
+                case false:
+                    int questCount = 1;
+                    var loot = Memory.Loot.UnfilteredLoot
+                        .Where(x => x.IsQuestCondition && x is not QuestItem)
+                        .OrderBy(x => Vector3.Distance(localPlayer.Position, x.Position))
+                        .ToList();
+                    Config.ESP.MaxQuestItemsNum = loot.Count;
+                    foreach (var item in loot)
+                    {
+                        bool isSelected = questCount == Config.ESP.LootScrollIndex;
+                        string questName = "";
+                        int questCounter = 0;
+
+                        foreach (var questId in Memory.QuestManager.CurrentQuests)
+                        {
+                            if (EftDataManager.TaskData.TryGetValue(questId, out var quest))
+                            {
+                                try
+                                {
+                                    foreach (var obj in quest.Objectives)
+                                    {
+                                        if (obj.Item.Id.Equals(item.ID))
+                                        {
+                                            if (questCounter == 0)
+                                                questName = quest.Name;
+                                            else if (!questName.Contains(quest.Name))
+                                                questName += ", " + quest.Name;
+
+                                            questCounter++;
+                                        }
+                                    }
+                                }
+                                catch { }
+                            }
+                        }
+
+                        var paintToUse = isSelected && Config.ESP.DrawLootSnapline ? SKPaints.TextPMCESP : SKPaints.TextImpLootESP;
+
+                        canvas.DrawText(
+                            $"{(isSelected ? ">  " : "")}{item.ShortName} {(item.Count > 1 ? $"[{item.Count}]" : "")}" +
+                            (questName != "" ? ("{" + questName + "} ") : "") +
+                            $"(H: {(int)Math.Round(item.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, item.Position)})",
+                            new SKPoint(textStartX, (y + 125f * scale) + (questCount * lineSpacing)),
+                            paintToUse);
+
+                        if (isSelected && Config.ESP.DrawLootSnapline)
+                        {
+                            if (CameraManagerBase.WorldToScreen(ref item.Position, out var targetScrPos, true))
+                            {
+                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), linePaint);
+                            }
+                        }
+
+                        questCount++;
+                    }
+                    break;
+            }
+        }
         public void DrawHealthStatus(SKCanvas canvas, LocalPlayer localPlayer, Player player)
         {
             // draw skeleton
@@ -451,10 +578,10 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             var x = CameraManagerBase.Viewport.Width - textWidth - 15f * Config.ESP.FontScale;
             var y = CameraManagerBase.Viewport.Height - CameraManagerBase.Viewport.Height * 0.10f - textHeight + 4f * Config.ESP.FontScale;
             if (wepInfo is not null)
-                canvas.DrawText(wepInfo, x, y, SKPaints.TextMagazineInfoESP); // Draw Weapon Info
+                canvas.DrawText(wepInfo, x, y + 40 * Config.ESP.FontScale, SKPaints.TextMagazineInfoESP); // Draw Weapon Info
             canvas.DrawText(counter, x,
                 y + (SKPaints.TextMagazineESP.FontSpacing - SKPaints.TextMagazineInfoESP.FontSpacing +
-                     6f * Config.ESP.FontScale), SKPaints.TextMagazineESP); // Draw Counter
+                     46f * Config.ESP.FontScale), SKPaints.TextMagazineESP); // Draw Counter
         }
 
         /// <summary>
@@ -544,8 +671,8 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             DateTime tarkovTimeDay = epoch.AddSeconds(((offsetDay + (time * 7)) % oneDay) / 1000);
             DateTime tarkovTimeNight = epoch.AddSeconds(((offsetNight + (time * 7)) % oneDay) / 1000);
             string raidTime = tarkovTimeDay.ToString("HH:mm:ss") + " - " + tarkovTimeNight.ToString("HH:mm:ss");
-            var textPt = new SKPoint(CameraManagerBase.Viewport.Left + 80f * Config.ESP.FontScale,
-                CameraManagerBase.Viewport.Top + 533f * Config.ESP.FontScale);
+            var textPt = new SKPoint(CameraManagerBase.Viewport.Left + 75.5f * Config.ESP.FontScale,
+                CameraManagerBase.Viewport.Top + 14f * Config.ESP.FontScale);
             canvas.DrawText(raidTime, textPt, SKPaints.TextBasicESPLeftAligned);
         }
 
@@ -675,6 +802,38 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             return top;
         }
 
+        List<LootItem> GetTopGroupedLootItems(IReadOnlyList<LootItem> lootList, Vector3 playerPosition)
+        {
+            var sorted = lootList
+                .OrderByDescending(x => x.IsFIR)
+                .ThenByDescending(x => x.FlatPrice)
+                .ToList();
+
+            if (MapID.Equals("tarkovstreets", StringComparison.OrdinalIgnoreCase))
+            {
+                sorted = sorted
+                    .Where(x => !x.IsKey)
+                    .OrderByDescending(x => x.IsFIR)
+                    .ThenByDescending(x => x.FlatPrice)
+                    .ToList();
+            }
+
+            var grouped = sorted
+                .GroupBy(x => (x.ID, x.FlatPrice, x.IsFIR))
+                .Select(g =>
+                {
+                    var closest = g.OrderBy(x => Vector3.Distance(playerPosition, x.Position)).First();
+                    closest.Count = g.Count();
+                    return closest;
+                })
+                .OrderByDescending(x => x.IsFIR)
+                .ThenByDescending(x => x.FlatPrice)
+                .ThenBy(x => Vector3.Distance(playerPosition, x.Position))
+                .Take(10)
+                .ToList();
+            return grouped;
+        }
+
         /// <summary>
         /// Draw Raid Stats in top right corner.
         /// </summary>
@@ -708,7 +867,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                 "",
                 "",
                 "",
-                (looseLoot is not null && looseLoot.FlatPrice > 0) && Config.ESP.ShowFIRItem ? $"Highest value FIR loot: {looseLoot.ShortName} {(bestLootCount > 1 ? $"[{bestLootCount}]" : "")}  [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot.Position)})" : "",
+                (looseLoot is not null && looseLoot.FlatPrice > 0) && Config.ESP.ShowFIRItem ? $"Highest value FIR loot: {looseLoot.ShortName} {(bestLootCount > 1 ? $"[{bestLootCount}]" : "")} [{TarkovMarketItem.FormatPrice(looseLoot.FlatPrice)}] (H: {(int)Math.Round(looseLoot.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot.Position)})" : "",
                 "",
                 (looseLoot2 is not null && looseLoot2.FlatPrice > 0) && Config.ESP.ShowNFIRItem ? $"Highest value non-FIR loot {looseLoot2.ShortName} [{TarkovMarketItem.FormatPrice(looseLoot2.FlatPrice)}] (H: {(int)Math.Round(looseLoot2.Position.Y - LocalPlayer.Position.Y) } D: {Utils.GetDistPretty(LocalPlayer.Position, looseLoot2.Position)})" : ""
             };

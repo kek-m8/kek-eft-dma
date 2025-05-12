@@ -92,6 +92,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_MapSetup = new CheckBox();
             checkBox_Aimview = new CheckBox();
             checkBox_ShowInfoTab = new CheckBox();
+            checkBox_ImportantPlayer = new CheckBox();
             checkBox_GrpConnect = new CheckBox();
             checkBox_HideNames = new CheckBox();
             checkBox_ShowMines = new CheckBox();
@@ -325,7 +326,7 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
-            checkBox_ImportantPlayer = new CheckBox();
+            checkBox_ESP_LootMenu = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -1116,6 +1117,18 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowInfoTab.Text = "Player Info Widget";
             checkBox_ShowInfoTab.UseVisualStyleBackColor = true;
             // 
+            // checkBox_ImportantPlayer
+            // 
+            checkBox_ImportantPlayer.AutoSize = true;
+            checkBox_ImportantPlayer.Location = new Point(383, 137);
+            checkBox_ImportantPlayer.Name = "checkBox_ImportantPlayer";
+            checkBox_ImportantPlayer.Size = new Size(152, 19);
+            checkBox_ImportantPlayer.TabIndex = 64;
+            checkBox_ImportantPlayer.Text = "Toggle Important Player";
+            toolTip1.SetToolTip(checkBox_ImportantPlayer, "When enabled, draws a specified paint (default cyan) on an entity (player, ai) to help display they have an important item on them (quest, loot filter)");
+            checkBox_ImportantPlayer.UseVisualStyleBackColor = true;
+            checkBox_ImportantPlayer.CheckedChanged += checkBox2_CheckedChanged_2;
+            // 
             // checkBox_GrpConnect
             // 
             checkBox_GrpConnect.AutoSize = true;
@@ -1501,7 +1514,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_MemWrites, true);
             flowLayoutPanel_MemWrites.Location = new Point(3, 427);
             flowLayoutPanel_MemWrites.Name = "flowLayoutPanel_MemWrites";
-            flowLayoutPanel_MemWrites.Size = new Size(1120, 371);
+            flowLayoutPanel_MemWrites.Size = new Size(1144, 371);
             flowLayoutPanel_MemWrites.TabIndex = 1;
             // 
             // label3
@@ -2400,6 +2413,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_ESPSettings.Controls.Add(label_ESP_HighAlert);
             flowLayoutPanel_ESPSettings.Controls.Add(comboBox_ESP_HighAlert);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Loot);
+            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_LootMenu);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Exfils);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_TrapSwitches);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_ShowMag);
@@ -2422,7 +2436,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
             flowLayoutPanel_ESPSettings.Location = new Point(3, 880);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
-            flowLayoutPanel_ESPSettings.Size = new Size(831, 521);
+            flowLayoutPanel_ESPSettings.Size = new Size(1144, 381);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
             // 
             // label12
@@ -2548,7 +2562,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_Exfils
             // 
             checkBox_ESP_Exfils.AutoSize = true;
-            checkBox_ESP_Exfils.Location = new Point(91, 71);
+            checkBox_ESP_Exfils.Location = new Point(214, 71);
             checkBox_ESP_Exfils.Name = "checkBox_ESP_Exfils";
             checkBox_ESP_Exfils.Size = new Size(85, 19);
             checkBox_ESP_Exfils.TabIndex = 7;
@@ -2559,7 +2573,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_TrapSwitches
             // 
             checkBox_TrapSwitches.AutoSize = true;
-            checkBox_TrapSwitches.Location = new Point(182, 71);
+            checkBox_TrapSwitches.Location = new Point(305, 71);
             checkBox_TrapSwitches.Name = "checkBox_TrapSwitches";
             checkBox_TrapSwitches.Size = new Size(189, 19);
             checkBox_TrapSwitches.TabIndex = 61;
@@ -2570,7 +2584,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_ShowMag
             // 
             checkBox_ESP_ShowMag.AutoSize = true;
-            checkBox_ESP_ShowMag.Location = new Point(377, 71);
+            checkBox_ESP_ShowMag.Location = new Point(500, 71);
             checkBox_ESP_ShowMag.Name = "checkBox_ESP_ShowMag";
             checkBox_ESP_ShowMag.Size = new Size(109, 19);
             checkBox_ESP_ShowMag.TabIndex = 60;
@@ -2581,7 +2595,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_Dist
             // 
             checkBox_ESP_Dist.AutoSize = true;
-            checkBox_ESP_Dist.Location = new Point(492, 71);
+            checkBox_ESP_Dist.Location = new Point(615, 71);
             checkBox_ESP_Dist.Name = "checkBox_ESP_Dist";
             checkBox_ESP_Dist.Size = new Size(108, 19);
             checkBox_ESP_Dist.TabIndex = 48;
@@ -2592,7 +2606,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_ShowMines
             // 
             checkBox_ESP_ShowMines.AutoSize = true;
-            checkBox_ESP_ShowMines.Location = new Point(606, 71);
+            checkBox_ESP_ShowMines.Location = new Point(729, 71);
             checkBox_ESP_ShowMines.Name = "checkBox_ESP_ShowMines";
             checkBox_ESP_ShowMines.Size = new Size(90, 19);
             checkBox_ESP_ShowMines.TabIndex = 59;
@@ -2604,7 +2618,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             checkBox_ESP_FireportAim.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(checkBox_ESP_FireportAim, true);
-            checkBox_ESP_FireportAim.Location = new Point(702, 71);
+            checkBox_ESP_FireportAim.Location = new Point(825, 71);
             checkBox_ESP_FireportAim.Name = "checkBox_ESP_FireportAim";
             checkBox_ESP_FireportAim.Size = new Size(124, 19);
             checkBox_ESP_FireportAim.TabIndex = 71;
@@ -3132,7 +3146,6 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel9.Controls.Add(label37);
             flowLayoutPanel9.Controls.Add(checkBox_ESP_WeapAttach);
             flowLayoutPanel9.Controls.Add(checkBox_ESP_GearSlots);
-            flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel9, true);
             flowLayoutPanel9.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel9.Location = new Point(240, 204);
             flowLayoutPanel9.Name = "flowLayoutPanel9";
@@ -3239,7 +3252,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             flowLayoutPanel6.AutoSize = true;
             flowLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel6.Location = new Point(3, 382);
+            flowLayoutPanel6.Location = new Point(395, 204);
             flowLayoutPanel6.Name = "flowLayoutPanel6";
             flowLayoutPanel6.Size = new Size(0, 0);
             flowLayoutPanel6.TabIndex = 77;
@@ -3268,7 +3281,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel4.Controls.Add(label_EspLineScale);
             flowLayoutPanel4.Controls.Add(trackBar_EspLineScale);
             flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel4, true);
-            flowLayoutPanel4.Location = new Point(9, 382);
+            flowLayoutPanel4.Location = new Point(401, 204);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
             flowLayoutPanel4.Size = new Size(738, 134);
             flowLayoutPanel4.TabIndex = 4;
@@ -3901,17 +3914,17 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
             // 
-            // checkBox_ImportantPlayer
+            // checkBox_ESP_LootMenu
             // 
-            checkBox_ImportantPlayer.AutoSize = true;
-            checkBox_ImportantPlayer.Location = new Point(383, 137);
-            checkBox_ImportantPlayer.Name = "checkBox_ImportantPlayer";
-            checkBox_ImportantPlayer.Size = new Size(152, 19);
-            checkBox_ImportantPlayer.TabIndex = 64;
-            checkBox_ImportantPlayer.Text = "Toggle Important Player";
-            toolTip1.SetToolTip(checkBox_ImportantPlayer, "When enabled, draws a specified paint (default cyan) on an entity (player, ai) to help display they have an important item on them (quest, loot filter)");
-            checkBox_ImportantPlayer.UseVisualStyleBackColor = true;
-            checkBox_ImportantPlayer.CheckedChanged += checkBox2_CheckedChanged_2;
+            checkBox_ESP_LootMenu.AutoSize = true;
+            checkBox_ESP_LootMenu.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkBox_ESP_LootMenu.Location = new Point(91, 71);
+            checkBox_ESP_LootMenu.Name = "checkBox_ESP_LootMenu";
+            checkBox_ESP_LootMenu.Size = new Size(117, 19);
+            checkBox_ESP_LootMenu.TabIndex = 79;
+            checkBox_ESP_LootMenu.Text = "Show Loot Menu";
+            checkBox_ESP_LootMenu.UseVisualStyleBackColor = true;
+            checkBox_ESP_LootMenu.CheckedChanged += checkBox_ESP_LootMenu_CheckedChanged;
             // 
             // MainForm
             // 
@@ -4306,6 +4319,7 @@ namespace eft_dma_radar.UI.Radar
         private NumericUpDown numericUpDown_PMC;
         private NumericUpDown numericUpDown_AI;
         private CheckBox checkBox_ImportantPlayer;
+        private CheckBox checkBox_ESP_LootMenu;
     }
 }
 

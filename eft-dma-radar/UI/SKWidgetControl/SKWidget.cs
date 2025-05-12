@@ -308,6 +308,14 @@ namespace eft_dma_radar.UI.SKWidgetControl
             IsAntialias = true
         };
 
+        private static readonly SKFont test = new SKFont()
+        {
+            Subpixel = true,
+            Size = 9f,
+            Typeface = CustomFonts.SKFontFamilyRegular,
+            
+
+        };
         private static readonly SKPaint TitleBarText = new SKPaint()
         {
             SubpixelText = true,

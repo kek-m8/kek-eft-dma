@@ -506,7 +506,40 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("showFPS")]
         public bool ShowFPS { get; set; } = false;
-
+        /// <summary>
+        /// Draw Loot Menu in ESP.
+        /// </summary>
+        [JsonPropertyName("showLootmenu")]
+        public bool ShowLootMenu { get; set; } = true;
+        /// <summary>
+        ///  Draw Loot Filter Background in ESP.
+        /// </summary>
+        [JsonPropertyName("drawLootBackground")]
+        public bool DrawLootBackground { get; set; } = true;
+        /// <summary>
+        /// Draws snapline to loot in ESP.
+        /// </summary>
+        [JsonPropertyName("drawLootSnapline")]
+        public bool DrawLootSnapline { get; set; } = false;
+        /// <summary>
+        /// Current scroll index inside loot menu
+        /// </summary>
+        [JsonPropertyName("lootScrollIndex")]
+        public int LootScrollIndex { get; set; } = 0;
+        /// <summary> 
+        /// Max number of loot items
+        /// </summary>
+        [JsonPropertyName("maxLootItemsNum")]
+        public int MaxLootItemsNum { get; set; } = 0;
+        /// <summary>
+        /// Max number of quest items
+        /// </summary>
+        [JsonPropertyName("maxQuestItemsNum")]
+        public int MaxQuestItemsNum { get; set; } = 0;
+        /// <summary>
+        /// Header state
+        /// </summary>
+        public bool LootHeaderState { get; set; } = false;
         // <summary>
         // Show InGame Time (for Tasking)
         // <summary>

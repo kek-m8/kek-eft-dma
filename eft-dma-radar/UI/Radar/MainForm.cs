@@ -2488,6 +2488,18 @@ namespace eft_dma_radar.UI.Radar
             toggleFullBright.HotkeyStateChanged += ToggleFullBright_HotkeyStateChanged;
             var toggleFastWeaponOps = new HotkeyActionController("Toggle Fast Weapon Ops");
             toggleFastWeaponOps.HotkeyStateChanged += ToggleFastWeaponOps_HotkeyStateChanged;
+            var scrollLootMenuUp = new HotkeyActionController("Loot Menu Scroll Up");
+            scrollLootMenuUp.HotkeyStateChanged += ScrollLootMenuUp_HotkeyStateChanged;
+            var scrollLootMenuDown = new HotkeyActionController("Loot Menu Scroll Down");
+            scrollLootMenuDown.HotkeyStateChanged += ScrollLootMenuDown_HotkeyStateChanged;
+            var toggleLootMenuHeader1 = new HotkeyActionController("Loot Menu Header Change");
+            toggleLootMenuHeader1.HotkeyStateChanged += ToggleLootMenuHeader1_HotkeyStateChanged;
+            var toggleLootMenuHeader2 = new HotkeyActionController("Loot Menu Header Change2");
+            toggleLootMenuHeader2.HotkeyStateChanged += ToggleLootMenuHeader2_HotkeyStateChanged;
+            var toggleLootMenu = new HotkeyActionController("Loot Menu Toggle");
+            toggleLootMenu.HotkeyStateChanged += ToggleLootMenu_HotkeyStateChanged;
+            var lootMenuPing = new HotkeyActionController("Loot Ping");
+            lootMenuPing.HotkeyStateChanged += LootMenuPing_HotkeyStateChanged;
             // Add to Static Collection:
             HotkeyManager.RegisterActionController(zoomIn);
             HotkeyManager.RegisterActionController(zoomOut);
@@ -2515,6 +2527,12 @@ namespace eft_dma_radar.UI.Radar
             HotkeyManager.RegisterActionController(toggleMoveSpeed);
             HotkeyManager.RegisterActionController(toggleFullBright);
             HotkeyManager.RegisterActionController(toggleFastWeaponOps);
+            HotkeyManager.RegisterActionController(scrollLootMenuUp);
+            HotkeyManager.RegisterActionController(scrollLootMenuDown);
+            HotkeyManager.RegisterActionController(toggleLootMenuHeader1);
+            HotkeyManager.RegisterActionController(toggleLootMenuHeader2);
+            HotkeyManager.RegisterActionController(toggleLootMenu);
+            HotkeyManager.RegisterActionController(lootMenuPing);
         }
 
         private void ToggleFastWeaponOps_HotkeyStateChanged(object sender, HotkeyEventArgs e)
@@ -2558,6 +2576,7 @@ namespace eft_dma_radar.UI.Radar
                     WideLean.Direction = WideLean.EWideLeanDirection.Off;
             }
         }
+
 
         private void WideLeanUp_HotkeyStateChanged(object sender, HotkeyEventArgs e)
         {
@@ -2649,6 +2668,66 @@ namespace eft_dma_radar.UI.Radar
             }
         }
 
+        private void ScrollLootMenuUp_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State && Config.ESP.DrawLootBackground)
+            {
+                Config.ESP.LootScrollIndex--;
+                if (Config.ESP.LootScrollIndex < 1)
+                    Config.ESP.LootScrollIndex = Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum;
+                else if (Config.ESP.LootScrollIndex == (Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum) + 1)
+                    Config.ESP.LootScrollIndex = 1;
+                Config.ESP.DrawLootSnapline = false;
+            }
+        }
+        private void ScrollLootMenuDown_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State && Config.ESP.DrawLootBackground)
+            {
+                Config.ESP.LootScrollIndex++;
+                if (Config.ESP.LootScrollIndex < 1)
+                    Config.ESP.LootScrollIndex = Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum;
+                else if (Config.ESP.LootScrollIndex == (Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum) + 1)
+                    Config.ESP.LootScrollIndex = 1;
+                Config.ESP.DrawLootSnapline = false;
+            }
+        }
+
+        private void ToggleLootMenuHeader1_HotkeyStateChanged(object sender, HotkeyEventArgs e) // left arrow
+        {
+            if (e.State && Config.ESP.DrawLootBackground)
+            {
+                Config.ESP.LootHeaderState = !Config.ESP.LootHeaderState;
+                Config.ESP.LootScrollIndex = 1;
+                Config.ESP.DrawLootSnapline = false;
+            }
+        }
+
+        private void ToggleLootMenuHeader2_HotkeyStateChanged(object sender, HotkeyEventArgs e) // right arrow
+        {
+            if (e.State && Config.ESP.DrawLootBackground)
+            {
+                Config.ESP.LootHeaderState = !Config.ESP.LootHeaderState;
+                Config.ESP.LootScrollIndex = 1;
+                Config.ESP.DrawLootSnapline = false;
+            }
+        }
+
+        private void ToggleLootMenu_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State && Config.ESP.ShowLootMenu)
+            {
+                Config.ESP.DrawLootBackground = !Config.ESP.DrawLootBackground;
+            }
+        }
+
+        private void LootMenuPing_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State && Config.ESP.DrawLootBackground)
+            {
+                Config.ESP.DrawLootSnapline = !Config.ESP.DrawLootSnapline;
+            }
+        }
         private void ToggleRageMode_HotkeyStateChanged(object sender, HotkeyEventArgs e)
         {
             if (e.State && checkBox_RageMode.Enabled)
@@ -4170,6 +4249,23 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox2_CheckedChanged_2(object sender, EventArgs e)
         {
             Config.ShowImportantPlayer = checkBox_ImportantPlayer.Checked;
+        }
+
+        private void checkBox_ESP_LootMenu_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowLootMenu = checkBox_ESP_LootMenu.Checked;
+            if(checkBox_ESP_LootMenu.Checked)
+            {
+                MessageBox.Show("""
+                    Loot Menu Enabled
+                    
+                    Right Control - Open/Close Menu
+                    Up Arrow/Down Arrow - Scroll
+                    Left Arrow/Right Arrow - Change Type (Highest Value - Quest)
+                    Right Shift - Draw snapline to selected item
+
+                    """);
+            }
         }
     }
 }

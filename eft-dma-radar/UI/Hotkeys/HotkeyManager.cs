@@ -138,6 +138,12 @@ namespace eft_dma_radar.UI.Hotkeys
                     _hotkeys.TryAdd((UnityKeyCode)kvp.Key, action);
                 }
             }
+            _hotkeys.TryAdd(UnityKeyCode.UpArrow, new("Loot Menu Scroll Up"));
+            _hotkeys.TryAdd(UnityKeyCode.DownArrow, new("Loot Menu Scroll Down"));
+            _hotkeys.TryAdd(UnityKeyCode.LeftArrow, new("Loot Menu Header Change"));
+            _hotkeys.TryAdd(UnityKeyCode.RightArrow, new("Loot Menu Header Change2"));
+            _hotkeys.TryAdd(UnityKeyCode.RightControl, new("Loot Menu Toggle"));
+            _hotkeys.TryAdd(UnityKeyCode.RightShift, new("Loot Ping"));
             _parent = parent;
         }
 

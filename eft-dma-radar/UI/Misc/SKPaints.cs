@@ -879,6 +879,19 @@ namespace eft_dma_radar.UI.Misc
             IsAntialias = true,
             FilterQuality = SKFilterQuality.High
         };
+
+        public static SKPaint LootMenuHeaderESP { get; } = new()
+        {
+            Color = SKColors.Aquamarine,
+            SubpixelText = true,
+            IsStroke = false,
+            TextSize = 18f,
+            TextAlign = SKTextAlign.Center,
+            TextEncoding = SKTextEncoding.Utf8,
+            IsAntialias = true,
+            Typeface = CustomFonts.SKFontFamilyBold,
+            FilterQuality = SKFilterQuality.High
+        };
         public static SKPaint TextImpLootESP { get; } = new()
         {
             SubpixelText = true,

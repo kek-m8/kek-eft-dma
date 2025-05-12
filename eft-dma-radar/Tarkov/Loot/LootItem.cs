@@ -41,6 +41,10 @@ namespace eft_dma_radar.Tarkov.Loot
         }
 
         /// <summary>
+        /// Duplicate item count
+        /// </summary>
+        public int Count { get; set; } = 1;
+        /// <summary>
         /// Item's BSG ID.
         /// </summary>
         public virtual string ID => _item.BsgId;
@@ -325,6 +329,8 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
+            if (this is LootCorpse && Config.HideCorpses)
+                return;
             if (this is not LootCorpse && (this is QuestItem && this is not LootItem) && !localPlayer.IsPmc)
                 return;
             if (this is not LootCorpse && this is LootItem && this is not QuestItem)
@@ -347,8 +353,6 @@ namespace eft_dma_radar.Tarkov.Loot
             {
                 return;
             }
-            if (this is LootCorpse && Config.HideCorpses)
-                return;
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
                 return;
             var boxHalf = 3.5f * ESP.Config.FontScale;
@@ -373,6 +377,8 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public virtual void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
         {
+            if(this is LootCorpse && Config.HideCorpses)
+                return;
             if (this is not LootCorpse && this is LootItem && this is not QuestItem)
             {
                 if (IsQuestCondition && !IsFIR)
