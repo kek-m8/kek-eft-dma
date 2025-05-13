@@ -510,12 +510,12 @@ namespace eft_dma_radar.UI.Misc
         /// Draw Loot Menu in ESP.
         /// </summary>
         [JsonPropertyName("showLootmenu")]
-        public bool ShowLootMenu { get; set; } = true;
+        public bool ShowLootMenu { get; set; } = false;
         /// <summary>
         ///  Draw Loot Filter Background in ESP.
         /// </summary>
         [JsonPropertyName("drawLootBackground")]
-        public bool DrawLootBackground { get; set; } = true;
+        public bool DrawLootBackground { get; set; } = false;
         /// <summary>
         /// Draws snapline to loot in ESP.
         /// </summary>

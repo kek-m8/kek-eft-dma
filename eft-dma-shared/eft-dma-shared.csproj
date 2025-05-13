@@ -27,6 +27,11 @@
 		<EmbeddedResource Include="..\Resources\NeoSansStdMedium.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdBold.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdItalic.otf" />
+		<EmbeddedResource Include="..\Resources\bender.regular.otf" />
+		<EmbeddedResource Include="..\Resources\bender.light.otf" />
+		<EmbeddedResource Include="..\Resources\bender.bold.otf" />
+		<EmbeddedResource Include="..\Resources\bender.italic.otf" />
+		<EmbeddedResource Include="..\Resources\bender.black.otf" />
 
 	</ItemGroup>
 

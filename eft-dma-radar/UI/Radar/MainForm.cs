@@ -2942,6 +2942,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowClass_PMCRadar.Checked = Config.ShowArmourClassPlayer;
             numericUpDown_AI.Value = Config.AIArmourClassMin;
             numericUpDown_PMC.Value = Config.PlayerArmourClassMin;
+            checkBox_ESP_LootMenu.Checked = Config.ESP.ShowLootMenu;
             checkBox_ImportantPlayer.Checked = Config.ShowImportantPlayer;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
             trackBar_EspImpLootDist.Value = (int)Config.ESP.ImpLootDrawDistance;
@@ -4254,17 +4255,32 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_ESP_LootMenu_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowLootMenu = checkBox_ESP_LootMenu.Checked;
-            if(checkBox_ESP_LootMenu.Checked)
+        }
+        private void checkBox_ESP_LootMenu_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (checkBox_ESP_LootMenu.Checked)
             {
                 MessageBox.Show("""
                     Loot Menu Enabled
+                    
+                    CLOSE CLIENT AND REOPEN FOR HOTKEYS TO LOAD
+
+                    *** 
+                    
+                    IF YOU HAVE EXISTING HOTKEYS SET USING THESE KEYS IT WILL NOT WORK
+
+                                                      -
+
+                    REMOVE THEM FIRST IN HOTKEY MANAGER UNDER SETTINGS BEFORE CLOSING CLIENT 
+                    
+                    ***
                     
                     Right Control - Open/Close Menu
                     Up Arrow/Down Arrow - Scroll
                     Left Arrow/Right Arrow - Change Type (Highest Value - Quest)
                     Right Shift - Draw snapline to selected item
 
-                    """);
+                    """, "Loot Menu Enabled", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification, false);
             }
         }
     }

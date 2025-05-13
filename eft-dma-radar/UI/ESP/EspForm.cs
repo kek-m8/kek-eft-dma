@@ -271,6 +271,8 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
         }
         public void DrawLootInfo(SKCanvas canvas, LocalPlayer localPlayer)
         {
+            if (!Config.ESP.ShowLootMenu)
+                return;
             float scale = Config.ESP.FontScale;
 
             float rectWidth = 200f * scale;

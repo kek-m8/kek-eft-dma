@@ -22,13 +22,17 @@ namespace eft_dma_shared.Common.Misc
         /// </summary>
         public static SKTypeface SKFontFamilyMedium { get; }
 
-        //public static SKTypeface SKFontFamilyNew { get; }
+        public static SKTypeface SKFontBenderRegular { get; }
+        public static SKTypeface SKFontBenderLight { get; }
+        public static SKTypeface SKFontBenderBold { get; }
+        public static SKTypeface SKFontBenderItalic { get; }
+        public static SKTypeface SKFontBenderBlack { get; }
 
         static CustomFonts()
         {
             try
             {
-                byte[] fontFamilyRegular, fontFamilyBold, fontFamilyItalic, fontFamilyMedium;//, fontFamilyNew;
+                byte[] fontFamilyRegular, fontFamilyBold, fontFamilyItalic, fontFamilyMedium, fontBenderRegular, fontBenderLight, fontBenderBold, fontBenderItalic, fontBenderBlack;
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.NeoSansStdRegular.otf"))
                 {
                     fontFamilyRegular = new byte[stream!.Length];
@@ -49,16 +53,40 @@ namespace eft_dma_shared.Common.Misc
                     fontFamilyMedium = new byte[stream!.Length];
                     stream.ReadExactly(fontFamilyMedium);
                 }
-                /*using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.K2D-Thin.ttf"))
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.bender.regular.otf"))
                 {
-                    fontFamilyNew = new byte[stream!.Length];
-                    stream.ReadExactly(fontFamilyNew);
-                }*/
+                    fontBenderRegular = new byte[stream!.Length];
+                    stream.ReadExactly(fontBenderRegular);
+                }
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.bender.light.otf"))
+                {
+                    fontBenderLight = new byte[stream!.Length];
+                    stream.ReadExactly(fontBenderLight);
+                }
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.bender.bold.otf"))
+                {
+                    fontBenderBold = new byte[stream!.Length];
+                    stream.ReadExactly(fontBenderBold);
+                }
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.bender.italic.otf"))
+                {
+                    fontBenderItalic = new byte[stream!.Length];
+                    stream.ReadExactly(fontBenderItalic);
+                }
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("eft-dma-shared.bender.black.otf"))
+                {
+                    fontBenderBlack = new byte[stream!.Length];
+                    stream.ReadExactly(fontBenderBlack);
+                }
                 SKFontFamilyRegular = SKTypeface.FromStream(new MemoryStream(fontFamilyRegular, false));
                 SKFontFamilyBold = SKTypeface.FromStream(new MemoryStream(fontFamilyBold, false));
                 SKFontFamilyItalic = SKTypeface.FromStream(new MemoryStream(fontFamilyItalic, false));
                 SKFontFamilyMedium = SKTypeface.FromStream(new MemoryStream(fontFamilyMedium, false));
-                //SKFontFamilyNew = SKTypeface.FromStream(new MemoryStream(fontFamilyNew, false));
+                SKFontBenderRegular = SKTypeface.FromStream(new MemoryStream(fontBenderRegular, false));
+                SKFontBenderLight = SKTypeface.FromStream(new MemoryStream(fontBenderLight, false));
+                SKFontBenderBold = SKTypeface.FromStream(new MemoryStream(fontBenderBold, false));
+                SKFontBenderItalic = SKTypeface.FromStream(new MemoryStream(fontBenderItalic, false));
+                SKFontBenderBlack = SKTypeface.FromStream(new MemoryStream(fontBenderBlack, false));
             }
             catch (Exception ex)
             {

@@ -651,7 +651,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -671,7 +671,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -691,7 +691,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -711,7 +711,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -731,7 +731,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -751,7 +751,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -771,7 +771,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -791,7 +791,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -811,7 +811,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -831,7 +831,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -850,7 +850,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
         public static SKPaint PaintCorpseESP { get; } = new()
@@ -868,7 +868,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -889,7 +889,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyBold,
+            Typeface = CustomFonts.SKFontBenderBlack,
             FilterQuality = SKFilterQuality.High
         };
         public static SKPaint TextImpLootESP { get; } = new()
@@ -900,7 +900,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -920,7 +920,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts. SKFontFamilyMedium,
+            Typeface = CustomFonts. SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -939,7 +939,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -958,7 +958,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -977,7 +977,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -996,7 +996,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
         public static SKPaint PaintWishlistItemESP { get; } = new()
@@ -1014,7 +1014,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
         public static SKPaint PaintQuestHelperESP { get; } = new()
@@ -1032,7 +1032,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -1052,7 +1052,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -1094,7 +1094,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Left,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyBold,
+            Typeface = CustomFonts.SKFontBenderBlack,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -1107,7 +1107,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Left,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyItalic,
+            Typeface = CustomFonts.SKFontBenderItalic,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -1129,7 +1129,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Center,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -1142,7 +1142,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Left,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 
@@ -1155,7 +1155,7 @@ namespace eft_dma_radar.UI.Misc
             TextAlign = SKTextAlign.Right,
             TextEncoding = SKTextEncoding.Utf8,
             IsAntialias = true,
-            Typeface = CustomFonts.SKFontFamilyMedium,
+            Typeface = CustomFonts.SKFontBenderBold,
             FilterQuality = SKFilterQuality.High
         };
 

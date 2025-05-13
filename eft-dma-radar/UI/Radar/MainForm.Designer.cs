@@ -3925,6 +3925,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_LootMenu.Text = "Show Loot Menu";
             checkBox_ESP_LootMenu.UseVisualStyleBackColor = true;
             checkBox_ESP_LootMenu.CheckedChanged += checkBox_ESP_LootMenu_CheckedChanged;
+            checkBox_ESP_LootMenu.MouseClick += checkBox_ESP_LootMenu_MouseClick;
             // 
             // MainForm
             // 
