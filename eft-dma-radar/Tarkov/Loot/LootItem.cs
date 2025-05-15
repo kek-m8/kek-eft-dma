@@ -356,7 +356,15 @@ namespace eft_dma_radar.Tarkov.Loot
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
                 return;
             var boxHalf = 3.5f * ESP.Config.FontScale;
-            var label = GetUILabel(MainForm.Config.QuestHelper.Enabled);
+            List<string> lines = new List<string>();
+            lines.Add(GetUILabel(MainForm.Config.QuestHelper.Enabled));
+            if (this is LootCorpse corpse && GetUILabel(MainForm.Config.QuestHelper.Enabled).Contains("!!")) // draw what items are important on a corpse 
+            {
+                var items = corpse.PlayerObject?.cachedImportantItem ?? null;
+                if (items is not null && items.Length > 0)
+                    foreach( var item in items )
+                        lines.Add($"({item.ShortName})");
+            }
             var showDist = ESP.Config.ShowDistances || dist <= 10f;
             var boxPt = new SKRect(scrPos.X - boxHalf, scrPos.Y + boxHalf,
                 scrPos.X + boxHalf, scrPos.Y - boxHalf);
@@ -364,7 +372,7 @@ namespace eft_dma_radar.Tarkov.Loot
             var textPt = new SKPoint(scrPos.X,
                 scrPos.Y + 16f * ESP.Config.FontScale);
             canvas.DrawRect(boxPt, paints.Item1);
-            textPt.DrawESPText(canvas, this, localPlayer, showDist, paints.Item2, label);
+            textPt.DrawESPText(canvas, this, localPlayer, showDist, paints.Item2, lines.ToArray());
         }
 
         private Vector3 _position;

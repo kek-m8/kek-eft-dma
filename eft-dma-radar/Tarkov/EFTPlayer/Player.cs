@@ -227,6 +227,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// </summary>
         public HandsManager Hands { get; private set; }
 
+        public Loot.LootItem[] cachedImportantItem { get; private set; }
+
         /// <summary>
         /// True if player is 'Locked On' via Aimbot.
         /// </summary>
@@ -1571,6 +1573,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     {
                         lines[0] = $"!!{lines[0]}"; // Notify important loot
                         important = Config.ShowImportantPlayer;
+                        cachedImportantItem = Gear.Loot.Where(x => x.IsImportant || x.IsQuestCondition).ToArray();
                     }
                     DrawPlayerText(canvas, point, lines, important);
                 }
@@ -1781,6 +1784,15 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams).DrawMouseoverText(canvas, lines);
         }
 
+        SKPaint CloneESPPaint_Style(SKPaintStyle style) =>
+            new SKPaint
+            {
+                StrokeWidth = 1.5f,
+                Style = style,
+                IsAntialias = true,
+                FilterQuality = SKFilterQuality.High
+            };
+
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
             if (this == localPlayer ||
@@ -1846,9 +1858,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             }
             else if (renderMode is ESPPlayerRenderMode.Presence) // draw presence (dot on head only)
             {
-                if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanHead].Position, out var presenceScrPos, true, true))
+                if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanNeck].Position, out var presenceScrPos, true, true))
                     return;
-                canvas.DrawCircle(presenceScrPos, 1.5f * ESP.Config.FontScale, espPaints.Item1);
+                canvas.DrawCircle(presenceScrPos, 1.5f * ESP.Config.FontScale, new SKPaint { Color = espPaints.Item1.Color, StrokeWidth = 2f, Style = SKPaintStyle.Fill, IsAntialias = true, FilterQuality = SKFilterQuality.High });
             }
             else if (renderMode is ESPPlayerRenderMode.BonesNBox) // draw box with skeleton (bones) inside
             {

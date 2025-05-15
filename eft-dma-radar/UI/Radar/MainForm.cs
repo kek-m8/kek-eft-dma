@@ -2176,6 +2176,7 @@ namespace eft_dma_radar.UI.Radar
         /// </summary>
         private void SetUiValues()
         {
+            Config.ESP.LootScrollIndex = 1;
             checkBox_displayRaidTIme.Checked = Config.ESP.ShowTime;
             comboBox_LootFiltersItem_Items.Items
                 .AddRange(EftDataManager.AllItems.Values

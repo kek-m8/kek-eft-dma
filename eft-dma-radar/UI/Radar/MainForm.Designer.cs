@@ -209,6 +209,7 @@ namespace eft_dma_radar.UI.Radar
             label_ESP_HighAlert = new Label();
             comboBox_ESP_HighAlert = new ComboBox();
             checkBox_ESP_Loot = new CheckBox();
+            checkBox_ESP_LootMenu = new CheckBox();
             checkBox_ESP_Exfils = new CheckBox();
             checkBox_TrapSwitches = new CheckBox();
             checkBox_ESP_ShowMag = new CheckBox();
@@ -326,7 +327,6 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
-            checkBox_ESP_LootMenu = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -2559,6 +2559,19 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_Loot.UseVisualStyleBackColor = true;
             checkBox_ESP_Loot.CheckedChanged += checkBox_ESP_Loot_CheckedChanged;
             // 
+            // checkBox_ESP_LootMenu
+            // 
+            checkBox_ESP_LootMenu.AutoSize = true;
+            checkBox_ESP_LootMenu.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkBox_ESP_LootMenu.Location = new Point(91, 71);
+            checkBox_ESP_LootMenu.Name = "checkBox_ESP_LootMenu";
+            checkBox_ESP_LootMenu.Size = new Size(117, 19);
+            checkBox_ESP_LootMenu.TabIndex = 79;
+            checkBox_ESP_LootMenu.Text = "Show Loot Menu";
+            checkBox_ESP_LootMenu.UseVisualStyleBackColor = true;
+            checkBox_ESP_LootMenu.CheckedChanged += checkBox_ESP_LootMenu_CheckedChanged;
+            checkBox_ESP_LootMenu.MouseClick += checkBox_ESP_LootMenu_MouseClick;
+            // 
             // checkBox_ESP_Exfils
             // 
             checkBox_ESP_Exfils.AutoSize = true;
@@ -2664,9 +2677,9 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowPlates.AutoSize = true;
             checkBox_ShowPlates.Location = new Point(366, 96);
             checkBox_ShowPlates.Name = "checkBox_ShowPlates";
-            checkBox_ShowPlates.Size = new Size(155, 19);
+            checkBox_ShowPlates.Size = new Size(212, 19);
             checkBox_ShowPlates.TabIndex = 75;
-            checkBox_ShowPlates.Text = "Show ArmourPlate Class";
+            checkBox_ShowPlates.Text = "Show ArmourPlate Class (Unstable)";
             checkBox_ShowPlates.TextAlign = ContentAlignment.MiddleCenter;
             toolTip1.SetToolTip(checkBox_ShowPlates, "WARNING: Unstable, can break ESP randomly.");
             checkBox_ShowPlates.UseVisualStyleBackColor = true;
@@ -2675,7 +2688,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_displayRaidTIme
             // 
             checkBox_displayRaidTIme.AutoSize = true;
-            checkBox_displayRaidTIme.Location = new Point(527, 96);
+            checkBox_displayRaidTIme.Location = new Point(584, 96);
             checkBox_displayRaidTIme.Name = "checkBox_displayRaidTIme";
             checkBox_displayRaidTIme.Size = new Size(93, 19);
             checkBox_displayRaidTIme.TabIndex = 74;
@@ -2686,7 +2699,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ESP_FPS
             // 
             checkBox_ESP_FPS.AutoSize = true;
-            checkBox_ESP_FPS.Location = new Point(626, 96);
+            checkBox_ESP_FPS.Location = new Point(683, 96);
             checkBox_ESP_FPS.Name = "checkBox_ESP_FPS";
             checkBox_ESP_FPS.Size = new Size(86, 19);
             checkBox_ESP_FPS.TabIndex = 5;
@@ -2698,7 +2711,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             label27.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(label27, true);
-            label27.Location = new Point(718, 93);
+            label27.Location = new Point(775, 93);
             label27.Name = "label27";
             label27.Size = new Size(0, 15);
             label27.TabIndex = 72;
@@ -3913,19 +3926,6 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.AutoPopDelay = 20000;
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
-            // 
-            // checkBox_ESP_LootMenu
-            // 
-            checkBox_ESP_LootMenu.AutoSize = true;
-            checkBox_ESP_LootMenu.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox_ESP_LootMenu.Location = new Point(91, 71);
-            checkBox_ESP_LootMenu.Name = "checkBox_ESP_LootMenu";
-            checkBox_ESP_LootMenu.Size = new Size(117, 19);
-            checkBox_ESP_LootMenu.TabIndex = 79;
-            checkBox_ESP_LootMenu.Text = "Show Loot Menu";
-            checkBox_ESP_LootMenu.UseVisualStyleBackColor = true;
-            checkBox_ESP_LootMenu.CheckedChanged += checkBox_ESP_LootMenu_CheckedChanged;
-            checkBox_ESP_LootMenu.MouseClick += checkBox_ESP_LootMenu_MouseClick;
             // 
             // MainForm
             // 

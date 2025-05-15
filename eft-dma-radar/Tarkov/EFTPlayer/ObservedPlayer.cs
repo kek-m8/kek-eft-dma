@@ -435,7 +435,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 gunHasMods = null;
             }
         }
-
+            
 
         internal ObservedPlayer(ulong playerBase) : base(playerBase)
         {

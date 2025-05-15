@@ -269,6 +269,16 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             }
             canvas.Flush();
         }
+
+        SKPaint ESPLine_Width(float width) =>
+            new SKPaint
+            {
+                Color = SKColors.Red,
+                StrokeWidth = width,
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                FilterQuality = SKFilterQuality.High
+            };
         public void DrawLootInfo(SKCanvas canvas, LocalPlayer localPlayer)
         {
             if (!Config.ESP.ShowLootMenu)
@@ -307,9 +317,6 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             canvas.DrawText(Config.ESP.LootHeaderState ? "HIGHEST VALUE" : " QUEST ITEMS ",
                 new SKPoint(x - 30f * scale, y + headerOffsetY), SKPaints.LootMenuHeaderESP);
 
-            var linePaint = SKPaints.PaintHighAlertAimlineESP;
-            linePaint.StrokeWidth = 2f * scale;
-
             float lineSpacing = 22.5f * scale;
             float textStartX = x - 28f * scale;
 
@@ -331,7 +338,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                         {
                             if (CameraManagerBase.WorldToScreen(ref item.Position, out var targetScrPos, true))
                             {
-                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), linePaint);
+                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), ESPLine_Width(2f * scale));
                             }
                         }
 
@@ -388,7 +395,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                         {
                             if (CameraManagerBase.WorldToScreen(ref item.Position, out var targetScrPos, true))
                             {
-                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), linePaint);
+                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), ESPLine_Width(2f * scale));
                             }
                         }
 
@@ -809,6 +816,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             var sorted = lootList
                 .OrderByDescending(x => x.IsFIR)
                 .ThenByDescending(x => x.FlatPrice)
+                .Where(x => x.FlatPrice > 0 && x is not LootCorpse && (int)(Math.Round(x.Position.Y - playerPosition.Y)) > -1000)
                 .ToList();
 
             if (MapID.Equals("tarkovstreets", StringComparison.OrdinalIgnoreCase))
