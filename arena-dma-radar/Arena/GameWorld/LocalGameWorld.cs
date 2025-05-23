@@ -9,6 +9,7 @@ using eft_dma_shared.Common.Unity;
 using arena_dma_radar.Arena.Features.MemoryWrites;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Misc.Commercial;
+using arena_dma_radar.Arena.GameWorld;
 
 namespace arena_dma_radar.Arena.GameWorld
 {
@@ -573,3 +574,36 @@ namespace arena_dma_radar.Arena.GameWorld
         #endregion
     }
 }
+/*public readonly partial struct QuestTemplate
+        {
+            public const uint Id = 0x10; // String
+            public const uint LocationId = 0x18; // String
+            public const uint TraderId = 0x20; // String
+            public const uint Image = 0x28; // String
+            public const uint TemplateId = 0x30; // String
+            public const uint Rewards = 0x38; // System.Collections.Generic.Dictionary<Int32, IReadOnlyList<\uEF6E>>
+            public const uint Conditions = 0x40; // EFT.Quests.ConditionsDict
+            public const uint Sprite = 0x48; // UnityEngine.Sprite
+            public const uint Name = 0x50; // String
+            public const uint QuestSuccessMessageKey = 0x58; // String
+            public const uint ChangeQuestText = 0x60; // String
+            public const uint Description = 0x68; // String
+            public const uint AcceptPlayerMessageKey = 0x70; // String
+            public const uint DeclinePlayerMessageKey = 0x78; // String
+            public const uint CompletePlayerMessageKey = 0x80; // String
+            public const uint rankingModes = 0x88; // System.String[]
+            public const uint gameModes = 0x90; // System.String[]
+            public const uint arenaLocationIds = 0x98; // System.String[]
+            public const uint Level = 0xA0; // System.Int32
+            public const uint Restartable = 0xA4; // System.Boolean
+            public const uint QuestType = 0xA8; // System.Int32
+            public const uint QuestStatus = 0xAC; // System.Int32
+            public const uint KeyQuest = 0xB0; // Boolean
+            public const uint CanShowNotificationsInGame = 0xB1; // Boolean
+            public const uint InstantComplete = 0xB2; // Boolean
+            public const uint PlayerGroup = 0xB4; // System.Int32
+            public const uint ServerOnly = 0xB8; // Boolean
+            public const uint acceptanceAndFinishingSource = 0xBC; // System.Int32
+            public const uint progressSource = 0xC0; // System.Int32
+            public const uint theme = 0xC4; // System.Int32
+        }*/

@@ -105,6 +105,10 @@ namespace eft_dma_radar.Tarkov.GameWorld
         /// </summary>
         public IReadOnlyList<QuestLocation> LocationConditions { get; private set; } = new List<QuestLocation>();
 
+        public Dictionary<string, ulong[]> QuestConditions { get; } = new(StringComparer.OrdinalIgnoreCase);
+
+        public Dictionary<string, HashSet<string>> QuestItems { get; } = new(new Dictionary<string, HashSet<string>>());
+
         /// <summary>
         /// Map Identifier of Current Map.
         /// </summary>
@@ -171,7 +175,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
             _rateLimit.Restart();
         }
 
-        private static void GetQuestConditions(string questID, ulong condition, HashSet<string> completedConditions,
+        public static void GetQuestConditions(string questID, ulong condition, HashSet<string> completedConditions,
             HashSet<string> items, List<QuestLocation> locations)
         {
             try

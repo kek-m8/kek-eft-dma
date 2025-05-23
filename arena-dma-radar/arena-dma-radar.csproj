@@ -56,6 +56,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DarkModeForms.imerzan" Version="1.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.0" />
 		<PackageReference Include="SkiaSharp.Views.WindowsForms" Version="3.119.0" />
 	</ItemGroup>

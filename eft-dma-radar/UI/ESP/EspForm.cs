@@ -3,6 +3,7 @@ using eft_dma_radar.Tarkov.EFTPlayer;
 using eft_dma_radar.Tarkov.EFTPlayer.Plugins;
 using eft_dma_radar.Tarkov.Features;
 using eft_dma_radar.Tarkov.Features.MemoryWrites;
+using eft_dma_radar.Tarkov.GameWorld;
 using eft_dma_radar.Tarkov.GameWorld.Exits;
 using eft_dma_radar.Tarkov.GameWorld.Explosives;
 using eft_dma_radar.Tarkov.Loot;
@@ -348,6 +349,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
 
                 case false:
                     int questCount = 1;
+                    HashSet<string> questItems = new HashSet<string>();
                     var loot = Memory.Loot.UnfilteredLoot
                         .Where(x => x.IsQuestCondition && x is not QuestItem)
                         .OrderBy(x => Vector3.Distance(localPlayer.Position, x.Position))
@@ -356,9 +358,18 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     foreach (var item in loot)
                     {
                         bool isSelected = questCount == Config.ESP.LootScrollIndex;
-                        string questName = "";
+                        string questName = "", corpseName = null;
                         int questCounter = 0;
-
+                        try
+                        {
+                            if (item is LootCorpse corpse)
+                            {
+                                corpseName = corpse.Name + " (Corpse)";
+                                foreach (var xx in corpse.Loot.Where(x => x.IsQuestCondition))
+                                    corpseName += " {" + xx.ShortName + "} ";
+                            }
+                        }
+                        catch { }
                         foreach (var questId in Memory.QuestManager.CurrentQuests)
                         {
                             if (EftDataManager.TaskData.TryGetValue(questId, out var quest))
@@ -367,7 +378,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                                 {
                                     foreach (var obj in quest.Objectives)
                                     {
-                                        if (obj.Item.Id.Equals(item.ID))
+                                        if (obj.Item.Id.Equals(item.ID) && item.IsQuestCondition)
                                         {
                                             if (questCounter == 0)
                                                 questName = quest.Name;
@@ -385,8 +396,8 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                         var paintToUse = isSelected && Config.ESP.DrawLootSnapline ? SKPaints.TextPMCESP : SKPaints.TextImpLootESP;
 
                         canvas.DrawText(
-                            $"{(isSelected ? ">  " : "")}{item.ShortName} {(item.Count > 1 ? $"[{item.Count}]" : "")}" +
-                            (questName != "" ? ("{" + questName + "} ") : "") +
+                            $"{(isSelected ? ">  " : "")}{(corpseName is not null ? corpseName : item.ShortName)} {(item.Count > 1 ? $"[{item.Count}]" : "")}" +
+                            (questName != "" ? (" {" + questName + "} ") : "") +
                             $"(H: {(int)Math.Round(item.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, item.Position)})",
                             new SKPoint(textStartX, (y + 125f * scale) + (questCount * lineSpacing)),
                             paintToUse);
@@ -871,7 +882,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                 $"PScav: {pscavCount}",
                 $"AI: {aiCount}",
                 $"Boss: {bossCount}",
-                "",
+                (!MapID.Equals("lighthouse", StringComparison.OrdinalIgnoreCase) ? "" : $"Rogues: {hostiles.Count(x => x.Type is Player.PlayerType.AIRaider)}"),
                 "",
                 "",
                 "",

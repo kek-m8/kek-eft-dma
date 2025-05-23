@@ -51,7 +51,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer.Plugins
                         continue;
                     }
                         
-                    if (EftDataManager.AllItemsArena.TryGetValue(id, out var entry))
+                    if (EftDataManager.AllItems.TryGetValue(id, out var entry))
                         gearDict.TryAdd(name, entry.Name);
                     
                 }

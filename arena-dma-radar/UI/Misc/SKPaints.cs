@@ -268,6 +268,15 @@ namespace arena_dma_radar.UI.Misc
             FilterQuality = SKFilterQuality.High
         };
 
+        public static SKPaint QuestHelperPaint { get; } = new()
+        {
+            Color = SKColors.DeepPink,
+            StrokeWidth = 0.25f,
+            Style = SKPaintStyle.Fill,
+            IsAntialias = true,
+            FilterQuality = SKFilterQuality.High
+        };
+
         #region ESP Paints
         public static SKPaint PaintPlayerESP { get; } = new SKPaint()
         {

@@ -360,8 +360,8 @@ namespace eft_dma_radar.Tarkov.Loot
             lines.Add(GetUILabel(MainForm.Config.QuestHelper.Enabled));
             if (this is LootCorpse corpse && GetUILabel(MainForm.Config.QuestHelper.Enabled).Contains("!!")) // draw what items are important on a corpse 
             {
-                var items = corpse.PlayerObject?.cachedImportantItem ?? null;
-                if (items is not null && items.Length > 0)
+                var items = corpse.Loot.Where(x => x.IsQuestCondition || x.IsImportant);
+                if (items is not null && items.Count() > 0)
                     foreach( var item in items )
                         lines.Add($"({item.ShortName})");
             }
@@ -489,7 +489,7 @@ namespace eft_dma_radar.Tarkov.Loot
             var label = "";
             if (this is LootContainer container)
             {
-                var important = container.Loot.Any(x => x.IsImportant);
+                var important = container.Loot.Any(x => x.IsImportant || x.IsQuestCondition);
                 var loot = container.FilteredLoot;
                 if (this is not LootCorpse && loot.Count() == 1)
                 {

@@ -57,8 +57,6 @@ namespace arena_dma_radar.Arena
         /// </summary>
         public override bool InRaid => Game?.InRaid ?? false;
 
-        public LootManager Loot => Game?.Loot;
-
         private bool _ready;
         /// <summary>
         /// True if Startup was successful and waiting for raid.
@@ -74,6 +72,7 @@ namespace arena_dma_radar.Arena
         public IReadOnlyCollection<Grenade> Grenades => Game?.Grenades;
         public LocalPlayer LocalPlayer => Game?.LocalPlayer;
         public LocalGameWorld Game { get; private set; }
+        public LootManager Loot => Game?.Loot;
 
         public MemDMA() : base(Config.FpgaAlgo, Config.MemMapEnabled)
         {
