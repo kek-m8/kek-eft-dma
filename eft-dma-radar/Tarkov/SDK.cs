@@ -1,3 +1,5 @@
+using OpenTK.Graphics.ES20;
+
 namespace SDK
 {
     public readonly partial struct ClassNames
@@ -640,6 +642,7 @@ namespace SDK
             public const uint ContainedItem = 0x38; // EFT.InventoryLogic.Item
             public const uint ID = 0x48; // String
             public const uint Required = 0x60; // Boolean
+            public const uint ParentItem = 0x40; // EFT.InventoryLogic.Item
         }
 
         public readonly partial struct InteractiveLootItem
@@ -728,6 +731,8 @@ namespace SDK
 
         public readonly partial struct AmmoTemplate
         {
+            public const uint Damage = 0x180; // Int32
+            public const uint PenetrationPower = 0x194; // Int32
             public const uint InitialSpeed = 0x1BC; // Single
             public const uint BallisticCoeficient = 0x1D0; // Single
             public const uint BulletMassGram = 0x258; // Single

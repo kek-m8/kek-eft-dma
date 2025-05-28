@@ -89,6 +89,16 @@ namespace eft_dma_shared.Common.Misc.Data
         /// <summary>
         /// Is Currency (Roubles,etc.)
         /// </summary>
+
+        [JsonIgnore]
+        public bool IsUBGL => Tags.Contains("UBGL");
+
+        [JsonIgnore]
+        public bool IsT7 => Tags.Contains("Thermal Vision");
+
+        [JsonIgnore]
+        public bool IsThermalScope => Tags.Contains("Special scope") && !Tags.Contains("Night Vision") && !Name.ToLower().Contains("night vision scope") && !IsT7;
+
         [JsonIgnore]
         public bool IsCurrency => Tags.Contains("Money");
         [JsonIgnore]

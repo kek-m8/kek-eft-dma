@@ -10,6 +10,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
 
         private string _ammo;
         private string _thermal;
+        private string _ubgl;
         private LootItem _cachedItem;
         private ulong _cached = 0x0;
         /// <summary>
@@ -28,7 +29,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
         {
             get
             {
-                string at = $"{_ammo} {_thermal}".Trim();
+                string at = $"{_ammo} {_thermal}{(_thermal is not null ? $" {_ubgl}" : $"{_ubgl}")}".Trim();
                 var item = (_cachedItem?.ID.Equals("67b49e7335dec48e3e05e057") ?? false ? "F-1 (delayed)" : _cachedItem?.ShortName);
                 if (item is null) return "--";
                 if (item.Contains("127x108"))
@@ -59,13 +60,12 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                 var itemBase = Memory.ReadPtr(handsController +
                     (_parent is ClientPlayer ?
                     Offsets.ItemHandsController.Item : Offsets.ObservedHandsController.ItemInHands));
-                
-                //MessageBox.Show(Memory.ReadUnityString(ammoNamePtr, useCache: false));
                 if (itemBase != _cached)
                 {
                     _cachedItem = null;
                     _ammo = null;
                     _thermal = null;
+                    bool a = false, b = false;
                     var itemTemplate = Memory.ReadPtr(itemBase + Offsets.LootItem.Template);
                     var itemIDPtr = Memory.ReadValue<Types.MongoID>(itemTemplate + Offsets.ItemTemplate._id);
                     var itemID = Memory.ReadUnityString(itemIDPtr.StringID);
@@ -74,17 +74,25 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                         _cachedItem = new LootItem(heldItem);
                         if (heldItem?.IsWeapon ?? false)
                         {
-                            bool hasThermal = _parent.Gear?.Loot?.Any(x =>
-                                x.ID.Equals("5a1eaa87fcdbcb001865f75e", StringComparison.OrdinalIgnoreCase) || // REAP-IR
-                                x.ID.Equals("5d1b5e94d7ad1a2b865a96b0", StringComparison.OrdinalIgnoreCase) || // FLIR
-                                x.ID.Equals("6478641c19d732620e045e17", StringComparison.OrdinalIgnoreCase) || // ECHO
-                                x.ID.Equals("63fc44e2429a8a166c7f61e6", StringComparison.OrdinalIgnoreCase) || // ZEUS
-                                x.ID.Equals("67641b461c2eb66ade05dba6", StringComparison.OrdinalIgnoreCase) || // SHAKIN
-                                x.ID.Equals("609bab8b455afd752b2e6138", StringComparison.OrdinalIgnoreCase) || // REFLEX
-                                x.ID.Equals("606f2696f2cb2e02a42aceb1", StringComparison.OrdinalIgnoreCase))   // ULTIMA
-                                ?? false;
-                            _thermal = hasThermal ?
-                                "Thermal" : null;
+                            if(_parent.Gear.Equipment.TryGetValue("FirstPrimaryWeapon", out var weapon))
+                                if(weapon.Id.Equals(_cachedItem.ID, StringComparison.OrdinalIgnoreCase))
+                                    a = true; // Item is in primary weapon slot
+                            if (_parent.Gear.Equipment.TryGetValue("SecondPrimaryWeapon", out var secondaryWeapon))
+                                if (secondaryWeapon.Id.Equals(_cachedItem.ID, StringComparison.OrdinalIgnoreCase))
+                                    b = true; // Item is in secondary weapon slot
+
+                            if(a && _parent.Gear.Loot.Where(x => x._parentSlot == "FirstPrimaryWeapon").Any(x => x.IsThermalScope)) // player holding primary weapon (on sling) with thermal scope
+                                _thermal = "Thermal";
+                            else if (b && _parent.Gear.Loot.Where(x => x._parentSlot == "SecondPrimaryWeapon").Any(x => x.IsThermalScope)) // player holding secondary weapon (on back) with thermal scope
+                                _thermal = "Thermal";
+                            else
+                                _thermal = null;
+                            if(a && _parent.Gear.Loot.Where(x => x._parentSlot == "FirstPrimaryWeapon").Any(x => x.IsUBGL))
+                                _ubgl = "UBGL";
+                            else if (b && _parent.Gear.Loot.Where(x => x._parentSlot == "SecondPrimaryWeapon").Any(x => x.IsUBGL))
+                                _ubgl = "UBGL";
+                            else
+                                _ubgl = null;
                         }
                     }
                     else // Item doesn't exist in DB , use name from game memory
@@ -99,6 +107,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                 }
                 if (_cachedItem?.IsWeapon ?? false)
                 {
+                    var ammoInChamber = "";
+                    var ammoFromMag = "";
                     try
                     {
                         var chambers = Memory.ReadPtr(itemBase + Offsets.LootItemWeapon.Chambers);
@@ -108,7 +118,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                         var ammoIDPtr = Memory.ReadValue<Types.MongoID>(ammoTemplate + Offsets.ItemTemplate._id);
                         var ammoID = Memory.ReadUnityString(ammoIDPtr.StringID);
                         if (EftDataManager.AllItems.TryGetValue(ammoID, out var ammo))
-                            _ammo = ammo?.ShortName;
+                            _ammo = ammoInChamber = ammo?.ShortName;
+                        
                     }
                     catch // gun doesnt have a chamber
                     {
@@ -116,7 +127,29 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                         var ammoIdPtr = Memory.ReadValue<Types.MongoID>(ammoTemplate_ + Offsets.ItemTemplate._id);
                         string ammoId = Memory.ReadUnityString(ammoIdPtr.StringID);
                         if (EftDataManager.AllItems.TryGetValue(ammoId, out var ammo))
-                            _ammo = ammo?.ShortName;
+                            _ammo = ammoFromMag = ammo?.ShortName;
+                    }
+
+                    if (ammoInChamber != ammoFromMag)
+                    {
+                        Dictionary<string, int[]> bulletData = new Dictionary<string, int[]>(StringComparer.OrdinalIgnoreCase);
+                        var chambers = Memory.ReadPtr(itemBase + Offsets.LootItemWeapon.Chambers);
+                        var slotPtr = Memory.ReadPtr(chambers + MemList<byte>.ArrStartOffset + 0 * 0x8); // One in the chamber ;)
+                        var slotItem = Memory.ReadPtr(slotPtr + Offsets.Slot.ContainedItem);
+                        var ammoTemplate = Memory.ReadPtr(slotItem + Offsets.LootItem.Template);
+                        var magTempPtr = GetAmmoTemplateFromWeapon(itemBase);
+                        var ammoIdPtr = Memory.ReadValue<Types.MongoID>(ammoTemplate + Offsets.ItemTemplate._id);
+                        var magIdPtr = Memory.ReadValue<Types.MongoID>(magTempPtr + Offsets.ItemTemplate._id);
+                        string chambersAmmoId = Memory.ReadUnityString(ammoIdPtr.StringID, 32);
+                        string magAmmoId = Memory.ReadUnityString(magIdPtr.StringID, 32);
+                        if (EftDataManager.AllItems.TryGetValue(chambersAmmoId, out var chambersAmmo) &&
+                            EftDataManager.AllItems.TryGetValue(magAmmoId, out var magAmmo))
+                        {
+                            bulletData.TryAdd(chambersAmmo.ShortName, new int[] { Memory.ReadValue<int>(ammoTemplate + Offsets.AmmoTemplate.Damage), Memory.ReadValue<int>(ammoTemplate + Offsets.AmmoTemplate.PenetrationPower) });
+                            bulletData.TryAdd(magAmmo.ShortName, new int[] { Memory.ReadValue<int>(magTempPtr + Offsets.AmmoTemplate.Damage), Memory.ReadValue<int>(magTempPtr + Offsets.AmmoTemplate.PenetrationPower) });
+                        }
+                        _ammo = bulletData.OrderBy(x => x.Value[1]) // Sort by Penetration Power
+                            .First().Key;
                     }
                 }
             }

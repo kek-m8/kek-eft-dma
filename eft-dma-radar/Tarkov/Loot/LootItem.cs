@@ -20,10 +20,11 @@ namespace eft_dma_radar.Tarkov.Loot
         private static Config Config { get; } = Program.Config;
         private readonly TarkovMarketItem _item;
 
-        public LootItem(TarkovMarketItem item)
+        public LootItem(TarkovMarketItem item, string parentSlot = null)
         {
             ArgumentNullException.ThrowIfNull(item, nameof(item));
             _item = item;
+            _parentSlot = parentSlot;
         }
 
         public LootItem(string id, string name)
@@ -39,6 +40,8 @@ namespace eft_dma_radar.Tarkov.Loot
                 BsgId = id
             };
         }
+
+        public string _parentSlot;
 
         /// <summary>
         /// Duplicate item count
@@ -183,6 +186,10 @@ namespace eft_dma_radar.Tarkov.Loot
         public bool IsArmoredRig => _item.IsArmoredRig;
 
         public bool IsBullet => _item.IsBullet;
+
+        public bool IsThermalScope => _item.IsThermalScope;
+
+        public bool IsUBGL => _item.IsUBGL;
 
         public bool IsAmmo => _item.IsAmmo;
 

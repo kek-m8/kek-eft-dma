@@ -67,6 +67,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
             var loot = new List<LootItem>();
             var gearDict = new Dictionary<string, GearItem>(StringComparer.OrdinalIgnoreCase);
             foreach (var slot in Slots)
+            {
                 try
                 {
                     if (_isPMC && slot.Key == "Scabbard") // melee slot
@@ -94,17 +95,16 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                             slot.Key == "Holster" || slot.Key == "Headwear" || slot.Key == "TacticalVest" || slot.Key == "ArmorVest")
                             try
                             {
-                                RecursePlayerGearSlots(containedItem, loot);
+                                RecursePlayerGearSlots(slot.Key, containedItem, loot);
                             }
                             catch
                             {
                             }
-
                         var gear = new GearItem
                         {
                             Long = entry2.Name ?? "None",
                             Short = entry2.ShortName ?? "None",
-                            Id = entry2.BsgId ?? "None"
+                            Id = entry2.BsgId ?? "None",
                         };
                         gearDict.TryAdd(slot.Key, gear);
                     }
@@ -112,6 +112,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                 catch
                 {
                 } // Skip over empty slots
+            }
 
             Loot = loot.OrderLoot().ToList();
             Value = loot.Sum(x => x.Price); // Get value of player's loot/gear
@@ -121,7 +122,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
         /// <summary>
         /// Checks a 'Primary' weapon for Ammo Type, and Thermal Scope.
         /// </summary>
-        private static void RecursePlayerGearSlots(ulong lootItemBase, List<LootItem> loot)
+        private static void RecursePlayerGearSlots(string slot_, ulong lootItemBase, List<LootItem> loot)
         {
             try
             {
@@ -149,8 +150,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                             var idPtr = Memory.ReadValue<Types.MongoID>(inventorytemplate + Offsets.ItemTemplate._id);
                             var id = Memory.ReadUnityString(idPtr.StringID);
                             if (EftDataManager.AllItems.TryGetValue(id, out var entry))
-                                loot.Add(new LootItem(entry)); // Add to loot, get weapon attachment values
-                            RecursePlayerGearSlots(containedItem, loot);
+                                loot.Add(new LootItem(entry, slot_)); // Add to loot, get weapon attachment values
+                            RecursePlayerGearSlots(slot_, containedItem, loot);
                         }
                     }
                     catch

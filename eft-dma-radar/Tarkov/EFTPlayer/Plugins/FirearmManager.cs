@@ -272,11 +272,9 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                     var magItemPtr = Memory.ReadPtr(magSlotPtr + Offsets.Slot.ContainedItem);
                     var cartridges = Memory.ReadPtr(magItemPtr + Offsets.LootItemMagazine.Cartridges);
                     var magStackPtr = Memory.ReadPtr(cartridges + Offsets.StackSlot._items);
-                    var magStack = MemList<ulong>.Get(magStackPtr);
+                    using var magStack = MemList<ulong>.Get(magStackPtr);
                     maxCount += Memory.ReadValue<int>(cartridges + Offsets.StackSlot.MaxCount);
-                    var magStackPtr_ = Memory.ReadPtr(cartridges + Offsets.StackSlot._items);
-                    using var magStack_ = MemList<ulong>.Get(magStackPtr);
-                    foreach (var stack in magStack_) // Each ammo type will be a separate stack
+                    foreach (var stack in magStack) // Each ammo type will be a separate stack
                     {
                         if (stack != 0x0)
                             currentCount += Memory.ReadValue<int>(stack + Offsets.MagazineClass.StackObjectsCount, false);
@@ -316,19 +314,82 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                             }
                         }
                     }
+                    if (ammoInChamber != ammoFromMag)
+                    {
+                        Dictionary<string, int[]> bulletData = new Dictionary<string, int[]>(StringComparer.OrdinalIgnoreCase);
+                        var chambers = Memory.ReadPtr(hands.ItemAddr + Offsets.LootItemWeapon.Chambers);
+                        var slotPtr = Memory.ReadPtr(chambers + MemList<byte>.ArrStartOffset + 0 * 0x8); // One in the chamber ;)
+                        var slotItem = Memory.ReadPtr(slotPtr + Offsets.Slot.ContainedItem);
+                        var ammoTemplate = Memory.ReadPtr(slotItem + Offsets.LootItem.Template);
+                        var magTempPtr = GetAmmoTemplateFromWeapon(hands.ItemAddr);
+                        var ammoIdPtr = Memory.ReadValue<Types.MongoID>(ammoTemplate + Offsets.ItemTemplate._id);
+                        var magIdPtr = Memory.ReadValue<Types.MongoID>(magTempPtr + Offsets.ItemTemplate._id);
+                        string chambersAmmoId = Memory.ReadUnityString(ammoIdPtr.StringID, 32);
+                        string magAmmoId = Memory.ReadUnityString(magIdPtr.StringID, 32);
+                        if (EftDataManager.AllItems.TryGetValue(chambersAmmoId, out var chambersAmmo) &&
+                            EftDataManager.AllItems.TryGetValue(magAmmoId, out var magAmmo))
+                        {
+                            bulletData.TryAdd(chambersAmmo.ShortName, new int[] { Memory.ReadValue<int>(ammoTemplate + Offsets.AmmoTemplate.Damage), Memory.ReadValue<int>(ammoTemplate + Offsets.AmmoTemplate.PenetrationPower) });
+                            bulletData.TryAdd(magAmmo.ShortName, new int[] { Memory.ReadValue<int>(magTempPtr + Offsets.AmmoTemplate.Damage), Memory.ReadValue<int>(magTempPtr + Offsets.AmmoTemplate.PenetrationPower) });
+                        }
+                        _ammo = bulletData.OrderBy(x => x.Value[1]) // Sort by Penetration Power
+                            .First().Key;
+                        goto end;
+                    }
                 }
-            end:
                 _ammo = ammoInChamber ?? ammoFromMag;
+            end:
                 _fireType = fireType;
                 Count = currentCount;
                 MaxCount = maxCount;
             }
 
             /// <summary>
+            /// Gets the most common ammo type from the top half of a magazine, otherwise NULL.
+            /// </summary>
+            /// <param name="magItemPtr"></param>
+            /// <returns></returns>
+            private static string GetCommonAmmoFromMag(ulong magItemPtr)
+            {
+                var cartridges = 0x0ul;
+                try
+                {
+                    cartridges = Memory.ReadPtr(magItemPtr + Offsets.LootItemMagazine.Cartridges);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("ERROR Getting Magazine Cartridges: " + ex.Message, "Ammo Info", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return "NULL";
+                }
+                var magStackPtr = Memory.ReadPtr(cartridges + Offsets.StackSlot._items);
+                int maxCount = Memory.ReadValue<int>(cartridges + Offsets.StackSlot.MaxCount);
+                var magStack = MemList<ulong>.Get(magStackPtr);
+                string[] ammo = new string[magStack.Count];
+                for (int i = 0; i < magStack.Count; i++)
+                {
+                    var template = Memory.ReadPtr(magStack[i] + Offsets.LootItem.Template);
+                    if (template != 0x0)
+                    {
+                        var idPtr = Memory.ReadValue<Types.MongoID>(template + Offsets.ItemTemplate._id);
+                        var ammoId = Memory.ReadUnityString(idPtr.StringID, 32);
+                        if (EftDataManager.AllItems.TryGetValue(ammoId, out var ammoItem))
+                            ammo[i] = ammoItem?.ShortName;
+                    }
+                    else
+                    {
+                        ammo[i] = "NULL";
+                    }
+                }
+                return ammo.GroupBy(x => x)
+                            .OrderByDescending(g => g.Count())
+                            .FirstOrDefault()?.Key;
+            }
+            /// <summary>
             /// Gets the name of the ammo round currently loaded in this chamber, otherwise NULL.
             /// </summary>
             /// <param name="chamber">Chamber to check.</param>
             /// <returns>Short name of ammo in chamber, or null if no round loaded.</returns>
+            /// 
             private static string GetLoadedAmmoName(Chamber chamber)
             {
                 if (chamber != 0x0)
@@ -376,6 +437,43 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                             var magStackPtr = Memory.ReadPtr(cartridges + Offsets.StackSlot._items);
                             magStack = MemList<ulong>.Get(magStackPtr);
                             firstRound = magStack[0];
+                        }
+                    }
+                    return Memory.ReadPtr(firstRound + Offsets.LootItem.Template);
+                }
+                finally
+                {
+                    chambers?.Dispose();
+                    magChambers?.Dispose();
+                    magStack?.Dispose();
+                }
+            }
+
+            public static ulong GetAmmoTemplateFromWeaponV2(ulong lootItemBase, bool magOnly)
+            {
+                var chambersPtr = Memory.ReadValue<ulong>(lootItemBase + Offsets.LootItemWeapon.Chambers);
+                ulong firstRound;
+                MemArray<Chamber> chambers = null;
+                MemArray<Chamber> magChambers = null;
+                MemList<ulong> magStack = null;
+                try
+                {
+                    if (chambersPtr != 0x0 && (chambers = MemArray<Chamber>.Get(chambersPtr)).Count > 0) // Single chamber, or for some shotguns, multiple chambers
+                        firstRound = !magOnly ? Memory.ReadPtr(chambers.First(x => x.HasBullet(true)) + Offsets.Slot.ContainedItem) : 0x0;
+                    else
+                    {
+                        var magSlot = Memory.ReadPtr(lootItemBase + Offsets.LootItemWeapon._magSlotCache);
+                        var magItemPtr = Memory.ReadPtr(magSlot + Offsets.Slot.ContainedItem);
+                        var magChambersPtr = Memory.ReadPtr(magItemPtr + Offsets.LootItemMod.Slots);
+                        magChambers = MemArray<Chamber>.Get(magChambersPtr);
+                        if (magChambers.Count > 0) // Revolvers, etc.
+                            firstRound = !magOnly ? Memory.ReadPtr(magChambers.First(x => x.HasBullet(true)) + Offsets.Slot.ContainedItem) : 0x0;
+                        else // Regular magazines
+                        {
+                            var cartridges = Memory.ReadPtr(magItemPtr + Offsets.LootItemMagazine.Cartridges);
+                            var magStackPtr = Memory.ReadPtr(cartridges + Offsets.StackSlot._items);
+                            magStack = MemList<ulong>.Get(magStackPtr);
+                            firstRound = magOnly ? magStack[0] : 0;
                         }
                     }
                     return Memory.ReadPtr(firstRound + Offsets.LootItem.Template);

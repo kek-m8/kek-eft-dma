@@ -28,6 +28,7 @@ using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Unity.LowLevel;
 using LonesEFTRadar.Tarkov.Features.MemoryWrites;
+using Microsoft.Extensions.Primitives;
 using SkiaSharp;
 using System;
 using System.CodeDom;
@@ -946,8 +947,23 @@ namespace eft_dma_radar.UI.Radar
                                 sb.Append(@$"\b {slot.Key}: \b0 ");
                                 sb.Append(slot.Value.Long);
                                 sb.Append(@" \line ");
+                                if(gear.Loot.Where(x => x._parentSlot == slot.Key && !x.IsWeapon).Count() > 0)
+                                {
+                                    sb.Append(@"Attachments: ");
+                                    sb.Append(@" \line ");
+                                    foreach (var ok in gear.Loot.Where(x => x._parentSlot == slot.Key && !x.IsWeapon))
+                                    {
+                                        if (!GameData.PlateLevel.TryGetValue(ok.Name, out var lvl))
+                                            sb.Append(@$"       \b {ok.Name} \t0 \b0");
+                                        else
+                                            sb.Append(@$"       \b {ok.ShortName} (LVL {lvl}) \b0");
+                                        sb.Append(@" \line ");
+                                        sb.Append(@" \line ");
+                                    }
+                                }
                                 sb.Append(@" \line ");
                             }
+                            /*
                             int index = 0;
                             foreach (var loot in gear.Loot.Where(x => x.IsArmorPlate))
                             {
@@ -956,7 +972,7 @@ namespace eft_dma_radar.UI.Radar
                                 sb.Append(@$"\b Plate {(index == 0 ? "Front" : (index == 1 ? "Back" : (index >= 2 ? $"Side {index - 1}" : "")))}: \b0 {loot.ShortName} (LVL {lvl})");
                                 sb.Append(@" \line ");
                                 index++;
-                            }
+                            }*/
                         }
                         else
                         {
