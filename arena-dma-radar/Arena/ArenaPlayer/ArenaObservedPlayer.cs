@@ -75,12 +75,6 @@ namespace arena_dma_radar.Arena.ArenaPlayer
         /// Player's Current Health Status
         /// </summary>
         public Enums.ETagStatus HealthStatus { get; private set; } = Enums.ETagStatus.Healthy;
-
-        public float[] Health = new float[Enum.GetValues(typeof(Enums.EBodyPart)).Length];
-        /// <summary>
-        /// Current state of the player
-        /// </summary>
-        public Enums.EPlayerState PlayerState { get; private set; }
         /// <summary>
         /// Player's Gear/Loadout Information and contained items.
         /// </summary>
@@ -107,14 +101,13 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             InventoryControllerAddr = ObservedPlayerController + Offsets.ObservedPlayerController.InventoryController;
             HandsControllerAddr = ObservedPlayerController + Offsets.ObservedPlayerController.HandsController;
             CorpseAddr = ObservedHealthController + Offsets.ObservedHealthController.PlayerCorpse;
-            BodyStateAddr = ObservedHealthController + Offsets.ObservedHealthController.BodyState;
 
 
             AccountID = GetAccountID();
             IsFocused = CheckIfFocused();
             TeamID = GetTeamID();
             MovementContext = GetMovementContext();
-            SetPlayerState();
+            //SetPlayerState();
             RotationAddress = ValidateRotationAddr(MovementContext + Offsets.ObservedMovementController.Rotation);
             /// Setup Transforms
             this.Skeleton_ = new Skeleton(this, GetTransformInternalChain);
@@ -145,7 +138,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             return Memory.ReadUnityString(idPTR);
         }
 
-        private float GetHealthForBone(Enums.EBodyPart bone)
+        /*private float GetHealthForBone(Enums.EBodyPart bone)
         {
             var dictPtr = Memory.ReadValue<ulong>(BodyStateAddr, false);
             var dict = MemDictionary<ulong, ulong>.Get(dictPtr, false);
@@ -165,7 +158,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                 }
             }
             return -1f; // not found
-        }
+        }*/
 
         /// <summary>
         /// Gets player's Team ID.
@@ -193,10 +186,10 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             return name;
         }
 
-        private void SetPlayerState()
+        /*private void SetPlayerState()
         {
             PlayerState = (Enums.EPlayerState)Memory.ReadValue<byte>(MovementContext + Offsets.ObservedMovementController.CurrentStateName);
-        }
+        }*/
 
         /// <summary>
         /// Get Movement Context Instance.
@@ -216,7 +209,7 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             if (isActive)
             {
                 UpdateHealthStatus();
-                SetPlayerState();
+                //SetPlayerState();
             }
             base.OnRegRefresh(index, registered, isActive);
         }
@@ -238,11 +231,6 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                     HealthStatus = Enums.ETagStatus.Injured;
                 else
                     HealthStatus = Enums.ETagStatus.Healthy;
-                for(int i = 0; i < Health.Length; i++)
-                {
-                    var bone = (Enums.EBodyPart)i;
-                    Health[i] = GetHealthForBone(bone);
-                }
             }
             catch (Exception ex)
             {

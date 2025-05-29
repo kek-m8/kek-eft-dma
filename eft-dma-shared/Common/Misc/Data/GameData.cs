@@ -36,7 +36,8 @@ namespace eft_dma_shared.Common.Misc.Data
             ["Arena_Bay5"] = "Bay 5",
             ["Arena_AutoService"] = "Chop Shop",
             ["Arena_Yard"] = "Yard",
-            ["Arena_Prison"] = "Fort"
+            ["Arena_Prison"] = "Fort",
+            ["Arena_Iceberg"] = "Iceberg"
         }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
 
         public static FrozenDictionary<string, FrozenDictionary<string, Vector3>> Switches { get; } = new Dictionary<string, FrozenDictionary<string, Vector3>>(StringComparer.OrdinalIgnoreCase)
