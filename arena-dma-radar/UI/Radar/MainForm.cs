@@ -531,6 +531,7 @@ namespace arena_dma_radar.UI.Radar
             checkBox_Aimview.Checked = Config.ShowESPWidget;
             checkBox_Bomb.Checked = Config.ESP.PlayerRendering.ShowBomb;
             checkBox_RadarBomb.Checked = Config.ShowBomb;
+            checkBox_ESP_Refill.Checked = Config.ESP.ShowRefillContainers;
             trackBar_UIScale.Value = (int)Math.Round(Config.UIScale * 100);
             textBox_ResWidth.Text = Config.MonitorWidth.ToString();
             textBox_ResHeight.Text = Config.MonitorHeight.ToString();
@@ -1882,6 +1883,11 @@ namespace arena_dma_radar.UI.Radar
         {
             if (radioButton_BoxBones.Checked)
                 Config.ESP.PlayerRendering.RenderingMode = ESPPlayerRenderMode.BonesNBox;
+        }
+
+        private void checkBox_ESP_Refill_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowRefillContainers = checkBox_ESP_Refill.Checked;
         }
     }
 }

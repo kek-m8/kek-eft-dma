@@ -9,6 +9,7 @@ using System.Runtime;
 using eft_dma_shared.Common.DMA;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Misc.Commercial;
+using LonesArenaRadar.Arena.GameWorld;
 
 namespace arena_dma_radar.Arena
 {
@@ -73,6 +74,7 @@ namespace arena_dma_radar.Arena
         public LocalPlayer LocalPlayer => Game?.LocalPlayer;
         public LocalGameWorld Game { get; private set; }
         public LootManager Loot => Game?.Loot;
+        public InteractiveManager Interactive => Game?.Interactive;
 
         public MemDMA() : base(Config.FpgaAlgo, Config.MemMapEnabled)
         {

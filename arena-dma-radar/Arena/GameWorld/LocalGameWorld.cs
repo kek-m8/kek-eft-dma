@@ -10,6 +10,7 @@ using arena_dma_radar.Arena.Features.MemoryWrites;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Misc.Commercial;
 using arena_dma_radar.Arena.GameWorld;
+using LonesArenaRadar.Arena.GameWorld;
 
 namespace arena_dma_radar.Arena.GameWorld
 {
@@ -28,6 +29,7 @@ namespace arena_dma_radar.Arena.GameWorld
         /// </summary>
         private ulong Base { get; }
 
+        private readonly InteractiveManager _interactiveManager;
         private static readonly WaitTimer _refreshWait = new();
         private readonly CancellationTokenSource _cts = new();
         private readonly RegisteredPlayers _rgtPlayers;
@@ -39,6 +41,7 @@ namespace arena_dma_radar.Arena.GameWorld
         private readonly LootManager _lootManager;
 
         public LootManager Loot => _lootManager;
+        public InteractiveManager Interactive => _interactiveManager;
 
         /// <summary>
         /// Current Game Instance Mode.
@@ -134,6 +137,7 @@ namespace arena_dma_radar.Arena.GameWorld
             CameraManager = new();
             _lootManager = new(localGameWorld, ct);
             _grenadeManager = new(localGameWorld);
+            _interactiveManager = new(localGameWorld);
         }
 
         /// <summary>
@@ -225,6 +229,7 @@ namespace arena_dma_radar.Arena.GameWorld
                 ThrowIfMatchEnded();
                 _rgtPlayers.Refresh();
                 _lootManager.Refresh();
+                _interactiveManager.Refresh();
             }
             catch (RaidEnded)
             {

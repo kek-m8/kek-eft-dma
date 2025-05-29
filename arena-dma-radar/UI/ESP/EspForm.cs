@@ -10,6 +10,8 @@ using eft_dma_shared.Common.ESP;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Misc.Commercial;
 using arena_dma_radar.Arena.Loot;
+using LonesArenaRadar.Arena.GameWorld.Interactive;
+using LonesArenaRadar.Arena.GameWorld;
 
 namespace arena_dma_radar.UI.ESP
 {
@@ -184,7 +186,9 @@ namespace arena_dma_radar.UI.ESP
                         DrawNotShown(canvas);
                     else
                     {
-                        DrawLoot(canvas, localPlayer);
+                        if(Config.ESP.ShowRefillContainers)
+                            DrawRefillContainer(canvas, localPlayer);
+                        //DrawLoot(canvas, localPlayer);
                         if (Config.ESP.ShowGrenades)
                             DrawGrenades(canvas, localPlayer);
                         foreach (var player in allPlayers)
@@ -270,6 +274,25 @@ namespace arena_dma_radar.UI.ESP
             if (wepInfo is not null)
                 canvas.DrawText(wepInfo, x, y, SKPaints.TextMagazineInfoESP); // Draw Weapon Info
             canvas.DrawText(counter, x, y + ((SKPaints.TextMagazineESP.FontSpacing - SKPaints.TextMagazineInfoESP.FontSpacing) + 6f * Config.ESP.FontScale), SKPaints.TextMagazineESP); // Draw Counter
+        }
+
+        private void DrawRefillContainer(SKCanvas canvas, LocalPlayer localPlayer)
+        {
+            var boxHalf = 3.5f * ESP.Config.FontScale;
+            foreach (var refill in Memory.Interactive.RefillContainers)
+            {
+                var refillPosition = refill.Position;
+
+                if (!CameraManagerBase.WorldToScreen(ref refillPosition, out var scrPos))
+                    continue;
+
+                var boxPt = new SKRect(scrPos.X - boxHalf, scrPos.Y + boxHalf,
+                    scrPos.X + boxHalf, scrPos.Y - boxHalf);
+                var textPt = new SKPoint(scrPos.X,
+                    scrPos.Y + 16f * ESP.Config.FontScale);
+                canvas.DrawRect(boxPt, SKPaints.PaintExplosives);
+                canvas.DrawText("Refill", textPt, SKPaints.TextBasicESPLeftAligned);
+            }
         }
 
         private static void DrawLoot(SKCanvas canvas, LocalPlayer localPlayer)

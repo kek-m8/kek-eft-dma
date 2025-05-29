@@ -145,6 +145,7 @@
             label_Pos = new Label();
             skglControl_Radar = new SKGLControl();
             tabControl1 = new TabControl();
+            checkBox_ESP_Refill = new CheckBox();
             tabPage2.SuspendLayout();
             flowLayoutPanel_Settings.SuspendLayout();
             flowLayoutPanel_RadarSettings.SuspendLayout();
@@ -1021,6 +1022,7 @@
             flowLayoutPanel_ESPSettings.Controls.Add(comboBox_ESPAutoFS);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Grenades);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_ShowMag);
+            flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_Refill);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_HighAlert);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_FireportAim);
             flowLayoutPanel_ESPSettings.Controls.Add(checkBox_ESP_AimFov);
@@ -1149,7 +1151,7 @@
             // checkBox_ESP_HighAlert
             // 
             checkBox_ESP_HighAlert.AutoSize = true;
-            checkBox_ESP_HighAlert.Location = new Point(231, 71);
+            checkBox_ESP_HighAlert.Location = new Point(381, 71);
             checkBox_ESP_HighAlert.Name = "checkBox_ESP_HighAlert";
             checkBox_ESP_HighAlert.Size = new Size(80, 19);
             checkBox_ESP_HighAlert.TabIndex = 70;
@@ -1160,7 +1162,7 @@
             // checkBox_ESP_FireportAim
             // 
             checkBox_ESP_FireportAim.AutoSize = true;
-            checkBox_ESP_FireportAim.Location = new Point(317, 71);
+            checkBox_ESP_FireportAim.Location = new Point(467, 71);
             checkBox_ESP_FireportAim.Name = "checkBox_ESP_FireportAim";
             checkBox_ESP_FireportAim.Size = new Size(124, 19);
             checkBox_ESP_FireportAim.TabIndex = 72;
@@ -1171,7 +1173,7 @@
             // checkBox_ESP_AimFov
             // 
             checkBox_ESP_AimFov.AutoSize = true;
-            checkBox_ESP_AimFov.Location = new Point(447, 71);
+            checkBox_ESP_AimFov.Location = new Point(597, 71);
             checkBox_ESP_AimFov.Name = "checkBox_ESP_AimFov";
             checkBox_ESP_AimFov.Size = new Size(105, 19);
             checkBox_ESP_AimFov.TabIndex = 43;
@@ -1182,7 +1184,7 @@
             // checkBox_ESP_AimLock
             // 
             checkBox_ESP_AimLock.AutoSize = true;
-            checkBox_ESP_AimLock.Location = new Point(558, 71);
+            checkBox_ESP_AimLock.Location = new Point(708, 71);
             checkBox_ESP_AimLock.Name = "checkBox_ESP_AimLock";
             checkBox_ESP_AimLock.Size = new Size(126, 19);
             checkBox_ESP_AimLock.TabIndex = 49;
@@ -1193,7 +1195,7 @@
             // checkBox_ESP_StatusText
             // 
             checkBox_ESP_StatusText.AutoSize = true;
-            checkBox_ESP_StatusText.Location = new Point(690, 71);
+            checkBox_ESP_StatusText.Location = new Point(840, 71);
             checkBox_ESP_StatusText.Name = "checkBox_ESP_StatusText";
             checkBox_ESP_StatusText.Size = new Size(114, 19);
             checkBox_ESP_StatusText.TabIndex = 73;
@@ -1205,7 +1207,7 @@
             // 
             checkBox_ESP_FPS.AutoSize = true;
             flowLayoutPanel_ESPSettings.SetFlowBreak(checkBox_ESP_FPS, true);
-            checkBox_ESP_FPS.Location = new Point(810, 71);
+            checkBox_ESP_FPS.Location = new Point(960, 71);
             checkBox_ESP_FPS.Name = "checkBox_ESP_FPS";
             checkBox_ESP_FPS.Size = new Size(86, 19);
             checkBox_ESP_FPS.TabIndex = 5;
@@ -1535,6 +1537,17 @@
             tabControl1.Size = new Size(1264, 681);
             tabControl1.TabIndex = 8;
             // 
+            // checkBox_ESP_Refill
+            // 
+            checkBox_ESP_Refill.AutoSize = true;
+            checkBox_ESP_Refill.Location = new Point(231, 71);
+            checkBox_ESP_Refill.Name = "checkBox_ESP_Refill";
+            checkBox_ESP_Refill.Size = new Size(144, 19);
+            checkBox_ESP_Refill.TabIndex = 74;
+            checkBox_ESP_Refill.Text = "Show Refill Containers";
+            checkBox_ESP_Refill.UseVisualStyleBackColor = true;
+            checkBox_ESP_Refill.CheckedChanged += checkBox_ESP_Refill_CheckedChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1702,6 +1715,7 @@
         private RadioButton radioButton_Box;
         private RadioButton radioButton_BoxBones;
         private RadioButton radioButton_P;
+        private CheckBox checkBox_ESP_Refill;
     }
 }
 

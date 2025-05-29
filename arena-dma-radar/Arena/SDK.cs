@@ -50,6 +50,14 @@ namespace SDK
             public const uint MainPlayer = 0x1B0; // EFT.Player
             public const uint Grenades = 0x210; // -.\uE3E3<Int32, Throwable>
             public const uint IsInRaid = 0x290; // [HUMAN] Bool
+            public static readonly uint[] InteractiveObject = new uint[] { 0x268, 0x30 }; // EFT.World, EFT.Interactive.WorldInteractiveObject[]
+        }
+
+        public readonly partial struct WorldInteractiveObject
+        {
+            public const uint KeyId = 0x58; // String
+            public const uint Id = 0x60; // String
+            public const uint Template = 0x138; // String
         }
 
         public readonly partial struct Grenade

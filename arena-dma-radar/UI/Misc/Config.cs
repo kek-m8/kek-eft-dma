@@ -478,6 +478,9 @@ namespace arena_dma_radar.UI.Misc
         [JsonPropertyName("showGrenades")]
         public bool ShowGrenades { get; set; } = true;
 
+        [JsonPropertyName("showRefillContainers")]
+        public bool ShowRefillContainers { get; set; } = true;
+
         /// <summary>
         /// Display Aimline out of the barrel fireport.
         /// </summary>
