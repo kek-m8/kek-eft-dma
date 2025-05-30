@@ -23,6 +23,7 @@
 		<EmbeddedResource Include="..\Resources\visibilitycheck.bundle" />
 		<EmbeddedResource Include="..\Resources\FILE_CRYPT_KEY.bin" />
 		<EmbeddedResource Include="..\Resources\DEFAULT_DATA.json" />
+		<EmbeddedResource Include="..\Resources\Maps.bin" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdRegular.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdMedium.otf" />
 		<EmbeddedResource Include="..\Resources\NeoSansStdBold.otf" />
@@ -60,10 +61,6 @@
     <Reference Include="VmmFrost">
       <HintPath>..\VmmFrost.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Maps.bin" />
   </ItemGroup>
   
   
