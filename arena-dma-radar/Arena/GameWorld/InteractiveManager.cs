@@ -14,6 +14,7 @@ namespace LonesArenaRadar.Arena.GameWorld
     {
         private readonly ulong _localGameWorld;
         private readonly HashSet<ArenaPresetRefillContainer> _refillContainers;
+        private bool _kill = false;
 
         public IReadOnlyCollection<ArenaPresetRefillContainer> RefillContainers => _refillContainers;
 
@@ -28,7 +29,7 @@ namespace LonesArenaRadar.Arena.GameWorld
         {
             try
             {
-                var interactableArrayPtr = Memory.ReadPtrChain(_localGameWorld, Offsets.ClientLocalGameWorld.InteractiveObject, false);
+                var interactableArrayPtr = Memory.ReadPtrChain(_localGameWorld, new uint[] { 0x268, 0x30 }, false);
                 using var array = MemArray<ulong>.Get(interactableArrayPtr, false);
                 var set = array.Where(x => x != 0x0).ToHashSet();
                 array.Dispose();
@@ -39,17 +40,17 @@ namespace LonesArenaRadar.Arena.GameWorld
                     if (itemName == "ArenaPresetRefillContainer")
                     {
                         _refillContainers.Add(new ArenaPresetRefillContainer(item));
+                        _kill = false;
                     }
                 }
             }
-            catch (Exception e)
-            {
-                MessageBox.Show($"ERROR: {e.Message}", "InteractiveManager");
-            }
+            catch { _kill = true; return; }
         }
 
         public void Refresh()
         {
+            if (_kill)
+                return;
             if (_refillContainers.Count == 0)
             {
                 Init();

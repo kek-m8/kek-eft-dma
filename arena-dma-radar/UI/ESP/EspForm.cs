@@ -186,7 +186,7 @@ namespace arena_dma_radar.UI.ESP
                         DrawNotShown(canvas);
                     else
                     {
-                        if(Config.ESP.ShowRefillContainers && (Memory.Game.matchMode == Enums.ERaidMode.LastHero || Memory.Game.matchMode == Enums.ERaidMode.CheckPoint))
+                        if(Config.ESP.ShowRefillContainers)
                             DrawRefillContainer(canvas, localPlayer);
                         //DrawLoot(canvas, localPlayer);
                         if (Config.ESP.ShowGrenades)

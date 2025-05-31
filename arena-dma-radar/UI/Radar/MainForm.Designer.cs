@@ -111,6 +111,7 @@
             comboBox_ESPAutoFS = new ComboBox();
             checkBox_ESP_Grenades = new CheckBox();
             checkBox_ESP_ShowMag = new CheckBox();
+            checkBox_ESP_Refill = new CheckBox();
             checkBox_ESP_HighAlert = new CheckBox();
             checkBox_ESP_FireportAim = new CheckBox();
             checkBox_ESP_AimFov = new CheckBox();
@@ -145,7 +146,6 @@
             label_Pos = new Label();
             skglControl_Radar = new SKGLControl();
             tabControl1 = new TabControl();
-            checkBox_ESP_Refill = new CheckBox();
             tabPage2.SuspendLayout();
             flowLayoutPanel_Settings.SuspendLayout();
             flowLayoutPanel_RadarSettings.SuspendLayout();
@@ -1148,6 +1148,17 @@
             checkBox_ESP_ShowMag.UseVisualStyleBackColor = true;
             checkBox_ESP_ShowMag.CheckedChanged += checkBox_ESP_ShowMag_CheckedChanged;
             // 
+            // checkBox_ESP_Refill
+            // 
+            checkBox_ESP_Refill.AutoSize = true;
+            checkBox_ESP_Refill.Location = new Point(231, 71);
+            checkBox_ESP_Refill.Name = "checkBox_ESP_Refill";
+            checkBox_ESP_Refill.Size = new Size(144, 19);
+            checkBox_ESP_Refill.TabIndex = 74;
+            checkBox_ESP_Refill.Text = "Show Refill Containers";
+            checkBox_ESP_Refill.UseVisualStyleBackColor = true;
+            checkBox_ESP_Refill.CheckedChanged += checkBox_ESP_Refill_CheckedChanged;
+            // 
             // checkBox_ESP_HighAlert
             // 
             checkBox_ESP_HighAlert.AutoSize = true;
@@ -1536,17 +1547,6 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1264, 681);
             tabControl1.TabIndex = 8;
-            // 
-            // checkBox_ESP_Refill
-            // 
-            checkBox_ESP_Refill.AutoSize = true;
-            checkBox_ESP_Refill.Location = new Point(231, 71);
-            checkBox_ESP_Refill.Name = "checkBox_ESP_Refill";
-            checkBox_ESP_Refill.Size = new Size(144, 19);
-            checkBox_ESP_Refill.TabIndex = 74;
-            checkBox_ESP_Refill.Text = "Show Refill Containers";
-            checkBox_ESP_Refill.UseVisualStyleBackColor = true;
-            checkBox_ESP_Refill.CheckedChanged += checkBox_ESP_Refill_CheckedChanged;
             // 
             // MainForm
             // 
