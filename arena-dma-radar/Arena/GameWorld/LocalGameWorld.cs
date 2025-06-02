@@ -137,7 +137,8 @@ namespace arena_dma_radar.Arena.GameWorld
             CameraManager = new();
             _lootManager = new(localGameWorld, ct);
             _grenadeManager = new(localGameWorld);
-            _interactiveManager = new(localGameWorld);
+            if(MatchMode == Enums.ERaidMode.CheckPoint || MatchMode == Enums.ERaidMode.LastHero)
+                _interactiveManager = new(localGameWorld);
         }
 
         /// <summary>
@@ -228,8 +229,9 @@ namespace arena_dma_radar.Arena.GameWorld
             {
                 ThrowIfMatchEnded();
                 _rgtPlayers.Refresh();
-                _lootManager.Refresh();
-                _interactiveManager.Refresh();
+                //_lootManager.Refresh();
+                if (MatchMode == Enums.ERaidMode.CheckPoint || MatchMode == Enums.ERaidMode.LastHero)
+                    _interactiveManager.Refresh();
             }
             catch (RaidEnded)
             {
