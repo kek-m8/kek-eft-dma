@@ -169,7 +169,7 @@ namespace arena_dma_radar.UI.Misc
         /// <summary>
         /// Filename of this Config File (not full path).
         /// </summary>
-        [JsonIgnore] internal const string Filename = "Config-EFTArena.json";
+        [JsonIgnore] internal const string Filename = "Config-EFTArena-kek.json";
 
         [JsonIgnore] private static readonly Lock _syncRoot = new();
 

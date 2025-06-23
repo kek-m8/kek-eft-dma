@@ -18,7 +18,7 @@ namespace arena_dma_radar.Arena.Loot
 {
     public class LootItem : IMouseoverEntity, IMapEntity, IWorldEntity, IESPEntity
     {
-        //private static Config Config { get; } = Program.Config;
+        private static Config Config { get; } = Program.Config;
         private readonly TarkovMarketItem _item;
         public LootItem(TarkovMarketItem item)
         {
@@ -109,7 +109,7 @@ namespace arena_dma_radar.Arena.Loot
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
                 return;
             var boxHalf = 3.5f * ESP.Config.FontScale;
-            var label = GetUILabel(false);
+            var label = GetUILabel();
             var paints = GetESPPaints();
             var boxPt = new SKRect(scrPos.X - boxHalf, scrPos.Y + boxHalf,
                 scrPos.X + boxHalf, scrPos.Y - boxHalf);
@@ -125,7 +125,7 @@ namespace arena_dma_radar.Arena.Loot
 
         public virtual void Draw(SKCanvas canvas, LoneMapParams mapParams, ILocalPlayer localPlayer)
         {
-            var label = GetUILabel(false);
+            var label = GetUILabel();
             var paints = GetESPPaints();
             var heightDiff = Position.Y - localPlayer.Position.Y;
             var point = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
@@ -148,17 +148,17 @@ namespace arena_dma_radar.Arena.Loot
         /// <param name="showImportant">Show Important !! in label.</param>
         /// <param name="showQuest">Show Quest tag in label.</param>
         /// <returns>Item Label string cleaned up for UI usage.</returns>
-        public string GetUILabel(bool showQuest = false)
+        public string GetUILabel()
         {
             var label = "";
             if (this is LootContainer container)
-            {
-                var backpack = container.Loot.Any(x => x.IsBackpack);
-                var loot = container.FilteredLoot;
                 label = container.Name;
-            }
+            else
+                label += ShortName;
+
             if (string.IsNullOrEmpty(label))
                 label = "Item";
+
             return label;
         }
 

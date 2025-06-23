@@ -238,6 +238,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
             /// </summary>
             public void Update(CachedHandsInfo hands)
             {
+                bool ignore = false;
                 string ammoInChamber = null;
                 string fireType = null;
                 string ammoFromMag = null;
@@ -264,6 +265,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                 }
                 catch
                 {
+                    ignore = true;
                     var ammoTemplate_ = GetAmmoTemplateFromWeapon(hands.ItemAddr);
                     var ammoIdPtr = Memory.ReadValue<Types.MongoID>(ammoTemplate_ + Offsets.ItemTemplate._id);
                     string ammoId = Memory.ReadUnityString(ammoIdPtr.StringID);
@@ -314,7 +316,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer.Plugins
                             }
                         }
                     }
-                    if (ammoInChamber != ammoFromMag)
+                    if (ammoInChamber != ammoFromMag && !ignore)
                     {
                         Dictionary<string, int[]> bulletData = new Dictionary<string, int[]>(StringComparer.OrdinalIgnoreCase);
                         var chambers = Memory.ReadPtr(hands.ItemAddr + Offsets.LootItemWeapon.Chambers);

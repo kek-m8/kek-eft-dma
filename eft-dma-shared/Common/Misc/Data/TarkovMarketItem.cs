@@ -97,7 +97,18 @@ namespace eft_dma_shared.Common.Misc.Data
         public bool IsT7 => Tags.Contains("Thermal Vision");
 
         [JsonIgnore]
-        public bool IsThermalScope => Tags.Contains("Special scope") && !Tags.Contains("Night Vision") && !Name.ToLower().Contains("night vision scope") && !IsT7;
+        public bool IsNVG => Tags.Contains("Night Vision");
+        [JsonIgnore]
+        public bool IsAltyn => Name.Contains("altyn", StringComparison.OrdinalIgnoreCase);
+        [JsonIgnore]
+        public bool IsRysT => Name.Contains("rys-t", StringComparison.OrdinalIgnoreCase);
+        [JsonIgnore]
+        public bool IsMaska => Name.Contains("Maska-1SCh", StringComparison.OrdinalIgnoreCase);
+        [JsonIgnore]
+        public bool IsJuggernaught => Name.Contains("altyn", StringComparison.OrdinalIgnoreCase) || Name.Contains("rys-t", StringComparison.OrdinalIgnoreCase) || Name.Contains("Maska-1SCh", StringComparison.OrdinalIgnoreCase);
+
+        [JsonIgnore]
+        public bool IsThermalScope => Tags.Contains("Special scope") && !IsNVG && !Name.ToLower().Contains("night vision scope") && !IsT7;
 
         [JsonIgnore]
         public bool IsCurrency => Tags.Contains("Money");
@@ -110,7 +121,9 @@ namespace eft_dma_shared.Common.Misc.Data
         [JsonIgnore]
         public bool IsThrowable => Tags.Contains("Throwable weapon");
         [JsonIgnore]
-        public bool IsKey => Tags.Contains("Key");
+        public bool IsKey => Tags.Contains("Mechanical Key");
+        [JsonIgnore]
+        public bool IsKeycard => Tags.Contains("Keycard");
         [JsonIgnore]
         public bool IsHeadset => Tags.Contains("Headphones");
         [JsonIgnore]

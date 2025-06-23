@@ -191,11 +191,23 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public bool IsUBGL => _item.IsUBGL;
 
+        public bool IsAltyn => _item.IsAltyn;
+
+        public bool IsRysT => _item.IsRysT;
+
+        public bool IsMaska => _item.IsMaska;
+
+        public bool IsT7 => _item.IsT7;
+
+        public bool IsNVG => _item.IsNVG;
+
         public bool IsAmmo => _item.IsAmmo;
 
         public bool IsArmoredEquipment => _item.IsArmoredEquipment;
 
         public bool IsKey => _item.IsKey;
+
+        public bool IsKeycard => _item.IsKeycard;
         public bool CouldHavePlates => _item.CouldHavePlates;
 
         public bool IsSpecialItem => _item.IsSpecialItem;

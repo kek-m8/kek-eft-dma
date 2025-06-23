@@ -947,7 +947,7 @@ namespace eft_dma_radar.UI.Radar
                                 sb.Append(@$"\b {slot.Key}: \b0 ");
                                 sb.Append(slot.Value.Long);
                                 sb.Append(@" \line ");
-                                if(gear.Loot.Where(x => x._parentSlot == slot.Key && !x.IsWeapon).Count() > 0)
+                                if (gear.Loot.Where(x => x._parentSlot == slot.Key && !x.IsWeapon).Count() > 0)
                                 {
                                     sb.Append(@"Attachments: ");
                                     sb.Append(@" \line ");
@@ -2454,6 +2454,8 @@ namespace eft_dma_radar.UI.Radar
             var zoomIn = new HotkeyActionController("Zoom In");
             zoomIn.Delay = HK_ZoomTickDelay;
             zoomIn.HotkeyDelayElapsed += ZoomIn_HotkeyDelayElapsed;
+            var toggleContainer = new HotkeyActionController("Toggle Containers");
+            toggleContainer.HotkeyStateChanged += ToggleContainer_HotkeyStateChanged;
             var zoomOut = new HotkeyActionController("Zoom Out");
             zoomOut.Delay = HK_ZoomTickDelay;
             zoomOut.HotkeyDelayElapsed += ZoomOut_HotkeyDelayElapsed;
@@ -2519,6 +2521,7 @@ namespace eft_dma_radar.UI.Radar
             lootMenuPing.HotkeyStateChanged += LootMenuPing_HotkeyStateChanged;
             // Add to Static Collection:
             HotkeyManager.RegisterActionController(zoomIn);
+            HotkeyManager.RegisterActionController(toggleContainer);
             HotkeyManager.RegisterActionController(zoomOut);
             HotkeyManager.RegisterActionController(toggleLoot);
             HotkeyManager.RegisterActionController(toggleESPWidget);
@@ -2550,6 +2553,11 @@ namespace eft_dma_radar.UI.Radar
             HotkeyManager.RegisterActionController(toggleLootMenuHeader2);
             HotkeyManager.RegisterActionController(toggleLootMenu);
             HotkeyManager.RegisterActionController(lootMenuPing);
+        }
+
+        private void ToggleContainer_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void ToggleFastWeaponOps_HotkeyStateChanged(object sender, HotkeyEventArgs e)
@@ -2684,6 +2692,15 @@ namespace eft_dma_radar.UI.Radar
                 }
             }
         }
+
+        private void ToggleContainers_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State)
+            {
+                Config.Containers.Show = !Config.Containers.Show;
+            }
+        }
+
 
         private void ScrollLootMenuUp_HotkeyStateChanged(object sender, HotkeyEventArgs e)
         {
@@ -4299,6 +4316,11 @@ namespace eft_dma_radar.UI.Radar
 
                     """, "Loot Menu Enabled", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification, false);
             }
+        }
+
+        private void skglControl_Radar_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
+        {
+
         }
     }
 }

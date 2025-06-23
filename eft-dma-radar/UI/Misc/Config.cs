@@ -309,7 +309,7 @@ namespace eft_dma_radar.UI.Misc
         /// <summary>
         /// Filename of this Config File (not full path).
         /// </summary>
-        [JsonIgnore] internal const string Filename = "Config-EFT.json";
+        [JsonIgnore] internal const string Filename = "Config-EFT-kek.json";
 
         [JsonIgnore] private static readonly Lock _syncRoot = new();
 

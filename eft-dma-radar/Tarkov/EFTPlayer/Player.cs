@@ -1709,6 +1709,20 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             }
         }
 
+        private string doHelmetStuff(ObservedPlayer player)
+        {
+            try
+            {
+                if (player == null)
+                    return "ERROR"; ;
+                if (player.Gear.Loot.Any(x => x.IsAltyn)) return " ALTYN ";
+                else if (player.Gear.Loot.Any(x => x.IsRysT)) return " RYS-T ";
+                else if (player.Gear.Loot.Any(x => x.IsT7)) return " T7 ";
+                else if (player.Gear.Loot.Any(x => x.IsMaska)) return " MASKA ";
+            }
+            catch { return "ERROR"; }
+            return null;
+        }
         public void DrawMouseover(SKCanvas canvas, LoneMapParams mapParams, LocalPlayer localPlayer)
         {
             if (this == localPlayer)
@@ -1878,11 +1892,15 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 var lines = new List<string>();
                 if (showInfo)
                 {
+                    string tank = null;
                     string health = null;
                     if (this is ObservedPlayer observed)
+                    {
                         health = observed.HealthStatus is Enums.ETagStatus.Healthy
                             ? null
                             : $" ({observed.HealthStatus.GetDescription()})"; // Only display abnormal health status
+                        tank = doHelmetStuff(observed);
+                    }
                     string fac = null;
                     if (IsHostilePmc) // Prepend PMC Faction
                     {
@@ -1891,7 +1909,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         else if (PlayerSide is Enums.EPlayerSide.Bear)
                             fac = $"B:";
                     }
-                    lines.Add($"{fac}{Name}{health}");
+                    lines.Add($"{fac}{Name}{(tank is not null && !tank.Equals("ERROR") ? tank : "")}{health}");
                 }
                 if (this is ObservedPlayer player && showClass)
                 {
