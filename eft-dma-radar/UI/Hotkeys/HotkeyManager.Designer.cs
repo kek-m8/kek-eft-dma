@@ -58,6 +58,7 @@
             groupBox_Main.TabIndex = 0;
             groupBox_Main.TabStop = false;
             groupBox_Main.Text = "Set Hotkeys In-Game";
+            groupBox_Main.Enter += groupBox_Main_Enter;
             // 
             // button_Save
             // 

@@ -193,6 +193,10 @@ namespace eft_dma_radar.Tarkov.Loot
 
         public bool IsAltyn => _item.IsAltyn;
 
+        public bool IsVulkan => _item.IsVulkan;
+
+        public bool IsWelding => _item.IsWelding;
+
         public bool IsRysT => _item.IsRysT;
 
         public bool IsMaska => _item.IsMaska;

@@ -138,14 +138,13 @@ namespace eft_dma_radar.UI.Hotkeys
                     _hotkeys.TryAdd((UnityKeyCode)kvp.Key, action);
                 }
             }
-        if(Config.ESP.ShowLootMenu)
             _hotkeys.TryAdd(UnityKeyCode.UpArrow, new("Loot Menu Scroll Up"));
             _hotkeys.TryAdd(UnityKeyCode.DownArrow, new("Loot Menu Scroll Down"));
             _hotkeys.TryAdd(UnityKeyCode.LeftArrow, new("Loot Menu Header Change"));
             _hotkeys.TryAdd(UnityKeyCode.RightArrow, new("Loot Menu Header Change2"));
             _hotkeys.TryAdd(UnityKeyCode.RightControl, new("Loot Menu Toggle"));
             _hotkeys.TryAdd(UnityKeyCode.RightShift, new("Loot Ping"));
-        _parent = parent;
+            _parent = parent;
         }
 
         /// <summary>
@@ -378,6 +377,11 @@ namespace eft_dma_radar.UI.Hotkeys
         #endregion
 
         private void HotkeyManager_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox_Main_Enter(object sender, EventArgs e)
         {
 
         }

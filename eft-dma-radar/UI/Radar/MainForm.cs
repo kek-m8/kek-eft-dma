@@ -2555,11 +2555,6 @@ namespace eft_dma_radar.UI.Radar
             HotkeyManager.RegisterActionController(lootMenuPing);
         }
 
-        private void ToggleContainer_HotkeyStateChanged(object sender, HotkeyEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void ToggleFastWeaponOps_HotkeyStateChanged(object sender, HotkeyEventArgs e)
         {
             if (e.State)
@@ -2693,7 +2688,7 @@ namespace eft_dma_radar.UI.Radar
             }
         }
 
-        private void ToggleContainers_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        private void ToggleContainer_HotkeyStateChanged(object sender, HotkeyEventArgs e)
         {
             if (e.State)
             {
@@ -4319,6 +4314,11 @@ namespace eft_dma_radar.UI.Radar
         }
 
         private void skglControl_Radar_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
+        {
+
+        }
+
+        private void trackBar_ESPPlayerDist_Scroll(object sender, EventArgs e)
         {
 
         }

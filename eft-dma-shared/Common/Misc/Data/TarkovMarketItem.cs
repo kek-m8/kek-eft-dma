@@ -98,12 +98,17 @@ namespace eft_dma_shared.Common.Misc.Data
 
         [JsonIgnore]
         public bool IsNVG => Tags.Contains("Night Vision");
+
+        [JsonIgnore]
+        public bool IsWelding => Name.Contains("welding mask", StringComparison.OrdinalIgnoreCase);
         [JsonIgnore]
         public bool IsAltyn => Name.Contains("altyn", StringComparison.OrdinalIgnoreCase);
         [JsonIgnore]
         public bool IsRysT => Name.Contains("rys-t", StringComparison.OrdinalIgnoreCase);
         [JsonIgnore]
         public bool IsMaska => Name.Contains("Maska-1SCh", StringComparison.OrdinalIgnoreCase);
+        [JsonIgnore]
+        public bool IsVulkan => Name.Contains("vulkan", StringComparison.OrdinalIgnoreCase);
         [JsonIgnore]
         public bool IsJuggernaught => Name.Contains("altyn", StringComparison.OrdinalIgnoreCase) || Name.Contains("rys-t", StringComparison.OrdinalIgnoreCase) || Name.Contains("Maska-1SCh", StringComparison.OrdinalIgnoreCase);
 

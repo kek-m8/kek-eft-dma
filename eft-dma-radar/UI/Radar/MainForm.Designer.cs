@@ -3415,6 +3415,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_ESPPlayerDist.TabIndex = 78;
             trackBar_ESPPlayerDist.TickStyle = TickStyle.None;
             trackBar_ESPPlayerDist.Value = 5;
+            trackBar_ESPPlayerDist.Scroll += trackBar_ESPPlayerDist_Scroll;
             trackBar_ESPPlayerDist.ValueChanged += trackBar1_Scroll;
             // 
             // label_EspQuestHelperDist

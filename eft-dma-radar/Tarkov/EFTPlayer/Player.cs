@@ -23,6 +23,7 @@ using static SDK.Offsets;
 using static eft_dma_radar.UI.Radar.MainForm;
 using System.Net.Http.Json;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace eft_dma_radar.Tarkov.EFTPlayer
 {
@@ -1446,7 +1447,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             name = "ERROR"; // In case POS stops updating, let us know!
                         else
                             name = Name;
-                        string health = null; string level = null;
+                        string health = null; string level = null; string tank = null;
                         if (this is ObservedPlayer observed)
                         {
                             health = observed.HealthStatus is Enums.ETagStatus.Healthy
@@ -1454,9 +1455,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                                 : $" ({observed.HealthStatus.GetDescription()})"; // Only display abnormal health status
                             if (observed.Profile?.Level is int levelResult)
                                 level = $"L{levelResult}:";
+                            tank = doHelmetStuff(observed);
 
                         }
-                        lines.Add($"{level}{name}{health}");
+                        lines.Add($"{level}{name} {(tank is not null && !tank.Equals("ERROR", StringComparison.OrdinalIgnoreCase) ? $" {tank}" : "")} {health}");
                         if(this is ObservedPlayer player)
                         {
                             if (showClass)
@@ -1715,10 +1717,12 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             {
                 if (player == null)
                     return "ERROR"; ;
-                if (player.Gear.Loot.Any(x => x.IsAltyn)) return " ALTYN ";
-                else if (player.Gear.Loot.Any(x => x.IsRysT)) return " RYS-T ";
-                else if (player.Gear.Loot.Any(x => x.IsT7)) return " T7 ";
-                else if (player.Gear.Loot.Any(x => x.IsMaska)) return " MASKA ";
+                if (player.Gear.Loot.Any(x => x.IsAltyn)) return " !! ALTYN !!";
+                else if (player.Gear.Loot.Any(x => x.IsRysT)) return " !! RYS-T !!";
+                else if (player.Gear.Loot.Any(x => x.IsT7)) return " !! T7 !!";
+                else if (player.Gear.Loot.Any(x => x.IsMaska)) return " !! MASKA !!";
+                else if (player.Gear.Loot.Any(x => x.IsWelding)) return " !! TAGILLA !!";
+                else if (player.Gear.Loot.Any(x => x.IsVulkan)) return " !! VULKAN !!";
             }
             catch { return "ERROR"; }
             return null;
@@ -1909,7 +1913,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         else if (PlayerSide is Enums.EPlayerSide.Bear)
                             fac = $"B:";
                     }
-                    lines.Add($"{fac}{Name}{(tank is not null && !tank.Equals("ERROR") ? tank : "")}{health}");
+                    lines.Add($"{fac}{Name}{(tank is not null && !tank.Equals("ERROR") ? $" {tank}" : "")}{health}");
                 }
                 if (this is ObservedPlayer player && showClass)
                 {
