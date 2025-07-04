@@ -149,7 +149,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
                 {
                     //canvas.DrawText(ID.Equals("67b49e7335dec48e3e05e057") ? "F-1 (delay)" : Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
                     var grenadeName = 
-                        new List<string> { ID.Equals("67b49e7335dec48e3e05e057") ? Name + " ( DELAY )" : Name, Utils.GetDistPretty(Position, localPlayer.Position) };
+                        new List<string> { Name, Utils.GetDistPretty(Position, localPlayer.Position) };
                     new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }
                     .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
                 }
@@ -159,7 +159,7 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
             if (_config.ESP.ShowGrenadeName)
             {
                 var grenadeName =
-                        new List<string> { ID.Equals("67b49e7335dec48e3e05e057") ? Name + " ( DELAY )" : Name, Utils.GetDistPretty(Position, localPlayer.Position) };
+                        new List<string> { Name, Utils.GetDistPretty(Position, localPlayer.Position) };
                 new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }
                 .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
             }
