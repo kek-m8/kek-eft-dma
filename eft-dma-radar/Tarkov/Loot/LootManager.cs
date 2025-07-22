@@ -216,16 +216,26 @@ namespace eft_dma_radar.Tarkov.Loot
                 {
                     try
                     {
-                        var itemOwner = Memory.ReadPtr(interactiveClass + Offsets.LootableContainer.ItemOwner);
-                        var ownerItemBase = Memory.ReadPtr(itemOwner + Offsets.LootableContainerItemOwner.RootItem);
-                        var ownerItemTemplate = Memory.ReadPtr(ownerItemBase + Offsets.LootItem.Template);
-                        var ownerItemBsgIdPtr = Memory.ReadValue<Types.MongoID>(ownerItemTemplate + Offsets.ItemTemplate._id);
-                        var ownerItemBsgId = Memory.ReadUnityString(ownerItemBsgIdPtr.StringID);
-                        bool containerOpened = Memory.ReadValue<ulong>(interactiveClass + Offsets.LootableContainer.InteractingPlayer) != 0;
-                        containers.Add(new StaticLootContainer(ownerItemBsgId, containerOpened)
+                        if (objectName.Equals("loot_collider", StringComparison.OrdinalIgnoreCase))
                         {
-                            Position = pos
-                        });
+                            loot.Add(new LootAirdrop()
+                            {
+                                Position = pos
+                            });
+                        }
+                        else
+                        {
+                            var itemOwner = Memory.ReadPtr(interactiveClass + Offsets.LootableContainer.ItemOwner);
+                            var ownerItemBase = Memory.ReadPtr(itemOwner + Offsets.LootableContainerItemOwner.RootItem);
+                            var ownerItemTemplate = Memory.ReadPtr(ownerItemBase + Offsets.LootItem.Template);
+                            var ownerItemBsgIdPtr = Memory.ReadValue<Types.MongoID>(ownerItemTemplate + Offsets.ItemTemplate._id);
+                            var ownerItemBsgId = Memory.ReadUnityString(ownerItemBsgIdPtr.StringID);
+                            bool containerOpened = Memory.ReadValue<ulong>(interactiveClass + Offsets.LootableContainer.InteractingPlayer) != 0;
+                            containers.Add(new StaticLootContainer(ownerItemBsgId, containerOpened)
+                            {
+                                Position = pos
+                            });
+                        }
                     }
                     catch
                     {

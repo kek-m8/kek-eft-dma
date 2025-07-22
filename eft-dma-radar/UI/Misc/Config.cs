@@ -537,9 +537,14 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("maxQuestItemsNum")]
         public int MaxQuestItemsNum { get; set; } = 0;
         /// <summary>
-        /// Header state
+        /// Max number of wishlist items
         /// </summary>
-        public bool LootHeaderState { get; set; } = false;
+        [JsonPropertyName("maxWishlistItemsNum")]
+        public int MaxWishlistItemsNum { get; set; } = 0;
+        /// <summary>
+        /// Header mode
+        /// </summary>
+        public LootHeaderMode LootHeaderIndex { get; set; } = 0;
         // <summary>
         // Show InGame Time (for Tasking)
         // <summary>

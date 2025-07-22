@@ -2039,6 +2039,8 @@ namespace eft_dma_radar.UI.Radar
             checkBox_FullBright.Checked = MemWriteFeature<FullBright>.Instance.Enabled;
             checkBox_FastWeaponOps.Checked = MemWriteFeature<FastWeaponOps>.Instance.Enabled;
             checkBox_FastLoadUnload.Checked = MemPatchFeature<FastLoadUnload>.Instance.Enabled;
+            checkBox_NightVision.Checked = MemWriteFeature<NightVision>.Instance.Enabled;
+            checkBox_ThermalVision.Checked = MemWriteFeature<ThermalVision>.Instance.Enabled;
 
             switch (Aimbot.Config.TargetingMode)
             {
@@ -2701,10 +2703,11 @@ namespace eft_dma_radar.UI.Radar
         {
             if (e.State && Config.ESP.DrawLootBackground)
             {
+                int[] LootScrollIndex = new int[] { Config.ESP.MaxLootItemsNum, Config.ESP.MaxQuestItemsNum, Config.ESP.MaxWishlistItemsNum };
                 Config.ESP.LootScrollIndex--;
                 if (Config.ESP.LootScrollIndex < 1)
-                    Config.ESP.LootScrollIndex = Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum;
-                else if (Config.ESP.LootScrollIndex == (Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum) + 1)
+                    Config.ESP.LootScrollIndex = LootScrollIndex[(int)Config.ESP.LootHeaderIndex];
+                else if (Config.ESP.LootScrollIndex == LootScrollIndex[(int)Config.ESP.LootHeaderIndex] + 1)
                     Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
             }
@@ -2713,10 +2716,11 @@ namespace eft_dma_radar.UI.Radar
         {
             if (e.State && Config.ESP.DrawLootBackground)
             {
+                int[] LootScrollIndex = new int[] { Config.ESP.MaxLootItemsNum, Config.ESP.MaxQuestItemsNum, Config.ESP.MaxWishlistItemsNum };
                 Config.ESP.LootScrollIndex++;
                 if (Config.ESP.LootScrollIndex < 1)
-                    Config.ESP.LootScrollIndex = Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum;
-                else if (Config.ESP.LootScrollIndex == (Config.ESP.LootHeaderState ? Config.ESP.MaxLootItemsNum : Config.ESP.MaxQuestItemsNum) + 1)
+                    Config.ESP.LootScrollIndex = LootScrollIndex[(int)Config.ESP.LootHeaderIndex];
+                else if (Config.ESP.LootScrollIndex == LootScrollIndex[(int)Config.ESP.LootHeaderIndex] + 1)
                     Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
             }
@@ -2726,7 +2730,11 @@ namespace eft_dma_radar.UI.Radar
         {
             if (e.State && Config.ESP.DrawLootBackground)
             {
-                Config.ESP.LootHeaderState = !Config.ESP.LootHeaderState;
+                Config.ESP.LootHeaderIndex--;
+                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Wishlist)
+                    Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
+                else if(Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue)
+                    Config.ESP.LootHeaderIndex = LootHeaderMode.Wishlist;
                 Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
             }
@@ -2736,7 +2744,9 @@ namespace eft_dma_radar.UI.Radar
         {
             if (e.State && Config.ESP.DrawLootBackground)
             {
-                Config.ESP.LootHeaderState = !Config.ESP.LootHeaderState;
+                Config.ESP.LootHeaderIndex++;
+                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Wishlist) Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
+                else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue) Config.ESP.LootHeaderIndex = LootHeaderMode.Wishlist;
                 Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
             }

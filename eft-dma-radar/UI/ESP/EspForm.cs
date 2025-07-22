@@ -271,6 +271,13 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             canvas.Flush();
         }
 
+        public enum LootHeaderIndex : int
+        {
+            HighestValue = 0,
+            QuestItems = 1,
+            Wishlist = 2
+        }
+
         SKPaint ESPLine_Width(float width) =>
             new SKPaint
             {
@@ -315,15 +322,22 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
 
             //header
             float headerOffsetY = 115f * scale;
-            canvas.DrawText(Config.ESP.LootHeaderState ? "HIGHEST VALUE" : " QUEST ITEMS ",
+           string[] LootHeaders = new string[]
+            {
+                "HIGHEST VALUE",
+                " QUEST ITEMS ",
+                "   WISHLIST  "
+            };
+            ;
+            canvas.DrawText(LootHeaders[((int?)Config.ESP.LootHeaderIndex ?? 0)],
                 new SKPoint(x - 30f * scale, y + headerOffsetY), SKPaints.LootMenuHeaderESP);
 
             float lineSpacing = 22.5f * scale;
             float textStartX = x - 28f * scale;
 
-            switch (Config.ESP.LootHeaderState)
+            switch (Config.ESP.LootHeaderIndex)
             {
-                case true:
+                case LootHeaderMode.HighestValue:
                     int lootCount = 1;
                     var items = GetTopGroupedLootItems(Memory.Loot.UnfilteredLoot, localPlayer.Position);
                         Config.ESP.MaxLootItemsNum = items.Count;
@@ -347,7 +361,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     }
                     break;
 
-                case false:
+                case LootHeaderMode.QuestItems:
                     int questCount = 1;
                     HashSet<string> questItems = new HashSet<string>();
                     var loot = Memory.Loot.UnfilteredLoot
@@ -411,6 +425,56 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                         }
 
                         questCount++;
+                    }
+                    break;
+                
+                case LootHeaderMode.Wishlist:
+                    int wishCount = 1;
+                    HashSet<string> wishItems = new HashSet<string>();
+                    var wloot = Memory.Loot.UnfilteredLoot
+                        .Where(x => x.IsWishlisted)
+                        .OrderBy(x => Vector3.Distance(localPlayer.Position, x.Position))
+                        .ToList();
+                    Config.ESP.MaxWishlistItemsNum = wloot.Count;
+                    string entityName = null;
+                    try
+                    {
+                        foreach (var entity in Memory.Players)
+                        {
+                            var gearWish = entity.Gear.Loot.Where(x => x.IsWishlisted);
+                            if (!gearWish.Any()) break;
+                            entityName = entity.Name + " (Entity)";
+                            foreach (var xx in gearWish)
+                            {
+                                wloot.Add(xx);
+                                entityName += " {" + xx.ShortName + "} ";
+                            }
+                        }
+                    }
+                    catch { }
+                    foreach (var item in wloot)
+                    {
+                        bool isSelected = wishCount == Config.ESP.LootScrollIndex;
+                        
+                        
+
+                        var paintToUse = isSelected && Config.ESP.DrawLootSnapline ? SKPaints.TextPMCESP : SKPaints.TextImpLootESP;
+
+                        canvas.DrawText(
+                            $"{(isSelected ? ">  " : "")}{item.ShortName} {(item.Count > 1 ? $"[{item.Count}]" : "")}" +
+                            $"(H: {(int)Math.Round(item.Position.Y - LocalPlayer.Position.Y)} D: {Utils.GetDistPretty(LocalPlayer.Position, item.Position)})",
+                            new SKPoint(textStartX, (y + 125f * scale) + (wishCount * lineSpacing)),
+                            paintToUse);
+
+                        if (isSelected && Config.ESP.DrawLootSnapline)
+                        {
+                            if (CameraManagerBase.WorldToScreen(ref item.Position, out var targetScrPos, true))
+                            {
+                                canvas.DrawLine(targetScrPos, new SKPoint(CameraManagerBase.Viewport.Width / 2, CameraManagerBase.Viewport.Height), ESPLine_Width(2f * scale));
+                            }
+                        }
+
+                        wishCount++;
                     }
                     break;
             }
