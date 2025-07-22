@@ -584,6 +584,7 @@ namespace SDK
         public readonly partial struct MovementContext
         {
             public const uint Player = 0x10; // EFT.Player
+            public const uint PlantState = 0x68; // EFT.BaseMovementState
             public const uint CurrentState = 0xE0; // EFT.BaseMovementState
             public const uint _states = 0x1E0; // System.Collections.Generic.Dictionary<Byte, BaseMovementState>
             public const uint _movementStates = 0x200; // -.IPlayerStateContainerBehaviour[]

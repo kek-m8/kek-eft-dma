@@ -1401,6 +1401,11 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_NoRecoil.Enabled = enabled;
         }
 
+        private void checkBox_InstantPlant_CheckedChanged(object sender, EventArgs e)
+        {
+            MemWriteFeature<InstantPlant>.Instance.Enabled = checkBox_InstantPlant.Checked;
+        }
+
         private void checkBox_InfStamina_CheckedChanged(object sender, EventArgs e)
         {
             MemWriteFeature<InfStamina>.Instance.Enabled = checkBox_InfStamina.Checked;
@@ -4319,6 +4324,11 @@ namespace eft_dma_radar.UI.Radar
         }
 
         private void trackBar_ESPPlayerDist_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged_3(object sender, EventArgs e)
         {
 
         }

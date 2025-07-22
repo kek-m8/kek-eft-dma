@@ -870,6 +870,13 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("enableNoVisor")]
         public bool NoVisor { get; set; } = false;
 
+
+        /// <summary>
+        /// Allows instantly planting certain quest items.
+        /// </summary>
+        [JsonPropertyName("instantPlant")]
+        public bool InstantPlant { get; set; } = false;
+
         /// <summary>
         /// Enable ThermalVision
         /// </summary>
