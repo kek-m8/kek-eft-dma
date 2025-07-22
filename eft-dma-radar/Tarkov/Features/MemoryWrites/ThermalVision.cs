@@ -25,7 +25,7 @@ namespace LonesEFTRadar.Tarkov.Features.MemoryWrites
             {
                 if (!Memory.InRaid)
                     return;
-                ulong thermalVision = CameraManager.GetNightVision();
+                ulong thermalVision = CameraManager.GetThermalVision(false);
                 if (thermalVision != 0)
                 {
                     writes.AddValueEntry(thermalVision + Offsets.ThermalVision.On, Enabled);

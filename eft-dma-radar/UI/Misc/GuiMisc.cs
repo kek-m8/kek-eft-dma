@@ -194,6 +194,13 @@ namespace eft_dma_radar.UI.Misc
         public override string ToString() => Name;
     }
 
+
+    public enum LootHeaderMode : int
+    {
+        HighestValue = 0,
+        QuestItems = 1,
+        Wishlist = 2
+    }
     public enum LootPriceMode : int
     {
         /// <summary>

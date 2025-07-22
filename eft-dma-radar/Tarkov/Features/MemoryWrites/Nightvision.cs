@@ -26,7 +26,7 @@ namespace LonesEFTRadar.Tarkov.Features.MemoryWrites
             {
                 if (!Memory.InRaid)
                     return;
-                ulong nightVision = CameraManager.GetNightVision();
+                ulong nightVision = CameraManager.GetNightVision(false);
                 if (nightVision != 0)
                 {
                     writes.AddValueEntry(nightVision + Offsets.NightVision._on, Enabled);

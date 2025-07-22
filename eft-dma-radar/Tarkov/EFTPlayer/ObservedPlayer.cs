@@ -223,10 +223,10 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     }
                 } }
                 );
-                AddMap("streets",
+                AddMap("tarkovstreets",
                     new List<string> { "Attack 2" },
                     new List<string> { "Altyn", "LShZ-2DTM", "Maska-1SCh", "Vulkan-5", "ZSh-1-2M" },
-                    new List<string> { "m62", "m80", "zvezda", "shrap-10", "pp" },
+                    new List<string> { "m62", "m80", "zvezda", "shrap-10", "barrikada",  "pp" },
                     new Dictionary<string, List<List<string>>>
                     {
                         { "RPDN", new List<List<string>> { new List<string> { "USP-1" } } },
@@ -234,9 +234,34 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         {
                             new List<string> { "EKP-8-18" },
                             new List<string> { "Vityaz-SN" }
-                        }
-                },
-                    });
+                        } },
+                        { "AK-545", new List<List<string>>
+                        {
+                            new List<string> { "MOE SG" }
+                        } },
+                        { "AK-74N", new List<List<string>>
+                        {
+                            new List<string> { "B-10" },
+                            new List<string> { "RK-1" },
+                        } },
+                        { "Saiga-12K", new List<List<string>>
+                        {
+                            new List<string> { "MOE SG" },
+                            new List<string> { "AK-74 poly" },
+                        } },
+                        { "AK-105", new List<List<string>>
+                        {
+                            new List<string> { "AK-12" },
+                        } },
+                        { "AK-103", new List<List<string>>
+                        {
+                            new List<string> { "AK-EPG" },
+                        } },
+                        { "AK-74M", new List<List<string>>
+                        {
+                            new List<string> { "MOE SG" },
+                        } },
+                        });
             }
 
             public GuardIdentifier(string mapId)
@@ -484,15 +509,31 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         var role = Player.GetAIRoleInfo(VoiceLine);
                         Name = role.Name;
                         Type = role.Type;
+                        if(Memory.MapID.Equals("tarkovstreets", StringComparison.OrdinalIgnoreCase) && Memory.Players.Count(x => x.Type is PlayerType.AIBoss) > 0)
+                        {
+                            GearManager gear1 = new GearManager(this);
+                            if (gear1.Equipment.TryGetValue("Headwear", out var hat))
+                            {
+                                switch(hat.Short)
+                                {
+                                    case "Gus":
+                                    case "Basmach":
+                                        Name = hat.Short;
+                                        Type = PlayerType.AIRaider;
+                                        break;
+                                }
+                            }
+                        }
                         switch (Name)
                         {
                             case "Priest":
-                                GearManager newGear = new GearManager(this);
-                                if (newGear.Equipment.TryGetValue("FaceCover", out var face))
+                                GearManager gear2 = new GearManager(this);
+                                if (gear2.Equipment.TryGetValue("FaceCover", out var face))
                                 {
                                     if (face.Short.ToLower() == "zryachiy")
                                     {
                                         Name = "Zryachiy";
+                                        
                                     }
                                 }
                                 break;
@@ -612,7 +653,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     UpdatePlayerHours();
                 }
                 UpdateHealthStatus();
-                UpdateVisability();
+                //UpdateVisability();
             }
             base.OnRegRefresh(index, registered, isActive);
         }
