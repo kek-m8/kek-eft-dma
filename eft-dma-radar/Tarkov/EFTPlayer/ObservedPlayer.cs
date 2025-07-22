@@ -253,10 +253,6 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         {
                             new List<string> { "AK-12" },
                         } },
-                        { "AK-105", new List<List<string>>
-                        {
-                            new List<string> { "EMOD" },
-                        } },
                         { "AK-103", new List<List<string>>
                         {
                             new List<string> { "AK-EPG" },
