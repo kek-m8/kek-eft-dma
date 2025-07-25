@@ -1740,7 +1740,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     else if (!Memory.MapID.Equals("factory4_day", StringComparison.OrdinalIgnoreCase) || !Memory.MapID.Equals("laboratory", StringComparison.OrdinalIgnoreCase))
                     {
                         int hour = getCurrentHour();
-                        if (hour >= 19 || hour < 6)
+                        if (hour >= 21 || hour < 6)
                         {
                             if (!player.Gear.Loot.Any(x => x.IsNVG)) return " !! NO NVG !!";
                         }

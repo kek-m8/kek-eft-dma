@@ -544,6 +544,10 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("maxWishlistItemsNum")]
         public int MaxWishlistItemsNum { get; set; } = 0;
         /// <summary>
+        /// Max number of important items
+        /// </summary>
+        public int MaxImportantItemsNum { get; set; } = 0;
+        /// <summary>
         /// Header mode
         /// </summary>
         public LootHeaderMode LootHeaderIndex { get; set; } = 0;
@@ -571,6 +575,11 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("showOnlyWishlist")]
         public bool ShowOnlyWishlist { get; set; } = false;
 
+        /// <summary>
+        /// Display important items only in ESP.
+        /// </summary>
+        [JsonPropertyName("showOnlyImportantLoot")]
+        public bool ShowOnlyImportantLoot { get; set; } = false;
         /// <summary>
         /// Display grenades in ESP.
         /// </summary>

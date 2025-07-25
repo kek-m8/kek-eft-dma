@@ -593,8 +593,10 @@ namespace eft_dma_radar.Tarkov.Loot
                 return new(SKPaints.PaintMedsESP, SKPaints.TextMedsESP);
             if (LootFilter.ShowFood && IsFood)
                 return new(SKPaints.PaintFoodESP, SKPaints.TextFoodESP);
-            if (LootFilter.ShowWishlist && IsWishlist)
+            if (Config.LootWishlist && IsWishlisted)
                 return new(SKPaints.PaintWishlistItemESP, SKPaints.TextWishlistItemESP);
+            if (LootFilter.ShowImportant && IsImportant)
+                return new(SKPaints.PaintImpLootESP, SKPaints.TextImpLootESP);
             string filterColor = null;
             if (this is LootContainer ctr)
                 filterColor = ctr.Loot?.FirstOrDefault(x => x.Important)?.CustomFilter?.Color;

@@ -199,7 +199,8 @@ namespace eft_dma_radar.UI.Misc
     {
         HighestValue = 0,
         QuestItems = 1,
-        Wishlist = 2
+        Wishlist = 2,
+        Important = 3
     }
     public enum LootPriceMode : int
     {

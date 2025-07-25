@@ -13,6 +13,7 @@ namespace eft_dma_radar.UI.LootFilters
         public static bool ShowFood;
         public static bool ShowBackpacks;
         public static bool ShowWishlist;
+        public static bool ShowImportant;
 
         private static bool ShowQuestItems => MainForm.Config.QuestHelper.Enabled;
 

@@ -328,6 +328,7 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
+            checkBox_ShowImportant = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -443,6 +444,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Loot.Controls.Add(radioButton_Loot_FleaPrice);
             flowLayoutPanel_Loot.Controls.Add(radioButton_Loot_VendorPrice);
             flowLayoutPanel_Loot.Controls.Add(checkBox_HideCorpses);
+            flowLayoutPanel_Loot.Controls.Add(checkBox_ShowImportant);
             flowLayoutPanel_Loot.Controls.Add(checkBox_ShowOnlyWishlist);
             flowLayoutPanel_Loot.Controls.Add(checkBox_ShowMeds);
             flowLayoutPanel_Loot.Controls.Add(checkBox_ShowFood);
@@ -450,7 +452,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Loot.Controls.Add(textBox_LootFilterByName);
             flowLayoutPanel_Loot.Location = new Point(6, 36);
             flowLayoutPanel_Loot.Name = "flowLayoutPanel_Loot";
-            flowLayoutPanel_Loot.Size = new Size(540, 146);
+            flowLayoutPanel_Loot.Size = new Size(685, 146);
             flowLayoutPanel_Loot.TabIndex = 19;
             flowLayoutPanel_Loot.Visible = false;
             flowLayoutPanel_Loot.Paint += flowLayoutPanel_Loot_Paint;
@@ -574,7 +576,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowOnlyWishlist
             // 
             checkBox_ShowOnlyWishlist.AutoSize = true;
-            checkBox_ShowOnlyWishlist.Location = new Point(105, 93);
+            checkBox_ShowOnlyWishlist.Location = new Point(250, 93);
             checkBox_ShowOnlyWishlist.Name = "checkBox_ShowOnlyWishlist";
             checkBox_ShowOnlyWishlist.Size = new Size(127, 19);
             checkBox_ShowOnlyWishlist.TabIndex = 29;
@@ -585,7 +587,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowMeds
             // 
             checkBox_ShowMeds.AutoSize = true;
-            checkBox_ShowMeds.Location = new Point(238, 93);
+            checkBox_ShowMeds.Location = new Point(383, 93);
             checkBox_ShowMeds.Name = "checkBox_ShowMeds";
             checkBox_ShowMeds.Size = new Size(87, 19);
             checkBox_ShowMeds.TabIndex = 23;
@@ -596,7 +598,7 @@ namespace eft_dma_radar.UI.Radar
             // checkBox_ShowFood
             // 
             checkBox_ShowFood.AutoSize = true;
-            checkBox_ShowFood.Location = new Point(331, 93);
+            checkBox_ShowFood.Location = new Point(476, 93);
             checkBox_ShowFood.Name = "checkBox_ShowFood";
             checkBox_ShowFood.Size = new Size(85, 19);
             checkBox_ShowFood.TabIndex = 24;
@@ -608,7 +610,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             checkBox_ShowBackpacks.AutoSize = true;
             flowLayoutPanel_Loot.SetFlowBreak(checkBox_ShowBackpacks, true);
-            checkBox_ShowBackpacks.Location = new Point(422, 93);
+            checkBox_ShowBackpacks.Location = new Point(567, 93);
             checkBox_ShowBackpacks.Name = "checkBox_ShowBackpacks";
             checkBox_ShowBackpacks.Size = new Size(113, 19);
             checkBox_ShowBackpacks.TabIndex = 26;
@@ -3943,6 +3945,17 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
             // 
+            // checkBox_ShowImportant
+            // 
+            checkBox_ShowImportant.AutoSize = true;
+            checkBox_ShowImportant.Location = new Point(105, 93);
+            checkBox_ShowImportant.Name = "checkBox_ShowImportant";
+            checkBox_ShowImportant.Size = new Size(139, 19);
+            checkBox_ShowImportant.TabIndex = 30;
+            checkBox_ShowImportant.Text = "Show Only Important";
+            checkBox_ShowImportant.UseVisualStyleBackColor = true;
+            checkBox_ShowImportant.CheckedChanged += checkBox_ShowImportant_CheckedChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -4338,6 +4351,7 @@ namespace eft_dma_radar.UI.Radar
         private CheckBox checkBox_ImportantPlayer;
         private CheckBox checkBox_ESP_LootMenu;
         private CheckBox checkBox_DetectNVG;
+        private CheckBox checkBox_ShowImportant;
     }
 }
 

@@ -341,6 +341,8 @@ namespace eft_dma_radar.UI.Radar
                                     continue;
                                 if (checkBox_ShowOnlyWishlist.Checked)
                                     if (!item.IsWishlisted) { continue; }
+                                if (checkBox_ShowImportant.Checked)
+                                    if (!item.IsImportant || item.IsWishlisted) { continue; }
                                 if (item.Name.ToLower().Contains("q_") && !localPlayer.IsPmc)
                                     continue;
                                 item.Draw(canvas, mapParams, localPlayer);
@@ -2704,7 +2706,7 @@ namespace eft_dma_radar.UI.Radar
         {
             if (e.State && Config.ESP.DrawLootBackground)
             {
-                int[] LootScrollIndex = new int[] { Config.ESP.MaxLootItemsNum, Config.ESP.MaxQuestItemsNum, Config.ESP.MaxWishlistItemsNum };
+                int[] LootScrollIndex = new int[] { Config.ESP.MaxLootItemsNum, Config.ESP.MaxQuestItemsNum, Config.ESP.MaxWishlistItemsNum, Config.ESP.MaxImportantItemsNum };
                 Config.ESP.LootScrollIndex--;
                 if (Config.ESP.LootScrollIndex < 1)
                     Config.ESP.LootScrollIndex = LootScrollIndex[(int)Config.ESP.LootHeaderIndex];
@@ -2717,7 +2719,7 @@ namespace eft_dma_radar.UI.Radar
         {
             if (e.State && Config.ESP.DrawLootBackground)
             {
-                int[] LootScrollIndex = new int[] { Config.ESP.MaxLootItemsNum, Config.ESP.MaxQuestItemsNum, Config.ESP.MaxWishlistItemsNum };
+                int[] LootScrollIndex = new int[] { Config.ESP.MaxLootItemsNum, Config.ESP.MaxQuestItemsNum, Config.ESP.MaxWishlistItemsNum, Config.ESP.MaxImportantItemsNum };
                 Config.ESP.LootScrollIndex++;
                 if (Config.ESP.LootScrollIndex < 1)
                     Config.ESP.LootScrollIndex = LootScrollIndex[(int)Config.ESP.LootHeaderIndex];
@@ -2732,10 +2734,10 @@ namespace eft_dma_radar.UI.Radar
             if (e.State && Config.ESP.DrawLootBackground)
             {
                 Config.ESP.LootHeaderIndex--;
-                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Wishlist)
+                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Important)
                     Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
                 else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue)
-                    Config.ESP.LootHeaderIndex = LootHeaderMode.Wishlist;
+                    Config.ESP.LootHeaderIndex = LootHeaderMode.Important;
                 Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
             }
@@ -2746,8 +2748,10 @@ namespace eft_dma_radar.UI.Radar
             if (e.State && Config.ESP.DrawLootBackground)
             {
                 Config.ESP.LootHeaderIndex++;
-                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Wishlist) Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
-                else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue) Config.ESP.LootHeaderIndex = LootHeaderMode.Wishlist;
+                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Important) 
+                    Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
+                else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue) 
+                    Config.ESP.LootHeaderIndex = LootHeaderMode.Important;
                 Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
             }
@@ -3911,6 +3915,7 @@ namespace eft_dma_radar.UI.Radar
         private void MainForm_Load(object sender, EventArgs e)
         {
             checkBox_ShowOnlyWishlist.Checked = Config.ESP.ShowOnlyWishlist;
+            checkBox_ShowImportant.Checked = Config.ESP.ShowOnlyImportantLoot;
         }
 
         private void label34_Click(object sender, EventArgs e)
@@ -4337,6 +4342,18 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_DetectNVG_CheckedChanged(object sender, EventArgs e)
         {
             Config.DetectPlayerNvg = checkBox_DetectNVG.Checked;
+        }
+
+        private void checkBox_ShowImportant_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowOnlyImportantLoot = checkBox_ShowImportant.Checked;
+            LootFilter.ShowImportant = checkBox_ShowImportant.Checked;
+            LootFilter.ShowWishlist = checkBox_ShowImportant.Checked ? false : checkBox_ShowOnlyWishlist.Checked;
+            LootFilter.ShowFood = checkBox_ShowImportant.Checked ? false : checkBox_ShowFood.Checked;
+            LootFilter.ShowMeds = checkBox_ShowImportant.Checked ? false : checkBox_ShowMeds.Checked;
+            LootFilter.ShowBackpacks = checkBox_ShowImportant.Checked ? false : checkBox_ShowBackpacks.Checked;
+            _lootMenuTimer.Restart();
+            Config.Save();
         }
     }
 }
