@@ -103,6 +103,8 @@ namespace eft_dma_radar.UI.Misc
         public int AIArmourClassMin { get; set; } = 3;
         [JsonPropertyName("showImportantPlayer")]
         public bool ShowImportantPlayer { get; set; } = true;
+        [JsonPropertyName("detectPlayerNvg")]
+        public bool DetectPlayerNvg { get; set; } = false;
         /// <summary>
         /// Draws (AIMING) under a player on the map
         /// </summary>

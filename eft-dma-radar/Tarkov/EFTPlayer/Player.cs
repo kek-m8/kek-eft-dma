@@ -1711,18 +1711,42 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             }
         }
 
+        public int getCurrentHour()
+        {
+            ulong fps = Memory.Game.CameraManager?.FPSCamera ?? 0x0;
+            var todScatt = MonoBehaviour.GetComponent(fps, "TOD_Scattering");
+            var cycle = Memory.ReadPtrChain(todScatt, new uint[] { Offsets.TOD_Scattering.sky, Offsets.TOD_Sky.Cycle });
+            return (int)Memory.ReadValue<float>(cycle + Offsets.TOD_CycleParameters.Hour);
+        }
+
         private string doHelmetStuff(ObservedPlayer player)
         {
             try
             {
                 if (player == null)
-                    return "ERROR"; ;
+                    return "ERROR";
                 if (player.Gear.Loot.Any(x => x.IsAltyn)) return " !! ALTYN !!";
                 else if (player.Gear.Loot.Any(x => x.IsRysT)) return " !! RYS-T !!";
                 else if (player.Gear.Loot.Any(x => x.IsT7)) return " !! T7 !!";
                 else if (player.Gear.Loot.Any(x => x.IsMaska)) return " !! MASKA !!";
                 else if (player.Gear.Loot.Any(x => x.IsWelding)) return " !! TAGILLA !!";
                 else if (player.Gear.Loot.Any(x => x.IsVulkan)) return " !! VULKAN !!";
+                if (Config.DetectPlayerNvg && player.IsHostilePmc)
+                {
+                    if (Memory.MapID.Equals("factory4_night", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!player.Gear.Loot.Any(x => x.IsNVG)) return " !! NO NVG !!";
+                    }
+                    else if (!Memory.MapID.Equals("factory4_day", StringComparison.OrdinalIgnoreCase) || !Memory.MapID.Equals("laboratory", StringComparison.OrdinalIgnoreCase))
+                    {
+                        int hour = getCurrentHour();
+                        if (hour >= 19 || hour < 6)
+                        {
+                            if (!player.Gear.Loot.Any(x => x.IsNVG)) return " !! NO NVG !!";
+                        }
+                    }
+                    
+                }
             }
             catch { return "ERROR"; }
             return null;

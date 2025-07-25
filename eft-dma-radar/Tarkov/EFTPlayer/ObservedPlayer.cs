@@ -126,7 +126,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             {
                 AddMap("shoreline",
                     new List<string> { "SFMP", "Beta 2", "Attack 2" },
-                    new List<string> { "Altyn", "LShZ-2DTM" },
+                    new List<string> { "Altyn", "LShZ-2DTM", "ZSh-1-2M" },
                     new List<string> { "m62", "m993", "pp", "bp", "ap-20", "ppbs" },
                     new Dictionary<string, List<List<string>>>
                     {
@@ -232,8 +232,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         { "RPDN", new List<List<string>> { new List<string> { "USP-1" } } },
                         { "PP-19-01", new List<List<string>>
                         {
-                            new List<string> { "EKP-8-18" },
-                            new List<string> { "Vityaz-SN" }
+                            new List<string> { "EKP-8-18", "Vityaz-SN" }
                         } },
                         { "AK-545", new List<List<string>>
                         {
@@ -241,13 +240,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                         } },
                         { "AK-74N", new List<List<string>>
                         {
-                            new List<string> { "B-10" },
-                            new List<string> { "RK-1" },
+                            new List<string> { "B-10", "RK-1" }
                         } },
                         { "Saiga-12K", new List<List<string>>
                         {
-                            new List<string> { "MOE SG" },
-                            new List<string> { "AK-74 poly" },
+                            new List<string> { "MOE SG" }
                         } },
                         { "AK-105", new List<List<string>>
                         {

@@ -2203,6 +2203,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_AimlineLength.Value = Config.AimLineLength;
             checkBox_Loot.Checked = Config.ShowLoot;
             checkBox_LootPPS.Checked = Config.LootPPS;
+            checkBox_DetectNVG.Checked = Config.DetectPlayerNvg;
             if (Config.LootPriceMode is LootPriceMode.FleaMarket)
                 radioButton_Loot_FleaPrice.Checked = true;
             else if (Config.LootPriceMode is LootPriceMode.Trader)
@@ -2733,7 +2734,7 @@ namespace eft_dma_radar.UI.Radar
                 Config.ESP.LootHeaderIndex--;
                 if (Config.ESP.LootHeaderIndex > LootHeaderMode.Wishlist)
                     Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
-                else if(Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue)
+                else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue)
                     Config.ESP.LootHeaderIndex = LootHeaderMode.Wishlist;
                 Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
@@ -4331,6 +4332,11 @@ namespace eft_dma_radar.UI.Radar
         private void trackBar_ESPPlayerDist_Scroll(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox_DetectNVG_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.DetectPlayerNvg = checkBox_DetectNVG.Checked;
         }
     }
 }
