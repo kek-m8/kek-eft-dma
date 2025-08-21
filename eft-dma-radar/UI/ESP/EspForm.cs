@@ -336,6 +336,8 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
             float lineSpacing = 22.5f * scale;
             float textStartX = x - 28f * scale;
 
+            LootItem cachedItem = null;
+
             switch (Config.ESP.LootHeaderIndex)
             {
                 case LootHeaderMode.HighestValue:
@@ -345,6 +347,8 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     foreach (var item in items)
                     {
                         bool isSelected = lootCount == Config.ESP.LootScrollIndex;
+                        if(cachedItem is not  null && isSelected)
+                            cachedItem = item;
                         var paintToUse = isSelected && Config.ESP.DrawLootSnapline ? SKPaints.TextPMCESP : SKPaints.TextImpLootESP;
 
                         canvas.DrawText($"{(isSelected ? ">  " : "")}{item.ShortName} {(item.Count > 1 ? $"[{item.Count}]" : "")}" + " {" + TarkovMarketItem.FormatPrice(item.FlatPrice) + "} " + $"(H: {(int)Math.Round(item.Position.Y - localPlayer.Position.Y)} D: {Utils.GetDistPretty(localPlayer.Position, item.Position)})",

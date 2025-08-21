@@ -46,6 +46,7 @@ namespace eft_dma_radar.UI.Radar
             radioButton_Loot_FleaPrice = new RadioButton();
             radioButton_Loot_VendorPrice = new RadioButton();
             checkBox_HideCorpses = new CheckBox();
+            checkBox_ShowImportant = new CheckBox();
             checkBox_ShowOnlyWishlist = new CheckBox();
             checkBox_ShowMeds = new CheckBox();
             checkBox_ShowFood = new CheckBox();
@@ -328,7 +329,6 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
-            checkBox_ShowImportant = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -572,6 +572,17 @@ namespace eft_dma_radar.UI.Radar
             checkBox_HideCorpses.Text = "Hide Corpses";
             checkBox_HideCorpses.UseVisualStyleBackColor = true;
             checkBox_HideCorpses.CheckedChanged += checkBox_HideCorpses_CheckedChanged;
+            // 
+            // checkBox_ShowImportant
+            // 
+            checkBox_ShowImportant.AutoSize = true;
+            checkBox_ShowImportant.Location = new Point(105, 93);
+            checkBox_ShowImportant.Name = "checkBox_ShowImportant";
+            checkBox_ShowImportant.Size = new Size(139, 19);
+            checkBox_ShowImportant.TabIndex = 30;
+            checkBox_ShowImportant.Text = "Show Only Important";
+            checkBox_ShowImportant.UseVisualStyleBackColor = true;
+            checkBox_ShowImportant.CheckedChanged += checkBox_ShowImportant_CheckedChanged;
             // 
             // checkBox_ShowOnlyWishlist
             // 
@@ -1682,6 +1693,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             checkBox_LTW.Anchor = AnchorStyles.Right;
             checkBox_LTW.AutoSize = true;
+            checkBox_LTW.Enabled = false;
             checkBox_LTW.Location = new Point(252, 128);
             checkBox_LTW.Name = "checkBox_LTW";
             checkBox_LTW.Size = new Size(167, 19);
@@ -3944,17 +3956,6 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.AutoPopDelay = 20000;
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
-            // 
-            // checkBox_ShowImportant
-            // 
-            checkBox_ShowImportant.AutoSize = true;
-            checkBox_ShowImportant.Location = new Point(105, 93);
-            checkBox_ShowImportant.Name = "checkBox_ShowImportant";
-            checkBox_ShowImportant.Size = new Size(139, 19);
-            checkBox_ShowImportant.TabIndex = 30;
-            checkBox_ShowImportant.Text = "Show Only Important";
-            checkBox_ShowImportant.UseVisualStyleBackColor = true;
-            checkBox_ShowImportant.CheckedChanged += checkBox_ShowImportant_CheckedChanged;
             // 
             // MainForm
             // 

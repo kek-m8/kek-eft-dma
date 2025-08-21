@@ -854,6 +854,25 @@ namespace arena_dma_radar.Arena.ArenaPlayer
             this.Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams).DrawMouseoverText(canvas, lines);
         }
 
+        public void DrawCornerBox(SKCanvas canvas, SKRect rect, SKPaint paint, float cornerLength = 10f)
+        {
+            // Top-Left corner
+            canvas.DrawLine(rect.Left, rect.Top, rect.Left + cornerLength, rect.Top, paint);
+            canvas.DrawLine(rect.Left, rect.Top, rect.Left, rect.Top + cornerLength, paint);
+
+            // Top-Right corner
+            canvas.DrawLine(rect.Right, rect.Top, rect.Right - cornerLength, rect.Top, paint);
+            canvas.DrawLine(rect.Right, rect.Top, rect.Right, rect.Top + cornerLength, paint);
+
+            // Bottom-Left corner
+            canvas.DrawLine(rect.Left, rect.Bottom, rect.Left + cornerLength, rect.Bottom, paint);
+            canvas.DrawLine(rect.Left, rect.Bottom, rect.Left, rect.Bottom - cornerLength, paint);
+
+            // Bottom-Right corner
+            canvas.DrawLine(rect.Right, rect.Bottom, rect.Right - cornerLength, rect.Bottom, paint);
+            canvas.DrawLine(rect.Right, rect.Bottom, rect.Right, rect.Bottom - cornerLength, paint);
+        }
+
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
             if (this == localPlayer ||
@@ -895,7 +914,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                 var getBox = Skeleton_.GetESPBox(baseScrPos);
                 if (getBox is not SKRect box)
                     return;
-                canvas.DrawRect(box, paint.Item1);
+                //canvas.DrawRect(box, paint.Item1);
+                DrawCornerBox(canvas, box, paint.Item1);
                 baseScrPos.X = box.MidX;
                 baseScrPos.Y = box.Bottom;
             }
@@ -911,7 +931,8 @@ namespace arena_dma_radar.Arena.ArenaPlayer
                 var box = Skeleton_.GetESPBox(baseScrPos);
                 if (box is not SKRect box_) return;
                 canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, paint.Item1);
-                canvas.DrawRect(box_, paint.Item1);
+                //canvas.DrawRect(box_, paint.Item1);
+                DrawCornerBox(canvas, box_, paint.Item1);
                 baseScrPos.X = box_.MidX;
                 baseScrPos.Y = box_.Bottom;
             }

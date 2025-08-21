@@ -1823,16 +1823,6 @@ namespace arena_dma_radar.UI.Radar
         }
         #endregion
 
-        private void linkLabel_CheckForUpdates_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            const string updatesUrl = "https://lone-eft.com/ongoingsupport";
-            Process.Start(new ProcessStartInfo()
-            {
-                FileName = updatesUrl,
-                UseShellExecute = true
-            });
-        }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
 
@@ -1846,20 +1836,6 @@ namespace arena_dma_radar.UI.Radar
         private void checkBox_Bomb_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.PlayerRendering.ShowBomb = checkBox_Bomb.Checked;
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
-                var arenaOverlay = MonoLib.MonoClass.Find("Assembly-CSharp", "Game.Mode.System.ArenaOverlaySystem", out _);
-                var arenaOverlayPtr = arenaOverlay.GetNumMethods();
-                MessageBox.Show(arenaOverlayPtr.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
 
         private void checkBox_RadarBomb_CheckedChanged(object sender, EventArgs e)

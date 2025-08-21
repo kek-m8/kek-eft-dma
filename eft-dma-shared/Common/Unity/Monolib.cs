@@ -16,6 +16,8 @@ namespace eft_dma_shared.Common.Unity
         /// </summary>
         public static ulong GameWorldField { get; private set; }
 
+        public static ulong HideoutWorldField { get; private set; }
+
         /// <summary>
         /// AbstractGame Mono Field.
         /// </summary>
@@ -45,7 +47,7 @@ namespace eft_dma_shared.Common.Unity
             try
             {
                 LoneLogging.WriteLine("Initializing Mono...");
-                var singletons = Singleton.FindMany("GameWorld", "LevelSettings");
+                var singletons = Singleton.FindMany("GameWorld", "LevelSettings", "HideoutGame");
                 if (!singletons[0].IsValidVirtualAddress())
                     throw new ArgumentOutOfRangeException("GameWorld");
                 GameWorldField = singletons[0];
@@ -53,6 +55,8 @@ namespace eft_dma_shared.Common.Unity
                 {
                     _levelSettingsField = singletons[1];
                 }
+                if(singletons[2].IsValidVirtualAddress())
+                    HideoutWorldField = singletons[2];
                 FunctionsWorker.Refresh(); // Signal Functions Worker
                 LoneLogging.WriteLine("Mono Init [OK]");
             }

@@ -2701,6 +2701,25 @@ namespace eft_dma_radar.UI.Radar
             }
         }
 
+        private void ToggleExfil_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State)
+            {
+                checkBox_ESP_Exfils.Checked = !checkBox_ESP_Exfils.Checked;
+                
+                // Config.ESP.ShowExfil = !Config.ESP.ShowExfil;
+            }
+        }
+
+        private void ToggleBackpack_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State)
+            {
+                checkBox_ShowBackpacks.Checked = !checkBox_ShowBackpacks.Checked;
+                // Config.ESP.ShowBackpack = !Config.ESP.ShowBackpack;
+            }
+        }
+
 
         private void ScrollLootMenuUp_HotkeyStateChanged(object sender, HotkeyEventArgs e)
         {

@@ -43,6 +43,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// Player hours.
         /// </summary>
         public override int Hours { get; set; }
+
+        /// <summary>
+        /// Player kill-death ratio.
+        /// </summary>
+        public override float KD { get; set; }
         /// <summary>
         /// Player level.
         /// </summary>
@@ -647,6 +652,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     UpdatePlayerName();
                     UpdatePlayerPrestige();
                     UpdatePlayerLevel();
+                    UpdatePlayerKD();
                     UpdatePlayerHours();
                 }
                 UpdateHealthStatus();
@@ -684,6 +690,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             catch (Exception ex)
             {
                 LoneLogging.WriteLine($"ERROR updating Hours for Player '{Name}': {ex}");
+            }
+        }
+
+        private void UpdatePlayerKD()
+        {
+            try
+            {
+                float? kd = Profile.Overall_KD;
+                if (kd is not null && this.KD != kd)
+                {
+                    this.KD = kd.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoneLogging.WriteLine($"ERROR updating KD for Player '{Name}': {ex}");
             }
         }
 

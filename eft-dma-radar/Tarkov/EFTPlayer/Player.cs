@@ -265,6 +265,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
 
         public virtual int Hours { get; set; }
 
+        public virtual float KD { get; set; }
+
         /// <summary>
         /// Account UUID for Human Controlled Players.
         /// </summary>
@@ -1835,6 +1837,25 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 FilterQuality = SKFilterQuality.High
             };
 
+        public void DrawCornerBox(SKCanvas canvas, SKRect rect, SKPaint paint, float cornerLength = 10f)
+        {
+            // Top-Left corner
+            canvas.DrawLine(rect.Left, rect.Top, rect.Left + cornerLength, rect.Top, paint);
+            canvas.DrawLine(rect.Left, rect.Top, rect.Left, rect.Top + cornerLength, paint);
+
+            // Top-Right corner
+            canvas.DrawLine(rect.Right, rect.Top, rect.Right - cornerLength, rect.Top, paint);
+            canvas.DrawLine(rect.Right, rect.Top, rect.Right, rect.Top + cornerLength, paint);
+
+            // Bottom-Left corner
+            canvas.DrawLine(rect.Left, rect.Bottom, rect.Left + cornerLength, rect.Bottom, paint);
+            canvas.DrawLine(rect.Left, rect.Bottom, rect.Left, rect.Bottom - cornerLength, paint);
+
+            // Bottom-Right corner
+            canvas.DrawLine(rect.Right, rect.Bottom, rect.Right - cornerLength, rect.Bottom, paint);
+            canvas.DrawLine(rect.Right, rect.Bottom, rect.Right, rect.Bottom - cornerLength, paint);
+        }
+
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
             if (this == localPlayer ||
@@ -1894,7 +1915,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 var getBox = Skeleton_.GetESPBox(baseScrPos);
                 if (getBox is not SKRect box)
                     return;
-                canvas.DrawRect(box, espPaints.Item1);
+                //canvas.DrawRect(box, espPaints.Item1);
+                DrawCornerBox(canvas, box, espPaints.Item1);
                 baseScrPos.X = box.MidX;
                 baseScrPos.Y = box.Bottom;
             }
@@ -1910,7 +1932,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 var box = Skeleton_.GetESPBox(baseScrPos);
                 if (box is not SKRect box_) return;
                 canvas.DrawPoints(SKPointMode.Lines, eft_dma_shared.Common.Players.Skeleton.ESPBuffer, espPaints.Item1);
-                canvas.DrawRect(box_, espPaints.Item1);
+                //canvas.DrawRect(box_, espPaints.Item1);
+                DrawCornerBox(canvas, box_, espPaints.Item1);
                 baseScrPos.X = box_.MidX;
                 baseScrPos.Y = box_.Bottom;
             }
@@ -1941,10 +1964,11 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 }
                 if (this is ObservedPlayer player && showClass)
                 {
-                    if (!player.Gear.Loot.Any(x => x.CouldHavePlates))
+                    var gear = player.Gear.Loot;
+                    if (!gear.Any(x => x.CouldHavePlates))
                         goto skip0;
-                    int index = 0, back = 0, front = 0;//, left = 0, right = 0;
-                    foreach (var plate in player.Gear.Loot.Where(x => x.IsArmorPlate))
+                    int index = 0, back = -1, front = -1;//, left = 0, right = 0;
+                    foreach (var plate in gear.Where(x => x.IsArmorPlate))
                     {
                         if (GameData.PlateLevel.TryGetValue(plate.Name, out var lvl))
                         {
@@ -1952,10 +1976,14 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                             {
                                 case 0: front = lvl; break;
                                 case 1: back = lvl; break;
-                                //case 2: left = lvl; break;
-                                //case 3: right = lvl; break;
                             }
                             index++;
+                        }
+                        if(front == -1 || back == -1)
+                        {
+                            // If we don't have both front and back plates, we skip the class display
+                            // This is to avoid showing "F: 3 B: 0" or similar
+                            goto skip0;
                         }
                     }
                     string final = "";
@@ -2005,7 +2033,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     if (!CameraManagerBase.WorldToScreen(ref Skeleton_.Bones[Bones.HumanHead].Position, out var rankScreenPos, true, true))
                         return;
                     rankScreenPos -= new SKPoint(0f, 5f);
-                    rankLine.Add($"LVL: {Prestige} / {Level} | {Hours}h");
+                    rankLine.Add($"LVL: {Prestige} / {Level} | {Hours}h / {Math.Truncate(KD * 100) / 100:F2} K/D");
                     rankScreenPos.DrawESPText(canvas, this, localPlayer, false, espPaints.Item2, rankLine.ToArray());
                 }
                 /*if (this is ObservedPlayer guy)
