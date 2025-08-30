@@ -2206,6 +2206,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_Loot.Checked = Config.ShowLoot;
             checkBox_LootPPS.Checked = Config.LootPPS;
             checkBox_DetectNVG.Checked = Config.DetectPlayerNvg;
+            checkBox_ESP_NadeLine.Checked = Config.ESP.ShowGrenadeTracer;
             if (Config.LootPriceMode is LootPriceMode.FleaMarket)
                 radioButton_Loot_FleaPrice.Checked = true;
             else if (Config.LootPriceMode is LootPriceMode.Trader)
@@ -2706,7 +2707,7 @@ namespace eft_dma_radar.UI.Radar
             if (e.State)
             {
                 checkBox_ESP_Exfils.Checked = !checkBox_ESP_Exfils.Checked;
-                
+
                 // Config.ESP.ShowExfil = !Config.ESP.ShowExfil;
             }
         }
@@ -2767,9 +2768,9 @@ namespace eft_dma_radar.UI.Radar
             if (e.State && Config.ESP.DrawLootBackground)
             {
                 Config.ESP.LootHeaderIndex++;
-                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Important) 
+                if (Config.ESP.LootHeaderIndex > LootHeaderMode.Important)
                     Config.ESP.LootHeaderIndex = LootHeaderMode.HighestValue;
-                else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue) 
+                else if (Config.ESP.LootHeaderIndex < LootHeaderMode.HighestValue)
                     Config.ESP.LootHeaderIndex = LootHeaderMode.Important;
                 Config.ESP.LootScrollIndex = 1;
                 Config.ESP.DrawLootSnapline = false;
@@ -4373,6 +4374,19 @@ namespace eft_dma_radar.UI.Radar
             LootFilter.ShowBackpacks = checkBox_ShowImportant.Checked ? false : checkBox_ShowBackpacks.Checked;
             _lootMenuTimer.Restart();
             Config.Save();
+        }
+
+        private void checkBox_ESP_NadeLine_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowGrenadeTracer = checkBox_ESP_NadeLine.Checked;
+        }
+
+        private void checkBox_DoorAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radioButton_DoorClosed.Checked)
+                radioButton_DoorClosed.Checked = false;
+            if(radioButton_DoorOpen.Checked)
+                radioButton_DoorOpen.Checked = false;
         }
     }
 }

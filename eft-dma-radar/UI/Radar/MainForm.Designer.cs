@@ -253,6 +253,7 @@ namespace eft_dma_radar.UI.Radar
             label32 = new Label();
             checkBox_ESP_GrenadeShow = new CheckBox();
             checkBox_ESP_GrenadeText = new CheckBox();
+            checkBox_ESP_NadeLine = new CheckBox();
             checkBox_ESP_GrenadeIcon = new CheckBox();
             flowLayoutPanel8 = new FlowLayoutPanel();
             label35 = new Label();
@@ -329,6 +330,13 @@ namespace eft_dma_radar.UI.Radar
             Column_LootColorPicker = new DataGridViewButtonColumn();
             colorPicker1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
+            flowLayoutPanel12 = new FlowLayoutPanel();
+            label41 = new Label();
+            checkedListBox_Doors = new CheckedListBox();
+            radioButton_DoorOpen = new RadioButton();
+            radioButton_DoorClosed = new RadioButton();
+            checkBox_DoorEnabled = new CheckBox();
+            checkBox_DoorAll = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowLayoutPanel_Loot.SuspendLayout();
@@ -384,6 +392,7 @@ namespace eft_dma_radar.UI.Radar
             tableLayoutPanel_ImportantLoot.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             ((ISupportInitialize)dataGridView_Loot).BeginInit();
+            flowLayoutPanel12.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -1218,10 +1227,11 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel5.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanel5.BorderStyle = BorderStyle.FixedSingle;
             flowLayoutPanel5.Controls.Add(flowLayoutPanel_Loot_Containers);
+            flowLayoutPanel5.Controls.Add(flowLayoutPanel12);
             flowLayoutPanel5.Controls.Add(flowLayoutPanel1);
             flowLayoutPanel5.Location = new Point(3, 170);
             flowLayoutPanel5.Name = "flowLayoutPanel5";
-            flowLayoutPanel5.Size = new Size(911, 202);
+            flowLayoutPanel5.Size = new Size(1117, 202);
             flowLayoutPanel5.TabIndex = 61;
             // 
             // flowLayoutPanel_Loot_Containers
@@ -1383,8 +1393,8 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel1.Controls.Add(checkBox_KappaOnly);
             flowLayoutPanel1.Controls.Add(checkedListBox_QuestHelper);
             flowLayoutPanel1.Controls.Add(checkBox_KillTask);
-            flowLayoutPanel1.Dock = DockStyle.Top;
-            flowLayoutPanel1.Location = new Point(447, 3);
+            flowLayoutPanel5.SetFlowBreak(flowLayoutPanel1, true);
+            flowLayoutPanel1.Location = new Point(653, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(459, 191);
             flowLayoutPanel1.TabIndex = 62;
@@ -2465,7 +2475,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Settings.SetFlowBreak(flowLayoutPanel_ESPSettings, true);
             flowLayoutPanel_ESPSettings.Location = new Point(3, 880);
             flowLayoutPanel_ESPSettings.Name = "flowLayoutPanel_ESPSettings";
-            flowLayoutPanel_ESPSettings.Size = new Size(1144, 381);
+            flowLayoutPanel_ESPSettings.Size = new Size(1147, 381);
             flowLayoutPanel_ESPSettings.TabIndex = 3;
             // 
             // label12
@@ -3039,11 +3049,12 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel7.Controls.Add(label32);
             flowLayoutPanel7.Controls.Add(checkBox_ESP_GrenadeShow);
             flowLayoutPanel7.Controls.Add(checkBox_ESP_GrenadeText);
+            flowLayoutPanel7.Controls.Add(checkBox_ESP_NadeLine);
             flowLayoutPanel7.Controls.Add(checkBox_ESP_GrenadeIcon);
             flowLayoutPanel7.Controls.Add(flowLayoutPanel8);
             flowLayoutPanel7.Location = new Point(3, 204);
             flowLayoutPanel7.Name = "flowLayoutPanel7";
-            flowLayoutPanel7.Size = new Size(231, 123);
+            flowLayoutPanel7.Size = new Size(234, 123);
             flowLayoutPanel7.TabIndex = 1;
             // 
             // label25
@@ -3091,11 +3102,23 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_GrenadeText.UseVisualStyleBackColor = true;
             checkBox_ESP_GrenadeText.CheckedChanged += checkBox_ESP_GrenadeText_CheckedChanged;
             // 
+            // checkBox_ESP_NadeLine
+            // 
+            checkBox_ESP_NadeLine.AutoSize = true;
+            checkBox_ESP_NadeLine.Location = new Point(117, 43);
+            checkBox_ESP_NadeLine.Name = "checkBox_ESP_NadeLine";
+            checkBox_ESP_NadeLine.Size = new Size(57, 19);
+            checkBox_ESP_NadeLine.TabIndex = 5;
+            checkBox_ESP_NadeLine.Text = "Tracer";
+            toolTip1.SetToolTip(checkBox_ESP_NadeLine, "When enabled, a yellow tracer will follow grenades showing their pathing");
+            checkBox_ESP_NadeLine.UseVisualStyleBackColor = true;
+            checkBox_ESP_NadeLine.CheckedChanged += checkBox_ESP_NadeLine_CheckedChanged;
+            // 
             // checkBox_ESP_GrenadeIcon
             // 
             checkBox_ESP_GrenadeIcon.AutoSize = true;
             flowLayoutPanel7.SetFlowBreak(checkBox_ESP_GrenadeIcon, true);
-            checkBox_ESP_GrenadeIcon.Location = new Point(117, 43);
+            checkBox_ESP_GrenadeIcon.Location = new Point(180, 43);
             checkBox_ESP_GrenadeIcon.Name = "checkBox_ESP_GrenadeIcon";
             checkBox_ESP_GrenadeIcon.Size = new Size(49, 19);
             checkBox_ESP_GrenadeIcon.TabIndex = 3;
@@ -3189,7 +3212,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel9.Controls.Add(checkBox_ESP_WeapAttach);
             flowLayoutPanel9.Controls.Add(checkBox_ESP_GearSlots);
             flowLayoutPanel9.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel9.Location = new Point(240, 204);
+            flowLayoutPanel9.Location = new Point(243, 204);
             flowLayoutPanel9.Name = "flowLayoutPanel9";
             flowLayoutPanel9.Size = new Size(149, 172);
             flowLayoutPanel9.TabIndex = 78;
@@ -3294,7 +3317,7 @@ namespace eft_dma_radar.UI.Radar
             // 
             flowLayoutPanel6.AutoSize = true;
             flowLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel6.Location = new Point(395, 204);
+            flowLayoutPanel6.Location = new Point(398, 204);
             flowLayoutPanel6.Name = "flowLayoutPanel6";
             flowLayoutPanel6.Size = new Size(0, 0);
             flowLayoutPanel6.TabIndex = 77;
@@ -3323,7 +3346,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel4.Controls.Add(label_EspLineScale);
             flowLayoutPanel4.Controls.Add(trackBar_EspLineScale);
             flowLayoutPanel_ESPSettings.SetFlowBreak(flowLayoutPanel4, true);
-            flowLayoutPanel4.Location = new Point(401, 204);
+            flowLayoutPanel4.Location = new Point(404, 204);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
             flowLayoutPanel4.Size = new Size(738, 134);
             flowLayoutPanel4.TabIndex = 4;
@@ -3957,6 +3980,83 @@ namespace eft_dma_radar.UI.Radar
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
             // 
+            // flowLayoutPanel12
+            // 
+            flowLayoutPanel12.Controls.Add(label41);
+            flowLayoutPanel12.Controls.Add(checkBox_DoorEnabled);
+            flowLayoutPanel12.Controls.Add(checkBox_DoorAll);
+            flowLayoutPanel12.Controls.Add(checkedListBox_Doors);
+            flowLayoutPanel12.Controls.Add(radioButton_DoorOpen);
+            flowLayoutPanel12.Controls.Add(radioButton_DoorClosed);
+            flowLayoutPanel12.Dock = DockStyle.Fill;
+            flowLayoutPanel12.Location = new Point(447, 3);
+            flowLayoutPanel12.Name = "flowLayoutPanel12";
+            flowLayoutPanel12.Size = new Size(200, 194);
+            flowLayoutPanel12.TabIndex = 65;
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            flowLayoutPanel12.SetFlowBreak(label41, true);
+            label41.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label41.ImageAlign = ContentAlignment.MiddleRight;
+            label41.Location = new Point(3, 0);
+            label41.Name = "label41";
+            label41.Size = new Size(97, 21);
+            label41.TabIndex = 0;
+            label41.Text = "DoorViewer";
+            // 
+            // checkedListBox_Doors
+            // 
+            checkedListBox_Doors.FormattingEnabled = true;
+            checkedListBox_Doors.Location = new Point(3, 53);
+            checkedListBox_Doors.Name = "checkedListBox_Doors";
+            checkedListBox_Doors.Size = new Size(197, 112);
+            checkedListBox_Doors.TabIndex = 1;
+            // 
+            // radioButton_DoorOpen
+            // 
+            radioButton_DoorOpen.AutoSize = true;
+            radioButton_DoorOpen.Location = new Point(3, 171);
+            radioButton_DoorOpen.Name = "radioButton_DoorOpen";
+            radioButton_DoorOpen.Size = new Size(86, 19);
+            radioButton_DoorOpen.TabIndex = 2;
+            radioButton_DoorOpen.TabStop = true;
+            radioButton_DoorOpen.Text = "Show Open";
+            radioButton_DoorOpen.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_DoorClosed
+            // 
+            radioButton_DoorClosed.AutoSize = true;
+            radioButton_DoorClosed.Location = new Point(95, 171);
+            radioButton_DoorClosed.Name = "radioButton_DoorClosed";
+            radioButton_DoorClosed.Size = new Size(93, 19);
+            radioButton_DoorClosed.TabIndex = 3;
+            radioButton_DoorClosed.TabStop = true;
+            radioButton_DoorClosed.Text = "Show Closed";
+            radioButton_DoorClosed.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_DoorEnabled
+            // 
+            checkBox_DoorEnabled.AutoSize = true;
+            checkBox_DoorEnabled.Location = new Point(3, 28);
+            checkBox_DoorEnabled.Name = "checkBox_DoorEnabled";
+            checkBox_DoorEnabled.Size = new Size(68, 19);
+            checkBox_DoorEnabled.TabIndex = 4;
+            checkBox_DoorEnabled.Text = "Enabled";
+            checkBox_DoorEnabled.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_DoorAll
+            // 
+            checkBox_DoorAll.AutoSize = true;
+            checkBox_DoorAll.Location = new Point(77, 28);
+            checkBox_DoorAll.Name = "checkBox_DoorAll";
+            checkBox_DoorAll.Size = new Size(74, 19);
+            checkBox_DoorAll.TabIndex = 5;
+            checkBox_DoorAll.Text = "Select All";
+            checkBox_DoorAll.UseVisualStyleBackColor = true;
+            checkBox_DoorAll.CheckedChanged += checkBox_DoorAll_CheckedChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -4050,6 +4150,8 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel2.ResumeLayout(false);
             flowLayoutPanel2.PerformLayout();
             ((ISupportInitialize)dataGridView_Loot).EndInit();
+            flowLayoutPanel12.ResumeLayout(false);
+            flowLayoutPanel12.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -4353,6 +4455,14 @@ namespace eft_dma_radar.UI.Radar
         private CheckBox checkBox_ESP_LootMenu;
         private CheckBox checkBox_DetectNVG;
         private CheckBox checkBox_ShowImportant;
+        private CheckBox checkBox_ESP_NadeLine;
+        private FlowLayoutPanel flowLayoutPanel12;
+        private Label label41;
+        private CheckedListBox checkedListBox_Doors;
+        private CheckBox checkBox_DoorEnabled;
+        private CheckBox checkBox_DoorAll;
+        private RadioButton radioButton_DoorOpen;
+        private RadioButton radioButton_DoorClosed;
     }
 }
 

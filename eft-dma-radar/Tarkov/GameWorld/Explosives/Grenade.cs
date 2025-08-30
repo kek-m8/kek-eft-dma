@@ -115,13 +115,34 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
             var circlePosition = Position.ToMapPos(mapParams.Map).ToZoomedPos(mapParams);
             var size = 5 * MainForm.UIScale;
             SKPaints.ShapeOutline.StrokeWidth = SKPaints.PaintExplosives.StrokeWidth + 2f * MainForm.UIScale;
-            canvas.DrawCircle(circlePosition, size, SKPaints.ShapeOutline); // Draw outline
-            canvas.DrawCircle(circlePosition, size, SKPaints.PaintExplosives); // draw LocalPlayer marker
+            if(Name is not null)
+            {
+                if(GameData.GrenadeData.TryGetValue(Name, out var grenadeData))
+                {
+                    SKPoint grenadePos = new SKPoint(circlePosition.X - (11f * MainForm.UIScale), circlePosition.Y - (15f * MainForm.UIScale));
+                    if (grenadeData != null)
+                    {
+                        DrawCustomImage(ref grenadeData, canvas, grenadePos);
+                        canvas.DrawText(Name, new SKPoint(circlePosition.X, circlePosition.Y + 20f * MainForm.UIScale), SKPaints.TextOutline);
+                        canvas.DrawText(Name, new SKPoint(circlePosition.X, circlePosition.Y + 20f * MainForm.UIScale), SKPaints.TextGrenade);
+                    }
+                }
+                else
+                {
+                    canvas.DrawCircle(circlePosition, size, SKPaints.ShapeOutline); // Draw outline
+                    canvas.DrawCircle(circlePosition, size, SKPaints.PaintExplosives); // draw LocalPlayer marker
+                }
+            }
+             
         }
+
+
+        List<Vector3> _trailWorld = new();
+        int maxTrailLength = 250;
 
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)
         {
-            if(!_config.ESP.ShowGrenades)
+            if (!_config.ESP.ShowGrenades)
                 return;
             if (!IsActive)
                 return;
@@ -129,9 +150,46 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
                 return;
             if (!CameraManagerBase.WorldToScreen(ref _position, out var scrPos))
                 return;
+            if(_config.ESP.ShowGrenadeTracer)
+            {
+                _trailWorld.Add(Position);
+                if (_trailWorld.Count > maxTrailLength)
+                    _trailWorld.RemoveAt(0);
+                var screenTrail = new List<SKPoint>();
+                foreach (var wp in _trailWorld)
+                {
+                    var worldPos = wp;
+                    if (CameraManagerBase.WorldToScreen(ref worldPos, out var sp, true, true))
+                        screenTrail.Add(sp);
+                }
+                if (screenTrail.Count > 1)
+                {
+                    using var paint = new SKPaint
+                    {
+                        Style = SKPaintStyle.Stroke,
+                        StrokeWidth = 3f * ESP.Config.LineScale,
+                        IsAntialias = true,
+                        StrokeCap = SKStrokeCap.Round,
+                        Shader = SKShader.CreateLinearGradient(
+                            screenTrail[0],
+                            screenTrail[screenTrail.Count - 1],
+                            new[] { SKColors.Transparent, SKColors.Yellow.WithAlpha(220) },
+                            null,
+                            SKShaderTileMode.Clamp
+                        )
+                    };
+
+                    using var path = new SKPath();
+                    path.MoveTo(screenTrail[0]);
+                    for (int i = 1; i < screenTrail.Count; i++)
+                        path.LineTo(screenTrail[i]);
+
+                    canvas.DrawPath(path, paint);
+                }
+            }
             if (Name is not null && _config.ESP.ShowGrenadeIcons)
             {
-                if(GameData.GrenadeData.TryGetValue(Name, out var grenadeData))
+                if (GameData.GrenadeData.TryGetValue(Name, out var grenadeData))
                 {
                     SKPoint grenadePos = scrPos;
                     grenadePos.Y -= 15f;
@@ -145,28 +203,31 @@ namespace eft_dma_radar.Tarkov.GameWorld.Explosives
                 {
                     goto notFound;
                 }
+
                 if (_config.ESP.ShowGrenadeName)
                 {
-                    //canvas.DrawText(ID.Equals("67b49e7335dec48e3e05e057") ? "F-1 (delay)" : Name, new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }, SKPaints.TextImpLootESP);
-                    var grenadeName = 
+                    var grenadeName =
                         new List<string> { Name, Utils.GetDistPretty(Position, localPlayer.Position) };
                     new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }
-                    .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
+                        .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
                 }
 
                 return;
             }
+
             if (_config.ESP.ShowGrenadeName)
             {
                 var grenadeName =
-                        new List<string> { Name, Utils.GetDistPretty(Position, localPlayer.Position) };
+                    new List<string> { Name, Utils.GetDistPretty(Position, localPlayer.Position) };
                 new SKPoint { X = scrPos.X, Y = scrPos.Y + 20f }
-                .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
+                    .DrawESPText(canvas, this, localPlayer, false, SKPaints.TextImpLootESP, grenadeName?.ToArray());
             }
-         notFound:
+
+        notFound:
             var circleRadius = 8f * ESP.Config.LineScale;
             canvas.DrawCircle(scrPos, circleRadius, SKPaints.PaintGrenadeESP);
         }
+
 
         public void DrawCustomImage(ref string bitMap, SKCanvas canvas, SKPoint point)
         {

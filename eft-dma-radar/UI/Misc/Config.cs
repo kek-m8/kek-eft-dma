@@ -617,6 +617,11 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("showTripwireLine")]
         public bool ShowTripwireLine { get; set; } = false;
         /// <summary>
+        /// Display tracer line following grenade path in ESP
+        /// </summary>
+        [JsonPropertyName("showGrenadeTracer")]
+        public bool ShowGrenadeTracer { get; set; } = false;
+        /// <summary>
         /// Display grenades as icons in ESP
         /// </summary>
         [JsonPropertyName("showExplosivesAsIcons")]

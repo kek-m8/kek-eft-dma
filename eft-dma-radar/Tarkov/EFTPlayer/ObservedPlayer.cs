@@ -130,18 +130,18 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             static GuardIdentifier()
             {
                 AddMap("shoreline",
-                    new List<string> { "SFMP", "Beta 2", "Attack 2" },
-                    new List<string> { "Altyn", "LShZ-2DTM", "ZSh-1-2M" },
-                    new List<string> { "m62", "m993", "pp", "bp", "ap-20", "ppbs" },
-                    new Dictionary<string, List<List<string>>>
-                    {
+                   new List<string> { "SFMP", "Beta 2", "Attack 2" },
+                   new List<string> { "Altyn", "LShZ-2DTM", "ZSh-1-2M" },
+                   new List<string> { "m62", "m993", "pp", "bp", "ap-20", "ppbs" },
+                   new Dictionary<string, List<List<string>>>
+                   {
                 { "VPO-101 Vepr-Hunter", new List<List<string>> { new List<string> { "USP-1", "USP-1 cup" } } },
                 { "Saiga-12K", new List<List<string>> { new List<string> { "EKP-8-02 DT", "Powermag", "Sb.5" } } },
                 { "VPO-136 Vepr-KM", new List<List<string>> { new List<string> { "B10M+B19" } } },
                 { "AKM", new List<List<string>> { new List<string> { "B-10", "RK-6" } } },
                 { "AKS-74UB", new List<List<string>> { new List<string> { "PBS-4", "EKP-8-02 DT", "B-11" } } }
-                    }
-                );
+                   }
+               );
                 AddMap("bigmap",
                     null,
                     new List<string> { "Altyn" },
@@ -231,7 +231,7 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 AddMap("tarkovstreets",
                     new List<string> { "Attack 2" },
                     new List<string> { "Altyn", "LShZ-2DTM", "Maska-1SCh", "Vulkan-5", "ZSh-1-2M" },
-                    new List<string> { "m62", "m80", "zvezda", "shrap-10", "barrikada",  "pp" },
+                    new List<string> { "m62", "m80", "zvezda", "shrap-10", "barrikada", "pp" },
                     new Dictionary<string, List<List<string>>>
                     {
                         { "RPDN", new List<List<string>> { new List<string> { "USP-1" } } },
