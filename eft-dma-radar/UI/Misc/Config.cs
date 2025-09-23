@@ -82,7 +82,11 @@ namespace eft_dma_radar.UI.Misc
         /// </summary>
         [JsonPropertyName("containerDrawDistance")]
         public float ContainerDrawDistance { get; set; } = 100f;
-
+        /// <summary>
+        /// Maximum distance to draw doors on the Radar UI.
+        /// </summary>
+        [JsonPropertyName("doorDrawDistance")]
+        public float DoorDrawDistance { get; set; } = 150f;
         /// <summary>
         /// Shows loot on map.
         /// </summary>
@@ -140,6 +144,11 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("showMines")]
         public bool ShowMines { get; set; } = true;
 
+        /// <summary>
+        /// Show doors in the Radar UI.
+        /// </summary>
+        [JsonPropertyName("showDoors")]
+        public bool ShowDoors { get; set; } = true;
         /// <summary>
         /// Show BorderZone for KillTask
         /// </summary>
@@ -509,6 +518,16 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("showFPS")]
         public bool ShowFPS { get; set; } = false;
         /// <summary>
+        /// Enable DoorViewer feature
+        /// </summary>
+        [JsonPropertyName("showDoorViewer")]
+        public bool ShowDoorViewer { get; set; } = false;
+        /// <summary>
+        /// Blacklisted doors
+        /// </summary>
+        [JsonPropertyName("doorViewerBlacklist")]
+        public List<string> DoorViewerBlacklist { get; set; } = new List<string>();
+        /// <summary>
         /// Draw Loot Menu in ESP.
         /// </summary>
         [JsonPropertyName("showLootmenu")]
@@ -776,6 +795,17 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("lineScale")]
         public float LineScale { get; set; } = 1.0f;
 
+        /// <summary>
+        /// Distance to draw doors on ESP
+        /// </summary>
+        [JsonPropertyName("drawDoorDistance")]
+        public float DrawDoorDistance { get; set; } = 50.0f;
+
+        /// <summarry>
+        /// Weither or not to check player height for door drawing
+        /// </summarry>
+        [JsonPropertyName("doorHeightCheck")]
+        public bool DoorHeightCheck { get; set; } = false;
         /// <summary>
         /// FPS Cap for ESP Rendering.
         /// 0 = Infinite.

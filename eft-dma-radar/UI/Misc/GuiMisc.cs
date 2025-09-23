@@ -6,7 +6,8 @@ using eft_dma_shared.Common.Maps;
 using eft_dma_shared.Common.Misc;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity;
-
+using System.Collections.Generic;
+using static eft_dma_shared.Common.Misc.Data.EftDataManager.TaskElement.ObjectiveElement;
 namespace eft_dma_radar.UI.Misc
 {
     /// <summary>
@@ -294,7 +295,7 @@ namespace eft_dma_radar.UI.Misc
         /// <summary>
         /// Draws Mouseover Text (with backer) on this zoomed location.
         /// </summary>
-        public static void DrawMouseoverText(this SKPoint zoomedMapPos, SKCanvas canvas, IEnumerable<string> lines)
+        public static void DrawMouseoverText(this SKPoint zoomedMapPos, SKCanvas canvas, IEnumerable<string> lines, bool allowNewline = false)
         {
             float maxLength = 0;
             foreach (var line in lines)
@@ -303,12 +304,15 @@ namespace eft_dma_radar.UI.Misc
                 if (length > maxLength)
                     maxLength = length;
             }
-            var backer = new SKRect()
+
+            float totalHeight = (lines.Count() * SKPaints.TextMouseover.TextSize) + ((lines.Count() - 1) * (allowNewline ? 12f : 0f));
+
+            var backer = new SKRect
             {
-                Bottom = zoomedMapPos.Y + ((lines.Count() * 12f) - 2) * MainForm.UIScale,
                 Left = zoomedMapPos.X + (9 * MainForm.UIScale),
                 Top = zoomedMapPos.Y - (9 * MainForm.UIScale),
-                Right = zoomedMapPos.X + (9 * MainForm.UIScale) + maxLength + (6 * MainForm.UIScale)
+                Right = zoomedMapPos.X + (9 * MainForm.UIScale) + maxLength + (6 * MainForm.UIScale),
+                Bottom = zoomedMapPos.Y + (totalHeight - 2) * MainForm.UIScale
             };
             canvas.DrawRect(backer, SKPaints.PaintTransparentBacker); // Draw tooltip backer
             zoomedMapPos.Offset(11 * MainForm.UIScale, 3 * MainForm.UIScale);
@@ -317,7 +321,7 @@ namespace eft_dma_radar.UI.Misc
                 if (string.IsNullOrEmpty(line?.Trim()))
                     continue;
                 canvas.DrawText(line, zoomedMapPos, SKPaints.TextMouseover); // draw line text
-                zoomedMapPos.Offset(0, 12f * MainForm.UIScale);
+                zoomedMapPos.Offset(0, 12f + (allowNewline ? 12f : 0f) * MainForm.UIScale);
             }
         }
 

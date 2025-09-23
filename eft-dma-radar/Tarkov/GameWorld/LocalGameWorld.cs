@@ -11,6 +11,7 @@ using eft_dma_shared.Common.Unity;
 using eft_dma_radar.Tarkov.Features.MemoryWrites;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Misc.Commercial;
+using LonesEFTRadar.Tarkov.GameWorld;
 
 namespace eft_dma_radar.Tarkov.GameWorld
 {
@@ -32,6 +33,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
         private static readonly WaitTimer _refreshWait = new();
         private readonly CancellationTokenSource _cts = new();
         private readonly RegisteredPlayers _rgtPlayers;
+        private readonly WorldInteractiveManager _interactiveManager;
         private readonly LootManager _lootManager;
         private readonly ExitManager _exfilManager;
         private readonly ExplosivesManager _grenadeManager;
@@ -39,6 +41,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
         private readonly Thread _t2;
         private readonly Thread _t3;
         private readonly Thread _t4;
+        private readonly Thread _t5;
 
         /// <summary>
         /// Map ID of Current Map.
@@ -51,6 +54,8 @@ namespace eft_dma_radar.Tarkov.GameWorld
         public IReadOnlyCollection<IExitPoint> Exits => _exfilManager;
         public LocalPlayer LocalPlayer => _rgtPlayers?.LocalPlayer;
         public LootManager Loot => _lootManager;
+
+        public WorldInteractiveManager InteractiveManager => _interactiveManager;
 
         public QuestManager QuestManager { get; private set; }
 
@@ -112,12 +117,17 @@ namespace eft_dma_radar.Tarkov.GameWorld
             {
                 IsBackground = true
             };
+            _t5 = new Thread(() => { DoorWorker(ct); })
+            {
+                IsBackground = true
+            };
             // Reset static assets for a new raid/game.
             Player.Reset();
             var rgtPlayersAddr = Memory.ReadPtr(localGameWorld + Offsets.ClientLocalGameWorld.RegisteredPlayers, false);
             _rgtPlayers = new RegisteredPlayers(rgtPlayersAddr, this);
             if (_rgtPlayers.GetPlayerCount() < 1)
                 throw new ArgumentOutOfRangeException(nameof(_rgtPlayers));
+            _interactiveManager = new(localGameWorld);
             _lootManager = new(localGameWorld, ct);
             _exfilManager = new(localGameWorld, _rgtPlayers.LocalPlayer.IsPmc);
             _grenadeManager = new(localGameWorld);
@@ -132,6 +142,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
             _t2.Start();
             _t3.Start();
             _t4.Start();
+            _t5.Start();
         }
 
         /// <summary>
@@ -612,6 +623,25 @@ namespace eft_dma_radar.Tarkov.GameWorld
             }
         }
 
+        #endregion
+
+        #region DoorWorker T5
+        private void DoorWorker(CancellationToken ct)
+        {
+            if (_disposed) return;
+            try
+            {
+                while (InRaid)
+                {
+                    ct.ThrowIfCancellationRequested();
+                    _interactiveManager.Refresh();
+                    Thread.Sleep(550);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
         #endregion
 
         #region BTR Vehicle

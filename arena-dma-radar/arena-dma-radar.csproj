@@ -59,6 +59,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.0" />
 		<PackageReference Include="SkiaSharp.Views.WindowsForms" Version="3.119.0" />
+		<PackageReference Include="System.IO.Ports" Version="9.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>

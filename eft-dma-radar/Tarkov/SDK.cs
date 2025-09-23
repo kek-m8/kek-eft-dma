@@ -107,6 +107,16 @@ namespace SDK
             public const uint Grenades = 0x200; // -.\uE3D7<Int32, Throwable>
         }
 
+        public readonly partial struct Interactable
+        {
+            public const uint KeyId = 0x58; // String
+            public const uint Id = 0x60; // String
+            public const uint _doorState = 0x11C; // System.Byte
+            public const uint CanBeBreached = 0x189; // Boolean
+        }
+
+
+
         public readonly partial struct TransitController
         {
             public const uint TransitPoints = 0x18; // System.Collections.Generic.Dictionary<Int32, TransitPoint>
@@ -277,7 +287,31 @@ namespace SDK
             public const uint InteractionRayOriginOnStartOperation = 0xA14; // UnityEngine.Vector3
             public const uint InteractionRayDirectionOnStartOperation = 0xA20; // UnityEngine.Vector3
             public const uint IsYourPlayer = 0xA36; // Boolean
+            public const uint PacketData = 0xD60; // -.\uE8F9
         }
+
+        public readonly partial struct PacketData
+        {
+            public const uint MovementInfoPacket = 0x18; // -.\uE912
+        }
+
+        public readonly partial struct MovementInfoPacket
+        {
+            public const uint InteractWithDoorPacket = 0x28;            // -.\uE914
+            public const uint InteractWithBtrPacket = 0x48;             // -.\uE916
+            public const uint InteractWithTripwirePacket = 0x54;        // -.\uE915
+            public const uint InteractWithTransitPacket = 0x60;         // -.\uE917
+            public const uint InteractWithEventObjectPacket = 0x78;     // -.\uE918
+            public const uint LootInteractionPacket = 0x88;             // -.\uE921
+            public const uint StationaryWeaponPacket = 0xA0;            // -.\uE919
+            public const uint PlantItemPacket = 0xB8;                   // -.\uE91A
+            public const uint VaultingPacket = 0xFC;                    // -.\uE91C
+            public const uint InteractionPacket = 0x124;                // -.\uE91E
+            public const uint InventoryInteractionPacket = 0x126;       // -.\uE91F
+            public const uint MountingPacket = 0x12C;                   // -.\uE91B
+            public const uint LeftHandPacket = 0x148;					// -.\uE91D
+        }
+
 
         public readonly partial struct AIData
         {
@@ -318,6 +352,9 @@ namespace SDK
         {
             public const uint ItemInHands = 0x58; // EFT.InventoryLogic.Item
             public const uint BundleAnimationBones = 0xA0; // -.\uED42
+            public const uint IsInventoryOpen = 0xEC; // Boolean
+            public const uint InReloadOperation = 0xF8; // Boolean
+            public const uint IsWeaponTriggerPressing = 0xF4; // Boolean
         }
 
         public readonly partial struct BundleAnimationBonesController

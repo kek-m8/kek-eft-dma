@@ -28,6 +28,8 @@ using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Unity.LowLevel;
 using LonesEFTRadar.Tarkov.Features.MemoryWrites;
+using LonesEFTRadar.Tarkov.GameWorld.Interactive;
+using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Primitives;
 using SkiaSharp;
 using System;
@@ -35,6 +37,7 @@ using System.CodeDom;
 using System.Net.Http.Json;
 using System.Security.Authentication.ExtendedProtection;
 using System.Timers;
+using System.Windows.Forms;
 using static eft_dma_radar.Tarkov.API.EFTProfileService;
 using static eft_dma_radar.UI.Hotkeys.HotkeyManager;
 using static eft_dma_radar.UI.Hotkeys.HotkeyManager.HotkeyActionController;
@@ -182,12 +185,13 @@ namespace eft_dma_radar.UI.Radar
                 var containers = Containers ?? Enumerable.Empty<IMouseoverEntity>();
                 var exits = Exits ?? Enumerable.Empty<IMouseoverEntity>();
                 var questZones = Memory.QuestManager?.LocationConditions ?? Enumerable.Empty<IMouseoverEntity>();
+                var doors = Memory.Interactive.Doors ?? Enumerable.Empty<IMouseoverEntity>();
 
                 if (FilterIsSet && !checkBox_HideCorpses.Checked) // Item Search
                     players = players.Where(x =>
                         x.LootObject is null || !loot.Contains(x.LootObject)); // Don't show both corpse objects
 
-                var result = loot.Concat(containers).Concat(players).Concat(exits).Concat(questZones);
+                var result = loot.Concat(containers).Concat(players).Concat(exits).Concat(questZones).Concat(doors);
                 return result.Any() ? result : null;
             }
         }
@@ -228,6 +232,13 @@ namespace eft_dma_radar.UI.Radar
             Config.ContainerDrawDistance = amt;
         }
 
+        private void TrackBar_ShowDoorDist_ValueChanged(object sender, EventArgs e)
+        {
+            int amt = trackBar_ShowDoorDist.Value;
+            label_ShowDoorDist.Text = $"Door Dist: {amt}";
+            Config.DoorDrawDistance = amt;
+        }
+
         #endregion
 
         #region Render
@@ -251,6 +262,7 @@ namespace eft_dma_radar.UI.Radar
             });
         }
 
+        public bool doorFirst = false;
 
         /// <summary>
         /// Main Render Event.
@@ -276,6 +288,16 @@ namespace eft_dma_radar.UI.Radar
                 canvas.Clear(); // Clear canvas
                 if (inRaid && localPlayer is not null) // LocalPlayer is in a raid -> Begin Drawing...
                 {
+                    if (checkBox_DoorEnabled.Checked && !doorFirst) // init doors
+                    {
+                        doorFirst = true;
+                        checkBox_DoorEnabled_CheckedChanged(sender, e);
+                        foreach (var x in checkedListBox_Doors.Items)
+                        {
+                            if (Config.ESP.DoorViewerBlacklist.Contains(x.ToString())) // if cached as blacklisted
+                                checkedListBox_Doors.SetItemChecked(checkedListBox_Doors.Items.IndexOf(x), false);
+                        }
+                    }
                     var map = LoneMapManager.Map; // Cache ref
                     ArgumentNullException.ThrowIfNull(map, nameof(map));
                     var closestToMouse = _mouseOverItem; // cache ref
@@ -428,6 +450,14 @@ namespace eft_dma_radar.UI.Radar
                             player.Draw(canvas, mapParams, localPlayer);
                         } // end ForEach (allPlayers)
 
+                    if (checkBox_DoorEnabled.Checked && Memory.Interactive.Doors.Count() > 0 && Config.ShowDoors)
+                    {
+                        foreach (var door in Memory.Interactive.Doors)
+                        {
+                            door.Draw(canvas, mapParams, localPlayer);
+                        }
+                    }
+
                     // End allPlayers not null
                     if (checkBox_GrpConnect.Checked) // Connect Groups together
                     {
@@ -454,8 +484,7 @@ namespace eft_dma_radar.UI.Radar
                         }
                     } // End Grp Connect
 
-                    if (allPlayers is not null &&
-                        checkBox_ShowInfoTab.Checked) // Players Overlay
+                    if (allPlayers is not null && checkBox_ShowInfoTab.Checked) // Players Overlay
                         _playerInfo?.Draw(canvas, localPlayer, allPlayers);
                     closestToMouse?.DrawMouseover(canvas, mapParams, localPlayer);// draw tooltip for object the mouse is closest to
 
@@ -464,6 +493,11 @@ namespace eft_dma_radar.UI.Radar
                 }
                 else // LocalPlayer is *not* in a Raid -> Display Reason
                 {
+                    if (doorFirst)
+                    {
+                        doorFirst = false;
+                        checkedListBox_Doors.Items.Clear();
+                    }
                     if (!isStarting)
                         GameNotRunningStatus(canvas);
                     else if (isStarting && !isReady)
@@ -1167,6 +1201,10 @@ namespace eft_dma_radar.UI.Radar
                         _mouseOverItem = quest;
                         MouseoverGroup = null;
                         break;
+                    case Door door:
+                        _mouseOverItem = door;
+                        MouseoverGroup = null;
+                        break;
                     default:
                         ClearRefs();
                         break;
@@ -1729,7 +1767,6 @@ namespace eft_dma_radar.UI.Radar
                 foreach (var item in currentItems)
                 {
                     bool isManuallyBlacklisted = Config.QuestHelper.BlacklistedQuests.Contains(item.Id, StringComparer.OrdinalIgnoreCase);
-
                     if (!item.KappaRequired && !isManuallyBlacklisted)
                     {
                         if (listIdToIndex.TryGetValue(item.Id, out int idx))
@@ -2207,6 +2244,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_LootPPS.Checked = Config.LootPPS;
             checkBox_DetectNVG.Checked = Config.DetectPlayerNvg;
             checkBox_ESP_NadeLine.Checked = Config.ESP.ShowGrenadeTracer;
+            checkBox_DoorEnabled.Checked = Config.ESP.ShowDoorViewer;
             if (Config.LootPriceMode is LootPriceMode.FleaMarket)
                 radioButton_Loot_FleaPrice.Checked = true;
             else if (Config.LootPriceMode is LootPriceMode.Trader)
@@ -2216,6 +2254,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ShowInfoTab.Checked = Config.ShowInfoTab;
             checkBox_HideCorpses.Checked = Config.HideCorpses;
             checkBox_ShowMines.Checked = Config.ShowMines;
+            checkBox_ShowDoor.Checked = Config.ShowDoors;
             checkBox_KillTask.Checked = Config.ShowZone;
             checkBox_TeammateAimlines.Checked = Config.TeammateAimlines;
             checkBox_AIAimlines.Checked = Config.AIAimlines;
@@ -2361,6 +2400,7 @@ namespace eft_dma_radar.UI.Radar
                 Config.ShowInfoTab = checkBox_ShowInfoTab.Checked;
                 Config.HideNames = checkBox_HideNames.Checked;
                 Config.ShowMines = checkBox_ShowMines.Checked;
+                Config.ShowDoors = checkBox_ShowDoor.Checked;
                 Config.ConnectGroups = checkBox_GrpConnect.Checked;
                 Config.Containers.Selected = TrackedContainers
                     .Where(x => x.Value is true)
@@ -2462,6 +2502,8 @@ namespace eft_dma_radar.UI.Radar
             zoomIn.HotkeyDelayElapsed += ZoomIn_HotkeyDelayElapsed;
             var toggleContainer = new HotkeyActionController("Toggle Containers");
             toggleContainer.HotkeyStateChanged += ToggleContainer_HotkeyStateChanged;
+            var toggleDoors = new HotkeyActionController("Toggle DoorViewer");
+            toggleDoors.HotkeyStateChanged += ToggleDoors_HotkeyStateChanged;
             var zoomOut = new HotkeyActionController("Zoom Out");
             zoomOut.Delay = HK_ZoomTickDelay;
             zoomOut.HotkeyDelayElapsed += ZoomOut_HotkeyDelayElapsed;
@@ -2528,6 +2570,7 @@ namespace eft_dma_radar.UI.Radar
             // Add to Static Collection:
             HotkeyManager.RegisterActionController(zoomIn);
             HotkeyManager.RegisterActionController(toggleContainer);
+            HotkeyManager.RegisterActionController(toggleDoors);
             HotkeyManager.RegisterActionController(zoomOut);
             HotkeyManager.RegisterActionController(toggleLoot);
             HotkeyManager.RegisterActionController(toggleESPWidget);
@@ -2699,6 +2742,14 @@ namespace eft_dma_radar.UI.Radar
             if (e.State)
             {
                 Config.Containers.Show = !Config.Containers.Show;
+            }
+        }
+
+        private void ToggleDoors_HotkeyStateChanged(object sender, HotkeyEventArgs e)
+        {
+            if (e.State)
+            {
+                checkBox_DoorEnabled.Checked = !checkBox_DoorEnabled.Checked;
             }
         }
 
@@ -2924,6 +2975,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_EspGrenadeDist.ValueChanged += TrackBar_EspGrenadeDist_ValueChanged;
             trackBar_EspFontScale.ValueChanged += TrackBar_EspFontScale_ValueChanged;
             trackBar_EspLineScale.ValueChanged += TrackBar_EspLineScale_ValueChanged;
+            trackBar_ESPDoorDist.ValueChanged += TrackBar_ESPDoorDist_ValueChanged;
             trackBar_ESPContainerDist.ValueChanged += TrackBar_ESPContainerDist_ValueChanged;
             Config.ESP.PlayerRendering ??= new ESPPlayerRenderOptions();
             Config.ESP.AIRendering ??= new ESPPlayerRenderOptions();
@@ -3009,6 +3061,7 @@ namespace eft_dma_radar.UI.Radar
             checkBox_ESP_LootMenu.Checked = Config.ESP.ShowLootMenu;
             checkBox_ImportantPlayer.Checked = Config.ShowImportantPlayer;
             trackBar_EspLootDist.Value = (int)Config.ESP.LootDrawDistance;
+            trackBar_ESPDoorDist.Value = (int)Config.ESP.DrawDoorDistance;
             trackBar_EspImpLootDist.Value = (int)Config.ESP.ImpLootDrawDistance;
             trackBar_EspQuestHelperDist.Value = (int)Config.ESP.QuestHelperDrawDistance;
             trackBar_EspGrenadeDist.Value = (int)Config.ESP.GrenadeDrawDistance;
@@ -3071,7 +3124,7 @@ namespace eft_dma_radar.UI.Radar
         private void StartESP()
         {
             button_StartESP.Text = "Running...";
-            flowLayoutPanel_ESPSettings.Enabled = false;
+            //flowLayoutPanel_ESPSettings.Enabled = false;
             flowLayoutPanel_MonitorSettings.Enabled = false;
             var t = new Thread(() =>
             {
@@ -3090,7 +3143,7 @@ namespace eft_dma_radar.UI.Radar
                     Invoke(() =>
                     {
                         button_StartESP.Text = "Start ESP";
-                        flowLayoutPanel_ESPSettings.Enabled = true;
+                        //flowLayoutPanel_ESPSettings.Enabled = true;
                         flowLayoutPanel_MonitorSettings.Enabled = true;
                     });
                 }
@@ -3153,6 +3206,14 @@ namespace eft_dma_radar.UI.Radar
             float value = .01f * trackBar_EspLineScale.Value;
             label_EspLineScale.Text = $"Line Scale {value.ToString("n2")}";
             Config.ESP.LineScale = value;
+            ScaleESPPaints();
+        }
+
+        private void TrackBar_ESPDoorDist_ValueChanged(object sender, EventArgs e)
+        {
+            var value = trackBar_ESPDoorDist.Value;
+            label_ESPDoorDist.Text = $"Door Dist {value}";
+            Config.ESP.DrawDoorDistance = value;
             ScaleESPPaints();
         }
 
@@ -3818,6 +3879,7 @@ namespace eft_dma_radar.UI.Radar
         {
             checkedListBox_Containers.ItemCheck += CheckedListBox_Containers_ItemCheck;
             trackBar_ContainerDist.ValueChanged += TrackBar_ContainerDist_ValueChanged;
+            trackBar_ShowDoorDist.ValueChanged += TrackBar_ShowDoorDist_ValueChanged;
             var entries = EftDataManager.AllContainers.Values
                 .OrderBy(x => x.Name)
                 .Select(x => new ContainerListItem(x)).ToArray();
@@ -4383,10 +4445,51 @@ namespace eft_dma_radar.UI.Radar
 
         private void checkBox_DoorAll_CheckedChanged(object sender, EventArgs e)
         {
-            if(radioButton_DoorClosed.Checked)
-                radioButton_DoorClosed.Checked = false;
-            if(radioButton_DoorOpen.Checked)
-                radioButton_DoorOpen.Checked = false;
+            if (checkBox_DoorEnabled.Checked && checkedListBox_Doors.Items is not null)
+            {
+                for (int i = 0; i < checkedListBox_Doors.Items.Count; i++)
+                {
+                    checkedListBox_Doors.SetItemChecked(i, checkBox_DoorAll.Checked);
+                }
+            }
+        }
+
+        private void checkBox_DoorEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.ShowDoorViewer = checkBox_DoorEnabled.Checked;
+            checkedListBox_Doors.Items.Clear();
+            if (InRaid && checkBox_DoorEnabled.Checked)
+            {
+                foreach (var door in Memory.Interactive.Doors)
+                {
+                    if (string.IsNullOrEmpty(door.KeyName) || door.KeyName == "NULL")
+                        continue;
+                    bool isBlacklisted = Config.ESP.DoorViewerBlacklist?.Contains(door.Id) ?? false;
+                    checkedListBox_Doors.Items.Add(door, doorFirst || !isBlacklisted);
+                }
+            }
+        }
+
+        private void checkedListBox_Doors_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            var door = (Door)checkedListBox_Doors.Items[e.Index];
+
+            if (Config.ESP.DoorViewerBlacklist == null)
+                Config.ESP.DoorViewerBlacklist = new List<string>();
+
+            if (e.NewValue == CheckState.Checked)
+            {
+                Config.ESP.DoorViewerBlacklist.Remove(door.Id);
+            }
+            else if (e.NewValue == CheckState.Unchecked)
+            {
+                if (!Config.ESP.DoorViewerBlacklist.Contains(door.Id))
+                    Config.ESP.DoorViewerBlacklist.Add(door.Id);
+            }
+        }
+        private void checkBox_DoorOnMyLvl_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.ESP.DoorHeightCheck = checkBox_DoorOnMyLvl.Checked;
         }
     }
 }

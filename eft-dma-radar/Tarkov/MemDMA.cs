@@ -12,6 +12,7 @@ using System.Runtime;
 using eft_dma_shared.Common.DMA;
 using eft_dma_shared.Common.Unity;
 using eft_dma_shared.Common.Misc.Commercial;
+using LonesEFTRadar.Tarkov.GameWorld;
 
 namespace eft_dma_radar.Tarkov
 {
@@ -81,6 +82,7 @@ namespace eft_dma_radar.Tarkov
         public LootManager Loot => Game?.Loot;
         public QuestManager QuestManager => Game?.QuestManager;
         public LocalGameWorld Game { get; private set; }
+        public WorldInteractiveManager Interactive => Game?.InteractiveManager;
 
         public MemDMA() : base(Config.FpgaAlgo, Config.MemMapEnabled)
         {

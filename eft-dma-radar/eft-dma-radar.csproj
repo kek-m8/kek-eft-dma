@@ -55,9 +55,9 @@
 	
   <ItemGroup>
 	<PackageReference Include="DarkModeForms.imerzan" Version="1.0.1" />
-	<PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="9.0.0" />
-	<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.0" />
+	<PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="9.0.9" />
+	<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.9" />
     <PackageReference Include="Open.Nat.imerzan" Version="2.2.0" />
     <PackageReference Include="SkiaSharp.Views.WindowsForms" Version="3.119.0" />
   </ItemGroup>
