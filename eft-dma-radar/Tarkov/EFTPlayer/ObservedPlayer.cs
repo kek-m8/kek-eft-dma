@@ -11,6 +11,7 @@ using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
+using eft_dma_shared.Common.Unity.Collections;
 using System;
 using static SDK.Enums;
 
@@ -30,6 +31,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
         /// ObservedHealthController for non-clientplayer players.
         /// </summary>
         private ulong ObservedHealthController { get; }
+        // Change MainParts property to be a private settable property so it can be assigned in the constructor and UpdatePlayerMainParts
+        public MemDictionary<BodyPartType, ulong> MainParts { get; private set; }
         /// <summary>
         /// Player name.
         /// </summary>
@@ -462,7 +465,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                 gunHasMods = null;
             }
         }
-            
+
+        
+
+        private void getMainPart(ObservedPlayer player)
+        {
+            var mainPartPtr = Memory.ReadPtr(player.Base + Offsets.ObservedPlayerView.MainParts);
+            using var items = MemDictionary<BodyPartType, int>.Get(mainPartPtr);
+            foreach (var item in items)
+            {
+                var enemyPartPtr = Memory.ReadPtr((ulong)item.Value);
+                bool canShoot = Memory.ReadValue<bool>(enemyPartPtr + Offsets.EnemyPart._canShoot);
+                Vector3 visabilityCast = Memory.ReadValue<Vector3>(enemyPartPtr + Offsets.EnemyPart._lastVisibilityCastOffsetLocal);
+                MessageBox.Show($"Part: {Enum.GetName<BodyPartType>(item.Key)} CanShoot: {canShoot} VisabilityCast: {visabilityCast}");
+            }
+        }
+
 
         internal ObservedPlayer(ulong playerBase) : base(playerBase)
         {
@@ -472,6 +490,8 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             ArgumentOutOfRangeException.ThrowIfNotEqual(this,
                 Memory.ReadValue<ulong>(ObservedPlayerController + Offsets.ObservedPlayerController.Player),
                 nameof(ObservedPlayerController));
+            //var mainPartPtr = Memory.ReadPtr(this + Offsets.ObservedPlayerView.MainParts);
+            //MainParts = MemDictionary<BodyPartType, ulong>.Get(mainPartPtr);
             ObservedHealthController = Memory.ReadPtr(ObservedPlayerController + Offsets.ObservedPlayerController.HealthController);
             ArgumentOutOfRangeException.ThrowIfNotEqual(this,
                 Memory.ReadValue<ulong>(ObservedHealthController + Offsets.ObservedHealthController.Player),
@@ -637,6 +657,22 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
             return movementController;
         }
 
+        public bool canSeePart(BodyPartType part)
+        {
+            if(MainParts is not null)
+            {
+                foreach(var item in MainParts)
+                {
+                    if(item.Key == part)
+                    {
+                        var enemyPartPtr = Memory.ReadPtr((ulong)item.Value);
+                        return Memory.ReadValue<bool>(enemyPartPtr + Offsets.EnemyPart._canShoot);
+                    }
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Refresh Player Information.
         /// </summary>
@@ -656,9 +692,24 @@ namespace eft_dma_radar.Tarkov.EFTPlayer
                     UpdatePlayerHours();
                 }
                 UpdateHealthStatus();
+                //UpdatePlayerMainParts();
                 //UpdateVisability();
             }
             base.OnRegRefresh(index, registered, isActive);
+        }
+
+        private void UpdatePlayerMainParts()
+        {
+            try
+            {
+                var mainPartPtr = Memory.ReadPtr(this + Offsets.ObservedPlayerView.MainParts);
+                MainParts?.Dispose();
+                MainParts = MemDictionary<BodyPartType, ulong>.Get(mainPartPtr);
+            }
+            catch (Exception ex)
+            {
+                LoneLogging.WriteLine($"ERROR updating Main Parts for Player '{Name}': {ex}");
+            }
         }
 
         private void UpdatePlayerPrestige()

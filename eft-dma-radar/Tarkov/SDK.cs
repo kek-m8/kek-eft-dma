@@ -321,6 +321,7 @@ namespace SDK
         public readonly partial struct ObservedPlayerView
         {
             public const uint GroupID = 0x20; // String
+            public const uint MainParts = 0x40; // System.Collections.Generic.Dictionary<UInt16, EnemyPart>
             public const uint NickName = 0x50; // String
             public const uint AccountId = 0x58; // String
             public const uint PlayerBody = 0x68; // EFT.PlayerBody
@@ -331,6 +332,19 @@ namespace SDK
             public const uint IsAI = 0x111; // Boolean
             public const uint VisibleToCameraType = 0x114; // System.Int32
             public const uint IsVisibleToCamera = 0x118; // Boolean
+        }
+
+        public readonly partial struct EnemyPart
+        {
+            public const uint EnemyPlayer = 0x10; // EFT.IPlayer
+            public const uint _bifacialTransform = 0x18; // EFT.BifacialTransform
+            public const uint _bodyPartyCollider = 0x20; // -.BodyPartCollider
+            public const uint BodyPartType = 0x28;
+            public const uint _canAimToPart = 0x2A; // Boolean
+            public const uint _canShoot = 0x2B; // Boolean
+            public const uint _visCastForShootIsTried = 0x3D; // Boolean
+            public const uint _lastVisibilityCastOffsetLocal = 0x40; // UnityEngine.Vector3
+            public const uint _lastShootCastOffsetLocal = 0x4C; // UnityEngine.Vector3
         }
 
         public readonly partial struct FollowerCullingObject
@@ -1157,6 +1171,16 @@ namespace SDK
             MarkedAsFailed = 7,
             Expired = 8,
             AvailableAfter = 9,
+        }
+
+        public enum BodyPartType : ushort
+        {
+            head,
+            body,
+            leftArm,
+            rightArm,
+            leftLeg,
+            rightLeg
         }
     }
 }

@@ -16,8 +16,10 @@ using eft_dma_shared.Common.Misc.Commercial;
 using eft_dma_shared.Common.Misc.Data;
 using eft_dma_shared.Common.Players;
 using eft_dma_shared.Common.Unity;
+using eft_dma_shared.Common.Unity.Collections;
 using eft_dma_shared.Misc;
 using OpenTK.Graphics.OpenGL;
+using static SDK.Enums;
 //using SkiaSharp.HarfBuzz;
 
 namespace eft_dma_radar.UI.ESP
@@ -229,6 +231,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                     }
                     else
                     {
+                        //DrawMainPartsInfo(canvas, localPlayer);
                         if (Config.ESP.ShowDoorViewer)
                             DrawDoors(canvas, localPlayer);
                         if (Config.ESP.DrawLootBackground)
@@ -572,6 +575,42 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAYAAACG+vy+AAB680lEQVR4nO19CZhU5ZV23a1u7UtX740g
                 return null;
             return targets.MinBy(x => x.FOV).Player;
         }
+
+        /*private void DrawMainPartsInfo(SKCanvas canvas, LocalPlayer localPlayer)
+        {
+            try
+            {
+                ObservedPlayer bloke = GetPlayerInFOV(localPlayer as Player) as ObservedPlayer;
+                List<string> strings = new List<string>();
+                if (bloke is null)
+                    return;
+                //var mainPartPtr = Memory.ReadPtr(bloke. + Offsets.ObservedPlayerView.MainParts);
+                //if (mainPartPtr == 0)
+                //    return;
+            }
+            /*    bloke.MainParts?.Dispose();
+                var mainParts = MemDictionary<BodyPartType, ulong>.Get(mainPartPtr);
+                if (mainParts is null || mainParts.Count == 0)
+                    return;
+                strings.Add($"Name: {bloke.Name}");
+                foreach (var yep in mainParts)
+                {
+                    var enemyPart = Memory.ReadPtr(yep.Value);
+                    if (enemyPart == 0)
+                        continue;
+                    strings.Add($"Part: {Enum.GetName<Enums.BodyPartType>(yep.Key).ToUpper()} - CanShoot {Memory.ReadValue<bool>(enemyPart + Offsets.EnemyPart._canShoot)}");
+                }
+                if (strings.Count == 1) // didnt find any parts
+                    return;
+                var textPt = new SKPoint(CameraManagerBase.Viewport.Right - 550f * Config.ESP.FontScale,
+                    CameraManagerBase.Viewport.Top * Config.ESP.FontScale);
+                textPt.DrawESPText(canvas, bloke, localPlayer, false, SKPaints.TextBasicESPLeftAligned, strings.ToArray());
+            catch(Exception ex)
+            {
+                MessageBox.Show($"ERROR Drawing Main Parts Info: {ex.Message}");
+            }
+
+        }*/
 
         public void DrawCustomImage(ref string bitMap, SKCanvas canvas, SKPoint point)
         {

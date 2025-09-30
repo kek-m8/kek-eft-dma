@@ -4491,5 +4491,27 @@ namespace eft_dma_radar.UI.Radar
         {
             Config.ESP.DoorHeightCheck = checkBox_DoorOnMyLvl.Checked;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            List<string> strings = new List<string>();
+            var players = Memory.Players.Where(x => x.IsHumanActive && !x.IsNotLocalPlayerAlive);
+            foreach (var player in players)
+            {
+                if (player is ObservedPlayer observed)
+                {
+                    strings.Add($"Player: {observed.Name}");
+                    strings.Add("");
+                    foreach (var b in observed.MainParts)
+                    {
+                        var enemyPartPtr = Memory.ReadPtr(b.Value);
+                        strings.Add($"Part: {Enum.GetName<Enums.BodyPartType>(b.Key)} - CanShoot : {Memory.ReadValue<bool>(enemyPartPtr + Offsets.EnemyPart._canShoot)}");
+                    }
+                }
+                MessageBox.Show(string.Join("\n", strings), $"{player.Name} body part info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                strings.Clear();
+            }
+            
+        }
     }
 }
