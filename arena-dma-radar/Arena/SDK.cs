@@ -18,14 +18,14 @@ namespace SDK
 
         public readonly partial struct OpticCameraManagerContainer
         {
-            public const uint ClassName_ClassToken = 0x20035A3; // MDToken
-            public const string ClassName = @"\uF29F";
+            public const uint ClassName_ClassToken = 0x2003169; // MDToken
+            public const string ClassName = @"\uF068";
         }
 
         public readonly partial struct ProceduralWeaponAnimation
         {
             public const uint ClassName_ClassToken = 0x2002825; // MDToken
-            public const uint MethodName_MethodToken = 0x600F8E8; // MDToken
+            public const uint MethodName_MethodToken = 0x600F8EE; // MDToken
             public const string ClassName = @"EFT.Animations.ProceduralWeaponAnimation";
             public const string MethodName = @"get_ShotNeedsFovAdjustments";
         }
@@ -62,7 +62,7 @@ namespace SDK
         public readonly partial struct Grenade
         {
             public const uint IsDestroyed = 0x5D; // Boolean
-            public const uint WeaponSource = 0x80; // -.\uF141
+            public const uint WeaponSource = 0x80; // -.\uF1B1
         }
 
         public readonly partial struct Player
@@ -206,7 +206,7 @@ namespace SDK
 
         public readonly partial struct Equipment
         {
-            public const uint Grids = 0x90; // -.\uF02B[]
+            public const uint Grids = 0x90; // -.\uF09B[]
             public const uint Slots = 0x98; // EFT.InventoryLogic.Slot[]
         }
 
@@ -234,7 +234,7 @@ namespace SDK
         public readonly partial struct LootableContainer
         {
             public const uint InteractingPlayer = 0xC0; // EFT.IPlayer
-            public const uint ItemOwner = 0x148; // -.\uF007
+            public const uint ItemOwner = 0x148; // -.\uF077
             public const uint Template = 0x150; // String
         }
 
@@ -252,13 +252,13 @@ namespace SDK
 
         public readonly partial struct LootItemMod
         {
-            public const uint Grids = 0x90; // -.\uF02B[]
+            public const uint Grids = 0x90; // -.\uF09B[]
             public const uint Slots = 0x98; // EFT.InventoryLogic.Slot[]
         }
 
         public readonly partial struct LootItemModGrids
         {
-            public const uint ItemCollection = 0x48; // -.\uF02D
+            public const uint ItemCollection = 0x48; // -.\uF09D
         }
 
         public readonly partial struct LootItemModGridsItemCollection
@@ -363,8 +363,8 @@ namespace SDK
 
         public readonly partial struct OpticCameraManagerContainer
         {
-            public const uint Instance = 0x0; // -.\uF29F
-            public const uint OpticCameraManager = 0x10; // -.\uF2A3
+            public const uint Instance = 0x0; // -.\uF068
+            public const uint OpticCameraManager = 0x10; // -.\uF06C
             public const uint FPSCamera = 0x68; // UnityEngine.Camera
         }
 
@@ -381,7 +381,7 @@ namespace SDK
 
         public readonly partial struct SightComponent
         {
-            public const uint _template = 0x20; // -.\uF023
+            public const uint _template = 0x20; // -.\uF093
             public const uint ScopesSelectedModes = 0x30; // System.Int32[]
             public const uint SelectedScope = 0x38; // Int32
         }
