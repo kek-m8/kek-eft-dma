@@ -67,7 +67,7 @@ namespace LonesEFTRadar.Tarkov.GameWorld.Interactive
         public Door(ulong ptr, string name)
         {
             if (!Utils.IsValidVirtualAddress(ptr) || ptr == 0x0)
-                throw new ArgumentOutOfRangeException(nameof(ptr));
+                return;
             Enum.GetValues<EDoorType>().ToList().ForEach(x =>
             {
                 if (name.Equals(x.ToString()))
@@ -97,7 +97,7 @@ namespace LonesEFTRadar.Tarkov.GameWorld.Interactive
 
                 CanBeBreached = Memory.ReadValue<bool>(Base + Offsets.Interactable.CanBeBreached, false);
             }
-            catch { MessageBox.Show("Error with getting door data"); }
+            catch { }
         }
 
         public void DrawESP(SKCanvas canvas, LocalPlayer localPlayer)

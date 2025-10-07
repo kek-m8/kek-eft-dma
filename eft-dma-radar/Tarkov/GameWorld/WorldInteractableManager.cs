@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LonesEFTRadar.Tarkov.GameWorld.Interactive;
+using eft_dma_radar.UI.Misc;
+using eft_dma_radar;
 
 namespace LonesEFTRadar.Tarkov.GameWorld
 {
@@ -28,6 +30,8 @@ namespace LonesEFTRadar.Tarkov.GameWorld
 
         public void Init()
         {
+            if (!Program.Config.ESP.ShowDoorViewer)
+                return;
             try
             {
                 var interactableArrayPtr = Memory.ReadPtrChain(_localGameWorld, new uint[] { 0x258, 0x30 }, false);
@@ -38,20 +42,10 @@ namespace LonesEFTRadar.Tarkov.GameWorld
                 foreach (var item in set)
                 {
                     var itemName = ObjectClass.ReadName(item);
-                    // dump all names to a file for later analysis
-                    if(!File.Exists("interactable_names.txt"))
-                        File.WriteAllText("interactable_names.txt", $"{itemName} {Memory.MapID}" + Environment.NewLine);
-                    else
-                        File.AppendAllText("interactable_names.txt", $"{itemName} {Memory.MapID}" + Environment.NewLine);
                     if (itemName.Contains("Door"))
                     {
                         _Doors.Add(new Door(item, itemName));
                     }
-                    /*else if (itemName.Equals("Switch"))
-                    {
-                        _Switches.Add(new Switches(item));
-                        _kill = false;
-                    }*/
                 }
             }
             catch {  }

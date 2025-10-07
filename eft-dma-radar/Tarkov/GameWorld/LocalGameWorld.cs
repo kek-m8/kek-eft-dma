@@ -631,7 +631,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
             if (_disposed) return;
             try
             {
-                while (InRaid)
+                while (InRaid && Program.Config.ESP.ShowDoorViewer)
                 {
                     ct.ThrowIfCancellationRequested();
                     _interactiveManager.Refresh();
