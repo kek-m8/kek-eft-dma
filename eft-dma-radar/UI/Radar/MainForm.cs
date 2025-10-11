@@ -4407,7 +4407,7 @@ namespace eft_dma_radar.UI.Radar
                     Left Arrow/Right Arrow - Change Type (Highest Value - Quest)
                     Right Shift - Draw snapline to selected item
 
-                    """, "Loot Menu Enabled", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification, false);
+                    """, "Loot Menu Enabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -4511,7 +4511,12 @@ namespace eft_dma_radar.UI.Radar
                 MessageBox.Show(string.Join("\n", strings), $"{player.Name} body part info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 strings.Clear();
             }
-            
+
+        }
+
+        private void checkBox_EnableMemWrite_CheckedChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
