@@ -32,6 +32,7 @@ using LonesEFTRadar.Tarkov.GameWorld.Interactive;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Primitives;
 using SkiaSharp;
+using SkiaSharp.Views.Desktop;
 using System;
 using System.CodeDom;
 using System.Net.Http.Json;
@@ -52,6 +53,11 @@ namespace eft_dma_radar.UI.Radar
         private readonly DarkModeCS _darkmode;
         private readonly Stopwatch _fpsSw = new();
         private readonly PrecisionTimer _renderTimer;
+        private bool _ismapdrawing = false;
+        private bool _ismapdrawingenabled = false;
+        private readonly List<List<SKPoint>> strokes = new List<List<SKPoint>>();
+        private List<SKPoint> currentStroke = null;
+        private float strokeWidth = 1f;
         private readonly Timer _lootMenuTimer = new()
         {
             Interval = 250,
@@ -223,6 +229,9 @@ namespace eft_dma_radar.UI.Radar
             var interval = TimeSpan.FromMilliseconds(1000d / Config.RadarTargetFPS);
             _renderTimer = new(interval);
             Shown += MainForm_Shown;
+            skglControl_Radar.MouseDown += SkglControl_Radar_MouseDown;
+            skglControl_Radar.MouseUp += SkglControl_Radar_MouseUp;
+            skglControl_Radar.MouseMove += SkglControl_Radar_MouseMove;
         }
 
         private void TrackBar_ContainerDist_ValueChanged(object sender, EventArgs e)
@@ -276,6 +285,7 @@ namespace eft_dma_radar.UI.Radar
             var canvas = e.Surface.Canvas; // get Canvas reference to draw on
             try
             {
+
                 SetFPS(inRaid);
                 SetMapName();
                 /// Check for map switch
@@ -490,6 +500,22 @@ namespace eft_dma_radar.UI.Radar
 
                     if (Config.ESPWidgetEnabled)
                         _aimview?.Draw(canvas);
+                    using (var paint = new SKPaint
+                    {
+                        Color = SKColors.Red,
+                        StrokeWidth = strokeWidth,
+                        IsAntialias = true,
+                        Style = SKPaintStyle.Stroke,
+                        StrokeCap = SKStrokeCap.Round,
+                        StrokeJoin = SKStrokeJoin.Round
+                    })
+                    {
+                        foreach (var stroke in strokes)
+                        {
+                            for (int i = 1; i < stroke.Count; i++)
+                                canvas.DrawLine(stroke[i - 1], stroke[i], paint);
+                        }
+                    }
                 }
                 else // LocalPlayer is *not* in a Raid -> Display Reason
                 {
@@ -1817,6 +1843,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_NoSway.ValueChanged += TrackBar_NoSway_ValueChanged;
             trackBar_WideLeanAmt.ValueChanged += TrackBar_WideLeanAmt_ValueChanged;
             trackBar_LTWAmount.ValueChanged += TrackBar_LTWAmount_ValueChanged;
+            trackBar_MapBrush.ValueChanged += TrackBar_MapBrush_ValueChanged;
             _lootFiltersItemSearchTimer.Elapsed += impLootSearchTimer_Elapsed;
             _lootMenuTimer.Elapsed += lootMenuTimer_Elapsed;
         }
@@ -4517,6 +4544,122 @@ namespace eft_dma_radar.UI.Radar
         private void checkBox_EnableMemWrite_CheckedChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        #region MAP X SCALE
+        private void button_MapX1_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapX.Text, out float x))
+            {
+                x += checkBox_MapUpOrDown.Checked ? -1 : 1;
+                textBox_mapX.Text = x.ToString();
+            }
+        }
+
+        private void button_MapX10_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapX.Text, out float x))
+            {
+                x += checkBox_MapUpOrDown.Checked ? -10 : 10;
+                textBox_mapX.Text = x.ToString();
+            }
+        }
+
+        #endregion
+
+        #region MAP Y SCALE
+        private void button_MapY1_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapY.Text, out float y))
+            {
+                y += checkBox_MapUpOrDown.Checked ? -1 : 1;
+                textBox_mapY.Text = y.ToString();
+            }
+        }
+
+        private void button_MapY10_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapY.Text, out float y))
+            {
+                y += checkBox_MapUpOrDown.Checked ? -10 : 10;
+                textBox_mapY.Text = y.ToString();
+            }
+        }
+
+        #endregion
+
+        private void checkBox_MapUpOrDown_CheckedChanged(object sender, EventArgs e)
+        {
+            button_MapX1.Text = checkBox_MapUpOrDown.Checked ? "v" : "^";
+            button_MapX10.Text = checkBox_MapUpOrDown.Checked ? "vv" : "^^";
+            button_MapY1.Text = checkBox_MapUpOrDown.Checked ? "v" : "^";
+            button_MapY10.Text = checkBox_MapUpOrDown.Checked ? "vv" : "^^";
+            button_MapScale1.Text = checkBox_MapUpOrDown.Checked ? "v" : "^";
+            button_MapScale10.Text = checkBox_MapUpOrDown.Checked ? "vv" : "^^";
+        }
+
+        private void button_MapScale1_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapScale.Text, out float currentValue))
+            {
+                currentValue += checkBox_MapUpOrDown.Checked ? -1 : 1;
+                textBox_mapScale.Text = currentValue.ToString();
+            }
+        }
+
+        private void button_MapScale10_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapScale.Text, out float currentValue))
+            {
+                currentValue += checkBox_MapUpOrDown.Checked ? -10 : 10;
+                textBox_mapScale.Text = currentValue.ToString();
+            }
+        }
+
+        private void button_MapDrawing_Click(object sender, EventArgs e)
+        {
+            _ismapdrawingenabled = !_ismapdrawingenabled;
+            button_MapDrawing.Text = _ismapdrawingenabled ? "Disable Map Drawing" : "Enable Map Drawing";
+        }
+
+        private void button_MapClearDraw_Click(object sender, EventArgs e)
+        {
+            strokes.Clear();
+        }
+
+        private void SkglControl_Radar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_ismapdrawingenabled && e.Button == MouseButtons.Left)
+            {
+                _ismapdrawing = true;
+                currentStroke = new List<SKPoint>
+                {
+                    new SKPoint(e.X, e.Y)
+                };
+                strokes.Add(currentStroke);
+            }
+        }
+
+        private void SkglControl_Radar_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                _ismapdrawing = false;
+            }
+        }
+
+        private void SkglControl_Radar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_ismapdrawing && _ismapdrawingenabled)
+            {
+                currentStroke.Add(new SKPoint(e.X, e.Y));
+                skglControl_Radar.Invalidate();
+            }
+        }
+        private void TrackBar_MapBrush_ValueChanged(object sender, EventArgs e)
+        {
+            strokeWidth = trackBar_MapBrush.Value;
+            label_BrushSize.Text = $"Brush Size: {strokeWidth}";
         }
     }
 }

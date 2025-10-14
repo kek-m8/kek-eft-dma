@@ -32,6 +32,12 @@
             ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
             colorDialog1 = new ColorDialog();
             toolTip1 = new ToolTip(components);
+            button_MapX10 = new Button();
+            button_MapX1 = new Button();
+            button_MapY10 = new Button();
+            button_MapY1 = new Button();
+            button_MapScale10 = new Button();
+            button_MapScale1 = new Button();
             tabPage2 = new TabPage();
             flowLayoutPanel_Settings = new FlowLayoutPanel();
             flowLayoutPanel_RadarSettings = new FlowLayoutPanel();
@@ -137,11 +143,17 @@
             tabPage1 = new TabPage();
             checkBox_MapFree = new CheckBox();
             groupBox_MapSetup = new GroupBox();
+            label_BrushSize = new Label();
+            trackBar_MapBrush = new TrackBar();
+            button_MapClearDraw = new Button();
+            button_MapDrawing = new Button();
+            checkBox_MapUpOrDown = new CheckBox();
+            label9 = new Label();
+            label4 = new Label();
             button_MapSetupApply = new Button();
             textBox_mapScale = new TextBox();
             label5 = new Label();
             textBox_mapY = new TextBox();
-            label4 = new Label();
             textBox_mapX = new TextBox();
             label_Pos = new Label();
             skglControl_Radar = new SKGLControl();
@@ -168,6 +180,7 @@
             ((ISupportInitialize)trackBar_EspLineScale).BeginInit();
             tabPage1.SuspendLayout();
             groupBox_MapSetup.SuspendLayout();
+            ((ISupportInitialize)trackBar_MapBrush).BeginInit();
             tabControl1.SuspendLayout();
             SuspendLayout();
             // 
@@ -176,6 +189,72 @@
             toolTip1.AutoPopDelay = 20000;
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
+            // 
+            // button_MapX10
+            // 
+            button_MapX10.Location = new Point(83, 72);
+            button_MapX10.Name = "button_MapX10";
+            button_MapX10.Size = new Size(33, 23);
+            button_MapX10.TabIndex = 20;
+            button_MapX10.Text = "^^";
+            toolTip1.SetToolTip(button_MapX10, "Increment or Decrement of 10");
+            button_MapX10.UseVisualStyleBackColor = true;
+            button_MapX10.Click += button_MapX10_Click;
+            // 
+            // button_MapX1
+            // 
+            button_MapX1.Location = new Point(62, 72);
+            button_MapX1.Name = "button_MapX1";
+            button_MapX1.Size = new Size(22, 23);
+            button_MapX1.TabIndex = 19;
+            button_MapX1.Text = "^";
+            toolTip1.SetToolTip(button_MapX1, "Increment or Decrement of 1");
+            button_MapX1.UseVisualStyleBackColor = true;
+            button_MapX1.Click += button_MapX1_Click;
+            // 
+            // button_MapY10
+            // 
+            button_MapY10.Location = new Point(150, 72);
+            button_MapY10.Name = "button_MapY10";
+            button_MapY10.Size = new Size(33, 23);
+            button_MapY10.TabIndex = 22;
+            button_MapY10.Text = "^^";
+            toolTip1.SetToolTip(button_MapY10, "Increment or Decrement of 10");
+            button_MapY10.UseVisualStyleBackColor = true;
+            button_MapY10.Click += button_MapY10_Click;
+            // 
+            // button_MapY1
+            // 
+            button_MapY1.Location = new Point(129, 72);
+            button_MapY1.Name = "button_MapY1";
+            button_MapY1.Size = new Size(22, 23);
+            button_MapY1.TabIndex = 21;
+            button_MapY1.Text = "^";
+            toolTip1.SetToolTip(button_MapY1, "Increment or Decrement of 1");
+            button_MapY1.UseVisualStyleBackColor = true;
+            button_MapY1.Click += button_MapY1_Click;
+            // 
+            // button_MapScale10
+            // 
+            button_MapScale10.Location = new Point(214, 72);
+            button_MapScale10.Name = "button_MapScale10";
+            button_MapScale10.Size = new Size(33, 23);
+            button_MapScale10.TabIndex = 24;
+            button_MapScale10.Text = "^^";
+            toolTip1.SetToolTip(button_MapScale10, "Increment or Decrement of 10");
+            button_MapScale10.UseVisualStyleBackColor = true;
+            button_MapScale10.Click += button_MapScale10_Click;
+            // 
+            // button_MapScale1
+            // 
+            button_MapScale1.Location = new Point(193, 72);
+            button_MapScale1.Name = "button_MapScale1";
+            button_MapScale1.Size = new Size(22, 23);
+            button_MapScale1.TabIndex = 23;
+            button_MapScale1.Text = "^";
+            toolTip1.SetToolTip(button_MapScale1, "Increment or Decrement of 1");
+            button_MapScale1.UseVisualStyleBackColor = true;
+            button_MapScale1.Click += button_MapScale1_Click;
             // 
             // tabPage2
             // 
@@ -1451,24 +1530,110 @@
             // groupBox_MapSetup
             // 
             groupBox_MapSetup.BackColor = Color.WhiteSmoke;
+            groupBox_MapSetup.Controls.Add(label_BrushSize);
+            groupBox_MapSetup.Controls.Add(trackBar_MapBrush);
+            groupBox_MapSetup.Controls.Add(button_MapClearDraw);
+            groupBox_MapSetup.Controls.Add(button_MapDrawing);
+            groupBox_MapSetup.Controls.Add(checkBox_MapUpOrDown);
+            groupBox_MapSetup.Controls.Add(button_MapScale10);
+            groupBox_MapSetup.Controls.Add(button_MapScale1);
+            groupBox_MapSetup.Controls.Add(button_MapY10);
+            groupBox_MapSetup.Controls.Add(button_MapY1);
+            groupBox_MapSetup.Controls.Add(button_MapX10);
+            groupBox_MapSetup.Controls.Add(button_MapX1);
+            groupBox_MapSetup.Controls.Add(label9);
+            groupBox_MapSetup.Controls.Add(label4);
             groupBox_MapSetup.Controls.Add(button_MapSetupApply);
             groupBox_MapSetup.Controls.Add(textBox_mapScale);
             groupBox_MapSetup.Controls.Add(label5);
             groupBox_MapSetup.Controls.Add(textBox_mapY);
-            groupBox_MapSetup.Controls.Add(label4);
             groupBox_MapSetup.Controls.Add(textBox_mapX);
             groupBox_MapSetup.Controls.Add(label_Pos);
             groupBox_MapSetup.Location = new Point(6, 36);
             groupBox_MapSetup.Name = "groupBox_MapSetup";
-            groupBox_MapSetup.Size = new Size(327, 175);
+            groupBox_MapSetup.Size = new Size(327, 231);
             groupBox_MapSetup.TabIndex = 11;
             groupBox_MapSetup.TabStop = false;
             groupBox_MapSetup.Text = "Map Setup";
             groupBox_MapSetup.Visible = false;
             // 
+            // label_BrushSize
+            // 
+            label_BrushSize.AutoSize = true;
+            label_BrushSize.Location = new Point(25, 200);
+            label_BrushSize.Name = "label_BrushSize";
+            label_BrushSize.Size = new Size(72, 15);
+            label_BrushSize.TabIndex = 34;
+            label_BrushSize.Text = "Brush Size: 1";
+            // 
+            // trackBar_MapBrush
+            // 
+            trackBar_MapBrush.AutoSize = false;
+            trackBar_MapBrush.BackColor = Color.WhiteSmoke;
+            trackBar_MapBrush.LargeChange = 1;
+            trackBar_MapBrush.Location = new Point(103, 194);
+            trackBar_MapBrush.Minimum = 1;
+            trackBar_MapBrush.Name = "trackBar_MapBrush";
+            trackBar_MapBrush.Size = new Size(191, 27);
+            trackBar_MapBrush.TabIndex = 33;
+            trackBar_MapBrush.TickStyle = TickStyle.None;
+            trackBar_MapBrush.Value = 1;
+            // 
+            // button_MapClearDraw
+            // 
+            button_MapClearDraw.AutoSize = true;
+            button_MapClearDraw.Location = new Point(201, 163);
+            button_MapClearDraw.Name = "button_MapClearDraw";
+            button_MapClearDraw.Size = new Size(118, 25);
+            button_MapClearDraw.TabIndex = 32;
+            button_MapClearDraw.Text = "Clear Map Drawing";
+            button_MapClearDraw.UseVisualStyleBackColor = true;
+            button_MapClearDraw.Click += button_MapClearDraw_Click;
+            // 
+            // button_MapDrawing
+            // 
+            button_MapDrawing.AutoSize = true;
+            button_MapDrawing.Location = new Point(6, 163);
+            button_MapDrawing.Name = "button_MapDrawing";
+            button_MapDrawing.Size = new Size(126, 25);
+            button_MapDrawing.TabIndex = 31;
+            button_MapDrawing.Text = "Enable Map Drawing";
+            button_MapDrawing.UseVisualStyleBackColor = true;
+            button_MapDrawing.Click += button_MapDrawing_Click;
+            // 
+            // checkBox_MapUpOrDown
+            // 
+            checkBox_MapUpOrDown.AutoSize = true;
+            checkBox_MapUpOrDown.BackColor = Color.Transparent;
+            checkBox_MapUpOrDown.Location = new Point(63, 101);
+            checkBox_MapUpOrDown.Name = "checkBox_MapUpOrDown";
+            checkBox_MapUpOrDown.Size = new Size(89, 19);
+            checkBox_MapUpOrDown.TabIndex = 25;
+            checkBox_MapUpOrDown.Text = "Decrement?";
+            checkBox_MapUpOrDown.UseVisualStyleBackColor = false;
+            checkBox_MapUpOrDown.CheckedChanged += checkBox_MapUpOrDown_CheckedChanged;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(149, 31);
+            label9.Name = "label9";
+            label9.Size = new Size(14, 15);
+            label9.TabIndex = 18;
+            label9.Text = "Y";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(80, 31);
+            label4.Name = "label4";
+            label4.Size = new Size(14, 15);
+            label4.TabIndex = 17;
+            label4.Text = "X";
+            // 
             // button_MapSetupApply
             // 
-            button_MapSetupApply.Location = new Point(6, 143);
+            button_MapSetupApply.Location = new Point(172, 97);
             button_MapSetupApply.Name = "button_MapSetupApply";
             button_MapSetupApply.Size = new Size(75, 23);
             button_MapSetupApply.TabIndex = 16;
@@ -1478,15 +1643,15 @@
             // 
             // textBox_mapScale
             // 
-            textBox_mapScale.Location = new Point(46, 101);
+            textBox_mapScale.Location = new Point(195, 49);
             textBox_mapScale.Name = "textBox_mapScale";
-            textBox_mapScale.Size = new Size(50, 23);
+            textBox_mapScale.Size = new Size(52, 23);
             textBox_mapScale.TabIndex = 15;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(6, 104);
+            label5.Location = new Point(201, 31);
             label5.Name = "label5";
             label5.Size = new Size(34, 15);
             label5.TabIndex = 14;
@@ -1494,31 +1659,22 @@
             // 
             // textBox_mapY
             // 
-            textBox_mapY.Location = new Point(102, 67);
+            textBox_mapY.Location = new Point(130, 49);
             textBox_mapY.Name = "textBox_mapY";
-            textBox_mapY.Size = new Size(50, 23);
+            textBox_mapY.Size = new Size(53, 23);
             textBox_mapY.TabIndex = 13;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(6, 70);
-            label4.Name = "label4";
-            label4.Size = new Size(24, 15);
-            label4.TabIndex = 12;
-            label4.Text = "X,Y";
             // 
             // textBox_mapX
             // 
-            textBox_mapX.Location = new Point(46, 67);
+            textBox_mapX.Location = new Point(63, 49);
             textBox_mapX.Name = "textBox_mapX";
-            textBox_mapX.Size = new Size(50, 23);
+            textBox_mapX.Size = new Size(53, 23);
             textBox_mapX.TabIndex = 11;
             // 
             // label_Pos
             // 
             label_Pos.AutoSize = true;
-            label_Pos.Location = new Point(7, 19);
+            label_Pos.Location = new Point(41, 134);
             label_Pos.Margin = new Padding(4, 0, 4, 0);
             label_Pos.Name = "label_Pos";
             label_Pos.Size = new Size(43, 15);
@@ -1595,6 +1751,7 @@
             tabPage1.PerformLayout();
             groupBox_MapSetup.ResumeLayout(false);
             groupBox_MapSetup.PerformLayout();
+            ((ISupportInitialize)trackBar_MapBrush).EndInit();
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -1684,7 +1841,6 @@
         private TextBox textBox_mapScale;
         private Label label5;
         private TextBox textBox_mapY;
-        private Label label4;
         private TextBox textBox_mapX;
         private Label label_Pos;
         private SKGLControl skglControl_Radar;
@@ -1716,6 +1872,19 @@
         private RadioButton radioButton_BoxBones;
         private RadioButton radioButton_P;
         private CheckBox checkBox_ESP_Refill;
+        private Label label9;
+        private Label label4;
+        private Button button_MapScale10;
+        private Button button_MapScale1;
+        private Button button_MapY10;
+        private Button button_MapY1;
+        private Button button_MapX10;
+        private Button button_MapX1;
+        private CheckBox checkBox_MapUpOrDown;
+        private Label label_BrushSize;
+        public TrackBar trackBar_MapBrush;
+        private Button button_MapClearDraw;
+        private Button button_MapDrawing;
     }
 }
 

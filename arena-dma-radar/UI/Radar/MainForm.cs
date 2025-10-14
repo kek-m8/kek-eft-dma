@@ -1,33 +1,34 @@
-using DarkModeForms;
-using arena_dma_radar.Features.MemoryWrites.UI;
+using arena_dma_radar.Arena;
 using arena_dma_radar.Arena.ArenaPlayer;
+using arena_dma_radar.Arena.Features;
+using arena_dma_radar.Arena.Features.MemoryWrites;
+using arena_dma_radar.Arena.Features.MemoryWrites.Patches;
 using arena_dma_radar.Arena.GameWorld;
+using arena_dma_radar.Arena.Loot;
+using arena_dma_radar.Features.MemoryWrites.UI;
 using arena_dma_radar.UI.ColorPicker;
 using arena_dma_radar.UI.ColorPicker.ESP;
 using arena_dma_radar.UI.ColorPicker.Radar;
 using arena_dma_radar.UI.ESP;
 using arena_dma_radar.UI.Hotkeys;
+using arena_dma_radar.UI.LootFilters;
 using arena_dma_radar.UI.Misc;
+using DarkModeForms;
+using eft_dma_shared.Common.ESP;
+using eft_dma_shared.Common.Features;
+using eft_dma_shared.Common.Maps;
+using eft_dma_shared.Common.Misc;
+using eft_dma_shared.Common.Misc.Commercial;
+using eft_dma_shared.Common.Misc.Data;
+using eft_dma_shared.Common.Unity;
+using eft_dma_shared.Common.Unity.Collections;
+using eft_dma_shared.Common.Unity.LowLevel;
+using System.Collections.Frozen;
+using System.Drawing;
+using VmmFrost;
 using static arena_dma_radar.UI.Hotkeys.HotkeyManager;
 using static arena_dma_radar.UI.Hotkeys.HotkeyManager.HotkeyActionController;
-using eft_dma_shared.Common.Features;
-using eft_dma_shared.Common.Misc;
-using arena_dma_radar.Arena.Loot;
-using eft_dma_shared.Common.Unity;
-using eft_dma_shared.Common.Unity.LowLevel;
-using eft_dma_shared.Common.Maps;
-using arena_dma_radar.Arena.Features;
-using arena_dma_radar.Arena.Features.MemoryWrites;
-using arena_dma_radar.Arena.Features.MemoryWrites.Patches;
-using eft_dma_shared.Common.ESP;
-using eft_dma_shared.Common.Misc.Commercial;
-using eft_dma_shared.Common.Unity.Collections;
 using static SDK.Enums;
-using VmmFrost;
-using arena_dma_radar.Arena;
-using eft_dma_shared.Common.Misc.Data;
-using System.Collections.Frozen;
-using arena_dma_radar.UI.LootFilters;
 
 namespace arena_dma_radar.UI.Radar
 {
@@ -38,6 +39,12 @@ namespace arena_dma_radar.UI.Radar
         private readonly Stopwatch _fpsSw = new();
         private readonly PrecisionTimer _renderTimer;
         private readonly DarkModeCS _darkmode;
+
+        private bool _ismapdrawing = false;
+        private bool _ismapdrawingenabled = false;
+        private readonly List<List<SKPoint>> strokes = new List<List<SKPoint>>();
+        private List<SKPoint> currentStroke = null;
+        private float strokeWidth = 1f;
 
         private IMouseoverEntity _mouseOverItem;
         private bool _mouseDown;
@@ -147,6 +154,9 @@ namespace arena_dma_radar.UI.Radar
             var interval = TimeSpan.FromMilliseconds(1000d / Config.RadarTargetFPS);
             _renderTimer = new(interval);
             Shown += MainForm_Shown;
+            skglControl_Radar.MouseDown += SkglControl_Radar_MouseDown;
+            skglControl_Radar.MouseUp += SkglControl_Radar_MouseUp;
+            skglControl_Radar.MouseMove += SkglControl_Radar_MouseMove;
         }
 
         private async void MainForm_Shown(object sender, EventArgs e)
@@ -292,6 +302,22 @@ namespace arena_dma_radar.UI.Radar
                     // ESP Widget
                     if (checkBox_Aimview.Checked)
                         _espWidget?.Draw(canvas);
+                    using (var paint = new SKPaint
+                    {
+                        Color = SKColors.Red,
+                        StrokeWidth = strokeWidth,
+                        IsAntialias = true,
+                        Style = SKPaintStyle.Stroke,
+                        StrokeCap = SKStrokeCap.Round,
+                        StrokeJoin = SKStrokeJoin.Round
+                    })
+                    {
+                        foreach (var stroke in strokes)
+                        {
+                            for (int i = 1; i < stroke.Count; i++)
+                                canvas.DrawLine(stroke[i - 1], stroke[i], paint);
+                        }
+                    }
                 }
                 else // LocalPlayer is *not* in a Raid -> Display Reason
                 {
@@ -393,6 +419,7 @@ namespace arena_dma_radar.UI.Radar
             trackBar_NoRecoil.ValueChanged += TrackBar_NoRecoil_ValueChanged;
             trackBar_NoSway.ValueChanged += TrackBar_NoSway_ValueChanged;
             trackBar_AimFOV.ValueChanged += TrackBar_AimFOV_ValueChanged;
+            trackBar_MapBrush.ValueChanged += TrackBar_MapBrush_ValueChanged;
         }
 
         /// <summary>
@@ -1864,6 +1891,122 @@ namespace arena_dma_radar.UI.Radar
         private void checkBox_ESP_Refill_CheckedChanged(object sender, EventArgs e)
         {
             Config.ESP.ShowRefillContainers = checkBox_ESP_Refill.Checked;
+        }
+
+#region MAP X SCALE
+        private void button_MapX1_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapX.Text, out float x))
+            {
+                x += checkBox_MapUpOrDown.Checked ? -1 : 1;
+                textBox_mapX.Text = x.ToString();
+            }
+        }
+
+        private void button_MapX10_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapX.Text, out float x))
+            {
+                x += checkBox_MapUpOrDown.Checked ? -10 : 10;
+                textBox_mapX.Text = x.ToString();
+            }
+        }
+
+#endregion
+
+        #region MAP Y SCALE
+        private void button_MapY1_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapY.Text, out float y))
+            {
+                y += checkBox_MapUpOrDown.Checked ? -1 : 1;
+                textBox_mapY.Text = y.ToString();
+            }
+        }
+
+        private void button_MapY10_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapY.Text, out float y))
+            {
+                y += checkBox_MapUpOrDown.Checked ? -10 : 10;
+                textBox_mapY.Text = y.ToString();
+            }
+        }
+
+        #endregion
+
+        private void checkBox_MapUpOrDown_CheckedChanged(object sender, EventArgs e)
+        {
+            button_MapX1.Text = checkBox_MapUpOrDown.Checked ? "v" : "^";
+            button_MapX10.Text = checkBox_MapUpOrDown.Checked ? "vv" : "^^";
+            button_MapY1.Text = checkBox_MapUpOrDown.Checked ? "v" : "^";
+            button_MapY10.Text = checkBox_MapUpOrDown.Checked ? "vv" : "^^";
+            button_MapScale1.Text = checkBox_MapUpOrDown.Checked ? "v" : "^";
+            button_MapScale10.Text = checkBox_MapUpOrDown.Checked ? "vv" : "^^";
+        }
+
+        private void button_MapScale1_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapScale.Text, out float currentValue))
+            {
+                currentValue += checkBox_MapUpOrDown.Checked ? -1 : 1;
+                textBox_mapScale.Text = currentValue.ToString();
+            }
+        }
+
+        private void button_MapScale10_Click(object sender, EventArgs e)
+        {
+            if (float.TryParse(textBox_mapScale.Text, out float currentValue))
+            {
+                currentValue += checkBox_MapUpOrDown.Checked ? -10 : 10;
+                textBox_mapScale.Text = currentValue.ToString();
+            }
+        }
+
+        private void button_MapDrawing_Click(object sender, EventArgs e)
+        {
+            _ismapdrawingenabled = !_ismapdrawingenabled;
+            button_MapDrawing.Text = _ismapdrawingenabled ? "Disable Map Drawing" : "Enable Map Drawing";
+        }
+
+        private void button_MapClearDraw_Click(object sender, EventArgs e)
+        {
+            strokes.Clear();
+        }
+
+        private void SkglControl_Radar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_ismapdrawingenabled && e.Button == MouseButtons.Left)
+            {
+                _ismapdrawing = true;
+                currentStroke = new List<SKPoint>
+                {
+                    new SKPoint(e.X, e.Y)
+                };
+                strokes.Add(currentStroke);
+            }
+        }
+
+        private void SkglControl_Radar_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                _ismapdrawing = false;
+            }
+        }
+
+        private void SkglControl_Radar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_ismapdrawing && _ismapdrawingenabled)
+            {
+                currentStroke.Add(new SKPoint(e.X, e.Y));
+                skglControl_Radar.Invalidate();
+            }
+        }
+        private void TrackBar_MapBrush_ValueChanged(object sender, EventArgs e)
+        {
+            strokeWidth = trackBar_MapBrush.Value;
+            label_BrushSize.Text = $"Brush Size: {strokeWidth}";
         }
     }
 }
