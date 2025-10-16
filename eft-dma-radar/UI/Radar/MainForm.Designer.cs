@@ -54,6 +54,8 @@ namespace eft_dma_radar.UI.Radar
             textBox_LootFilterByName = new TextBox();
             button_Loot = new Button();
             groupBox_MapSetup = new GroupBox();
+            button_MapLock = new Button();
+            button_MapDrawColour = new Button();
             label_BrushSize = new Label();
             trackBar_MapBrush = new TrackBar();
             label_Pos = new Label();
@@ -479,7 +481,7 @@ namespace eft_dma_radar.UI.Radar
             flowLayoutPanel_Loot.Controls.Add(checkBox_ShowFood);
             flowLayoutPanel_Loot.Controls.Add(checkBox_ShowBackpacks);
             flowLayoutPanel_Loot.Controls.Add(textBox_LootFilterByName);
-            flowLayoutPanel_Loot.Location = new Point(8, 36);
+            flowLayoutPanel_Loot.Location = new Point(6, 37);
             flowLayoutPanel_Loot.Name = "flowLayoutPanel_Loot";
             flowLayoutPanel_Loot.Size = new Size(685, 146);
             flowLayoutPanel_Loot.TabIndex = 19;
@@ -685,6 +687,8 @@ namespace eft_dma_radar.UI.Radar
             // groupBox_MapSetup
             // 
             groupBox_MapSetup.BackColor = Color.WhiteSmoke;
+            groupBox_MapSetup.Controls.Add(button_MapLock);
+            groupBox_MapSetup.Controls.Add(button_MapDrawColour);
             groupBox_MapSetup.Controls.Add(label_BrushSize);
             groupBox_MapSetup.Controls.Add(trackBar_MapBrush);
             groupBox_MapSetup.Controls.Add(label_Pos);
@@ -706,16 +710,38 @@ namespace eft_dma_radar.UI.Radar
             groupBox_MapSetup.Controls.Add(textBox_mapX);
             groupBox_MapSetup.Location = new Point(8, 37);
             groupBox_MapSetup.Name = "groupBox_MapSetup";
-            groupBox_MapSetup.Size = new Size(278, 229);
+            groupBox_MapSetup.Size = new Size(278, 247);
             groupBox_MapSetup.TabIndex = 11;
             groupBox_MapSetup.TabStop = false;
             groupBox_MapSetup.Text = "Map Setup";
             groupBox_MapSetup.Visible = false;
             // 
+            // button_MapLock
+            // 
+            button_MapLock.AutoSize = true;
+            button_MapLock.Location = new Point(172, 184);
+            button_MapLock.Name = "button_MapLock";
+            button_MapLock.Size = new Size(75, 25);
+            button_MapLock.TabIndex = 32;
+            button_MapLock.Text = "Lock Map";
+            button_MapLock.UseVisualStyleBackColor = true;
+            button_MapLock.Click += button_MapLock_Click;
+            // 
+            // button_MapDrawColour
+            // 
+            button_MapDrawColour.AutoSize = true;
+            button_MapDrawColour.Location = new Point(23, 182);
+            button_MapDrawColour.Name = "button_MapDrawColour";
+            button_MapDrawColour.Size = new Size(97, 25);
+            button_MapDrawColour.TabIndex = 31;
+            button_MapDrawColour.Text = "Change Colour";
+            button_MapDrawColour.UseVisualStyleBackColor = true;
+            button_MapDrawColour.Click += button_MapDrawColour_Click;
+            // 
             // label_BrushSize
             // 
             label_BrushSize.AutoSize = true;
-            label_BrushSize.Location = new Point(10, 197);
+            label_BrushSize.Location = new Point(7, 219);
             label_BrushSize.Name = "label_BrushSize";
             label_BrushSize.Size = new Size(72, 15);
             label_BrushSize.TabIndex = 30;
@@ -726,7 +752,7 @@ namespace eft_dma_radar.UI.Radar
             trackBar_MapBrush.AutoSize = false;
             trackBar_MapBrush.BackColor = Color.WhiteSmoke;
             trackBar_MapBrush.LargeChange = 1;
-            trackBar_MapBrush.Location = new Point(81, 187);
+            trackBar_MapBrush.Location = new Point(87, 213);
             trackBar_MapBrush.Minimum = 1;
             trackBar_MapBrush.Name = "trackBar_MapBrush";
             trackBar_MapBrush.Size = new Size(191, 30);
@@ -4698,6 +4724,8 @@ namespace eft_dma_radar.UI.Radar
         private Label label_Pos;
         private Label label_BrushSize;
         public TrackBar trackBar_MapBrush;
+        private Button button_MapLock;
+        private Button button_MapDrawColour;
     }
 }
 

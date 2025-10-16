@@ -5,7 +5,7 @@ namespace SDK
         public readonly partial struct NoMalfunctions
         {
             public const uint ClassName_ClassToken = 0x2001B59; // MDToken
-            public const uint GetMalfunctionState_MethodToken = 0x600AB19; // MDToken
+            public const uint GetMalfunctionState_MethodToken = 0x600AB1E; // MDToken
             public const string ClassName = @"EFT.Player+FirearmController";
             public const string GetMalfunctionState = @"GetMalfunctionState";
         }
@@ -25,7 +25,7 @@ namespace SDK
         public readonly partial struct ProceduralWeaponAnimation
         {
             public const uint ClassName_ClassToken = 0x2002825; // MDToken
-            public const uint MethodName_MethodToken = 0x600F8EE; // MDToken
+            public const uint MethodName_MethodToken = 0x600F8FE; // MDToken
             public const string ClassName = @"EFT.Animations.ProceduralWeaponAnimation";
             public const string MethodName = @"get_ShotNeedsFovAdjustments";
         }
@@ -191,7 +191,7 @@ namespace SDK
 
         public readonly partial struct MovementContext
         {
-            public const uint _rotation = 0x27C; // UnityEngine.Vector2
+            public const uint _rotation = 0x290; // UnityEngine.Vector2
         }
 
         public readonly partial struct InventoryController

@@ -158,6 +158,8 @@
             label_Pos = new Label();
             skglControl_Radar = new SKGLControl();
             tabControl1 = new TabControl();
+            button_MapLock = new Button();
+            button_MapDrawColour = new Button();
             tabPage2.SuspendLayout();
             flowLayoutPanel_Settings.SuspendLayout();
             flowLayoutPanel_RadarSettings.SuspendLayout();
@@ -1530,6 +1532,8 @@
             // groupBox_MapSetup
             // 
             groupBox_MapSetup.BackColor = Color.WhiteSmoke;
+            groupBox_MapSetup.Controls.Add(button_MapLock);
+            groupBox_MapSetup.Controls.Add(button_MapDrawColour);
             groupBox_MapSetup.Controls.Add(label_BrushSize);
             groupBox_MapSetup.Controls.Add(trackBar_MapBrush);
             groupBox_MapSetup.Controls.Add(button_MapClearDraw);
@@ -1551,7 +1555,7 @@
             groupBox_MapSetup.Controls.Add(label_Pos);
             groupBox_MapSetup.Location = new Point(6, 36);
             groupBox_MapSetup.Name = "groupBox_MapSetup";
-            groupBox_MapSetup.Size = new Size(327, 231);
+            groupBox_MapSetup.Size = new Size(327, 265);
             groupBox_MapSetup.TabIndex = 11;
             groupBox_MapSetup.TabStop = false;
             groupBox_MapSetup.Text = "Map Setup";
@@ -1560,7 +1564,7 @@
             // label_BrushSize
             // 
             label_BrushSize.AutoSize = true;
-            label_BrushSize.Location = new Point(25, 200);
+            label_BrushSize.Location = new Point(31, 235);
             label_BrushSize.Name = "label_BrushSize";
             label_BrushSize.Size = new Size(72, 15);
             label_BrushSize.TabIndex = 34;
@@ -1571,7 +1575,7 @@
             trackBar_MapBrush.AutoSize = false;
             trackBar_MapBrush.BackColor = Color.WhiteSmoke;
             trackBar_MapBrush.LargeChange = 1;
-            trackBar_MapBrush.Location = new Point(103, 194);
+            trackBar_MapBrush.Location = new Point(111, 235);
             trackBar_MapBrush.Minimum = 1;
             trackBar_MapBrush.Name = "trackBar_MapBrush";
             trackBar_MapBrush.Size = new Size(191, 27);
@@ -1703,6 +1707,28 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1264, 681);
             tabControl1.TabIndex = 8;
+            // 
+            // button_MapLock
+            // 
+            button_MapLock.AutoSize = true;
+            button_MapLock.Location = new Point(227, 196);
+            button_MapLock.Name = "button_MapLock";
+            button_MapLock.Size = new Size(75, 25);
+            button_MapLock.TabIndex = 36;
+            button_MapLock.Text = "Lock Map";
+            button_MapLock.UseVisualStyleBackColor = true;
+            button_MapLock.Click += button_MapLock_Click;
+            // 
+            // button_MapDrawColour
+            // 
+            button_MapDrawColour.AutoSize = true;
+            button_MapDrawColour.Location = new Point(19, 196);
+            button_MapDrawColour.Name = "button_MapDrawColour";
+            button_MapDrawColour.Size = new Size(97, 25);
+            button_MapDrawColour.TabIndex = 35;
+            button_MapDrawColour.Text = "Change Colour";
+            button_MapDrawColour.UseVisualStyleBackColor = true;
+            button_MapDrawColour.Click += button_MapDrawColour_Click;
             // 
             // MainForm
             // 
@@ -1885,6 +1911,8 @@
         public TrackBar trackBar_MapBrush;
         private Button button_MapClearDraw;
         private Button button_MapDrawing;
+        private Button button_MapLock;
+        private Button button_MapDrawColour;
     }
 }
 

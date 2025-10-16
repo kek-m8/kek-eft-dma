@@ -55,9 +55,18 @@ namespace eft_dma_radar.UI.Radar
         private readonly PrecisionTimer _renderTimer;
         private bool _ismapdrawing = false;
         private bool _ismapdrawingenabled = false;
-        private readonly List<List<SKPoint>> strokes = new List<List<SKPoint>>();
-        private List<SKPoint> currentStroke = null;
+        private bool _ismaplocked = false;
+        class Stroke
+        {
+            public List<SKPoint> strokes { get; } = new List<SKPoint>();
+            public SKColor strokeColour { get; set; }
+            public float strokeWidth { get; set; }
+        }
+
+        List<Stroke> strokes = new List<Stroke>();
+        Stroke currentStroke = null;
         private float strokeWidth = 1f;
+        private SKColor strokeColor = SKColors.Red;
         private readonly Timer _lootMenuTimer = new()
         {
             Interval = 250,
@@ -500,21 +509,24 @@ namespace eft_dma_radar.UI.Radar
 
                     if (Config.ESPWidgetEnabled)
                         _aimview?.Draw(canvas);
-                    using (var paint = new SKPaint
+                    foreach (var stroke in strokes)
                     {
-                        Color = SKColors.Red,
-                        StrokeWidth = strokeWidth,
-                        IsAntialias = true,
-                        Style = SKPaintStyle.Stroke,
-                        StrokeCap = SKStrokeCap.Round,
-                        StrokeJoin = SKStrokeJoin.Round
-                    })
-                    {
-                        foreach (var stroke in strokes)
+                        using(var paint = new SKPaint
                         {
-                            for (int i = 1; i < stroke.Count; i++)
-                                canvas.DrawLine(stroke[i - 1], stroke[i], paint);
+                            Color = stroke.strokeColour,
+                            StrokeWidth = stroke.strokeWidth,
+                            IsAntialias = true,
+                            Style = SKPaintStyle.Stroke,
+                            StrokeCap = SKStrokeCap.Round,
+                            StrokeJoin = SKStrokeJoin.Round
+                        })
+                        {
+                            for(int i = 1; i < stroke.strokes.Count; i++)
+                            {
+                                canvas.DrawLine(stroke.strokes[i - 1], stroke.strokes[i], paint);
+                            }
                         }
+
                     }
                 }
                 else // LocalPlayer is *not* in a Raid -> Display Reason
@@ -1156,7 +1168,7 @@ namespace eft_dma_radar.UI.Radar
         /// </summary>
         private void MapCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_mouseDown && followIndex is FollowIndexType.FOLLOW_FREE)
+            if (_mouseDown && followIndex is FollowIndexType.FOLLOW_FREE && !_ismaplocked)
             {
                 var deltaX = -(e.X - _lastMousePosition.X);
                 var deltaY = -(e.Y - _lastMousePosition.Y);
@@ -4632,10 +4644,12 @@ namespace eft_dma_radar.UI.Radar
             if (_ismapdrawingenabled && e.Button == MouseButtons.Left)
             {
                 _ismapdrawing = true;
-                currentStroke = new List<SKPoint>
+                currentStroke = new Stroke
                 {
-                    new SKPoint(e.X, e.Y)
+                    strokeColour = strokeColor,
+                    strokeWidth = strokeWidth
                 };
+                currentStroke.strokes.Add(new SKPoint(e.X, e.Y));
                 strokes.Add(currentStroke);
             }
         }
@@ -4650,9 +4664,9 @@ namespace eft_dma_radar.UI.Radar
 
         private void SkglControl_Radar_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_ismapdrawing && _ismapdrawingenabled)
+            if (_ismapdrawing && _ismapdrawingenabled && currentStroke != null)
             {
-                currentStroke.Add(new SKPoint(e.X, e.Y));
+                currentStroke.strokes.Add(new SKPoint(e.X, e.Y));
                 skglControl_Radar.Invalidate();
             }
         }
@@ -4660,6 +4674,21 @@ namespace eft_dma_radar.UI.Radar
         {
             strokeWidth = trackBar_MapBrush.Value;
             label_BrushSize.Text = $"Brush Size: {strokeWidth}";
+        }
+
+        private void button_MapDrawColour_Click(object sender, EventArgs e)
+        {
+            var a = colorDialog1.ShowDialog();
+            if(a == DialogResult.OK)
+            {
+                strokeColor = colorDialog1.Color.ToSKColor();
+            }
+        }
+
+        private void button_MapLock_Click(object sender, EventArgs e)
+        {
+            _ismaplocked = !_ismaplocked;
+            button_MapLock.Text = _ismaplocked ? "Unlock Map" : "Lock Map";
         }
     }
 }
