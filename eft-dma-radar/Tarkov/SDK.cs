@@ -1,12 +1,10 @@
-using OpenTK.Graphics.ES20;
-
 namespace SDK
 {
     public readonly partial struct ClassNames
     {
         public readonly partial struct FixWildSpawnType
         {
-            public const uint ClassName_ClassToken = 0x20026EF; // MDToken
+            public const uint ClassName_ClassToken = 0x20026F0; // MDToken
             public const string ClassName = @"\uED59";
             public const string MethodName = @"SetUpSpawnInfo";
         }
@@ -19,50 +17,50 @@ namespace SDK
 
         public readonly partial struct AmmoTemplate
         {
-            public const uint ClassName_ClassToken = 0x2002ABC; // MDToken
-            public const uint MethodName_MethodToken = 0x60105A1; // MDToken
+            public const uint ClassName_ClassToken = 0x2002ABD; // MDToken
+            public const uint MethodName_MethodToken = 0x60105B5; // MDToken
             public const string ClassName = @"\uEF1A";
             public const string MethodName = @"get_LoadUnloadModifier";
         }
 
         public readonly partial struct NoMalfunctions
         {
-            public const uint ClassName_ClassToken = 0x20018A0; // MDToken
-            public const uint GetMalfunctionState_MethodToken = 0x6009D17; // MDToken
+            public const uint ClassName_ClassToken = 0x20018A1; // MDToken
+            public const uint GetMalfunctionState_MethodToken = 0x6009D2B; // MDToken
             public const string ClassName = @"EFT.Player+FirearmController";
             public const string GetMalfunctionState = @"GetMalfunctionState";
         }
 
         public readonly partial struct GymHack
         {
-            public const uint ClassName_ClassToken = 0x200223B; // MDToken
-            public const uint MethodName_MethodToken = 0x600D832; // MDToken
+            public const uint ClassName_ClassToken = 0x200223C; // MDToken
+            public const uint MethodName_MethodToken = 0x600D846; // MDToken
             public const string ClassName = @"EFT.Hideout.ShrinkingCircleQTE";
             public const string MethodName = @"\uE001";
         }
 
         public readonly partial struct OpticCameraManagerContainer
         {
-            public const uint ClassName_ClassToken = 0x2002F5F; // MDToken
+            public const uint ClassName_ClassToken = 0x2002F60; // MDToken
             public const string ClassName = @"\uF124";
         }
 
         public readonly partial struct ScreenManager
         {
-            public const uint ClassName_ClassToken = 0x200369A; // MDToken
+            public const uint ClassName_ClassToken = 0x200369B; // MDToken
             public const string ClassName = @"\uF1EF";
         }
 
         public readonly partial struct FirearmController
         {
-            public const uint ClassName_ClassToken = 0x20018A0; // MDToken
+            public const uint ClassName_ClassToken = 0x20018A1; // MDToken
             public const string ClassName = @"EFT.Player+FirearmController";
         }
 
         public readonly partial struct ProceduralWeaponAnimation
         {
-            public const uint ClassName_ClassToken = 0x20025B0; // MDToken
-            public const uint MethodName_MethodToken = 0x600EAE8; // MDToken
+            public const uint ClassName_ClassToken = 0x20025B1; // MDToken
+            public const uint MethodName_MethodToken = 0x600EAFC; // MDToken
             public const string ClassName = @"EFT.Animations.ProceduralWeaponAnimation";
             public const string MethodName = @"get_ShotNeedsFovAdjustments";
         }
@@ -114,8 +112,6 @@ namespace SDK
             public const uint _doorState = 0x11C; // System.Byte
             public const uint CanBeBreached = 0x189; // Boolean
         }
-
-
 
         public readonly partial struct TransitController
         {
@@ -346,7 +342,6 @@ namespace SDK
             public const uint _lastVisibilityCastOffsetLocal = 0x40; // UnityEngine.Vector3
             public const uint _lastShootCastOffsetLocal = 0x4C; // UnityEngine.Vector3
         }
-
         public readonly partial struct FollowerCullingObject
         {
             public const uint _isVisible = 0x78; // Boolean
@@ -1172,7 +1167,6 @@ namespace SDK
             Expired = 8,
             AvailableAfter = 9,
         }
-
         public enum BodyPartType : ushort
         {
             head,
@@ -1184,4 +1178,3 @@ namespace SDK
         }
     }
 }
-
