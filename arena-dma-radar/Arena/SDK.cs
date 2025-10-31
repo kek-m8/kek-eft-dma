@@ -5,7 +5,7 @@ namespace SDK
         public readonly partial struct NoMalfunctions
         {
             public const uint ClassName_ClassToken = 0x2001B71; // MDToken
-            public const uint GetMalfunctionState_MethodToken = 0x600AB90; // MDToken
+            public const uint GetMalfunctionState_MethodToken = 0x600AB92; // MDToken
             public const string ClassName = @"EFT.Player+FirearmController";
             public const string GetMalfunctionState = @"GetMalfunctionState";
         }
@@ -18,14 +18,14 @@ namespace SDK
 
         public readonly partial struct OpticCameraManagerContainer
         {
-            public const uint ClassName_ClassToken = 0x2003185; // MDToken
+            public const uint ClassName_ClassToken = 0x2003186; // MDToken
             public const string ClassName = @"\uF074";
         }
 
         public readonly partial struct ProceduralWeaponAnimation
         {
-            public const uint ClassName_ClassToken = 0x2002841; // MDToken
-            public const uint MethodName_MethodToken = 0x600F97B; // MDToken
+            public const uint ClassName_ClassToken = 0x2002842; // MDToken
+            public const uint MethodName_MethodToken = 0x600F98C; // MDToken
             public const string ClassName = @"EFT.Animations.ProceduralWeaponAnimation";
             public const string MethodName = @"get_ShotNeedsFovAdjustments";
         }
@@ -82,9 +82,9 @@ namespace SDK
             public const uint AccountId = 0x58; // String
             public const uint PlayerBody = 0x68; // EFT.PlayerBody
             public const uint ObservedPlayerController = 0x88; // -.\uEDD0
-            public const uint Side = 0x108; // -.Int32
+            public const uint Side = 0x108; // System.Int32
             public const uint IsAI = 0x119; // Boolean
-            public const uint VisibleToCameraType = 0x120; // -.Int32
+            public const uint VisibleToCameraType = 0x120; // System.Int32
         }
 
         public readonly partial struct ObservedPlayerController
@@ -98,8 +98,8 @@ namespace SDK
         public readonly partial struct ObservedMovementController
         {
             public const uint Rotation = 0x88; // UnityEngine.Vector2
-            public const uint PreviousStateName = 0xD8; // -.
-            public const uint CurrentStateName = 0xD9; // -.
+            public const uint PreviousStateName = 0xD8; // System.Byte
+            public const uint CurrentStateName = 0xD9; // System.Byte
             public const uint Velocity = 0x120; // UnityEngine.Vector3
         }
 
@@ -111,7 +111,7 @@ namespace SDK
         public readonly partial struct ObservedHealthController
         {
             public const uint PlayerCorpse = 0x18; // EFT.Interactive.ObservedCorpse
-            public const uint HealthStatus = 0xE0; // -.Int32
+            public const uint HealthStatus = 0xE0; // System.Int32
         }
 
         public readonly partial struct ProceduralWeaponAnimation
@@ -121,7 +121,7 @@ namespace SDK
             public const uint MotionReact = 0x40; // -.MotionEffector
             public const uint Shootingg = 0x50; // -.ShotEffector
             public const uint _optics = 0xC8; // System.Collections.Generic.List<SightNBone>
-            public const uint Mask = 0x160; // -.Int32
+            public const uint Mask = 0x160; // System.Int32
             public const uint _isAiming = 0x1E5; // Boolean
             public const uint ShotNeedsFovAdjustments = 0x433; // Boolean
         }
@@ -164,13 +164,13 @@ namespace SDK
             public const uint Settings = 0x58; // -.\uEA3C
             public const uint Side = 0xA0; // [HUMAN] Int32
             public const uint RegistrationDate = 0xA4; // Int32
-            public const uint MemberCategory = 0xB0; // -.Int32
+            public const uint MemberCategory = 0xB0; // System.Int32
             public const uint Experience = 0xB4; // Int32
         }
 
         public readonly partial struct PlayerInfoSettings
         {
-            public const uint Role = 0x10; // -.Int32
+            public const uint Role = 0x10; // System.Int32
         }
 
         public readonly partial struct ItemHandsController
@@ -275,7 +275,7 @@ namespace SDK
 
         public readonly partial struct FireModeComponent
         {
-            public const uint FireMode = 0x28; // -.
+            public const uint FireMode = 0x28; // System.Byte
         }
 
         public readonly partial struct LootItemMagazine
@@ -382,13 +382,13 @@ namespace SDK
         public readonly partial struct SightComponent
         {
             public const uint _template = 0x20; // -.\uF09F
-            public const uint ScopesSelectedModes = 0x30; // -.Int32[]
+            public const uint ScopesSelectedModes = 0x30; // System.Int32[]
             public const uint SelectedScope = 0x38; // Int32
         }
 
         public readonly partial struct SightInterface
         {
-            public const uint Zooms = 0x1C0; // -.Single[]
+            public const uint Zooms = 0x1C0; // System.Single[]
         }
 
         public readonly partial struct NetworkGame
@@ -398,7 +398,7 @@ namespace SDK
 
         public readonly partial struct NetworkGameData
         {
-            public const uint raidMode = 0x4C; // -.Int32
+            public const uint raidMode = 0x4C; // System.Int32
         }
     }
 
